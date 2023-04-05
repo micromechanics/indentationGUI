@@ -3,7 +3,7 @@
 # Prepare and create a new version
 Test the code: linting, documentation and then the tests from project main directory
 ``` bash
-pylint micromechanics-indentationGUI/
+pylint micromechanics_indentationGUI/
 make -C docs html
 # python tests/testVerification.py
 ```

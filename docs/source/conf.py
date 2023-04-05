@@ -11,16 +11,15 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os, sys, datetime
-sys.path.insert(0, os.path.abspath('../../micromechanics/tif'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'micromechanics'
-copyright = u'2022-{}, PASTA-ELN team'.format(datetime.datetime.now().year)
+copyright = u'2022-{}, Micromechanics team'.format(datetime.datetime.now().year)
 author = u'Micromechanics team'
 
 # The full version, including alpha/beta/rc tags
-version = "0.0.2"
+version = "0.0.3"
 release = version
 
 # -- General configuration ---------------------------------------------------
