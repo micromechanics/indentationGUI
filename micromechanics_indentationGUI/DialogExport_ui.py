@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# pylint: skip-file
 ################################################################################
 ## Form generated from reading UI file 'DialogExport.ui'
 ##
