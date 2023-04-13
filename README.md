@@ -1,3 +1,12 @@
+# Install
+``` bash
+pip install micromechanics-indentationGUI
+```
+# Usage
+``` bash
+python micromechanics-indentationGUI
+``` 
+
 # More detailed description to developers
 
 # Prepare and create a new version

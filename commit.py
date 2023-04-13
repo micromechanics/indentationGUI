@@ -36,7 +36,7 @@ def newVersion(level=2, message=''):
   version = '.'.join([str(i) for i in version])
   print('======== Version '+version+' =======')
   #update python files
-  filesToUpdate = {'micromechanics_indentationGUI/__init__.py':'__version__ = ', 'docs/source/conf.py':'version = '}
+  filesToUpdate = {'micromechanics-indentationGUI/__init__.py':'__version__ = ', 'docs/source/conf.py':'version = '}
   for path in filesToUpdate:
     with open(path, encoding='utf-8') as fIn:
       fileOld = fIn.readlines()
