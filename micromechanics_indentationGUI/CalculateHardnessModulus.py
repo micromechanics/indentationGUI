@@ -1,5 +1,4 @@
 """ Graphical user interface to calculate hardness and young's modulus """
-from ast import literal_eval
 import numpy as np
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
