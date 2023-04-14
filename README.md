@@ -4,7 +4,7 @@ pip install micromechanics-indentationGUI
 ```
 # Usage
 ``` bash
-python micromechanics-indentationGUI
+micromechanics-indentationGUI
 ``` 
 
 # More detailed description to developers
