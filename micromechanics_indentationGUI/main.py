@@ -2,7 +2,6 @@
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QDialog, QVBoxLayout, QFileDialog # pylint: disable=no-name-in-module
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.figure import Figure
-import numpy as np
 from .main_window_ui import Ui_MainWindow
 from .DialogExport_ui import Ui_DialogExport
 
@@ -60,6 +59,13 @@ class MainWindow(QMainWindow):
                           ]
     for graphicsView in graphicsView_list:
       self.matplotlib_canve_ax(graphicsView=graphicsView)
+    #define path for Examples
+    file_path = __file__[:-8]
+    self.ui.lineEdit_path_tabCalibration.setText(fr"{file_path}\Examples\Example1\FusedSilica.xlsx")
+    self.ui.lineEdit_path_tabTipRadius_FrameStiffness.setText(fr"{file_path}\Examples\Example2\Tungsten_FrameStiffness.xlsx")
+    self.ui.lineEdit_path_tabTipRadius.setText(fr"{file_path}\Examples\Example2\Tungsten_TipRadius.xlsx")
+    self.ui.lineEdit_path_tabHE_FrameStiffness.setText(fr"{file_path}\Examples\Example1\FusedSilica.xlsx")
+    self.ui.lineEdit_path_tabHE.setText(fr"{file_path}\Examples\Example1\FusedSilica.xlsx")
 
 
   def show_DialogExport(self): #pylint: disable=no-self-use
