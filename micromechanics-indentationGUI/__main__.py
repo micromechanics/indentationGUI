@@ -3,17 +3,17 @@ from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QDialog, QVBox
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.figure import Figure
 import numpy as np
-from main_window_ui import Ui_MainWindow
-from DialogExport_ui import Ui_DialogExport
+from .main_window_ui import Ui_MainWindow
+from .DialogExport_ui import Ui_DialogExport
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
   """ Graphical user interface of MainWindow """
-  from TipRadius import Calculate_TipRadius, plot_Hertzian_fitting
-  from CalculateHardnessModulus import Calculate_Hardness_Modulus
-  from CalibrateTAF import click_OK_calibration, plot_TAF
-  from FrameStiffness import FrameStiffness
-  from load_depth import plot_load_depth
+  from .TipRadius import Calculate_TipRadius, plot_Hertzian_fitting
+  from .CalculateHardnessModulus import Calculate_Hardness_Modulus
+  from .CalibrateTAF import click_OK_calibration, plot_TAF
+  from .FrameStiffness import FrameStiffness
+  from .load_depth import plot_load_depth
   def __init__(self):
     #global setting
     super().__init__()
@@ -143,7 +143,7 @@ class MainWindow(QMainWindow):
 
 class DialogExport(QDialog):
   """ Graphical user interface of Dialog used to export calculated results """
-  from Export import export
+  from .Export import export
 
 
   def __init__(self, parent = None):
