@@ -69,6 +69,7 @@ class MainWindow(QMainWindow):
       self.matplotlib_canve_ax(graphicsView=graphicsView)
     #define path for Examples
     file_path = __file__[:-8]
+    slash = '\\'
     if '\\' in file_path:
       slash = '\\'
     elif '/' in file_path:
