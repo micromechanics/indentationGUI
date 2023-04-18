@@ -160,5 +160,3 @@ def Analyse_PopIn(self):
     else:
       self.ui.tableWidget_tabPopIn.setItem(k,2,QTableWidgetItem("No"))
       self.ui.tableWidget_tabPopIn.item(k,2).setBackground(QColor(125,125,125))
-
-
