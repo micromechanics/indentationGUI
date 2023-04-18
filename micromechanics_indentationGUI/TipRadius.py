@@ -71,7 +71,7 @@ def Calculate_TipRadius(self):
   self.i_tabTipRadius = indentation.Indentation(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   #show Test method
   Method=self.i_tabTipRadius.method.value
-  self.ui.comboBox_method_tabCalibration.setCurrentIndex(Method-1)
+  self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
   #plot load-depth of test 1
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.cla()
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.set_title(f"{self.i_tabTipRadius.testName}")

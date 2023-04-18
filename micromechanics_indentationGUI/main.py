@@ -9,6 +9,7 @@ from .DialogExport_ui import Ui_DialogExport
 class MainWindow(QMainWindow):
   """ Graphical user interface of MainWindow """
   from .TipRadius import Calculate_TipRadius, plot_Hertzian_fitting
+  from .AnalysePopIn import Analyse_PopIn
   from .CalculateHardnessModulus import Calculate_Hardness_Modulus
   from .CalibrateTAF import click_OK_calibration, plot_TAF
   from .FrameStiffness import FrameStiffness
@@ -22,6 +23,7 @@ class MainWindow(QMainWindow):
     self.ui.OK_path_tabCalibration.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabTipRadius_FrameStiffness)
+    self.ui.pushButton_Calculate_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabPopIn_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness) # pylint: disable=line-too-long
     self.ui.pushButton_Calculate_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness)
@@ -31,6 +33,7 @@ class MainWindow(QMainWindow):
     self.ui.Copy_FrameCompliance_tabTipRadius.clicked.connect(self.Copy_FrameCompliance_tabTipRadius)
     self.ui.Calculate_tabHE.clicked.connect(self.Calculate_Hardness_Modulus)
     self.ui.pushButton_Calculate_tabTipRadius.clicked.connect(self.Calculate_TipRadius)
+    self.ui.pushButton_Analyse_tabPopIn.clicked.connect(self.Analyse_PopIn)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius)
     self.ui.actionExport.triggered.connect(self.show_DialogExport)
@@ -46,6 +49,8 @@ class MainWindow(QMainWindow):
                           'tabTipAreaFunction',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness',
                           'tabTipRadius_FrameStiffness',
+                          'load_depth_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness',
+                          'tabPopIn_FrameStiffness',
                           'tabHE_FrameStiffness',
                           'load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness',
                           'load_depth_tab_inclusive_frame_stiffness_tabHE',
@@ -56,16 +61,25 @@ class MainWindow(QMainWindow):
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius',
                           'HertzianFitting_tabTipRadius',
                           'CalculatedTipRadius_tabTipRadius',
+                          'load_depth_tab_inclusive_frame_stiffness_tabPopIn',
+                          'HertzianFitting_tabPopIn',
+                          'CalculatedEr_tabPopIn',
                           ]
     for graphicsView in graphicsView_list:
       self.matplotlib_canve_ax(graphicsView=graphicsView)
     #define path for Examples
     file_path = __file__[:-8]
-    self.ui.lineEdit_path_tabCalibration.setText(fr"{file_path}\Examples\Example1\FusedSilica.xlsx")
-    self.ui.lineEdit_path_tabTipRadius_FrameStiffness.setText(fr"{file_path}\Examples\Example2\Tungsten_FrameStiffness.xlsx")
-    self.ui.lineEdit_path_tabTipRadius.setText(fr"{file_path}\Examples\Example2\Tungsten_TipRadius.xlsx")
-    self.ui.lineEdit_path_tabHE_FrameStiffness.setText(fr"{file_path}\Examples\Example1\FusedSilica.xlsx")
-    self.ui.lineEdit_path_tabHE.setText(fr"{file_path}\Examples\Example1\FusedSilica.xlsx")
+    if '\\' in file_path:
+      slash = '\\'
+    elif '/' in file_path:
+      slash = '/'
+    self.ui.lineEdit_path_tabCalibration.setText(fr"{file_path}{slash}Examples{slash}Example1{slash}FusedSilica.xlsx")
+    self.ui.lineEdit_path_tabTipRadius_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_FrameStiffness.xlsx")
+    self.ui.lineEdit_path_tabPopIn_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_FrameStiffness.xlsx")
+    self.ui.lineEdit_path_tabTipRadius.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_TipRadius.xlsx")
+    self.ui.lineEdit_path_tabPopIn.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_TipRadius.xlsx")
+    self.ui.lineEdit_path_tabHE_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example1{slash}FusedSilica.xlsx")
+    self.ui.lineEdit_path_tabHE.setText(fr"{file_path}{slash}Examples{slash}Example1{slash}FusedSilica.xlsx")
 
 
   def show_DialogExport(self): #pylint: disable=no-self-use
@@ -115,6 +129,11 @@ class MainWindow(QMainWindow):
   def click_pushButton_Calculate_tabTipRadius_FrameStiffness(self):
     """ calculate the frame stiffness in tabTipRadius """
     self.FrameStiffness(tabName='tabTipRadius_FrameStiffness')
+
+
+  def click_pushButton_Calculate_tabPopIn_FrameStiffness(self):
+    """ calculate the frame stiffness in tabPopIn """
+    self.FrameStiffness(tabName='tabPopIn_FrameStiffness')
 
 
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness(self):

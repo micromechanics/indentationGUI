@@ -1,5 +1,5 @@
 # Install
-highly recommend: install in a new environment (python >= 3.8) created by Anaconda (https://www.anaconda.com/)
+highly recommend: installing in a new environment (python >= 3.8) created by Anaconda (https://www.anaconda.com/)
 
 In the terminal, keyboard type the following command and press Enter
 ``` bash
@@ -21,17 +21,17 @@ In the terminal, keyboard type the following command and press Enter
 pip uninstall micromechanics-indentationGUI
 ```
 
-# More detailed description to developers
+# More detailed descriptions for developers
 
 # Prepare and create a new version
-Test the code: linting, documentation and then the tests from project main directory
+Test the code: linting, documentation and then the tests from the project's main directory
 ``` bash
 pylint micromechanics_indentationGUI/
 make -C docs html
 # python tests/testVerification.py
 ```
 
-Then upload/create-pull-request to github, via
+Then upload/create-pull-request to GitHub, via
 ``` bash
 ./commit.py 'my message'
 ```
