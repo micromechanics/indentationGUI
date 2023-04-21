@@ -3,6 +3,7 @@ import numpy as np
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
+from .CorrectThermalDrift import correctThermalDrift
 
 
 #define the function of Hertzian contact
@@ -77,6 +78,8 @@ def Analyse_PopIn(self):
   ax0.cla()
   ax0.set_title(f"{self.i_tabPopIn.testName}")
   self.i_tabPopIn.output['ax']=ax0
+  if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
+    correctThermalDrift(indentation=self.i_tabPopIn) #calibrate the thermal drift using the collection during the unloading
   self.i_tabPopIn.stiffnessFromUnloading(self.i_tabPopIn.p, self.i_tabPopIn.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.draw()
@@ -100,6 +103,7 @@ def Analyse_PopIn(self):
   ax1.set_ylabel('Force [mN]')
   ax1.set_title(f"{self.i_tabPopIn.testName}")
   ax1.legend()
+  self.static_canvas_HertzianFitting_tabPopIn.figure.set_tight_layout(True)
   self.static_canvas_HertzianFitting_tabPopIn.draw()
   #initialize parameters to collect hertzian fitting results
   fPopIn_collect=[]
@@ -132,19 +136,40 @@ def Analyse_PopIn(self):
           break
       test_Index+=1
       i.nextTest()
+      if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
+        correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
   #calculate reduced Modulus Er
   prefactor_collect = np.asarray(prefactor_collect)
   Er = prefactor_collect * 3/ (4 * TipRadius**0.5)
+  modulus = i.YoungsModulus(Er)
+  #calculate the maxium shear stress
+  fPopIn_collect = np.asarray(fPopIn_collect)
+  max_shear_Stress = 0.31 * ( 6 * Er**2 * fPopIn_collect / (np.pi**3 * TipRadius**2) )**(1./3.)
   #plot the calculated reduced Modulus Er
   ax2 = self.static_ax_CalculatedEr_tabPopIn
   ax2.cla()
-  ax2.plot(test_Index_collect,Er,'o')
-  ax2.axhline(np.mean(Er), color='k', linestyle='-', label='mean Value')
-  ax2.axhline(np.mean(Er)+np.std(Er,ddof=1), color='k', linestyle='dashed', label='standard deviation')
-  ax2.axhline(np.mean(Er)-np.std(Er,ddof=1), color='k', linestyle='dashed')
+  ax2.plot(test_Index_collect,modulus,'o')
+  ax2.axhline(np.mean(modulus), color='k', linestyle='-', label='mean Value')
+  ax2.axhline(np.mean(modulus)+np.std(modulus,ddof=1), color='k', linestyle='dashed', label='standard deviation')
+  ax2.axhline(np.mean(modulus)-np.std(modulus,ddof=1), color='k', linestyle='dashed')
+  ax2.set_xlabel('Indent\'s Number')
+  ax2.set_ylabel('reduced Modulus, Er [GPa]')
   self.ui.lineEdit_reducedModulus_tabPopIn.setText(f"{np.mean(Er):.10f}")
   self.ui.lineEdit_reducedModulus_errorBar_tabPopIn.setText(f"{np.std(Er,ddof=1):.10f}")
+  self.static_canvas_CalculatedEr_tabPopIn.figure.set_tight_layout(True)
   self.static_canvas_CalculatedEr_tabPopIn.draw()
+  #plot the cumulative probability distribution of the max. shear stress 
+  ax3 = self.static_ax_maxShearStress_tabPopIn
+  ax3.cla()
+  sortedData = np.sort(max_shear_Stress)
+  probability = np.arange(len(sortedData)) / float(len(sortedData))
+  ax3.plot(sortedData,probability,'-o')
+  ax3.axhline(0, color='k', linestyle='-')
+  ax3.axhline(1, color='k', linestyle='-')
+  ax3.set_xlabel('maximum shear stress [GPa]')
+  ax3.set_ylabel('cumulative probability distribution')
+  self.static_canvas_maxShearStress_tabPopIn.figure.set_tight_layout(True)
+  self.static_canvas_maxShearStress_tabPopIn.draw()
   #listing Test
   self.ui.tableWidget_tabPopIn.setRowCount(0)
   self.ui.tableWidget_tabPopIn.setRowCount(len(self.i_tabPopIn.allTestList))
