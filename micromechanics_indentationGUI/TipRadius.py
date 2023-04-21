@@ -3,25 +3,9 @@ import numpy as np
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
-
-
-#define the function of Hertzian contact
-def Hertzian_contact_funct(depth, prefactor, h0):
-  """
-  function of Hertzian contact
-
-  Args:
-  depth (float): depth [µm]
-  prefactor (float): constant term
-  h0 (float): constant term
-  """
-  diff = depth-h0
-  if isinstance(diff, np.float64):
-    diff = max(diff,0.0)
-  else:
-    diff[diff<0.0] = 0.0
-  return prefactor* (diff)**(3./2.)
-
+from scipy.optimize import curve_fit
+from .AnalysePopIn import Hertzian_contact_funct
+from .CorrectThermalDrift import correctThermalDrift
 
 def Calculate_TipRadius(self):
   """ Graphical user interface calculate tip radius """
@@ -76,6 +60,8 @@ def Calculate_TipRadius(self):
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.cla()
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.set_title(f"{self.i_tabTipRadius.testName}")
   self.i_tabTipRadius.output['ax']=self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius
+  if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
+    correctThermalDrift(indentation=self.i_tabTipRadius) #calibrate the thermal drift using the collection during the unloading
   self.i_tabTipRadius.stiffnessFromUnloading(self.i_tabTipRadius.p, self.i_tabTipRadius.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.draw()
@@ -99,6 +85,7 @@ def Calculate_TipRadius(self):
   ax1.set_ylabel('Force [mN]')
   ax1.set_title(f"{self.i_tabTipRadius.testName}")
   ax1.legend()
+  self.static_canvas_HertzianFitting_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_HertzianFitting_tabTipRadius.draw()
   #initialize parameters to collect hertzian fitting results
   fPopIn_collect=[]
@@ -107,8 +94,13 @@ def Calculate_TipRadius(self):
   testName_collect=[]
   test_Index_collect=[]
   success_identified_PopIn = []
+  depth_collect=[]
+  loadHertzian_collect=[]
+  depth = np.arange(0,0.1,0.001)
   i = self.i_tabTipRadius
   test_Index=1
+  ax2 = self.static_ax_CalculatedTipRadius_tabTipRadius #plot the fitted prefactor
+  ax2[0].cla()
   #analyse pop-in for all tests
   while True:
     i.h -= i.tip.compliance*i.p
@@ -127,24 +119,45 @@ def Calculate_TipRadius(self):
         prefactor_collect.append(certainty["prefactor"])
         testName_collect.append(i.testName)
         test_Index_collect.append(test_Index)
+        loadHertzian = Hertzian_contact_funct(depth=depth, prefactor=certainty["prefactor"], h0=0)
+        ax2[0].plot(depth,loadHertzian, color='tab:blue') #plot the fitted prefactor
+        depth_collect.append(depth)
+        loadHertzian_collect.append(loadHertzian)
         if not i.testList:
           break
       test_Index+=1
       i.nextTest()
+      if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
+        correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
   #calculate Tip Radius
   Er = self.i_tabTipRadius.ReducedModulus(modulus=E_Mat)
   self.ui.lineEdit_reducedModulus_tabTipRadius.setText(f"{Er:.10f}")
   prefactor_collect = np.asarray(prefactor_collect)
   TipRadius = ( 3*prefactor_collect/(4*Er) )**2
+  #set lable of plotting the fitted prefactor
+  ax2[0].set_xlabel('Depth [µm]')
+  ax2[0].set_ylabel('Load [mN]')
+  ax2[0].set_title('the fitted Hertzian Contact Function', fontsize=9)
   #plot the calculated Tip Radius
-  ax2 = self.static_ax_CalculatedTipRadius_tabTipRadius
-  ax2.cla()
-  ax2.plot(test_Index_collect,TipRadius,'o')
-  ax2.axhline(np.mean(TipRadius), color='k', linestyle='-', label='mean Value')
-  ax2.axhline(np.mean(TipRadius)+np.std(TipRadius,ddof=1), color='k', linestyle='dashed', label='standard deviation')
-  ax2.axhline(np.mean(TipRadius)-np.std(TipRadius,ddof=1), color='k', linestyle='dashed')
-  self.ui.lineEdit_TipRadius_tabTipRadius.setText(f"{np.mean(TipRadius):.10f}")
-  self.ui.lineEdit_TipRadius_errorBar_tabTipRadius.setText(f"{np.std(TipRadius,ddof=1):.10f}")
+  ax2[1].cla()
+  ax2[1].plot(test_Index_collect,TipRadius,'o')
+  ax2[1].axhline(np.mean(TipRadius), color='k', linestyle='-', label='mean Value')
+  ax2[1].axhline(np.mean(TipRadius)+np.std(TipRadius,ddof=1), color='k', linestyle='dashed', label='standard deviation')
+  ax2[1].axhline(np.mean(TipRadius)-np.std(TipRadius,ddof=1), color='k', linestyle='dashed')
+  ax2[1].set_xlabel('Indent\'s Number')
+  ax2[1].set_ylabel('Calcultaed Tip Radius [µm]')
+  ax2[1].set_title('Calcultaed Tip Radius', fontsize=9)
+  #plot the Hertzian-P-h-Curve of the tip radius calculated by fitting all data
+  depth_collect = (np.asarray(depth_collect)).flatten()
+  loadHertzian_collect = (np.asarray(loadHertzian_collect)).flatten()
+  popt, _ = curve_fit(Hertzian_contact_funct, depth_collect, loadHertzian_collect, p0=[100.,0.]) #pylint: disable=unbalanced-tuple-unpacking
+  loadHertzian = Hertzian_contact_funct(depth=depth, prefactor=popt[0], h0=0)
+  ax2[0].plot(depth,loadHertzian, color='tab:blue', label='for each test')
+  ax2[0].plot(depth,loadHertzian, color='tab:orange', label='using all fitted Functions')
+  ax2[0].legend()
+  TipRadius_all_data = ( 3*popt[0]/(4*Er) )**2
+  self.ui.lineEdit_TipRadius_tabTipRadius.setText(f"{TipRadius_all_data:.10f}")
+  self.static_canvas_CalculatedTipRadius_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_CalculatedTipRadius_tabTipRadius.draw()
   #listing Test
   self.ui.tableWidget_tabTipRadius.setRowCount(0)
@@ -213,6 +226,5 @@ def plot_Hertzian_fitting(self,tabName):
     ax.set_ylabel('Force [mN]')
     ax.set_title(i.testName)
     ax.legend()
-  static_canvas.draw()
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()
