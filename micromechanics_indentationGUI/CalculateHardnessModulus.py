@@ -2,8 +2,6 @@
 import numpy as np
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
-from .CorrectThermalDrift import correctThermalDrift
-
 
 def Calculate_Hardness_Modulus(self):
   """ Graphical user interface to calculate hardness and young's modulus """
@@ -62,8 +60,6 @@ def Calculate_Hardness_Modulus(self):
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE.cla()
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE.set_title(f"{self.i_tabHE.testName}")
   self.i_tabHE.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
-  if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
-    correctThermalDrift(indentation=self.i_tabHE) #calibrate the thermal drift using the collection during the unloading
   self.i_tabHE.stiffnessFromUnloading(self.i_tabHE.p, self.i_tabHE.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
@@ -89,8 +85,6 @@ def Calculate_Hardness_Modulus(self):
       if not i.testList:
         break
     i.nextTest()
-    if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
-      correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
   self.tabHE_hc_collect=hc_collect
   self.tabHE_Pmax_collect=Pmax_collect
   self.tabHE_H_collect=H_collect
@@ -122,11 +116,11 @@ def Calculate_Hardness_Modulus(self):
   Modulus_mean=np.mean(E_collect,axis=1)
   Modulus_std=np.std(E_collect,axis=1,ddof=1)
   self.static_ax_E_Index_tabHE.errorbar(test_number,Modulus_mean,yerr=Modulus_std,marker='s', markersize=10, capsize=10, capthick=5,elinewidth=2, color='black',alpha=0.7,linestyle='')
-  self.static_ax_H_hc_tabHE.set_xlabel('Contact depth [µm]')
+  self.static_ax_H_hc_tabHE.set_xlabel('Contact depth [nm]')
   self.static_ax_H_hc_tabHE.set_ylabel('Hardness [GPa]')
   self.static_ax_H_Index_tabHE.set_xlabel('Indents\'s Nummber')
   self.static_ax_H_Index_tabHE.set_ylabel('Hardness [GPa]')
-  self.static_ax_E_hc_tabHE.set_xlabel('Contact depth [µm]')
+  self.static_ax_E_hc_tabHE.set_xlabel('Contact depth [nm]')
   self.static_ax_E_hc_tabHE.set_ylabel('Young\'s Modulus [GPa]')
   self.static_ax_E_Index_tabHE.set_xlabel('Indents\'s Nummber')
   self.static_ax_E_Index_tabHE.set_ylabel('Young\'s Modulus [GPa]')

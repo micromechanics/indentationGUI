@@ -19,32 +19,23 @@ class MainWindow(QMainWindow):
     super().__init__()
     self.ui = Ui_MainWindow()
     self.ui.setupUi(self)
-    #clicked.connect in tabTAF
+    #clicked.connect
     self.ui.OK_path_tabCalibration.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
-    #clicked.connect in tabTipRadius
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabTipRadius_FrameStiffness)
     self.ui.pushButton_Calculate_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabPopIn_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness) # pylint: disable=line-too-long
-    self.ui.Copy_FrameCompliance_tabTipRadius.clicked.connect(self.Copy_FrameCompliance_tabTipRadius)
-    self.ui.pushButton_Calculate_tabTipRadius.clicked.connect(self.Calculate_TipRadius)
-    self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius)
-    self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
-    #clicked.connect in tabHE
     self.ui.pushButton_Calculate_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE)
     self.ui.Copy_TAF_tabHE.clicked.connect(self.Copy_TAF)
-    self.ui.Copy_FrameCompliance_tabHE.clicked.connect(self.Copy_FrameCompliance_tabHE)
+    self.ui.Copy_FrameCompliance_tabHE.clicked.connect(self.Copy_FrameCompliance)
+    self.ui.Copy_FrameCompliance_tabTipRadius.clicked.connect(self.Copy_FrameCompliance_tabTipRadius)
     self.ui.Calculate_tabHE.clicked.connect(self.Calculate_Hardness_Modulus)
-    #clicked.connect in tabPopIn
+    self.ui.pushButton_Calculate_tabTipRadius.clicked.connect(self.Calculate_TipRadius)
     self.ui.pushButton_Analyse_tabPopIn.clicked.connect(self.Analyse_PopIn)
-    self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness)
-    self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn)
-    self.ui.Copy_TipRadius_tabPopIn.clicked.connect(self.Copy_TipRadius)
-    self.ui.Copy_FrameCompliance_tabPopIn.clicked.connect(self.Copy_FrameCompliance_tabPopIn)
-    self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn)
-    #clicked.connect in DialogExport
+    self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
+    self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius)
     self.ui.actionExport.triggered.connect(self.show_DialogExport)
     #initializing variables for collecting analysed results
     self.tabHE_hc_collect=[]
@@ -73,7 +64,6 @@ class MainWindow(QMainWindow):
                           'load_depth_tab_inclusive_frame_stiffness_tabPopIn',
                           'HertzianFitting_tabPopIn',
                           'CalculatedEr_tabPopIn',
-                          'maxShearStress_tabPopIn',
                           ]
     for graphicsView in graphicsView_list:
       self.matplotlib_canve_ax(graphicsView=graphicsView)
@@ -122,27 +112,14 @@ class MainWindow(QMainWindow):
       exec(f"lineEdit.setText(self.ui.lineEdit_TAF{j+1}_tabTAF.text())") #pylint: disable=exec-used
 
 
-  def Copy_TipRadius(self):
-    """ get the calibrated tip radius from the tabTipRadius """
-    self.ui.lineEdit_TipName_tabPopIn.setText(self.ui.lineEdit_TipName_tabTipRadius.text())
-    self.ui.doubleSpinBox_E_Tip_tabPopIn.setValue(self.ui.doubleSpinBox_E_Tip_tabTipRadius.value())
-    self.ui.doubleSpinBox_Poisson_Tip_tabPopIn.setValue(self.ui.doubleSpinBox_Poisson_Tip_tabTipRadius.value())
-    self.ui.doubleSpinBox_TipRadius_tabPopIn.setValue(float(self.ui.lineEdit_TipRadius_tabTipRadius.text()))
+  def Copy_FrameCompliance(self):
+    """ get the calibrated frame compliance """
+    self.ui.lineEdit_FrameCompliance_tabHE.setText(self.ui.lineEdit_FrameCompliance_tabHE_FrameStiffness.text())
 
 
   def Copy_FrameCompliance_tabTipRadius(self):
     """ get the calibrated frame compliance """
     self.ui.lineEdit_FrameCompliance_tabTipRadius.setText(self.ui.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.text())
-
-
-  def Copy_FrameCompliance_tabHE(self):
-    """ get the calibrated frame compliance """
-    self.ui.lineEdit_FrameCompliance_tabHE.setText(self.ui.lineEdit_FrameCompliance_tabHE_FrameStiffness.text())
-
-
-  def Copy_FrameCompliance_tabPopIn(self):
-    """ get the calibrated frame compliance """
-    self.ui.lineEdit_FrameCompliance_tabPopIn.setText(self.ui.lineEdit_FrameCompliance_tabPopIn_FrameStiffness.text())
 
 
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness(self):
@@ -178,21 +155,6 @@ class MainWindow(QMainWindow):
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE(self):
     """ plot the load-depth curves of the chosen tests in tabHE """
     self.plot_load_depth(tabName='tabHE')
-
-
-  def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness(self):
-    """ plot the load-depth curves of the chosen tests in tabPopIn for calculating frame stiffness """
-    self.plot_load_depth(tabName='tabPopIn_FrameStiffness')
-
-
-  def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn(self):
-    """ plot the load-depth curves of the chosen tests in tabPopIn """
-    self.plot_load_depth(tabName='tabPopIn')
-
-
-  def click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn(self):
-    """ plot the Hertzian fitting curves of the chosen tests in tabPopIn """
-    self.plot_Hertzian_fitting(tabName='tabPopIn')
 
 
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius(self):
