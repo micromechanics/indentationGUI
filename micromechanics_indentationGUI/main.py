@@ -72,7 +72,7 @@ class MainWindow(QMainWindow):
                           'CalculatedTipRadius_tabTipRadius',
                           'load_depth_tab_inclusive_frame_stiffness_tabPopIn',
                           'HertzianFitting_tabPopIn',
-                          'CalculatedEr_tabPopIn',
+                          'E_tabPopIn',
                           'maxShearStress_tabPopIn',
                           ]
     for graphicsView in graphicsView_list:

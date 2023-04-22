@@ -138,26 +138,26 @@ def Analyse_PopIn(self):
       i.nextTest()
       if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
         correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
-  #calculate reduced Modulus Er
+  #calculate Young's Modulus
   prefactor_collect = np.asarray(prefactor_collect)
   Er = prefactor_collect * 3/ (4 * TipRadius**0.5)
   modulus = i.YoungsModulus(Er)
   #calculate the maxium shear stress
   fPopIn_collect = np.asarray(fPopIn_collect)
   max_shear_Stress = 0.31 * ( 6 * Er**2 * fPopIn_collect / (np.pi**3 * TipRadius**2) )**(1./3.)
-  #plot the calculated reduced Modulus Er
-  ax2 = self.static_ax_CalculatedEr_tabPopIn
+  #plot Young's Modulus
+  ax2 = self.static_ax_E_tabPopIn
   ax2.cla()
   ax2.plot(test_Index_collect,modulus,'o')
   ax2.axhline(np.mean(modulus), color='k', linestyle='-', label='mean Value')
   ax2.axhline(np.mean(modulus)+np.std(modulus,ddof=1), color='k', linestyle='dashed', label='standard deviation')
   ax2.axhline(np.mean(modulus)-np.std(modulus,ddof=1), color='k', linestyle='dashed')
   ax2.set_xlabel('Indent\'s Number')
-  ax2.set_ylabel('reduced Modulus, Er [GPa]')
-  self.ui.lineEdit_reducedModulus_tabPopIn.setText(f"{np.mean(Er):.10f}")
-  self.ui.lineEdit_reducedModulus_errorBar_tabPopIn.setText(f"{np.std(Er,ddof=1):.10f}")
-  self.static_canvas_CalculatedEr_tabPopIn.figure.set_tight_layout(True)
-  self.static_canvas_CalculatedEr_tabPopIn.draw()
+  ax2.set_ylabel('Young\'s Modulus [GPa]')
+  self.ui.lineEdit_E_tabPopIn.setText(f"{np.mean(modulus):.10f}")
+  self.ui.lineEdit_E_errorBar_tabPopIn.setText(f"{np.std(modulus,ddof=1):.10f}")
+  self.static_canvas_E_tabPopIn.figure.set_tight_layout(True)
+  self.static_canvas_E_tabPopIn.draw()
   #plot the cumulative probability distribution of the max. shear stress
   ax3 = self.static_ax_maxShearStress_tabPopIn
   ax3.cla()
