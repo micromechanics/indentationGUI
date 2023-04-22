@@ -57,7 +57,10 @@ def click_OK_calibration(self):
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF.cla()
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF.set_title(f"{self.i_tabTAF.testName}")
   self.i_tabTAF.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF
-  self.i_tabTAF.stiffnessFromUnloading(self.i_tabTAF.p, self.i_tabTAF.h, plot=True)
+  if self.i_tabTAF.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
+    self.i_tabTAF.stiffnessFromUnloading(self.i_tabTAF.p, self.i_tabTAF.h, plot=True)
+  elif self.i_tabTAF.method== indentation.definitions.Method.CSM:
+    self.i_tabTAF.output['ax'].plot(self.i_tabTAF.h, self.i_tabTAF.p)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.draw()
   self.i_tabTAF.output['ax'] = None

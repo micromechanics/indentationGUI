@@ -42,7 +42,10 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
         correctDrift = False
       if correctDrift:
         correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
-      i.stiffnessFromUnloading(i.p, i.h, plot=True)
+      if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
+        i.stiffnessFromUnloading(i.p, i.h, plot=True)
+      elif i.method== indentation.definitions.Method.CSM:
+        i.output['ax'].plot(i.h, i.p)
       i.output['ax']=None
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()

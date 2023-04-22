@@ -55,6 +55,10 @@ def FrameStiffness(self,tabName):
   ax_load_depth.set_title(f"{i_FrameStiffness.testName}")
   i_FrameStiffness.output['ax'] = ax_load_depth
   i_FrameStiffness.stiffnessFromUnloading(i_FrameStiffness.p, i_FrameStiffness.h, plot=True)
+  if i_FrameStiffness.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
+    i_FrameStiffness.stiffnessFromUnloading(i_FrameStiffness.p, i_FrameStiffness.h, plot=True)
+  elif i_FrameStiffness.method== indentation.definitions.Method.CSM:
+    i_FrameStiffness.output['ax'].plot(i_FrameStiffness.h, i_FrameStiffness.p)
   canvas_load_depht.figure.set_tight_layout(True)
   canvas_load_depht.draw()
   i_FrameStiffness.output['ax'] = None
@@ -80,3 +84,5 @@ def FrameStiffness(self,tabName):
       tableWidget.setItem(k,1,QTableWidgetItem("Yes"))
     else:
       tableWidget.setItem(k,1,QTableWidgetItem("No"))
+  #the End of frame stiffness calibration
+  progressBar.setValue(100)
