@@ -21,8 +21,8 @@ class IndentationXXX(indentation.Indentation):
     Returns:
       bool: success
     """
-    self.testList = []
-    self.fileName = fileName    #one file can have multiple tests
+    self.testList = []          # pylint: disable=attribute-defined-outside-init
+    self.fileName = fileName    #one file can have multiple tests # pylint: disable=attribute-defined-outside-init
     slash='\\'
     if '/' in fileName:
       slash ='/'
@@ -32,7 +32,7 @@ class IndentationXXX(indentation.Indentation):
     theFile = fileName[index_path_end+1:index_file_end]
     # try to open hdf5-file, if not convert .xlsx to .h5
     try:
-      self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r')
+      self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r') # pylint: disable=attribute-defined-outside-init
       if self.output['progressBar'] is not None:
         self.output['progressBar'](100,'convert')  # pylint: disable=not-callable
     except:
@@ -41,8 +41,8 @@ class IndentationXXX(indentation.Indentation):
       else:
         print(f"**ERROE: {fileName} is not an XLSX File")
     # read converted .hf5
-    self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r')
-    self.indicies = {}
+    self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r') # pylint: disable=attribute-defined-outside-init
+    self.indicies = {} # pylint: disable=attribute-defined-outside-init
     for sheetName in ['Required Inputs', 'Pre-Test Inputs']:
       try:
         workbook = self.datafile.get(sheetName)
@@ -74,7 +74,7 @@ class IndentationXXX(indentation.Indentation):
           ,"Y Axis Position":"yCoarse"\
           ,"TotalLateralForce": "L", "X Force": "pX", "_XForce": "pX", "Y Force": "pY", "_YForce": "pY"\
           ,"_XDeflection": "Ux", "_YDeflection": "Uy" }
-    self.fullData = ['h','p','t','pVsHSlope','hRaw','pRaw','tTotal','slopeSupport']
+    self.fullData = ['h','p','t','pVsHSlope','hRaw','pRaw','tTotal','slopeSupport'] # pylint: disable=attribute-defined-outside-init
     if self.output['verbose']>1:
       print("Open Agilent file: "+fileName)
     for _, dfName in enumerate(self.datafile.keys()):
@@ -93,7 +93,7 @@ class IndentationXXX(indentation.Indentation):
               if self.output['verbose']>2:
                 print(f" *** {cell:<30} NOT USED")
             if "Harmonic" in cell or "Dyn. Frequency" in cell:
-              self.method = Method.CSM
+              self.method = Method.CSM # pylint: disable=attribute-defined-outside-init
           #reset to ensure default values are set
           if "p" not in self.indicies: self.indicies['p']=self.indicies['pRaw']
           if "h" not in self.indicies: self.indicies['h']=self.indicies['hRaw']
@@ -105,6 +105,6 @@ class IndentationXXX(indentation.Indentation):
       "h" not in self.indicies:
       print("*WARNING*: INDENTATION: Some index is missing (t,p,h) should be there")
     self.metaUser['measurementType'] = 'MTS, Agilent Indentation XLS'
-    self.allTestList =  list(self.testList)
+    self.allTestList =  list(self.testList) # pylint: disable=attribute-defined-outside-init
     self.nextTest()
     return True
