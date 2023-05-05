@@ -1,6 +1,7 @@
 """ Graphical user interface to calculate the frame stiffness """
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from .WaitingUpgrade_of_micromechanics import IndentationXXX
 
 def FrameStiffness(self,tabName):
   """
@@ -30,11 +31,12 @@ def FrameStiffness(self,tabName):
             'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
             }
   def guiProgressBar(value, location):
-    if location=='load':
+    if location=='convert':
       value = value/2
+      progressBar.setValue(value)
     if location=='calibrateStiffness':
       value = (value/2 + 1/2) *100
-    progressBar.setValue(value)
+      progressBar.setValue(value)
   Output = {
             'progressBar': guiProgressBar,   # function to use for plotting progress bar
             }
@@ -44,7 +46,7 @@ def FrameStiffness(self,tabName):
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
   #Reading Inputs
-  i_FrameStiffness = indentation.Indentation(fileName=fileName, surface=Surface, model=Model, output=Output)
+  i_FrameStiffness = IndentationXXX(fileName=fileName, surface=Surface, model=Model, output=Output)
   #show Test method
   Method=i_FrameStiffness.method.value
   exec(f"self.ui.comboBox_method_{tabName}.setCurrentIndex({Method-1})") # pylint: disable = exec-used

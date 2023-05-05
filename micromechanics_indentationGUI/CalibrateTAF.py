@@ -2,6 +2,7 @@
 import numpy as np
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from .WaitingUpgrade_of_micromechanics import IndentationXXX
 
 def click_OK_calibration(self):
   """ Graphical user interface to calibrate tip area function """
@@ -33,13 +34,15 @@ def click_OK_calibration(self):
               'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
               }
   def guiProgressBar(value, location):
-    if location=='load':
+    if location=='convert':
       value = value/3
+      self.ui.progressBar_calibration.setValue(value)
     if location=='calibrateStiffness':
       value = (value/3 + 1/3) *100
+      self.ui.progressBar_calibration.setValue(value)
     if location in ('calibration1', 'calibration2'):
       value = (value/3 + 2/3) *100
-    self.ui.progressBar_calibration.setValue(value)
+      self.ui.progressBar_calibration.setValue(value)
   Output = {
               'progressBar': guiProgressBar,   # function to use for plotting progress bar
               }
@@ -49,7 +52,7 @@ def click_OK_calibration(self):
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
   #Reading Inputs
-  self.i_tabTAF = indentation.Indentation(fileName=fileName, nuMat= Poisson, surface=Surface, model=Model, output=Output)
+  self.i_tabTAF = IndentationXXX(fileName=fileName, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   #show Test method
   Method=self.i_tabTAF.method.value
   self.ui.comboBox_method_tabCalibration.setCurrentIndex(Method-1)

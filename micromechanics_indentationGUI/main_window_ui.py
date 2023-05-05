@@ -2622,6 +2622,7 @@ class Ui_MainWindow(object):
         sizePolicy6.setHeightForWidth(self.lineEdit_TAF1_tabHE.sizePolicy().hasHeightForWidth())
         self.lineEdit_TAF1_tabHE.setSizePolicy(sizePolicy6)
         self.lineEdit_TAF1_tabHE.setMinimumSize(QSize(80, 0))
+        self.lineEdit_TAF1_tabHE.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.lineEdit_TAF1_tabHE.setReadOnly(True)
 
         self.gridLayout_43.addWidget(self.lineEdit_TAF1_tabHE, 2, 2, 1, 1)

@@ -6,6 +6,7 @@ from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from scipy.optimize import curve_fit
 from .AnalysePopIn import Hertzian_contact_funct
 from .CorrectThermalDrift import correctThermalDrift
+from .WaitingUpgrade_of_micromechanics import IndentationXXX
 
 def Calculate_TipRadius(self):
   """ Graphical user interface calculate tip radius """
@@ -40,9 +41,9 @@ def Calculate_TipRadius(self):
             'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
             }
   def guiProgressBar(value, location):
-    if location=='load':
+    if location=='convert':
       value = value/2
-    progressBar.setValue(value)
+      progressBar.setValue(value)
   Output = {
             'progressBar': guiProgressBar,   # function to use for plotting progress bar
             }
@@ -52,7 +53,7 @@ def Calculate_TipRadius(self):
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
   #Reading Inputs
-  self.i_tabTipRadius = indentation.Indentation(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
+  self.i_tabTipRadius = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   #show Test method
   Method=self.i_tabTipRadius.method.value
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
