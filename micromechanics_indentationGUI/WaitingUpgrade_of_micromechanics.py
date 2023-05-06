@@ -32,16 +32,17 @@ class IndentationXXX(indentation.Indentation):
     theFile = fileName[index_path_end+1:index_file_end]
     # try to open hdf5-file, if not convert .xlsx to .h5
     try:
+      # read converted .hf5
       self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r') # pylint: disable=attribute-defined-outside-init
       if self.output['progressBar'] is not None:
         self.output['progressBar'](100,'convert')  # pylint: disable=not-callable
     except:
       if '.xlsx' in fileName:
         convertXLSXtoHDF5(XLSX_File=fileName,progressbar=self.output['progressBar'])
+        # read converted .hf5
+        self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r') # pylint: disable=attribute-defined-outside-init
       else:
         print(f"**ERROE: {fileName} is not an XLSX File")
-    # read converted .hf5
-    self.datafile = pd.HDFStore(f"{thePath}{slash}{theFile}.h5", mode='r') # pylint: disable=attribute-defined-outside-init
     self.indicies = {} # pylint: disable=attribute-defined-outside-init
     for sheetName in ['Required Inputs', 'Pre-Test Inputs']:
       try:
@@ -105,6 +106,15 @@ class IndentationXXX(indentation.Indentation):
       "h" not in self.indicies:
       print("*WARNING*: INDENTATION: Some index is missing (t,p,h) should be there")
     self.metaUser['measurementType'] = 'MTS, Agilent Indentation XLS'
+    #rearrange the testList
+    TestNumber_collect=[]
+    for _, theTest in enumerate(self.testList):
+      TestNumber_collect.append(int(theTest[5:]))
+    TestNumber_collect.sort()
+    self.testList = []
+    for theTest in TestNumber_collect:
+      self.testList.append(f"Test {theTest}")
+    #define allTestList
     self.allTestList =  list(self.testList) # pylint: disable=attribute-defined-outside-init
     self.nextTest()
     return True

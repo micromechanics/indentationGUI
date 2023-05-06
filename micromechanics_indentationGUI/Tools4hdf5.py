@@ -11,6 +11,7 @@ def convertXLSXtoHDF5(XLSX_File,progressbar=None):
   """
   df = pd.ExcelFile(XLSX_File)
   store = pd.HDFStore(f"{XLSX_File[:-5]}.h5", mode='w', complevel=9, complib='zlib')
+  print (df.sheet_names)
   for idx, sheet_name in enumerate(df.sheet_names):
     data = df.parse(sheet_name)
     for i, _ in enumerate(data.columns):
@@ -19,9 +20,10 @@ def convertXLSXtoHDF5(XLSX_File,progressbar=None):
       elif i>0:
         data.iloc[:,i] = pd.to_numeric(data.iloc[:,i], errors='coerce')
     try:
-      store.put(sheet_name, data, format='table')
+      store.put(sheet_name, data, format='table', append=True)
     except:
       store.put(sheet_name, data, format='fixed')
     if progressbar is not None:
       progressbar(idx/len(df.sheet_names)*100, 'convert')
+  print (store.keys())
   store.close()
