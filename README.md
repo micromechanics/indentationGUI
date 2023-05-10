@@ -16,6 +16,7 @@ Users need to know:
   - Using the given original file (e.g. the XLSX file for G200X), the HDF5 file will be automatically generated at the first calibration/calculation (or when an HDF5 file with the same name as the XLSX file does not exist).
   - The automatically generated HDF5 file has the same as the original file (e.g. the XLSX file for G200X) but the file extension of ".h5" and locates in the same folder as the original file.
   - The original file extension (e.g. '.xlsx' for G200X) should be given in the path instead of the file extension of the HDF5 file (".h5").
+
 Running by keyboard typing the following command and pressing Enter in the terminal
 ``` bash
 micromechanics-indentationGUI
