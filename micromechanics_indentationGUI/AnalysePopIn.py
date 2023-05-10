@@ -5,7 +5,7 @@ from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from micromechanics import indentation
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-
+from .load_depth import set_aspectRatio
 
 #define the function of Hertzian contact
 def Hertzian_contact_funct(depth, prefactor, h0):
@@ -84,6 +84,7 @@ def Analyse_PopIn(self):
   self.i_tabPopIn.stiffnessFromUnloading(self.i_tabPopIn.p, self.i_tabPopIn.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.draw()
+  set_aspectRatio(ax=self.i_tabPopIn.output['ax'])
   self.i_tabPopIn.output['ax']=None
   #calculate the pop-in force and the Hertzian contact parameters
   fPopIn, certainty = self.i_tabPopIn.popIn(plot=False, correctH=False)
@@ -105,6 +106,7 @@ def Analyse_PopIn(self):
   ax1.set_title(f"{self.i_tabPopIn.testName}")
   ax1.legend()
   self.static_canvas_HertzianFitting_tabPopIn.figure.set_tight_layout(True)
+  set_aspectRatio(ax=ax1)
   self.static_canvas_HertzianFitting_tabPopIn.draw()
   #initialize parameters to collect hertzian fitting results
   fPopIn_collect=[]
@@ -158,6 +160,7 @@ def Analyse_PopIn(self):
   self.ui.lineEdit_E_tabPopIn.setText(f"{np.mean(modulus):.10f}")
   self.ui.lineEdit_E_errorBar_tabPopIn.setText(f"{np.std(modulus,ddof=1):.10f}")
   self.static_canvas_E_tabPopIn.figure.set_tight_layout(True)
+  set_aspectRatio(ax=ax2)
   self.static_canvas_E_tabPopIn.draw()
   #plot the cumulative probability distribution of the max. shear stress
   ax3 = self.static_ax_maxShearStress_tabPopIn
@@ -170,6 +173,7 @@ def Analyse_PopIn(self):
   ax3.set_xlabel('maximum shear stress [GPa]')
   ax3.set_ylabel('cumulative probability distribution')
   self.static_canvas_maxShearStress_tabPopIn.figure.set_tight_layout(True)
+  set_aspectRatio(ax=ax3)
   self.static_canvas_maxShearStress_tabPopIn.draw()
   #listing Test
   self.ui.tableWidget_tabPopIn.setRowCount(0)

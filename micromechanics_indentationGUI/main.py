@@ -1,5 +1,6 @@
 """ Graphical user interface includes all widgets """
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QDialog, QVBoxLayout, QFileDialog # pylint: disable=no-name-in-module
+from PySide6.QtCore import Qt, QRectF # pylint: disable=no-name-in-module
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.figure import Figure
 from .main_window_ui import Ui_MainWindow
@@ -14,13 +15,14 @@ class MainWindow(QMainWindow):
   from .CalibrateTAF import click_OK_calibration, plot_TAF
   from .FrameStiffness import FrameStiffness
   from .load_depth import plot_load_depth
+  from .Save_and_Load import SAVE
   def __init__(self):
     #global setting
     super().__init__()
     self.ui = Ui_MainWindow()
     self.ui.setupUi(self)
     #clicked.connect in tabTAF
-    self.ui.OK_path_tabCalibration.clicked.connect(self.click_OK_calibration)
+    self.ui.OK_path_tabTAF.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
     #clicked.connect in tabTipRadius
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabTipRadius_FrameStiffness)
@@ -46,6 +48,8 @@ class MainWindow(QMainWindow):
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn)
     #clicked.connect in DialogExport
     self.ui.actionExport.triggered.connect(self.show_DialogExport)
+    #clicked.connect to save
+    self.ui.actionSave.triggered.connect(self.SAVE)
     #initializing variables for collecting analysed results
     self.tabHE_hc_collect=[]
     self.tabHE_Pmax_collect=[]
@@ -84,7 +88,7 @@ class MainWindow(QMainWindow):
       slash = '\\'
     elif '/' in file_path:
       slash = '/'
-    self.ui.lineEdit_path_tabCalibration.setText(fr"{file_path}{slash}Examples{slash}Example1{slash}FusedSilica.xlsx")
+    self.ui.lineEdit_path_tabTAF.setText(fr"{file_path}{slash}Examples{slash}Example1{slash}FusedSilica.xlsx")
     self.ui.lineEdit_path_tabTipRadius_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_FrameStiffness.xlsx")
     self.ui.lineEdit_path_tabPopIn_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_FrameStiffness.xlsx")
     self.ui.lineEdit_path_tabTipRadius.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_TipRadius.xlsx")
@@ -107,11 +111,11 @@ class MainWindow(QMainWindow):
     graphicsView (string): the name of graphicsView defined in Qtdesigner
     """
     layout = eval(f"QVBoxLayout(self.ui.graphicsView_{graphicsView})") #pylint: disable=eval-used disable=unused-variable
-    exec(f"self.static_canvas_{graphicsView} = FigureCanvas(Figure(figsize=(5, 3)))") #pylint: disable=exec-used
+    exec(f"self.static_canvas_{graphicsView} = FigureCanvas(Figure(figsize=(8, 6)))") #pylint: disable=exec-used
     exec(f"layout.addWidget(NavigationToolbar(self.static_canvas_{graphicsView}, self))") #pylint: disable=exec-used
     exec(f"layout.addWidget(self.static_canvas_{graphicsView})") #pylint: disable=exec-used
     if graphicsView in ('CalculatedTipRadius_tabTipRadius'):
-      exec(f"self.static_ax_{graphicsView} = self.static_canvas_{graphicsView}.figure.subplots(1,2)") #pylint: disable=exec-used
+      exec(f"self.static_ax_{graphicsView} = self.static_canvas_{graphicsView}.figure.subplots(2,1)") #pylint: disable=exec-used
     else:
       exec(f"self.static_ax_{graphicsView} = self.static_canvas_{graphicsView}.figure.subplots()") #pylint: disable=exec-used
 

@@ -2,6 +2,8 @@
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
+from .load_depth import set_aspectRatio
+
 
 def FrameStiffness(self,tabName):
   """
@@ -63,6 +65,7 @@ def FrameStiffness(self,tabName):
     i_FrameStiffness.output['ax'].plot(i_FrameStiffness.h, i_FrameStiffness.p)
   canvas_load_depht.figure.set_tight_layout(True)
   canvas_load_depht.draw()
+  set_aspectRatio(ax=i_FrameStiffness.output['ax'])
   i_FrameStiffness.output['ax'] = None
   #calculate FrameStiffness
   ax = eval(f"self.static_ax_{tabName}") # pylint: disable = eval-used
@@ -72,6 +75,7 @@ def FrameStiffness(self,tabName):
   critForce=eval(f"self.ui.doubleSpinBox_critForceStiffness_{tabName}.value()") # pylint: disable = eval-used
   frameCompliance = i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False)
   exec(f"self.static_canvas_{tabName}.draw()") # pylint: disable = exec-used
+  set_aspectRatio(ax=i_FrameStiffness.output['ax'])
   i_FrameStiffness.output['ax'] = None
   exec(f"self.ui.lineEdit_FrameCompliance_{tabName}.setText('{frameCompliance:.10f}')") # pylint: disable = exec-used
   exec(f"self.ui.lineEdit_FrameStiffness_{tabName}.setText('{(1/frameCompliance):.10f}')") # pylint: disable = exec-used

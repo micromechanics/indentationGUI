@@ -4,7 +4,7 @@ from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-
+from .load_depth import set_aspectRatio
 
 def Calculate_Hardness_Modulus(self):
   """ Graphical user interface to calculate hardness and young's modulus """
@@ -74,6 +74,7 @@ def Calculate_Hardness_Modulus(self):
     i.output['ax'].plot(i.h, i.p)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
+  set_aspectRatio(ax=i.output['ax'])
   i.output['ax'] = None
   #calculate Hardnss and Modulus for all Tests
   hc_collect=[]
@@ -160,6 +161,10 @@ def Calculate_Hardness_Modulus(self):
   self.static_canvas_E_hc_tabHE.figure.set_tight_layout(True)
   self.static_canvas_H_Index_tabHE.figure.set_tight_layout(True)
   self.static_canvas_E_Index_tabHE.figure.set_tight_layout(True)
+  set_aspectRatio(ax=ax_H_hc)
+  set_aspectRatio(ax=ax_E_hc)
+  set_aspectRatio(ax=ax_H_Index)
+  set_aspectRatio(ax=ax_E_Index)
   self.static_canvas_H_hc_tabHE.draw()
   self.static_canvas_E_hc_tabHE.draw()
   self.static_canvas_H_Index_tabHE.draw()

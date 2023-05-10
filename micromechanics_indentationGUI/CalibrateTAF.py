@@ -3,21 +3,23 @@ import numpy as np
 from micromechanics import indentation
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
+from .load_depth import set_aspectRatio
+
 
 def click_OK_calibration(self):
   """ Graphical user interface to calibrate tip area function """
   #set Progress Bar
-  self.ui.progressBar_calibration.setValue(0)
+  self.ui.progressBar_tabTAF.setValue(0)
   #get Inputs
-  fileName = f"{self.ui.lineEdit_path_tabCalibration.text()}"
-  E_target = self.ui.doubleSpinBox_E_tabCalibration.value()
-  Poisson = self.ui.doubleSpinBox_Poisson_tabCalibration.value()
+  fileName = self.ui.lineEdit_path_tabTAF.text()
+  E_target = self.ui.doubleSpinBox_E_tabTAF.value()
+  Poisson = self.ui.doubleSpinBox_Poisson_tabTAF.value()
   E_Tip = self.ui.doubleSpinBox_E_Tip_tabTAF.value()
   Poisson_Tip = self.ui.doubleSpinBox_Poisson_Tip_tabTAF.value()
-  unloaPMax = self.ui.doubleSpinBox_Start_Pmax_tabCalibration.value()
-  unloaPMin = self.ui.doubleSpinBox_End_Pmax_tabCalibration.value()
-  relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabCalibration.value()
-  max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabCalibration.value()
+  unloaPMax = self.ui.doubleSpinBox_Start_Pmax_tabTAF.value()
+  unloaPMin = self.ui.doubleSpinBox_End_Pmax_tabTAF.value()
+  relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabTAF.value()
+  max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabTAF.value()
   number_of_TAFterms = self.ui.spinBox_number_of_TAFterms.value()
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabTAF.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabTAF.value()
@@ -36,13 +38,13 @@ def click_OK_calibration(self):
   def guiProgressBar(value, location):
     if location=='convert':
       value = value/3
-      self.ui.progressBar_calibration.setValue(value)
+      self.ui.progressBar_tabTAF.setValue(value)
     if location=='calibrateStiffness':
       value = (value/3 + 1/3) *100
-      self.ui.progressBar_calibration.setValue(value)
+      self.ui.progressBar_tabTAF.setValue(value)
     if location in ('calibration1', 'calibration2'):
       value = (value/3 + 2/3) *100
-      self.ui.progressBar_calibration.setValue(value)
+      self.ui.progressBar_tabTAF.setValue(value)
   Output = {
               'progressBar': guiProgressBar,   # function to use for plotting progress bar
               }
@@ -55,7 +57,7 @@ def click_OK_calibration(self):
   self.i_tabTAF = IndentationXXX(fileName=fileName, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   #show Test method
   Method=self.i_tabTAF.method.value
-  self.ui.comboBox_method_tabCalibration.setCurrentIndex(Method-1)
+  self.ui.comboBox_method_tabTAF.setCurrentIndex(Method-1)
   #plot load-depth of test 1
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF.cla()
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF.set_title(f"{self.i_tabTAF.testName}")
@@ -66,15 +68,17 @@ def click_OK_calibration(self):
     self.i_tabTAF.output['ax'].plot(self.i_tabTAF.h, self.i_tabTAF.p)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.draw()
+  set_aspectRatio(ax=self.i_tabTAF.output['ax'])
   self.i_tabTAF.output['ax'] = None
   #calculate frameStiffness and Tip Area Function
   self.static_ax_tabFrameStiffness.cla()
   self.i_tabTAF.output['ax'] = self.static_ax_tabFrameStiffness
-  critDepthStiffness=self.ui.doubleSpinBox_critDepthStiffness_tabCalibration.value()
-  critForce=self.ui.doubleSpinBox_critForceStiffness_tabCalibration.value()
+  critDepthStiffness=self.ui.doubleSpinBox_critDepthStiffness_tabTAF.value()
+  critForce=self.ui.doubleSpinBox_critForceStiffness_tabTAF.value()
   hc, Ac = self.i_tabTAF.calibration(critDepthStiffness=critDepthStiffness, critForce=critForce,plotStiffness=False,numPolynomial=number_of_TAFterms,returnArea=True, eTarget=E_target)
   self.static_canvas_tabFrameStiffness.figure.set_tight_layout(True)
   self.static_canvas_tabFrameStiffness.draw()
+  set_aspectRatio(ax=self.i_tabTAF.output['ax'])
   self.i_tabTAF.output['ax'] = None
   #listing Test
   self.ui.tableWidget_tabTAF.setRowCount(0)
@@ -106,13 +110,15 @@ def plot_TAF(self,hc,Ac):
     hc (float): contact depth [µm]
     Ac (float): contact area [µm2]
   """
-  self.static_ax_tabTipAreaFunction.cla()
-  self.static_ax_tabTipAreaFunction.scatter(hc,Ac,color='b',label='data')
+  ax = self.static_ax_tabTipAreaFunction
+  ax.cla()
+  ax.scatter(hc,Ac,color='b',label='data')
   hc_new = np.arange(0,hc.max()*1.05,hc.max()/100)
   Ac_new = self.i_tabTAF.tip.areaFunction(hc_new)
-  self.static_ax_tabTipAreaFunction.plot(hc_new,Ac_new,color='r',label='fitted Tip Area Function')
-  self.static_ax_tabTipAreaFunction.legend()
-  self.static_ax_tabTipAreaFunction.set_xlabel('Contact Depth hc [µm]')
-  self.static_ax_tabTipAreaFunction.set_ylabel('Contact Area Ac [µm$^2$]')
+  ax.plot(hc_new,Ac_new,color='r',label='fitted Tip Area Function')
+  ax.legend()
+  ax.set_xlabel('Contact Depth hc [µm]')
+  ax.set_ylabel('Contact Area Ac [µm$^2$]')
   self.static_canvas_tabTipAreaFunction.figure.set_tight_layout(True)
+  set_aspectRatio(ax=ax)
   self.static_canvas_tabTipAreaFunction.draw()

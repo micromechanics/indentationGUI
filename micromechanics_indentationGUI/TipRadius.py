@@ -7,6 +7,8 @@ from scipy.optimize import curve_fit
 from .AnalysePopIn import Hertzian_contact_funct
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
+from .load_depth import set_aspectRatio
+
 
 def Calculate_TipRadius(self):
   """ Graphical user interface calculate tip radius """
@@ -66,6 +68,7 @@ def Calculate_TipRadius(self):
   self.i_tabTipRadius.stiffnessFromUnloading(self.i_tabTipRadius.p, self.i_tabTipRadius.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.draw()
+  set_aspectRatio(ax=self.i_tabTipRadius.output['ax'])
   self.i_tabTipRadius.output['ax']=None
   #calculate the pop-in force and the Hertzian contact parameters
   fPopIn, certainty = self.i_tabTipRadius.popIn(plot=False, correctH=False)
@@ -86,6 +89,7 @@ def Calculate_TipRadius(self):
   ax1.set_ylabel('Force [mN]')
   ax1.set_title(f"{self.i_tabTipRadius.testName}")
   ax1.legend()
+  set_aspectRatio(ax=ax1)
   self.static_canvas_HertzianFitting_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_HertzianFitting_tabTipRadius.draw()
   #initialize parameters to collect hertzian fitting results
@@ -156,6 +160,8 @@ def Calculate_TipRadius(self):
   ax2[0].plot(depth,loadHertzian, color='tab:blue', label='for each test')
   ax2[0].plot(depth,loadHertzian, color='tab:orange', label='using all fitted Functions')
   ax2[0].legend()
+  set_aspectRatio(ax=ax2[0])
+  set_aspectRatio(ax=ax2[1])
   TipRadius_all_data = ( 3*popt[0]/(4*Er) )**2
   self.ui.lineEdit_TipRadius_tabTipRadius.setText(f"{TipRadius_all_data:.10f}")
   self.static_canvas_CalculatedTipRadius_tabTipRadius.figure.set_tight_layout(True)
@@ -227,5 +233,6 @@ def plot_Hertzian_fitting(self,tabName):
     ax.set_ylabel('Force [mN]')
     ax.set_title(i.testName)
     ax.legend()
+    set_aspectRatio(ax=ax)
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()
