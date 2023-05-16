@@ -482,7 +482,6 @@ def main():
     file_RecentFiles.close()
   ret = app.exec()
   sys.exit(ret)
-  return
 
 # called by python3 micromechanics_indentationGUI
 if __name__ == '__main__':
