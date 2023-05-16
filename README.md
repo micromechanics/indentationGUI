@@ -30,6 +30,10 @@ pip uninstall micromechanics-indentationGUI
 # More detailed descriptions for developers
 
 # Prepare and create a new version
+Delete RecentFiles.txt in /indentationGUI/micromechanics_indentationGUI
+
+Set "# pylint: skip-file" for all files named "***_ui.py"
+
 Test the code: linting, documentation and then the tests from the project's main directory
 ``` bash
 pylint micromechanics_indentationGUI/

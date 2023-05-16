@@ -1,14 +1,118 @@
 """ Module temporarily used to replace the corresponding Module in micromechanics waited to be upgraded """
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy import signal
+from scipy.ndimage import gaussian_filter1d
 from micromechanics import indentation
-from micromechanics.indentation.definitions import Method
+from micromechanics.indentation.definitions import Method, Vendor
+from .CorrectThermalDrift import correctThermalDrift
 from .Tools4hdf5 import convertXLSXtoHDF5
 
 class IndentationXXX(indentation.Indentation):
   """
   based on the Main class of micromechanics.indentation
   """
+  def nextTest(self, newTest=True, plotSurface=False):
+    """
+    Wrapper for all next test for all vendors
+
+    Args:
+      newTest (bool): go to next test; false=redo this one
+      plotSurface (bool): plot surface area
+
+    Returns:
+      bool: success of going to next sheet
+    """
+    if newTest:
+      if self.vendor == Vendor.Agilent:
+        success = self.nextAgilentTest(newTest)
+      elif self.vendor == Vendor.Micromaterials:
+        success = self.nextMicromaterialsTest()
+      elif self.vendor == Vendor.FischerScope:
+        success = self.nextFischerScopeTest()
+      elif self.vendor > Vendor.Hdf5:
+        success = self.nextHDF5Test()
+      else:
+        print("No multiple tests in file")
+        success = False
+    else:
+      success = True
+    #SURFACE FIND
+    if self.testName in self.surface['surfaceIdx']:
+      surface = self.surface['surfaceIdx'][self.testName]
+      self.h -= self.h[surface]  #only change surface, not force
+    else:
+      found = False
+      if 'load' in self.surface:
+        thresValues = self.p
+        thresValue  = self.surface['load']
+        found = True
+      elif 'stiffness' in self.surface:
+        thresValues = self.slope
+        thresValue  = self.surface['stiffness']
+        found = True
+      elif 'phase angle' in self.surface:
+        thresValues = self.phase
+        thresValue  = self.surface['phase angle']
+        found = True
+      elif 'abs(dp/dh)' in self.surface:
+        thresValues = np.abs(np.gradient(self.p,self.h))
+        thresValue  = self.surface['abs(dp/dh)']
+        found = True
+      elif 'dp/dt' in self.surface:
+        thresValues = np.gradient(self.p,self.t)
+        thresValue  = self.surface['dp/dt']
+        found = True
+
+      if found:
+        #interpolate nan with neighboring values
+        nans = np.isnan(thresValues)
+        def tempX(z):
+          """
+          Temporary function
+
+          Args:
+            z (numpy.array): input
+
+          Returns:
+            numpy.array: output
+          """
+          return z.nonzero()[0]
+        thresValues[nans]= np.interp(tempX(nans), tempX(~nans), thresValues[~nans])
+
+        #filter this data
+        if 'median filter' in self.surface:
+          thresValues = signal.medfilt(thresValues, self.surface['median filter'])
+        elif 'gauss filter' in self.surface:
+          thresValues = gaussian_filter1d(thresValues, self.surface['gauss filter'])
+        elif 'butterfilter' in self.surface:
+          valueB, valueA = signal.butter(*self.surface['butterfilter'])
+          thresValues = signal.filtfilt(valueB, valueA, thresValues)
+        if 'phase angle' in self.surface:
+          surface  = np.where(thresValues<thresValue)[0][0]
+        else:
+          surface  = np.where(thresValues>thresValue)[0][0]
+        if plotSurface or 'plot' in self.surface:
+          _, ax1 = plt.subplots()
+          ax1.plot(self.h,thresValues, 'C0o-')
+          ax1.plot(self.h[surface], thresValues[surface], 'C9o', markersize=14)
+          ax1.axhline(0,linestyle='dashed')
+          ax1.set_ylim(bottom=0, top=np.percentile(thresValues,80))
+          ax1.set_xlabel(r'depth [$\mu m$]')
+          ax1.set_ylabel(r'threshold value [different units]', color='C0')
+          ax1.grid()
+          plt.show()
+        self.h -= self.h[surface]  #only change surface, not force
+        self.p -= self.p[surface]  #!!!!!:Different from micromechanics: change load
+        self.identifyLoadHoldUnload() #!!!!!:Different from micromechanics: moved from nextAgilentTest
+    #correct thermal drift !!!!!
+    if self.model['driftRate']:
+      correctThermalDrift(indentation=self,reFindSurface=True)
+      self.model['driftRate'] = True
+    return success
+
+
   def loadAgilent(self, fileName):
     """
     replacing loadAgilent in micromechanics.indentation
@@ -111,10 +215,81 @@ class IndentationXXX(indentation.Indentation):
     for _, theTest in enumerate(self.testList):
       TestNumber_collect.append(int(theTest[5:]))
     TestNumber_collect.sort()
-    self.testList = []
+    self.testList = [] # pylint: disable=attribute-defined-outside-init
     for theTest in TestNumber_collect:
       self.testList.append(f"Test {theTest}")
     #define allTestList
     self.allTestList =  list(self.testList) # pylint: disable=attribute-defined-outside-init
     self.nextTest()
+    return True
+
+
+  def nextAgilentTest(self, newTest=True):
+    """
+    Go to next sheet in worksheet and prepare indentation data
+
+    Data:
+
+    - _Raw: without frame stiffness correction,
+    - _Frame:  with frame stiffness correction (remove postscript finally)
+    - only affects/applies directly depth (h) and stiffness (s)
+    - modulus, hardness and k2p always only use the one with frame correction
+
+    Args:
+      newTest (bool): take next sheet (default)
+
+    Returns:
+      bool: success of going to next sheet
+    """
+    if self.vendor!=Vendor.Agilent: return False #cannot be used
+    if len(self.testList)==0: return False   #no sheet left
+    if newTest:
+      self.testName = self.testList.pop(0)
+
+    #read data and identify valid data points
+    df     = self.datafile.get(self.testName)
+    h       = np.array(df[self.indicies['h'    ]][1:-1], dtype=np.float64)
+    validFull = np.isfinite(h)
+    if 'slope' in self.indicies:
+      slope   = np.array(df[self.indicies['slope']][1:-1], dtype=np.float64)
+      self.valid =  np.isfinite(slope)
+      self.valid[self.valid] = slope[self.valid] > 0.0  #only valid points if stiffness is positiv
+    else:
+      self.valid = validFull
+    for index in self.indicies:  #pylint: disable=consider-using-dict-items
+      data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64)
+      mask = np.isfinite(data)
+      mask[mask] = data[mask]<1e99
+      self.valid = np.logical_and(self.valid, mask)                       #adopt/reduce mask continously
+
+    #Run through all items again and crop to only valid data
+    for index in self.indicies:  #pylint: disable=consider-using-dict-items
+      data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64)
+      if not index in self.fullData:
+        data = data[self.valid]
+      else:
+        data = data[validFull]
+      setattr(self, index, data)
+
+    self.valid = self.valid[validFull]
+    #  now all fields (incl. p) are full and defined
+
+    #self.identifyLoadHoldUnload()   #!!!!!Different from micromechanics::Moved to nextTest() after found surface
+    #TODO_P2 Why is there this code?
+    # if self.onlyLoadingSegment and self.method==Method.CSM:
+    #   # print("Length test",len(self.valid), len(self.h[self.valid]), len(self.p[self.valid])  )
+    #   iMin, iMax = 2, self.iLHU[0][1]
+    #   self.valid[iMax:] = False
+    #   self.valid[:iMin] = False
+    #   self.slope = self.slope[iMin:np.sum(self.valid)+iMin]
+
+    #correct data and evaluate missing
+    self.h /= 1.e3 #from nm in um
+    if "Ac" in self.indicies         : self.Ac /= 1.e6  #from nm in um
+    if "slope" in self.indicies       : self.slope /= 1.e3 #from N/m in mN/um
+    if "slopeSupport" in self.indicies: self.slopeSupport /= 1.e3 #from N/m in mN/um
+    if 'hc' in self.indicies         : self.hc /= 1.e3  #from nm in um
+    if 'hRaw' in self.indicies        : self.hRaw /= 1.e3  #from nm in um
+    if not "k2p" in self.indicies and 'slope' in self.indicies: #pylint: disable=unneeded-not
+      self.k2p = self.slope * self.slope / self.p[self.valid]
     return True

@@ -1,10 +1,14 @@
 """ Graphical user interface includes all widgets """
-from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QDialog, QVBoxLayout, QFileDialog # pylint: disable=no-name-in-module
-from PySide6.QtCore import Qt, QRectF # pylint: disable=no-name-in-module
+import sys
+from PySide6.QtGui import QAction, QKeySequence, QShortcut # pylint: disable=no-name-in-module
+from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QFileDialog # pylint: disable=no-name-in-module
+from PySide6.QtCore import Qt, QRectF, QCoreApplication # pylint: disable=no-name-in-module
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.figure import Figure
 from .main_window_ui import Ui_MainWindow
 from .DialogExport_ui import Ui_DialogExport
+from .DialogSaveAs_ui import Ui_DialogSaveAs
+from .DialogOpen_ui import Ui_DialogOpen
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -15,12 +19,36 @@ class MainWindow(QMainWindow):
   from .CalibrateTAF import click_OK_calibration, plot_TAF
   from .FrameStiffness import FrameStiffness
   from .load_depth import plot_load_depth
-  from .Save_and_Load import SAVE
+
   def __init__(self):
     #global setting
     super().__init__()
     self.ui = Ui_MainWindow()
+    #find file_path and slash
+    file_path = __file__[:-8]
+    slash = '\\'
+    if '\\' in file_path:
+      slash = '\\'
+    elif '/' in file_path:
+      slash = '/'
+    self.file_path = file_path
+    self.slash = slash
+    #intial the list of recently opened and saved files
+    self.RecentFiles =[]
+    self.RecentFilesNumber=0
+    #new
+    self.new()
+
+
+  def new(self):
+    """ initial settings """
     self.ui.setupUi(self)
+    #initial the Path for saving
+    self.Folder_SAVED = 'type or selcet the path of a folder'
+    self.FileName_SAVED = 'give an arbitrary file name (with or without an arbitrary file extension)'
+    #intial the list of recently opened and saved files
+    self.RecentFiles =[]
+    self.RecentFilesNumber=0
     #clicked.connect in tabTAF
     self.ui.OK_path_tabTAF.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
@@ -46,10 +74,18 @@ class MainWindow(QMainWindow):
     self.ui.Copy_TipRadius_tabPopIn.clicked.connect(self.Copy_TipRadius)
     self.ui.Copy_FrameCompliance_tabPopIn.clicked.connect(self.Copy_FrameCompliance_tabPopIn)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn)
+    #clicked.connect to new
+    self.ui.actionNew.triggered.connect(self.reNew_windows)
     #clicked.connect in DialogExport
     self.ui.actionExport.triggered.connect(self.show_DialogExport)
-    #clicked.connect to save
-    self.ui.actionSave.triggered.connect(self.SAVE)
+    #clicked.connect to DialogSaveAs
+    self.ui.actionSaveAs.triggered.connect(self.show_DialogSaveAs)
+    #clicked.connect to Save
+    shortcut_actionSave = QShortcut(QKeySequence("Ctrl+S"), self)
+    shortcut_actionSave.activated.connect(self.directSave)
+    self.ui.actionSave.triggered.connect(self.directSave)
+    #clicked.connect to DialogOpen
+    self.ui.actionLoad.triggered.connect(self.show_DialogOpen)
     #initializing variables for collecting analysed results
     self.tabHE_hc_collect=[]
     self.tabHE_Pmax_collect=[]
@@ -82,12 +118,8 @@ class MainWindow(QMainWindow):
     for graphicsView in graphicsView_list:
       self.matplotlib_canve_ax(graphicsView=graphicsView)
     #define path for Examples
-    file_path = __file__[:-8]
-    slash = '\\'
-    if '\\' in file_path:
-      slash = '\\'
-    elif '/' in file_path:
-      slash = '/'
+    file_path = self.file_path
+    slash = self.slash
     self.ui.lineEdit_path_tabTAF.setText(fr"{file_path}{slash}Examples{slash}Example1{slash}FusedSilica.xlsx")
     self.ui.lineEdit_path_tabTipRadius_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_FrameStiffness.xlsx")
     self.ui.lineEdit_path_tabPopIn_FrameStiffness.setText(fr"{file_path}{slash}Examples{slash}Example2{slash}Tungsten_FrameStiffness.xlsx")
@@ -101,6 +133,22 @@ class MainWindow(QMainWindow):
     """ showing dialog window for exporting results """
     if not window_DialogExport.isVisible():
       window_DialogExport.show()
+
+
+  def show_DialogSaveAs(self): #pylint: disable=no-self-use
+    """ showing dialog window for saving file """
+    if not window_DialogSaveAs.isVisible():
+      window_DialogSaveAs.ui.lineEdit_SaveAsFileName.setText(self.FileName_SAVED)
+      window_DialogSaveAs.ui.lineEdit_SaveAsFolder.setText(self.Folder_SAVED)
+      window_DialogSaveAs.show()
+
+
+  def show_DialogOpen(self): #pylint: disable=no-self-use
+    """ showing dialog window for openning file """
+    if not window_DialogOpen.isVisible():
+      window_DialogOpen.ui.lineEdit_OpenFileName.setText(self.FileName_SAVED)
+      window_DialogOpen.ui.lineEdit_OpenFolder.setText(self.Folder_SAVED)
+      window_DialogOpen.show()
 
 
   def matplotlib_canve_ax(self,graphicsView): #pylint: disable=no-self-use
@@ -213,15 +261,96 @@ class MainWindow(QMainWindow):
     self.plot_Hertzian_fitting(tabName='tabTipRadius')
 
 
+  def directSave(self):
+    """ Save the current file directly to its original path """
+    window_DialogSaveAs.ui.lineEdit_SaveAsFileName.setText(self.FileName_SAVED)
+    window_DialogSaveAs.ui.lineEdit_SaveAsFolder.setText(self.Folder_SAVED)
+    window_DialogSaveAs.go2Save()
+
+
+  def update_OpenRecent(self):
+    """ update the list of recently opened files """
+    for idex, file_name in enumerate(self.RecentFiles):
+      if idex>5:
+        break
+      if '\n' in file_name:
+        file_name = file_name[:-1]
+        self.RecentFiles[idex] = self.RecentFiles[idex][:-1]
+      if idex+1 >self.RecentFilesNumber:
+        actionOpenRecent = QAction(self)
+        self.ui.menuOpenRecent.addAction(actionOpenRecent)
+        self.RecentFilesNumber += 1
+        actionOpenRecent.setObjectName(f"actionOpenRecent{idex}")
+        actionOpenRecent.setText(QCoreApplication.translate("MainWindow", file_name, None))
+        exec(f"self.ui.actionOpenRecent{idex} = actionOpenRecent") # pylint: disable = exec-used
+        exec(f"self.ui.actionOpenRecent{idex}.triggered.connect(window_DialogOpen.openUsingOpenRecent{idex})") # pylint: disable = exec-used
+      else:
+        actionOpenRecent = eval(f"self.ui.actionOpenRecent{idex}") # pylint: disable = eval-used
+        actionOpenRecent.setText(QCoreApplication.translate("MainWindow", file_name, None))
+
+
+  def reNew_windows(self):
+    """ newly perform intial settings """
+    #save RecentFiles
+    file_RecentFiles = open(f"{self.file_path}{self.slash}RecentFiles.txt",'w', encoding="utf-8") #pylint: disable=consider-using-with
+    for idex, RecentFile in enumerate(self.RecentFiles):
+      if idex>10:
+        break
+      if '\n' in RecentFile:
+        file_RecentFiles.write(RecentFile)
+      else:
+        file_RecentFiles.write(RecentFile+'\n')
+    file_RecentFiles.close()
+    #new
+    self.new()
+    #read the list of recently opened files
+    try:
+      file_RecentFiles = open(f"{window.file_path}{window.slash}RecentFiles.txt", 'r', encoding="utf-8") #pylint: disable=consider-using-with
+    except:
+      print(f"**ERROR: cannot open {window.file_path}{window.slash}RecentFiles.txt")
+    else:
+      self.RecentFiles = file_RecentFiles.readlines()
+      self.update_OpenRecent()
+      file_RecentFiles.close()
+
+
+  def closeEvent(self, event):
+    """ close other windiows when the main window is closed """
+    #save RecentFiles
+    file_RecentFiles = open(f"{self.file_path}{self.slash}RecentFiles.txt",'w', encoding="utf-8") #pylint: disable=consider-using-with
+    for idex, RecentFile in enumerate(self.RecentFiles):
+      if idex>10:
+        break
+      if '\n' in RecentFile:
+        file_RecentFiles.write(RecentFile)
+      else:
+        file_RecentFiles.write(RecentFile+'\n')
+    file_RecentFiles.close()
+    #close all windows
+    for theWindow in QApplication.topLevelWidgets():
+      theWindow.close()
+
+
 class DialogExport(QDialog):
   """ Graphical user interface of Dialog used to export calculated results """
   from .Export import export
-
 
   def __init__(self, parent = None):
     super().__init__()
     self.ui = Ui_DialogExport()
     self.ui.setupUi(self)
+    if self.ui.comboBox_Tab.currentIndex()==0:
+      #set default file name und folder path for tabHE
+      tab_path = window.ui.lineEdit_path_tabHE_FrameStiffness.text()
+      slash = '\\'
+      if '\\' in tab_path:
+        slash = '\\'
+      elif '/' in tab_path:
+        slash = '/'
+      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + '_tabHE_output.xlsx'
+      Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
+      self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
+      self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
     self.ui.pushButton_selectPath.clicked.connect(self.selectPath)
     self.ui.pushButton_OK.clicked.connect(self.go2export)
 
@@ -229,18 +358,110 @@ class DialogExport(QDialog):
   def selectPath(self):
     """ click "select" Button to select a path for exporting  """
     file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-    self.ui.lineEdit_ExportPath.setText(file)
+    self.ui.lineEdit_ExportFolder.setText(file)
 
 
   def go2export(self):
     """ exporting  """
     self.export(window)
+    self.close()
+
+
+class DialogSaveAs(QDialog):
+  """ Graphical user interface of Dialog used to save file """
+  from .Save_and_Load import SAVE
+
+  def __init__(self, parent = None):
+    super().__init__()
+    self.ui = Ui_DialogSaveAs()
+    self.ui.setupUi(self)
+    self.ui.pushButton_selectPath.clicked.connect(self.selectPath)
+    self.ui.pushButton_OK.clicked.connect(self.go2Save)
+
+
+  def selectPath(self):
+    """ click "select" Button to select a path for exporting  """
+    file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+    self.ui.lineEdit_SaveAsFolder.setText(file)
+
+
+  def go2Save(self):
+    """ saving  """
+    self.SAVE(window)
+    self.close()
+
+
+class DialogOpen(QDialog):
+  """ Graphical user interface of Dialog used to open file """
+  from .Save_and_Load import LOAD
+
+  def __init__(self, parent = None):
+    super().__init__()
+    self.ui = Ui_DialogOpen()
+    self.ui.setupUi(self)
+    self.ui.pushButton_selectPath.clicked.connect(self.selectPath)
+    self.ui.pushButton_OK.clicked.connect(self.go2Open)
+
+
+  def selectPath(self):
+    """ click "select" Button to select a path for exporting  """
+    file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+    self.ui.lineEdit_OpenFolder.setText(file)
+
+
+  def go2Open(self):
+    """ openning  """
+    self.LOAD(window)
+    self.close()
+
+  def openUsingOpenRecent(self,file_name):
+    """
+    open the file named with file_name
+    Args:
+    file_name (string): the name of the file to be opened
+    """
+    idx = file_name.rfind(window.slash)
+    if file_name[-1] == '\n':
+      FileName = file_name[idx+1:-1]
+    else:
+      FileName = file_name[idx+1:]
+    Folder = file_name[:idx]
+    self.ui.lineEdit_OpenFileName.setText(FileName)
+    self.ui.lineEdit_OpenFolder.setText(Folder)
+    self.go2Open()
+
+
+  def openUsingOpenRecent0(self):
+    """ open the recent file 0  """
+    file_name = window.ui.actionOpenRecent0.text()
+    self.openUsingOpenRecent(file_name)
+  def openUsingOpenRecent1(self):
+    """ open the recent file 1  """
+    file_name = window.ui.actionOpenRecent1.text()
+    self.openUsingOpenRecent(file_name)
+  def openUsingOpenRecent2(self):
+    """ open the recent file 2  """
+    file_name = window.ui.actionOpenRecent2.text()
+    self.openUsingOpenRecent(file_name)
+  def openUsingOpenRecent3(self):
+    """ open the recent file 3  """
+    file_name = window.ui.actionOpenRecent3.text()
+    self.openUsingOpenRecent(file_name)
+  def openUsingOpenRecent4(self):
+    """ open the recent file 4  """
+    file_name = window.ui.actionOpenRecent4.text()
+    self.openUsingOpenRecent(file_name)
+  def openUsingOpenRecent5(self):
+    """ open the recent file 5  """
+    file_name = window.ui.actionOpenRecent5.text()
+    self.openUsingOpenRecent(file_name)
+
 
 ##############
 ## Main function
 def main():
   """ Main method and entry point for commands """
-  global window, window_DialogExport #pylint: disable=global-variable-undefined
+  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen #pylint: disable=global-variable-undefined
   app = QApplication()
   window = MainWindow()
   window.setWindowTitle("GUI for micromechanics.indentation")
@@ -248,7 +469,19 @@ def main():
   window.activateWindow()
   window.raise_()
   window_DialogExport = DialogExport()
-  app.exec()
+  window_DialogSaveAs = DialogSaveAs()
+  window_DialogOpen = DialogOpen()
+  #open or create Txt-file of OpenRecent
+  try:
+    file_RecentFiles = open(f"{window.file_path}{window.slash}RecentFiles.txt", 'r', encoding="utf-8") #pylint: disable=consider-using-with
+  except:
+    pass
+  else:
+    window.RecentFiles = file_RecentFiles.readlines()
+    window.update_OpenRecent()
+    file_RecentFiles.close()
+  ret = app.exec()
+  sys.exit(ret)
   return
 
 # called by python3 micromechanics_indentationGUI

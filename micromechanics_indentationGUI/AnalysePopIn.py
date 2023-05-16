@@ -80,7 +80,7 @@ def Analyse_PopIn(self):
   ax0.set_title(f"{self.i_tabPopIn.testName}")
   self.i_tabPopIn.output['ax']=ax0
   if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
-    correctThermalDrift(indentation=self.i_tabPopIn) #calibrate the thermal drift using the collection during the unloading
+    correctThermalDrift(indentation=self.i_tabPopIn, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   self.i_tabPopIn.stiffnessFromUnloading(self.i_tabPopIn.p, self.i_tabPopIn.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.draw()
@@ -140,7 +140,7 @@ def Analyse_PopIn(self):
       test_Index+=1
       i.nextTest()
       if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
-        correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
+        correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   #calculate Young's Modulus
   prefactor_collect = np.asarray(prefactor_collect)
   Er = prefactor_collect * 3/ (4 * TipRadius**0.5)

@@ -73,7 +73,15 @@ def FrameStiffness(self,tabName):
   i_FrameStiffness.output['ax'] = ax
   critDepth=eval(f"self.ui.doubleSpinBox_critDepthStiffness_{tabName}.value()") # pylint: disable = eval-used
   critForce=eval(f"self.ui.doubleSpinBox_critForceStiffness_{tabName}.value()") # pylint: disable = eval-used
+  #correct thermal drift
+  try:
+    correctDrift = eval(f"self.ui.checkBox_UsingDriftUnloading_{tabName}.isChecked()") # pylint: disable = eval-used
+  except:
+    correctDrift = False
+  if correctDrift:
+    i_FrameStiffness.model['driftRate'] = True
   frameCompliance = i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False)
+  i_FrameStiffness.model['driftRate'] = False #reset
   exec(f"self.static_canvas_{tabName}.draw()") # pylint: disable = exec-used
   set_aspectRatio(ax=i_FrameStiffness.output['ax'])
   i_FrameStiffness.output['ax'] = None

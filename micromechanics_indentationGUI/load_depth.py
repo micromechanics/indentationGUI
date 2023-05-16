@@ -1,5 +1,6 @@
 """ Graphical user interface to plot load-depth curves """
 from micromechanics import indentation
+import matplotlib.pylab as plt
 from .CorrectThermalDrift import correctThermalDrift
 
 
@@ -59,8 +60,8 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
         if show_iLHU:
           i.output['plotLoadHoldUnload'] = True # plot iLHU
         i.nextAgilentTest(newTest=False)
-        i.output['plotLoadHoldUnload'] = False
         i.nextTest(newTest=False,plotSurface=showFindSurface)
+        i.output['plotLoadHoldUnload'] = False
       ax.set_title(f"{i.testName}")
       i.output['ax']=ax
       try:
@@ -68,7 +69,14 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
       except:
         correctDrift = False
       if correctDrift:
-        correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
+        showDrift = eval(f"self.ui.checkBox_showThermalDrift_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used
+        ax_thermalDrift = False
+        if showDrift:
+          fig_thermalDrift, ax_thermalDrift = plt.subplots()
+        correctThermalDrift(indentation=i, ax=ax_thermalDrift, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
+        if showDrift:
+          fig_thermalDrift.legend()
+          fig_thermalDrift.show()
       if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
       elif i.method== indentation.definitions.Method.CSM:

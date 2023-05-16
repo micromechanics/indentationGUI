@@ -46,10 +46,14 @@ def identifyDrift(indentation):
   #drift segments: only add if it makes sense
   try:
     iDriftS = unloadIdx[1::2][-2]+1
-    iDriftE = unloadIdx[2::2][-1]-1
+    iDriftE = unloadIdx[ ::2][-1]-1
+    if iDriftE < iDriftS:
+      iDriftE = -1
     indentation.iDrift = [iDriftS,iDriftE]
   except:
-    indentation.iDrift = [-1,-1]
+    iDriftS = unloadIdx[-1]+1
+    iDriftE = -1
+    indentation.iDrift = [iDriftS,iDriftE]
   if np.absolute(indentation.p[indentation.iDrift[0]]-indentation.p[indentation.iDrift[1]])>0.05:
     if np.absolute(indentation.p[unloadIdx[-1]]-indentation.p[-1])<0.05:
       indentation.iDrift = [unloadIdx[-1],-1]
@@ -57,26 +61,42 @@ def identifyDrift(indentation):
       indentation.iDrift = [-1,-1]
   return True
 
-def correctThermalDrift(indentation):
+def correctThermalDrift(indentation,ax=False,reFindSurface=False):
   """
-  calibrate the thermal drift
+  calculate and correct the thermal (displacement) drift
 
   Args:
     indentation (class): defined in micromechanics
-
+    ax (class):  the ax of matplotlib
+    reFindSurface (bool): whether to perform the search surface again
   Returns:
-    bool: success of calibrating the thermal drift
+    Drift (float): the calculated thermal drift
   """
   #calculate thermal drift
   identifyDrift(indentation)
   Drift_Start=indentation.iDrift[0]
   Drift_End=indentation.iDrift[1]
+  #using thermal drift data from the 30s of collection
+  Drift_Start_from30s = np.where( indentation.t < indentation.t[Drift_Start] +30 )[0][-1]
   if Drift_Start == Drift_End:
     Drift = 0
   else:
-    Drift = (indentation.h[Drift_Start]- indentation.h[Drift_End])/(indentation.t[Drift_Start]- indentation.t[Drift_End])
-  #calibrate thermal Drift
+    print('Drift_Start',Drift_Start)
+    popt = np.polyfit(indentation.t[Drift_Start_from30s:Drift_End], indentation.h[Drift_Start_from30s:Drift_End], 1)
+    Drift = popt[0]
+    if ax:
+      ax.plot(indentation.t[Drift_Start:Drift_End],indentation.h[Drift_Start:Drift_End]*1000,'.', label='within the first 30 s')
+      ax.plot(indentation.t[Drift_Start_from30s:Drift_End],indentation.h[Drift_Start_from30s:Drift_End]*1000, '.', color='tab:orange', label = 'after 30 s')
+      func_y_new = np.poly1d(popt)
+      x_new = np.arange(indentation.t[Drift_Start], indentation.t[Drift_End],0.1)
+      y_new = func_y_new(x_new)
+      ax.plot(x_new,y_new*1000,'tab:green', label=f"slope of this is the determined thermal drift: {Drift*1000:.3E} nm/s")
+      ax.set_xlabel('time [s]')
+      ax.set_ylabel('depth [nm]')
+  # calibrate thermal Drift
   indentation.h -= Drift*indentation.t
-  #newly find surface
-  indentation.nextTest(newTest=False)
-  return True
+  if reFindSurface:
+    #newly find surface
+    indentation.model['driftRate'] = False
+    indentation.nextTest(newTest=False)
+  return Drift

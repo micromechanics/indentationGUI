@@ -20,7 +20,7 @@ def click_OK_calibration(self):
   unloaPMin = self.ui.doubleSpinBox_End_Pmax_tabTAF.value()
   relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabTAF.value()
   max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabTAF.value()
-  number_of_TAFterms = self.ui.spinBox_number_of_TAFterms.value()
+  number_of_TAFterms = self.ui.spinBox_number_of_TAFterms_tabTAF.value()
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabTAF.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabTAF.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabTAF.value()
@@ -75,7 +75,15 @@ def click_OK_calibration(self):
   self.i_tabTAF.output['ax'] = self.static_ax_tabFrameStiffness
   critDepthStiffness=self.ui.doubleSpinBox_critDepthStiffness_tabTAF.value()
   critForce=self.ui.doubleSpinBox_critForceStiffness_tabTAF.value()
+  #correct thermal drift
+  try:
+    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabTAF.isChecked()
+  except:
+    correctDrift = False
+  if correctDrift:
+    self.i_tabTAF.model['driftRate'] = True
   hc, Ac = self.i_tabTAF.calibration(critDepthStiffness=critDepthStiffness, critForce=critForce,plotStiffness=False,numPolynomial=number_of_TAFterms,returnArea=True, eTarget=E_target)
+  self.i_tabTAF.model['driftRate'] = False   #reset
   self.static_canvas_tabFrameStiffness.figure.set_tight_layout(True)
   self.static_canvas_tabFrameStiffness.draw()
   set_aspectRatio(ax=self.i_tabTAF.output['ax'])
@@ -90,8 +98,8 @@ def click_OK_calibration(self):
     else:
       self.ui.tableWidget_tabTAF.setItem(k,1,QTableWidgetItem("No"))
   #output: calibrated frame compliance and frame stiffness
-  self.ui.lineEdit_FrameCompliance_Calibration.setText(f"{self.i_tabTAF.tip.compliance:.10f}")
-  self.ui.lineEdit_FrameStiffness_Calibration.setText(f"{(1/self.i_tabTAF.tip.compliance):.10f}")
+  self.ui.lineEdit_FrameCompliance_tabTAF.setText(f"{self.i_tabTAF.tip.compliance:.10f}")
+  self.ui.lineEdit_FrameStiffness_tabTAF.setText(f"{(1/self.i_tabTAF.tip.compliance):.10f}")
   #output: terms of the calibrated tip area function
   for j in range(5):
     lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_tabTAF") # pylint: disable = eval-used

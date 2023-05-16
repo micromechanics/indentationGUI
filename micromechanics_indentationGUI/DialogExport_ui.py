@@ -15,67 +15,93 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QFrame,
-    QGridLayout, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QWidget)
 
 class Ui_DialogExport(object):
     def setupUi(self, DialogExport):
         if not DialogExport.objectName():
             DialogExport.setObjectName(u"DialogExport")
-        DialogExport.resize(535, 142)
+        DialogExport.resize(558, 153)
         self.gridLayout = QGridLayout(DialogExport)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.comboBox_Format = QComboBox(DialogExport)
-        self.comboBox_Format.addItem("")
-        self.comboBox_Format.setObjectName(u"comboBox_Format")
-
-        self.gridLayout.addWidget(self.comboBox_Format, 4, 2, 1, 1)
-
-        self.lineEdit_ExportPath = QLineEdit(DialogExport)
-        self.lineEdit_ExportPath.setObjectName(u"lineEdit_ExportPath")
-
-        self.gridLayout.addWidget(self.lineEdit_ExportPath, 2, 2, 1, 1)
-
-        self.label = QLabel(DialogExport)
-        self.label.setObjectName(u"label")
-
-        self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
-
         self.label_2 = QLabel(DialogExport)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout.addWidget(self.label_2, 3, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
 
         self.comboBox_Tab = QComboBox(DialogExport)
         self.comboBox_Tab.addItem("")
         self.comboBox_Tab.addItem("")
         self.comboBox_Tab.setObjectName(u"comboBox_Tab")
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboBox_Tab.sizePolicy().hasHeightForWidth())
+        self.comboBox_Tab.setSizePolicy(sizePolicy)
 
-        self.gridLayout.addWidget(self.comboBox_Tab, 3, 2, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_Tab, 0, 1, 1, 1)
+
+        self.label_4 = QLabel(DialogExport)
+        self.label_4.setObjectName(u"label_4")
+
+        self.gridLayout.addWidget(self.label_4, 1, 0, 1, 1)
+
+        self.lineEdit_ExportFileName = QLineEdit(DialogExport)
+        self.lineEdit_ExportFileName.setObjectName(u"lineEdit_ExportFileName")
+
+        self.gridLayout.addWidget(self.lineEdit_ExportFileName, 1, 1, 1, 1)
+
+        self.label = QLabel(DialogExport)
+        self.label.setObjectName(u"label")
+        self.label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
+
+        self.lineEdit_ExportFolder = QLineEdit(DialogExport)
+        self.lineEdit_ExportFolder.setObjectName(u"lineEdit_ExportFolder")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.lineEdit_ExportFolder.sizePolicy().hasHeightForWidth())
+        self.lineEdit_ExportFolder.setSizePolicy(sizePolicy1)
+
+        self.gridLayout.addWidget(self.lineEdit_ExportFolder, 2, 1, 1, 1)
 
         self.pushButton_selectPath = QPushButton(DialogExport)
         self.pushButton_selectPath.setObjectName(u"pushButton_selectPath")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.pushButton_selectPath.sizePolicy().hasHeightForWidth())
+        self.pushButton_selectPath.setSizePolicy(sizePolicy2)
+        self.pushButton_selectPath.setMaximumSize(QSize(50, 16777215))
 
-        self.gridLayout.addWidget(self.pushButton_selectPath, 2, 3, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_selectPath, 2, 2, 1, 1)
 
         self.label_3 = QLabel(DialogExport)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout.addWidget(self.label_3, 4, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_3, 3, 0, 1, 1)
 
-        self.frame = QFrame(DialogExport)
-        self.frame.setObjectName(u"frame")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
+        self.comboBox_Format = QComboBox(DialogExport)
+        self.comboBox_Format.addItem("")
+        self.comboBox_Format.setObjectName(u"comboBox_Format")
+        sizePolicy.setHeightForWidth(self.comboBox_Format.sizePolicy().hasHeightForWidth())
+        self.comboBox_Format.setSizePolicy(sizePolicy)
 
-        self.gridLayout.addWidget(self.frame, 6, 0, 1, 4)
+        self.gridLayout.addWidget(self.comboBox_Format, 3, 1, 1, 1)
 
         self.pushButton_OK = QPushButton(DialogExport)
         self.pushButton_OK.setObjectName(u"pushButton_OK")
         self.pushButton_OK.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.pushButton_OK.sizePolicy().hasHeightForWidth())
+        self.pushButton_OK.setSizePolicy(sizePolicy)
 
-        self.gridLayout.addWidget(self.pushButton_OK, 5, 2, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_OK, 4, 1, 1, 1)
 
 
         self.retranslateUi(DialogExport)
@@ -84,16 +110,18 @@ class Ui_DialogExport(object):
     # setupUi
 
     def retranslateUi(self, DialogExport):
-        DialogExport.setWindowTitle(QCoreApplication.translate("DialogExport", u"Export ", None))
-        self.comboBox_Format.setItemText(0, QCoreApplication.translate("DialogExport", u"Each Test in on sheet", None))
-
-        self.label.setText(QCoreApplication.translate("DialogExport", u"Path", None))
-        self.label_2.setText(QCoreApplication.translate("DialogExport", u"Tab", None))
+        DialogExport.setWindowTitle(QCoreApplication.translate("DialogExport", u"Export Results", None))
+        self.label_2.setText(QCoreApplication.translate("DialogExport", u"Tab:", None))
         self.comboBox_Tab.setItemText(0, QCoreApplication.translate("DialogExport", u"Hardness and Young's Modulus", None))
         self.comboBox_Tab.setItemText(1, QCoreApplication.translate("DialogExport", u"Pop-in ", None))
 
+        self.label_4.setText(QCoreApplication.translate("DialogExport", u"File Name:", None))
+        self.lineEdit_ExportFileName.setText(QCoreApplication.translate("DialogExport", u"Ouput.xlsx", None))
+        self.label.setText(QCoreApplication.translate("DialogExport", u"Folder:", None))
         self.pushButton_selectPath.setText(QCoreApplication.translate("DialogExport", u"select", None))
-        self.label_3.setText(QCoreApplication.translate("DialogExport", u"Format", None))
+        self.label_3.setText(QCoreApplication.translate("DialogExport", u"Format:", None))
+        self.comboBox_Format.setItemText(0, QCoreApplication.translate("DialogExport", u"Each Test in on sheet", None))
+
         self.pushButton_OK.setText(QCoreApplication.translate("DialogExport", u"Export", None))
     # retranslateUi
 

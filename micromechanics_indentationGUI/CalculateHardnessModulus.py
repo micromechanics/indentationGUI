@@ -67,7 +67,7 @@ def Calculate_Hardness_Modulus(self):
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE.set_title(f"{i.testName}")
   i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
   if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
-    correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
+    correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
     i.stiffnessFromUnloading(i.p, i.h, plot=True)
   elif i.method== indentation.definitions.Method.CSM:
@@ -92,7 +92,6 @@ def Calculate_Hardness_Modulus(self):
   ax_E_hc = self.static_ax_E_hc_tabHE
   ax_H_hc.cla()
   ax_E_hc.cla()
-  test_number=1
   while True:
     i.analyse()
     progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
@@ -101,30 +100,33 @@ def Calculate_Hardness_Modulus(self):
       Pmax_collect.append(i.Ac*i.hardness)
       hc_collect.append(i.hc)
       H_collect.append(i.hardness)
+      E_collect.append(i.modulus)
       marker4mean= np.where((i.hc>=min_hc4mean) & (i.hc<=max_hc4mean))
       Hmean_collect.append(np.mean(i.hardness[marker4mean]))
-      Hstd_collect.append(np.std(i.hardness[marker4mean], ddof=1))
-      E_collect.append(i.modulus)
       Emean_collect.append(np.mean(i.modulus[marker4mean]))
-      Estd_collect.append(np.std(i.modulus[marker4mean], ddof=1))
+      if len(i.hardness[marker4mean]) > 1:
+        Hstd_collect.append(np.std(i.hardness[marker4mean], ddof=1))
+        Estd_collect.append(np.std(i.modulus[marker4mean], ddof=1))
+      elif len(i.hardness[marker4mean]) == 1:
+        Hstd_collect.append(0)
+        Estd_collect.append(0)
       testName_collect.append(i.testName)
-      test_number_collect.append(test_number)
+      test_number_collect.append(int(i.testName[4:]))
       #plotting hardness and young's modulus
       ax_H_hc.plot(i.hc,i.hardness,'.-', linewidth=1)
       ax_E_hc.plot(i.hc,i.modulus,'.-', linewidth=1)
       if not i.testList:
         break
     i.nextTest()
-    test_number+=1
     if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
-      correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
+      correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   ax_H_hc.axvline(min_hc4mean,color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
   ax_E_hc.axvline(min_hc4mean,color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
   if np.max(hc_collect[0])*1.1 > max_hc4mean:
     ax_H_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
     ax_E_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
-  ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*0.1,np.mean(Hmean_collect)+np.mean(Hmean_collect)*0.1)
-  ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*0.1,np.mean(Emean_collect)+np.mean(Emean_collect)*0.1)
+  ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*0.3,np.mean(Hmean_collect)+np.mean(Hmean_collect)*0.3)
+  ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*0.3,np.mean(Emean_collect)+np.mean(Emean_collect)*0.3)
   ax_H_hc.legend()
   ax_E_hc.legend()
   #prepare for export

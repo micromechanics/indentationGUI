@@ -9,7 +9,12 @@ def export(self, win):
     win (class): MainWindow
   """
   #create a writer
-  writer = ExcelWriter(f"{self.ui.lineEdit_ExportPath.text()}") # pylint: disable=abstract-class-instantiated
+  slash = '\\'
+  if '\\' in __file__:
+    slash = '\\'
+  elif '/' in __file__:
+    slash = '/'
+  writer = ExcelWriter(f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}") # pylint: disable=abstract-class-instantiated
   #define the data frame of experimental parameters
   df = DataFrame([
                   ['Tested Material'],

@@ -271,6 +271,9 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="singleStep">
+                <double>0.010000000000000</double>
+               </property>
                <property name="value">
                 <double>0.980000000000000</double>
                </property>
@@ -299,6 +302,9 @@
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="singleStep">
+                <double>0.010000000000000</double>
                </property>
                <property name="value">
                 <double>0.500000000000000</double>
@@ -349,6 +355,9 @@
                </property>
                <property name="decimals">
                 <number>4</number>
+               </property>
+               <property name="singleStep">
+                <double>0.000100000000000</double>
                </property>
                <property name="value">
                 <double>0.003000000000000</double>
@@ -475,7 +484,7 @@
              <item row="0" column="0">
               <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabTAF">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Use the collection during unloading</string>
@@ -519,6 +528,9 @@
                </property>
                <property name="decimals">
                 <number>3</number>
+               </property>
+               <property name="singleStep">
+                <double>0.001000000000000</double>
                </property>
                <property name="value">
                 <double>72.000000000000000</double>
@@ -587,6 +599,9 @@
                </property>
                <property name="decimals">
                 <number>4</number>
+               </property>
+               <property name="singleStep">
+                <double>0.001000000000000</double>
                </property>
                <property name="value">
                 <double>0.179000000000000</double>
@@ -657,7 +672,7 @@
                   <string>inclusive of frame compliance</string>
                  </attribute>
                  <layout class="QGridLayout" name="gridLayout_6">
-                  <item row="3" column="0" colspan="2">
+                  <item row="4" column="0" colspan="2">
                    <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -667,6 +682,19 @@
                     </property>
                     <property name="text">
                      <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QCheckBox" name="checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTAF">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>show find surface</string>
                     </property>
                    </widget>
                   </item>
@@ -714,10 +742,16 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="0">
-                   <widget class="QCheckBox" name="checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTAF">
+                  <item row="2" column="2">
+                   <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTAF">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="text">
-                     <string>show find surface</string>
+                     <string>show thermal drift</string>
                     </property>
                    </widget>
                   </item>
@@ -760,7 +794,7 @@
                <widget class="QGraphicsView" name="graphicsView_tabFrameStiffness"/>
               </item>
               <item row="2" column="1">
-               <widget class="QLineEdit" name="lineEdit_FrameStiffness_Calibration">
+               <widget class="QLineEdit" name="lineEdit_FrameStiffness_tabTAF">
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
@@ -795,7 +829,7 @@
                </widget>
               </item>
               <item row="2" column="3">
-               <widget class="QLineEdit" name="lineEdit_FrameCompliance_Calibration">
+               <widget class="QLineEdit" name="lineEdit_FrameCompliance_tabTAF">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -1023,6 +1057,9 @@
                <property name="maximum">
                 <double>99999.990000000005239</double>
                </property>
+               <property name="singleStep">
+                <double>0.001000000000000</double>
+               </property>
                <property name="value">
                 <double>1141.000000000000000</double>
                </property>
@@ -1043,6 +1080,9 @@
                <property name="decimals">
                 <number>3</number>
                </property>
+               <property name="singleStep">
+                <double>0.001000000000000</double>
+               </property>
                <property name="value">
                 <double>0.070000000000000</double>
                </property>
@@ -1062,7 +1102,7 @@
               </widget>
              </item>
              <item row="2" column="3">
-              <widget class="QSpinBox" name="spinBox_number_of_TAFterms">
+              <widget class="QSpinBox" name="spinBox_number_of_TAFterms_tabTAF">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -1126,6 +1166,9 @@
              </item>
              <item row="1" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabTAF">
+               <property name="singleStep">
+                <double>1.000000000000000</double>
+               </property>
                <property name="value">
                 <double>15.000000000000000</double>
                </property>
@@ -1146,6 +1189,9 @@
              </item>
              <item row="0" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_critDepthStiffness_tabTAF">
+               <property name="singleStep">
+                <double>0.010000000000000</double>
+               </property>
                <property name="value">
                 <double>0.100000000000000</double>
                </property>
@@ -1284,6 +1330,9 @@
                    </property>
                    <property name="decimals">
                     <number>4</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.000100000000000</double>
                    </property>
                    <property name="value">
                     <double>0.010000000000000</double>
@@ -1507,7 +1556,7 @@
                  </sizepolicy>
                 </property>
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <property name="usesScrollButtons">
                  <bool>true</bool>
@@ -1573,6 +1622,19 @@
                         </property>
                         <property name="text">
                          <string>show the Indentification of Loading-Holding-UnladingStart-UnladingEnd</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>show thermal drift</string>
                         </property>
                        </widget>
                       </item>
@@ -1697,7 +1759,7 @@
                  <item row="0" column="0">
                   <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="text">
                     <string>Use the collection during unloading</string>
@@ -1739,6 +1801,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.100000000000000</double>
                    </property>
@@ -1775,6 +1840,9 @@
                  </item>
                  <item row="1" column="1">
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness">
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>15.000000000000000</double>
                    </property>
@@ -1903,7 +1971,7 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_Equipment_tabTipRadius_FrameStiffness">
+                  <widget class="QComboBox" name="comboBox_equipment_tabTipRadius_FrameStiffness">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -2005,6 +2073,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.980000000000000</double>
                    </property>
@@ -2039,6 +2110,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.500000000000000</double>
@@ -2090,7 +2164,20 @@
                       <string>inclusive of frame compliance</string>
                      </attribute>
                      <layout class="QGridLayout" name="gridLayout_62">
-                      <item row="1" column="0" colspan="3">
+                      <item row="3" column="0" colspan="4">
+                       <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0" colspan="4">
                        <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius">
                         <property name="enabled">
                          <bool>true</bool>
@@ -2139,6 +2226,19 @@
                         </property>
                        </widget>
                       </item>
+                      <item row="2" column="1">
+                       <widget class="QCheckBox" name="checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>show the Indentification of Loading-Holding-UnladingStart-UnladingEnd</string>
+                        </property>
+                       </widget>
+                      </item>
                       <item row="2" column="0">
                        <widget class="QCheckBox" name="checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius">
                         <property name="sizePolicy">
@@ -2152,8 +2252,8 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="3" column="0" colspan="3">
-                       <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius">
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                           <horstretch>0</horstretch>
@@ -2161,20 +2261,7 @@
                          </sizepolicy>
                         </property>
                         <property name="text">
-                         <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="1">
-                       <widget class="QCheckBox" name="checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="text">
-                         <string>show the Indentification of Loading-Holding-UnladingStart-UnladingEnd</string>
+                         <string>show thermal drift</string>
                         </property>
                        </widget>
                       </item>
@@ -2323,6 +2410,9 @@
                    </property>
                    <property name="decimals">
                     <number>4</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.000100000000000</double>
                    </property>
                    <property name="value">
                     <double>0.030000000000000</double>
@@ -2566,17 +2656,100 @@
                  <string>Tested Material</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_60">
-                 <item row="1" column="1" colspan="3">
-                  <widget class="QLineEdit" name="lineEdit">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_75">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="text">
+                    <string>Material's Name:</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
                   </widget>
                  </item>
-                 <item row="0" column="1" colspan="3">
+                 <item row="3" column="3">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_Poisson_tabTipRadius">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.280000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_83">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Young's Modulus [GPa]:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_73">
+                   <property name="text">
+                    <string>Path:</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_E_tabTipRadius">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="maximum">
+                    <double>9999.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>390.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2">
+                  <widget class="QLabel" name="label_74">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Poisson's ratio:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1" colspan="3">
                   <widget class="QLineEdit" name="lineEdit_path_tabTipRadius">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
@@ -2601,90 +2774,13 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="3">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_Poisson_tabTipRadius">
+                 <item row="0" column="1" colspan="3">
+                  <widget class="QLineEdit" name="lineEdit_MaterialName_tabTipRadius">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="decimals">
-                    <number>3</number>
-                   </property>
-                   <property name="value">
-                    <double>0.280000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_E_tabTipRadius">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="decimals">
-                    <number>2</number>
-                   </property>
-                   <property name="maximum">
-                    <double>9999.000000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>390.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="label_74">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Poisson's ratio:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_75">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Material's Name:</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_73">
-                   <property name="text">
-                    <string>Path:</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_83">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Young's Modulus [GPa]:</string>
                    </property>
                   </widget>
                  </item>
@@ -2755,6 +2851,9 @@
                    <property name="decimals">
                     <number>3</number>
                    </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.070000000000000</double>
                    </property>
@@ -2805,6 +2904,9 @@
                    </property>
                    <property name="maximum">
                     <double>99999.990000000005239</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
                    </property>
                    <property name="value">
                     <double>1141.000000000000000</double>
@@ -2895,7 +2997,7 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_Equipment_tabTipRadius">
+                  <widget class="QComboBox" name="comboBox_equipment_tabTipRadius">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -3020,6 +3122,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.980000000000000</double>
                    </property>
@@ -3048,6 +3153,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.500000000000000</double>
@@ -3143,7 +3251,7 @@
           <item row="0" column="1">
            <widget class="QTabWidget" name="tabWidget_5">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab_14">
              <attribute name="title">
@@ -3247,6 +3355,13 @@
                         </property>
                         <property name="text">
                          <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabHE_FrameStiffness">
+                        <property name="text">
+                         <string>show thermal drift</string>
                         </property>
                        </widget>
                       </item>
@@ -3385,6 +3500,9 @@
                    </property>
                    <property name="decimals">
                     <number>4</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.000100000000000</double>
                    </property>
                    <property name="value">
                     <double>0.010000000000000</double>
@@ -3577,7 +3695,7 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_Equipment_tabHE_FrameStiffness">
+                  <widget class="QComboBox" name="comboBox_equipment_tabHE_FrameStiffness">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -3624,7 +3742,7 @@
                  <item row="0" column="0">
                   <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabHE_FrameStiffness">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="text">
                     <string>Use the collection during unloading</string>
@@ -3754,6 +3872,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.980000000000000</double>
                    </property>
@@ -3796,6 +3917,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.500000000000000</double>
                    </property>
@@ -3829,6 +3953,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.100000000000000</double>
@@ -3956,6 +4083,9 @@
                    </property>
                    <property name="decimals">
                     <number>3</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.070000000000000</double>
@@ -4258,6 +4388,9 @@
                    <property name="maximum">
                     <double>99999.990000000005239</double>
                    </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
                    <property name="value">
                     <double>1141.000000000000000</double>
                    </property>
@@ -4340,6 +4473,9 @@
                    <property name="decimals">
                     <number>3</number>
                    </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.100000000000000</double>
                    </property>
@@ -4355,6 +4491,9 @@
                    </property>
                    <property name="decimals">
                     <number>3</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
                    </property>
                    <property name="value">
                     <double>2.000000000000000</double>
@@ -4391,6 +4530,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.980000000000000</double>
                    </property>
@@ -4419,6 +4561,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.500000000000000</double>
@@ -4530,6 +4675,9 @@
                    </property>
                    <property name="decimals">
                     <number>3</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.179000000000000</double>
@@ -4765,7 +4913,7 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_Equipment_tabHE">
+                  <widget class="QComboBox" name="comboBox_equipment_tabHE">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -4832,6 +4980,9 @@
                    </property>
                    <property name="decimals">
                     <number>4</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.000100000000000</double>
                    </property>
                    <property name="value">
                     <double>0.010000000000000</double>
@@ -5010,16 +5161,6 @@
                       <string>inclusive of frame stiffness</string>
                      </attribute>
                      <layout class="QGridLayout" name="gridLayout_45">
-                      <item row="1" column="0" colspan="5">
-                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                       </widget>
-                      </item>
                       <item row="2" column="0">
                        <widget class="QCheckBox" name="checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabHE">
                         <property name="sizePolicy">
@@ -5030,6 +5171,16 @@
                         </property>
                         <property name="text">
                          <string>show find surface</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0" colspan="7">
+                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
                         </property>
                        </widget>
                       </item>
@@ -5046,7 +5197,7 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="3" column="0" colspan="3">
+                      <item row="3" column="0" colspan="2">
                        <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -5056,6 +5207,23 @@
                         </property>
                         <property name="text">
                          <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabHE">
+                        <property name="text">
+                         <string>show thermal drift</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="2">
+                       <widget class="QPushButton" name="pushButton_Publication_LoadDepthCurve_tabHE">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="text">
+                         <string>Publication</string>
                         </property>
                        </widget>
                       </item>
@@ -5240,6 +5408,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.980000000000000</double>
                    </property>
@@ -5293,6 +5464,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.500000000000000</double>
@@ -5382,6 +5556,9 @@
                    <property name="decimals">
                     <number>4</number>
                    </property>
+                   <property name="singleStep">
+                    <double>0.000100000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.010000000000000</double>
                    </property>
@@ -5415,6 +5592,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.100000000000000</double>
@@ -5520,7 +5700,7 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_Equipment_tabPopIn_FrameStiffness">
+                  <widget class="QComboBox" name="comboBox_equipment_tabPopIn_FrameStiffness">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -5651,7 +5831,7 @@
                  <item row="0" column="0">
                   <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabPopIn_FrameStiffness">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="text">
                     <string>Use the collection during unloading</string>
@@ -5690,30 +5870,7 @@
                       <string>inclusive of frame compliance</string>
                      </attribute>
                      <layout class="QGridLayout" name="gridLayout_69">
-                      <item row="1" column="0" colspan="4">
-                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                       </widget>
-                      </item>
                       <item row="2" column="0">
-                       <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="text">
-                         <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="1">
                        <widget class="QCheckBox" name="checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -5726,7 +5883,17 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="2" column="2">
+                      <item row="1" column="0" colspan="5">
+                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
                        <widget class="QCheckBox" name="checkBox_iLHU_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -5736,6 +5903,26 @@
                         </property>
                         <property name="text">
                          <string>show the Indentification of Loading-Holding-UnladingStart-UnladingEnd</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="0" colspan="2">
+                       <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>Plot the selected Test (by clicking on the test in the &quot;List of Tests&quot;)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness">
+                        <property name="text">
+                         <string>show thermal drift</string>
                         </property>
                        </widget>
                       </item>
@@ -6116,6 +6303,9 @@
                    <property name="decimals">
                     <number>3</number>
                    </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.300000000000000</double>
                    </property>
@@ -6150,6 +6340,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.500000000000000</double>
                    </property>
@@ -6178,6 +6371,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.980000000000000</double>
@@ -6259,6 +6455,9 @@
                    </property>
                    <property name="decimals">
                     <number>4</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
                    </property>
                    <property name="value">
                     <double>0.030000000000000</double>
@@ -6433,7 +6632,7 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_Equipment_tabPopIn">
+                  <widget class="QComboBox" name="comboBox_equipment_tabPopIn">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -6579,6 +6778,9 @@
                    <property name="decimals">
                     <number>3</number>
                    </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
+                   </property>
                    <property name="value">
                     <double>0.070000000000000</double>
                    </property>
@@ -6601,6 +6803,9 @@
                    </property>
                    <property name="maximum">
                     <double>99999.990000000005239</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.001000000000000</double>
                    </property>
                    <property name="value">
                     <double>1141.000000000000000</double>
@@ -6636,8 +6841,14 @@
                  </item>
                  <item row="2" column="1">
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_TipRadius_tabPopIn">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
                    <property name="decimals">
-                    <number>10</number>
+                    <number>6</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.000001000000000</double>
                    </property>
                    <property name="value">
                     <double>0.100000000000000</double>
@@ -6856,6 +7067,13 @@
                         </property>
                        </widget>
                       </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabPopIn">
+                        <property name="text">
+                         <string>show thermal drift</string>
+                        </property>
+                       </widget>
+                      </item>
                      </layout>
                     </widget>
                     <widget class="QWidget" name="tab_43">
@@ -6999,35 +7217,62 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionnew"/>
-    <addaction name="actionopen"/>
+    <widget class="QMenu" name="menuOpenRecent">
+     <property name="title">
+      <string>Open Recent</string>
+     </property>
+    </widget>
+    <addaction name="actionNew"/>
+    <addaction name="actionLoad"/>
+    <addaction name="menuOpenRecent"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
     <addaction name="actionExport"/>
    </widget>
    <addaction name="menuData"/>
   </widget>
-  <action name="actionnew">
+  <action name="actionNew">
    <property name="checkable">
     <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>New</string>
    </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
   </action>
-  <action name="actionopen">
+  <action name="actionLoad">
    <property name="text">
-    <string>Open/Load</string>
+    <string>Open File...</string>
    </property>
   </action>
   <action name="actionSave">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+   <property name="priority">
+    <enum>QAction::HighPriority</enum>
    </property>
   </action>
   <action name="actionSaveAs">
    <property name="text">
-    <string>Save As</string>
+    <string>Save As...</string>
    </property>
   </action>
   <action name="actionExport">
@@ -7036,6 +7281,16 @@
    </property>
    <property name="shortcut">
     <string comment="Ctrl+E" extracomment="Ctrl+E"/>
+   </property>
+  </action>
+  <action name="actionRecent1">
+   <property name="text">
+    <string>Recent1</string>
+   </property>
+  </action>
+  <action name="actionAAA">
+   <property name="text">
+    <string>AAA</string>
    </property>
   </action>
  </widget>

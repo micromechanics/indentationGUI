@@ -64,7 +64,7 @@ def Calculate_TipRadius(self):
   self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.set_title(f"{self.i_tabTipRadius.testName}")
   self.i_tabTipRadius.output['ax']=self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius
   if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
-    correctThermalDrift(indentation=self.i_tabTipRadius) #calibrate the thermal drift using the collection during the unloading
+    correctThermalDrift(indentation=self.i_tabTipRadius, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   self.i_tabTipRadius.stiffnessFromUnloading(self.i_tabTipRadius.p, self.i_tabTipRadius.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.draw()
@@ -133,7 +133,7 @@ def Calculate_TipRadius(self):
       test_Index+=1
       i.nextTest()
       if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
-        correctThermalDrift(indentation=i) #calibrate the thermal drift using the collection during the unloading
+        correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   #calculate Tip Radius
   Er = self.i_tabTipRadius.ReducedModulus(modulus=E_Mat)
   self.ui.lineEdit_reducedModulus_tabTipRadius.setText(f"{Er:.10f}")
