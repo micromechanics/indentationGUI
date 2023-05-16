@@ -244,7 +244,7 @@ class IndentationXXX(indentation.Indentation):
     if self.vendor!=Vendor.Agilent: return False #cannot be used
     if len(self.testList)==0: return False   #no sheet left
     if newTest:
-      self.testName = self.testList.pop(0)
+      self.testName = self.testList.pop(0) # pylint: disable=attribute-defined-outside-init
 
     #read data and identify valid data points
     df     = self.datafile.get(self.testName)
@@ -252,15 +252,15 @@ class IndentationXXX(indentation.Indentation):
     validFull = np.isfinite(h)
     if 'slope' in self.indicies:
       slope   = np.array(df[self.indicies['slope']][1:-1], dtype=np.float64)
-      self.valid =  np.isfinite(slope)
+      self.valid =  np.isfinite(slope) # pylint: disable=attribute-defined-outside-init
       self.valid[self.valid] = slope[self.valid] > 0.0  #only valid points if stiffness is positiv
     else:
-      self.valid = validFull
+      self.valid = validFull # pylint: disable=attribute-defined-outside-init
     for index in self.indicies:  #pylint: disable=consider-using-dict-items
       data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64)
       mask = np.isfinite(data)
       mask[mask] = data[mask]<1e99
-      self.valid = np.logical_and(self.valid, mask)                       #adopt/reduce mask continously
+      self.valid = np.logical_and(self.valid, mask)  #adopt/reduce mask continously # pylint: disable=attribute-defined-outside-init
 
     #Run through all items again and crop to only valid data
     for index in self.indicies:  #pylint: disable=consider-using-dict-items
@@ -271,7 +271,7 @@ class IndentationXXX(indentation.Indentation):
         data = data[validFull]
       setattr(self, index, data)
 
-    self.valid = self.valid[validFull]
+    self.valid = self.valid[validFull]  # pylint: disable=attribute-defined-outside-init
     #  now all fields (incl. p) are full and defined
 
     #self.identifyLoadHoldUnload()   #!!!!!Different from micromechanics::Moved to nextTest() after found surface
@@ -291,5 +291,5 @@ class IndentationXXX(indentation.Indentation):
     if 'hc' in self.indicies         : self.hc /= 1.e3  #from nm in um
     if 'hRaw' in self.indicies        : self.hRaw /= 1.e3  #from nm in um
     if not "k2p" in self.indicies and 'slope' in self.indicies: #pylint: disable=unneeded-not
-      self.k2p = self.slope * self.slope / self.p[self.valid]
+      self.k2p = self.slope * self.slope / self.p[self.valid] # pylint: disable=attribute-defined-outside-init
     return True
