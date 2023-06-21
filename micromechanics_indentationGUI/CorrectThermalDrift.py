@@ -31,7 +31,8 @@ def identifyDrift(indentation):
   unloadMask= np.logical_and(rate < -indentation.model['relForceRateNoise'], p>indentation.model['forceNoise'])
   #try to clean small fluctuations
   if len(loadMask)>100 and len(unloadMask)>100:
-    size = indentation.model['maxSizeFluctuations']
+    #size = indentation.model['maxSizeFluctuations']
+    size = 1
     loadMaskTry = ndimage.binary_closing(loadMask, structure=np.ones((size,)) )
     unloadMaskTry = ndimage.binary_closing(unloadMask, structure=np.ones((size,)))
     loadMaskTry = ndimage.binary_opening(loadMaskTry, structure=np.ones((size,)))
@@ -45,18 +46,25 @@ def identifyDrift(indentation):
   unloadIdx = np.flatnonzero(unloadMask[1:] != unloadMask[:-1])
   #drift segments: only add if it makes sense
   try:
-    iDriftS = unloadIdx[1::2][-2]+1
-    iDriftE = unloadIdx[ ::2][-1]-1
+    if rate[-1]<-indentation.model['relForceRateNoise']:
+      iDriftS = unloadIdx[-3]-1
+      iDriftE = unloadIdx[-2]-1
+    elif p[-1]<p.max()*0.1:
+      iDriftS = unloadIdx[-3]-1
+      iDriftE = unloadIdx[-2]-1
+    else:
+      iDriftS = unloadIdx[-1]-1
+      iDriftE = -1
     if iDriftE < iDriftS:
       iDriftE = -1
     indentation.iDrift = [iDriftS,iDriftE]
   except:
-    iDriftS = unloadIdx[-1]+1
+    iDriftS = unloadIdx[-1]-1
     iDriftE = -1
     indentation.iDrift = [iDriftS,iDriftE]
   if np.absolute(indentation.p[indentation.iDrift[0]]-indentation.p[indentation.iDrift[1]])>0.05:
-    if np.absolute(indentation.p[unloadIdx[-1]]-indentation.p[-1])<0.05:
-      indentation.iDrift = [unloadIdx[-1],-1]
+    if np.absolute(indentation.p[unloadIdx[-1]-1]-indentation.p[-1])<0.05:
+      indentation.iDrift = [unloadIdx[-1]-1,-1]
     else:
       indentation.iDrift = [-1,-1]
   return True
@@ -81,7 +89,6 @@ def correctThermalDrift(indentation,ax=False,reFindSurface=False):
   if Drift_Start == Drift_End:
     Drift = 0
   else:
-    print('Drift_Start',Drift_Start)
     popt = np.polyfit(indentation.t[Drift_Start_from30s:Drift_End], indentation.h[Drift_Start_from30s:Drift_End], 1)
     Drift = popt[0]
     if ax:

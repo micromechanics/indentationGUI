@@ -1,11 +1,11 @@
 """ Graphical user interface calculate tip radius """
 import numpy as np
+from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from micromechanics import indentation
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-from .load_depth import set_aspectRatio
 
 #define the function of Hertzian contact
 def Hertzian_contact_funct(depth, prefactor, h0):
@@ -76,16 +76,16 @@ def Analyse_PopIn(self):
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
   #plot load-depth of test 1
   ax0=self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabPopIn
-  ax0.cla()
-  ax0.set_title(f"{self.i_tabPopIn.testName}")
+  ax0[0].cla()
+  ax0[1].cla()
+  ax0[0].set_title(f"{self.i_tabPopIn.testName}")
   self.i_tabPopIn.output['ax']=ax0
   if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
     correctThermalDrift(indentation=self.i_tabPopIn, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   self.i_tabPopIn.stiffnessFromUnloading(self.i_tabPopIn.p, self.i_tabPopIn.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.figure.set_tight_layout(True)
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.draw()
-  set_aspectRatio(ax=self.i_tabPopIn.output['ax'])
   self.i_tabPopIn.output['ax']=None
+  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.draw()
   #calculate the pop-in force and the Hertzian contact parameters
   fPopIn, certainty = self.i_tabPopIn.popIn(plot=False, correctH=False)
   #calculate the index of pop-in and surface
@@ -106,24 +106,33 @@ def Analyse_PopIn(self):
   ax1.set_title(f"{self.i_tabPopIn.testName}")
   ax1.legend()
   self.static_canvas_HertzianFitting_tabPopIn.figure.set_tight_layout(True)
-  set_aspectRatio(ax=ax1)
+  self.set_aspectRatio(ax=ax1)
   self.static_canvas_HertzianFitting_tabPopIn.draw()
+  #changing i.allTestList to calculate using the checked tests
+  OriginalAlltest = list(self.i_tabPopIn.allTestList)
+  for k, theTest in enumerate(OriginalAlltest):
+    try:
+      IsCheck = self.ui.tableWidget_tabPopIn.item(k,0).checkState()
+    except:
+      pass
+    else:
+      if IsCheck==Qt.Unchecked:
+        self.i_tabPopIn.allTestList.remove(theTest)
+  self.i_tabPopIn.restartFile()
   #initialize parameters to collect hertzian fitting results
   fPopIn_collect=[]
   prefactor_collect=[]
   Notlist=[]
   testName_collect=[]
-  test_Index_collect=[]
+  test_Number_collect=[]
   success_identified_PopIn = []
   i = self.i_tabPopIn
-  test_Index=1
   #analyse pop-in for all tests
   while True:
     i.h -= i.tip.compliance*i.p
     try:
       fPopIn, certainty = i.popIn(plot=False, correctH=False)
     except:
-      test_Index+=1
       i.nextTest()
     else:
       progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
@@ -134,10 +143,9 @@ def Analyse_PopIn(self):
         fPopIn_collect.append(fPopIn)
         prefactor_collect.append(certainty["prefactor"])
         testName_collect.append(i.testName)
-        test_Index_collect.append(test_Index)
+        test_Number_collect.append(int(i.testName[4:]))
         if not i.testList:
           break
-      test_Index+=1
       i.nextTest()
       if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
         correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
@@ -151,7 +159,7 @@ def Analyse_PopIn(self):
   #plot Young's Modulus
   ax2 = self.static_ax_E_tabPopIn
   ax2.cla()
-  ax2.plot(test_Index_collect,modulus,'o')
+  ax2.scatter(test_Number_collect,modulus, marker='o')
   ax2.axhline(np.mean(modulus), color='k', linestyle='-', label='mean Value')
   ax2.axhline(np.mean(modulus)+np.std(modulus,ddof=1), color='k', linestyle='dashed', label='standard deviation')
   ax2.axhline(np.mean(modulus)-np.std(modulus,ddof=1), color='k', linestyle='dashed')
@@ -160,7 +168,7 @@ def Analyse_PopIn(self):
   self.ui.lineEdit_E_tabPopIn.setText(f"{np.mean(modulus):.10f}")
   self.ui.lineEdit_E_errorBar_tabPopIn.setText(f"{np.std(modulus,ddof=1):.10f}")
   self.static_canvas_E_tabPopIn.figure.set_tight_layout(True)
-  set_aspectRatio(ax=ax2)
+  self.set_aspectRatio(ax=ax2)
   self.static_canvas_E_tabPopIn.draw()
   #plot the cumulative probability distribution of the max. shear stress
   ax3 = self.static_ax_maxShearStress_tabPopIn
@@ -173,20 +181,24 @@ def Analyse_PopIn(self):
   ax3.set_xlabel('maximum shear stress [GPa]')
   ax3.set_ylabel('cumulative probability distribution')
   self.static_canvas_maxShearStress_tabPopIn.figure.set_tight_layout(True)
-  set_aspectRatio(ax=ax3)
+  self.set_aspectRatio(ax=ax3)
   self.static_canvas_maxShearStress_tabPopIn.draw()
   #listing Test
-  self.ui.tableWidget_tabPopIn.setRowCount(0)
-  self.ui.tableWidget_tabPopIn.setRowCount(len(self.i_tabPopIn.allTestList))
-  for k, theTest in enumerate(self.i_tabPopIn.allTestList):
-    self.ui.tableWidget_tabPopIn.setItem(k,0,QTableWidgetItem(theTest))
-    if theTest in self.i_tabPopIn.output['successTest']:
-      self.ui.tableWidget_tabPopIn.setItem(k,1,QTableWidgetItem("Yes"))
+  self.ui.tableWidget_tabPopIn.setRowCount(len(OriginalAlltest))
+  for k, theTest in enumerate(OriginalAlltest):
+    qtablewidgetitem=QTableWidgetItem(theTest)
+    if theTest in self.i_tabPopIn.allTestList:
+      qtablewidgetitem.setCheckState(Qt.Checked)
+      if theTest in self.i_tabPopIn.output['successTest']:
+        self.ui.tableWidget_tabPopIn.setItem(k,1,QTableWidgetItem("Yes"))
+      else:
+        self.ui.tableWidget_tabPopIn.setItem(k,1,QTableWidgetItem("No"))
+        self.ui.tableWidget_tabPopIn.item(k,1).setBackground(QColor(125,125,125))
+      if theTest in success_identified_PopIn:
+        self.ui.tableWidget_tabPopIn.setItem(k,2,QTableWidgetItem("Yes"))
+      else:
+        self.ui.tableWidget_tabPopIn.setItem(k,2,QTableWidgetItem("No"))
+        self.ui.tableWidget_tabPopIn.item(k,2).setBackground(QColor(125,125,125))
     else:
-      self.ui.tableWidget_tabPopIn.setItem(k,1,QTableWidgetItem("No"))
-      self.ui.tableWidget_tabPopIn.item(k,1).setBackground(QColor(125,125,125))
-    if theTest in success_identified_PopIn:
-      self.ui.tableWidget_tabPopIn.setItem(k,2,QTableWidgetItem("Yes"))
-    else:
-      self.ui.tableWidget_tabPopIn.setItem(k,2,QTableWidgetItem("No"))
-      self.ui.tableWidget_tabPopIn.item(k,2).setBackground(QColor(125,125,125))
+      qtablewidgetitem.setCheckState(Qt.Unchecked)
+    self.ui.tableWidget_tabPopIn.setItem(k,0,qtablewidgetitem)

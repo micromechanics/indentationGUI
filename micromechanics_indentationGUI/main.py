@@ -1,6 +1,6 @@
 """ Graphical user interface includes all widgets """
 import sys
-from PySide6.QtGui import QAction, QKeySequence, QShortcut # pylint: disable=no-name-in-module
+from PySide6.QtGui import QAction, QKeySequence, QShortcut, QIcon # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QFileDialog # pylint: disable=no-name-in-module
 from PySide6.QtCore import Qt, QRectF, QCoreApplication # pylint: disable=no-name-in-module
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
   from .CalculateHardnessModulus import Calculate_Hardness_Modulus
   from .CalibrateTAF import click_OK_calibration, plot_TAF
   from .FrameStiffness import FrameStiffness
-  from .load_depth import plot_load_depth
+  from .load_depth import plot_load_depth, set_aspectRatio
 
   def __init__(self):
     #global setting
@@ -36,6 +36,9 @@ class MainWindow(QMainWindow):
     #intial the list of recently opened and saved files
     self.RecentFiles =[]
     self.RecentFilesNumber=0
+    #shortcut to Save
+    shortcut_actionSave = QShortcut(QKeySequence("Ctrl+S"), self)
+    shortcut_actionSave.activated.connect(self.directSave)
     #new
     self.new()
 
@@ -57,6 +60,7 @@ class MainWindow(QMainWindow):
     self.ui.pushButton_Calculate_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabPopIn_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness) # pylint: disable=line-too-long
     self.ui.Copy_FrameCompliance_tabTipRadius.clicked.connect(self.Copy_FrameCompliance_tabTipRadius)
+    self.ui.Copy_TAF_tabTipRadius_FrameStiffness.clicked.connect(self.Copy_TAF_tabTipRadius_FrameStiffness)
     self.ui.pushButton_Calculate_tabTipRadius.clicked.connect(self.Calculate_TipRadius)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
@@ -66,6 +70,7 @@ class MainWindow(QMainWindow):
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE)
     self.ui.Copy_TAF_tabHE.clicked.connect(self.Copy_TAF)
     self.ui.Copy_FrameCompliance_tabHE.clicked.connect(self.Copy_FrameCompliance_tabHE)
+    self.ui.Copy_TAF_tabHE_FrameStiffness.clicked.connect(self.Copy_TAF_tabHE_FrameStiffness)
     self.ui.Calculate_tabHE.clicked.connect(self.Calculate_Hardness_Modulus)
     #clicked.connect in tabPopIn
     self.ui.pushButton_Analyse_tabPopIn.clicked.connect(self.Analyse_PopIn)
@@ -73,6 +78,7 @@ class MainWindow(QMainWindow):
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn)
     self.ui.Copy_TipRadius_tabPopIn.clicked.connect(self.Copy_TipRadius)
     self.ui.Copy_FrameCompliance_tabPopIn.clicked.connect(self.Copy_FrameCompliance_tabPopIn)
+    self.ui.Copy_TAF_tabPopIn_FrameStiffness.clicked.connect(self.Copy_TAF_tabPopIn_FrameStiffness)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn)
     #clicked.connect to new
     self.ui.actionNew.triggered.connect(self.reNew_windows)
@@ -81,8 +87,6 @@ class MainWindow(QMainWindow):
     #clicked.connect to DialogSaveAs
     self.ui.actionSaveAs.triggered.connect(self.show_DialogSaveAs)
     #clicked.connect to Save
-    shortcut_actionSave = QShortcut(QKeySequence("Ctrl+S"), self)
-    shortcut_actionSave.activated.connect(self.directSave)
     self.ui.actionSave.triggered.connect(self.directSave)
     #clicked.connect to DialogOpen
     self.ui.actionLoad.triggered.connect(self.show_DialogOpen)
@@ -92,10 +96,13 @@ class MainWindow(QMainWindow):
     self.tabHE_H_collect=[]
     self.tabHE_E_collect=[]
     self.tabHE_testName_collect=[]
+    self.canvas_dict = {}
+    self.ax_dict = {}
+
     #graphicsView
     graphicsView_list = [ 'load_depth_tab_inclusive_frame_stiffness_tabTAF',
-                          'tabFrameStiffness',                                #Frame_stiffness_TabTAF
-                          'tabTipAreaFunction',
+                          'FrameStiffness_tabTAF',                                #Framestiffness_TabTAF
+                          'TAF_tabTAF',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness',
                           'tabTipRadius_FrameStiffness',
                           'load_depth_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness',
@@ -162,19 +169,49 @@ class MainWindow(QMainWindow):
     exec(f"self.static_canvas_{graphicsView} = FigureCanvas(Figure(figsize=(8, 6)))") #pylint: disable=exec-used
     exec(f"layout.addWidget(NavigationToolbar(self.static_canvas_{graphicsView}, self))") #pylint: disable=exec-used
     exec(f"layout.addWidget(self.static_canvas_{graphicsView})") #pylint: disable=exec-used
+    canvas = eval(f"self.static_canvas_{graphicsView}") #pylint: disable=eval-used
     if graphicsView in ('CalculatedTipRadius_tabTipRadius'):
       exec(f"self.static_ax_{graphicsView} = self.static_canvas_{graphicsView}.figure.subplots(2,1)") #pylint: disable=exec-used
+      ax = eval(f"self.static_ax_{graphicsView}") #pylint: disable=eval-used
+    elif ('load_depth' in graphicsView) or ('FrameStiffness' in graphicsView)  or (graphicsView in ('TAF_tabTAF')):
+      exec(f"self.static_ax_{graphicsView} = self.static_canvas_{graphicsView}.figure.subplots(2,1,sharex=True, gridspec_kw={{'hspace':0, 'height_ratios':[4, 1]}})") #pylint: disable=exec-used
+      ax = eval(f"self.static_ax_{graphicsView}") #pylint: disable=eval-used
     else:
       exec(f"self.static_ax_{graphicsView} = self.static_canvas_{graphicsView}.figure.subplots()") #pylint: disable=exec-used
-
+      ax = eval(f"self.static_ax_{graphicsView}") #pylint: disable=eval-used
+    self.canvas_dict.update({f"{graphicsView}":canvas})
+    self.ax_dict.update({f"{graphicsView}":ax})
 
   def Copy_TAF(self):
     """ get the calibrated tip are function from the tabTAF """
     self.ui.lineEdit_TipName_tabHE.setText(self.ui.lineEdit_TipName_tabTAF.text())
     self.ui.doubleSpinBox_E_Tip_tabHE.setValue(self.ui.doubleSpinBox_E_Tip_tabTAF.value())
     self.ui.doubleSpinBox_Poisson_Tip_tabHE.setValue(self.ui.doubleSpinBox_Poisson_Tip_tabTAF.value())
-    for j in range(5):
+    for j in range(9):
       lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_tabHE") #pylint: disable=eval-used disable=unused-variable
+      exec(f"lineEdit.setText(self.ui.lineEdit_TAF{j+1}_tabTAF.text())") #pylint: disable=exec-used
+
+  def Copy_TAF_tabTipRadius_FrameStiffness(self):
+    """ get the calibrated tip are function from the tabTAF """
+    self.ui.lineEdit_TipName_tabTipRadius_FrameStiffness.setText(self.ui.lineEdit_TipName_tabTAF.text())
+    for j in range(9):
+      lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_tabTipRadius_FrameStiffness") #pylint: disable=eval-used disable=unused-variable
+      exec(f"lineEdit.setText(self.ui.lineEdit_TAF{j+1}_tabTAF.text())") #pylint: disable=exec-used
+
+
+  def Copy_TAF_tabHE_FrameStiffness(self):
+    """ get the calibrated tip are function from the tabTAF """
+    self.ui.lineEdit_TipName_tabHE_FrameStiffness.setText(self.ui.lineEdit_TipName_tabTAF.text())
+    for j in range(9):
+      lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_tabHE_FrameStiffness") #pylint: disable=eval-used disable=unused-variable
+      exec(f"lineEdit.setText(self.ui.lineEdit_TAF{j+1}_tabTAF.text())") #pylint: disable=exec-used
+
+
+  def Copy_TAF_tabPopIn_FrameStiffness(self):
+    """ get the calibrated tip are function from the tabTAF """
+    self.ui.lineEdit_TipName_tabPopIn_FrameStiffness.setText(self.ui.lineEdit_TipName_tabTAF.text())
+    for j in range(9):
+      lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_tabPopIn_FrameStiffness") #pylint: disable=eval-used disable=unused-variable
       exec(f"lineEdit.setText(self.ui.lineEdit_TAF{j+1}_tabTAF.text())") #pylint: disable=exec-used
 
 
@@ -465,12 +502,18 @@ def main():
   app = QApplication()
   window = MainWindow()
   window.setWindowTitle("GUI for micromechanics.indentation")
+  logo_icon = QIcon()
+  logo_icon.addFile(f"{window.file_path}{window.slash}logo.png")
+  window.setWindowIcon(logo_icon)
   window.show()
   window.activateWindow()
   window.raise_()
   window_DialogExport = DialogExport()
+  window_DialogExport.setWindowIcon(logo_icon)
   window_DialogSaveAs = DialogSaveAs()
+  window_DialogSaveAs.setWindowIcon(logo_icon)
   window_DialogOpen = DialogOpen()
+  window_DialogOpen.setWindowIcon(logo_icon)
   #open or create Txt-file of OpenRecent
   try:
     file_RecentFiles = open(f"{window.file_path}{window.slash}RecentFiles.txt", 'r', encoding="utf-8") #pylint: disable=consider-using-with

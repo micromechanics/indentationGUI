@@ -1,16 +1,16 @@
 """ Graphical user interface calculate tip radius """
+
 import numpy as np
 from micromechanics import indentation
+from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from scipy.optimize import curve_fit
 from .AnalysePopIn import Hertzian_contact_funct
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-from .load_depth import set_aspectRatio
 
-
-def Calculate_TipRadius(self):
+def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   """ Graphical user interface calculate tip radius """
   #set Progress Bar
   progressBar = self.ui.progressBar_tabTipRadius
@@ -60,16 +60,27 @@ def Calculate_TipRadius(self):
   Method=self.i_tabTipRadius.method.value
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
   #plot load-depth of test 1
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.cla()
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.set_title(f"{self.i_tabTipRadius.testName}")
+  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius[0].cla()
+  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius[1].cla()
+  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius[0].set_title(f"{self.i_tabTipRadius.testName}")
   self.i_tabTipRadius.output['ax']=self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius
   if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
     correctThermalDrift(indentation=self.i_tabTipRadius, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   self.i_tabTipRadius.stiffnessFromUnloading(self.i_tabTipRadius.p, self.i_tabTipRadius.h, plot=True)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.figure.set_tight_layout(True)
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.draw()
-  set_aspectRatio(ax=self.i_tabTipRadius.output['ax'])
   self.i_tabTipRadius.output['ax']=None
+  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.draw()
+  #changing i.allTestList to calculate using the checked tests
+  OriginalAlltest = list(self.i_tabTipRadius.allTestList)
+  for k, theTest in enumerate(OriginalAlltest):
+    try:
+      IsCheck = self.ui.tableWidget_tabTipRadius.item(k,0).checkState()
+    except:
+      pass
+    else:
+      if IsCheck==Qt.Unchecked:
+        self.i_tabTipRadius.allTestList.remove(theTest)
+  self.i_tabTipRadius.restartFile()
   #calculate the pop-in force and the Hertzian contact parameters
   fPopIn, certainty = self.i_tabTipRadius.popIn(plot=False, correctH=False)
   #calculate the index of pop-in and surface
@@ -89,7 +100,7 @@ def Calculate_TipRadius(self):
   ax1.set_ylabel('Force [mN]')
   ax1.set_title(f"{self.i_tabTipRadius.testName}")
   ax1.legend()
-  set_aspectRatio(ax=ax1)
+  self.set_aspectRatio(ax=ax1)
   self.static_canvas_HertzianFitting_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_HertzianFitting_tabTipRadius.draw()
   #initialize parameters to collect hertzian fitting results
@@ -160,27 +171,31 @@ def Calculate_TipRadius(self):
   ax2[0].plot(depth,loadHertzian, color='tab:blue', label='for each test')
   ax2[0].plot(depth,loadHertzian, color='tab:orange', label='using all fitted Functions')
   ax2[0].legend()
-  set_aspectRatio(ax=ax2[0])
-  set_aspectRatio(ax=ax2[1])
+  self.set_aspectRatio(ax=ax2[0])
+  self.set_aspectRatio(ax=ax2[1])
   TipRadius_all_data = ( 3*popt[0]/(4*Er) )**2
   self.ui.lineEdit_TipRadius_tabTipRadius.setText(f"{TipRadius_all_data:.10f}")
   self.static_canvas_CalculatedTipRadius_tabTipRadius.figure.set_tight_layout(True)
   self.static_canvas_CalculatedTipRadius_tabTipRadius.draw()
   #listing Test
-  self.ui.tableWidget_tabTipRadius.setRowCount(0)
-  self.ui.tableWidget_tabTipRadius.setRowCount(len(self.i_tabTipRadius.allTestList))
-  for k, theTest in enumerate(self.i_tabTipRadius.allTestList):
-    self.ui.tableWidget_tabTipRadius.setItem(k,0,QTableWidgetItem(theTest))
-    if theTest in self.i_tabTipRadius.output['successTest']:
-      self.ui.tableWidget_tabTipRadius.setItem(k,1,QTableWidgetItem("Yes"))
+  self.ui.tableWidget_tabTipRadius.setRowCount(len(OriginalAlltest))
+  for k, theTest in enumerate(OriginalAlltest):
+    qtablewidgetitem=QTableWidgetItem(theTest)
+    if theTest in self.i_tabTipRadius.allTestList:
+      qtablewidgetitem.setCheckState(Qt.Checked)
+      if theTest in self.i_tabTipRadius.output['successTest']:
+        self.ui.tableWidget_tabTipRadius.setItem(k,1,QTableWidgetItem("Yes"))
+      else:
+        self.ui.tableWidget_tabTipRadius.setItem(k,1,QTableWidgetItem("No"))
+        self.ui.tableWidget_tabTipRadius.item(k,1).setBackground(QColor(125,125,125))
+      if theTest in success_identified_PopIn:
+        self.ui.tableWidget_tabTipRadius.setItem(k,2,QTableWidgetItem("Yes"))
+      else:
+        self.ui.tableWidget_tabTipRadius.setItem(k,2,QTableWidgetItem("No"))
+        self.ui.tableWidget_tabTipRadius.item(k,2).setBackground(QColor(125,125,125))
     else:
-      self.ui.tableWidget_tabTipRadius.setItem(k,1,QTableWidgetItem("No"))
-      self.ui.tableWidget_tabTipRadius.item(k,1).setBackground(QColor(125,125,125))
-    if theTest in success_identified_PopIn:
-      self.ui.tableWidget_tabTipRadius.setItem(k,2,QTableWidgetItem("Yes"))
-    else:
-      self.ui.tableWidget_tabTipRadius.setItem(k,2,QTableWidgetItem("No"))
-      self.ui.tableWidget_tabTipRadius.item(k,2).setBackground(QColor(125,125,125))
+      qtablewidgetitem.setCheckState(Qt.Unchecked)
+    self.ui.tableWidget_tabTipRadius.setItem(k,0,qtablewidgetitem)
 
 
 def plot_Hertzian_fitting(self,tabName):
@@ -233,6 +248,6 @@ def plot_Hertzian_fitting(self,tabName):
     ax.set_ylabel('Force [mN]')
     ax.set_title(i.testName)
     ax.legend()
-    set_aspectRatio(ax=ax)
+    self.set_aspectRatio(ax=ax)
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()

@@ -1,3 +1,4 @@
+![Welcome](micromechanics_indentationGUI/logo.png "Micromechanics-indentationGUI")
 # Install
 highly recommend: installing in a new environment (python >= 3.8) created by Anaconda (https://www.anaconda.com/)
 
@@ -30,11 +31,13 @@ pip uninstall micromechanics-indentationGUI
 # More detailed descriptions for developers
 
 # Prepare and create a new version
-Delete RecentFiles.txt in /indentationGUI/micromechanics_indentationGUI
+- Delete RecentFiles.txt in /indentationGUI/micromechanics_indentationGUI
 
-Set "# pylint: skip-file" for all files named "***_ui.py"
+- Delete *.hf in /indentationGUI/micromechanics_indentationGUI/Examples
 
-Test the code: linting, documentation and then the tests from the project's main directory
+- Set "# pylint: skip-file" for all files named "***_ui.py"
+
+- Test the code: linting, documentation and then the tests from the project's main directory
 ``` bash
 pylint micromechanics_indentationGUI/
 make -C docs html

@@ -1,10 +1,10 @@
 """ Graphical user interface to calculate hardness and young's modulus """
 import numpy as np
-from micromechanics import indentation
+from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from micromechanics import indentation
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-from .load_depth import set_aspectRatio
 
 def Calculate_Hardness_Modulus(self):
   """ Graphical user interface to calculate hardness and young's modulus """
@@ -28,7 +28,7 @@ def Calculate_Hardness_Modulus(self):
   if DataFilterSize%2==0:
     DataFilterSize+=1
   TAF_terms = []
-  for j in range(5):
+  for j in range(9):
     lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_tabHE") # pylint: disable=eval-used
     TAF_terms.append(float(lineEdit.text()))
   TAF_terms.append('iso')
@@ -63,8 +63,9 @@ def Calculate_Hardness_Modulus(self):
   Method=i.method.value
   self.ui.comboBox_method_tabHE.setCurrentIndex(Method-1)
   #plot load-depth of test 1
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE.cla()
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE.set_title(f"{i.testName}")
+  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE[0].cla()
+  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE[1].cla()
+  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE[0].set_title(f"{i.testName}")
   i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
   if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
     correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
@@ -73,17 +74,29 @@ def Calculate_Hardness_Modulus(self):
   elif i.method== indentation.definitions.Method.CSM:
     i.output['ax'].plot(i.h, i.p)
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.figure.set_tight_layout(True)
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
-  set_aspectRatio(ax=i.output['ax'])
   i.output['ax'] = None
+  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
+  #changing i.allTestList to calculate using the checked tests
+  OriginalAlltest = list(self.i_tabHE.allTestList)
+  for k, theTest in enumerate(OriginalAlltest):
+    try:
+      IsCheck = self.ui.tableWidget_tabHE.item(k,0).checkState()
+    except:
+      pass
+    else:
+      if IsCheck==Qt.Unchecked:
+        self.i_tabHE.allTestList.remove(theTest)
+  self.i_tabHE.restartFile()
   #calculate Hardnss and Modulus for all Tests
   hc_collect=[]
   Pmax_collect=[]
   H_collect=[]
   Hmean_collect=[]
+  H4mean_collect=[]
   Hstd_collect=[]
   E_collect=[]
   Emean_collect=[]
+  E4mean_collect=[]
   Estd_collect=[]
   Notlist=[]
   testName_collect=[]
@@ -103,7 +116,9 @@ def Calculate_Hardness_Modulus(self):
       E_collect.append(i.modulus)
       marker4mean= np.where((i.hc>=min_hc4mean) & (i.hc<=max_hc4mean))
       Hmean_collect.append(np.mean(i.hardness[marker4mean]))
+      H4mean_collect.append(i.hardness[marker4mean])
       Emean_collect.append(np.mean(i.modulus[marker4mean]))
+      E4mean_collect.append(i.modulus[marker4mean])
       if len(i.hardness[marker4mean]) > 1:
         Hstd_collect.append(np.std(i.hardness[marker4mean], ddof=1))
         Estd_collect.append(np.std(i.modulus[marker4mean], ddof=1))
@@ -136,10 +151,14 @@ def Calculate_Hardness_Modulus(self):
   self.tabHE_E_collect=E_collect
   self.tabHE_testName_collect=testName_collect
   #listing Test
-  self.ui.tableWidget_tabHE.setRowCount(0)
-  self.ui.tableWidget_tabHE.setRowCount(len(i.allTestList))
-  for k, theTest in enumerate(i.allTestList):
-    self.ui.tableWidget_tabHE.setItem(k,0,QTableWidgetItem(f"{theTest}"))
+  self.ui.tableWidget_tabHE.setRowCount(len(OriginalAlltest))
+  for k, theTest in enumerate(OriginalAlltest):
+    qtablewidgetitem=QTableWidgetItem(theTest)
+    if theTest in self.i_tabHE.allTestList:
+      qtablewidgetitem.setCheckState(Qt.Checked)
+    else:
+      qtablewidgetitem.setCheckState(Qt.Unchecked)
+    self.ui.tableWidget_tabHE.setItem(k,0,qtablewidgetitem)
     if f"{theTest}" in i.output['successTest']:
       self.ui.tableWidget_tabHE.setItem(k,1,QTableWidgetItem("Yes"))
     else:
@@ -149,8 +168,16 @@ def Calculate_Hardness_Modulus(self):
   ax_E_Index = self.static_ax_E_Index_tabHE
   ax_H_Index.cla()
   ax_E_Index.cla()
+  H4mean_collect=np.hstack(H4mean_collect)
+  E4mean_collect=np.hstack(E4mean_collect)
   ax_H_Index.errorbar(test_number_collect,Hmean_collect,yerr=Hstd_collect,marker='s', markersize=10, capsize=10, capthick=5,elinewidth=2, color='black',alpha=0.7,linestyle='')
+  ax_H_Index.axhline(np.mean(H4mean_collect), color = 'tab:orange', label = f"average Hardenss: {np.mean(H4mean_collect)} GPa")
+  ax_H_Index.axhline(np.mean(H4mean_collect)+np.std(H4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(H4mean_collect,ddof=1)} GPa")
+  ax_H_Index.axhline(np.mean(H4mean_collect)-np.std(H4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed')
   ax_E_Index.errorbar(test_number_collect,Emean_collect,yerr=Estd_collect,marker='s', markersize=10, capsize=10, capthick=5,elinewidth=2, color='black',alpha=0.7,linestyle='')
+  ax_E_Index.axhline(np.mean(E4mean_collect), color = 'tab:orange', label = f"average Young's Modulus: {np.mean(E4mean_collect)} GPa")
+  ax_E_Index.axhline(np.mean(E4mean_collect)+np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(E4mean_collect,ddof=1)} GPa")
+  ax_E_Index.axhline(np.mean(E4mean_collect)-np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed')
   ax_H_hc.set_xlabel('Contact depth [µm]')
   ax_H_hc.set_ylabel('Hardness [GPa]')
   ax_H_Index.set_xlabel('Indents\'s Nummber')
@@ -159,14 +186,16 @@ def Calculate_Hardness_Modulus(self):
   ax_E_hc.set_ylabel('Young\'s Modulus [GPa]')
   ax_E_Index.set_xlabel('Indents\'s Nummber')
   ax_E_Index.set_ylabel('Young\'s Modulus [GPa]')
+  ax_H_Index.legend()
+  ax_E_Index.legend()
   self.static_canvas_H_hc_tabHE.figure.set_tight_layout(True)
   self.static_canvas_E_hc_tabHE.figure.set_tight_layout(True)
   self.static_canvas_H_Index_tabHE.figure.set_tight_layout(True)
   self.static_canvas_E_Index_tabHE.figure.set_tight_layout(True)
-  set_aspectRatio(ax=ax_H_hc)
-  set_aspectRatio(ax=ax_E_hc)
-  set_aspectRatio(ax=ax_H_Index)
-  set_aspectRatio(ax=ax_E_Index)
+  self.set_aspectRatio(ax=ax_H_hc)
+  self.set_aspectRatio(ax=ax_E_hc)
+  self.set_aspectRatio(ax=ax_H_Index)
+  self.set_aspectRatio(ax=ax_E_Index)
   self.static_canvas_H_hc_tabHE.draw()
   self.static_canvas_E_hc_tabHE.draw()
   self.static_canvas_H_Index_tabHE.draw()

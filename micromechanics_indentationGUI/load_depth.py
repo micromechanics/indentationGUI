@@ -4,14 +4,20 @@ import matplotlib.pylab as plt
 from .CorrectThermalDrift import correctThermalDrift
 
 
-def set_aspectRatio(ax,ratio=0.618):
+def set_aspectRatio(event_ax=None,ax=None,ratio=0.618):
   """
   set the aspect ratio of a matplotlib.figure
 
   Args:
+    event_ax (class): the ax of a mtaplotlib.figure
     ax (class): the ax of a mtaplotlib.figure
     ratio (float): the aspect ratio
   """
+  if ax is None:
+    ax = event_ax
+  else:
+    ax.callbacks.connect('xlim_changed', set_aspectRatio)
+    ax.callbacks.connect('ylim_changed', set_aspectRatio)
   x_left, x_right = ax.get_xlim()
   y_low, y_high = ax.get_ylim()
   ax.set_aspect(abs((x_right-x_left)/(y_low-y_high))*ratio)
@@ -31,7 +37,8 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
   i.testList = list(i.allTestList)
   #read ax to plot load depth curves
   ax=eval(f"self.static_ax_load_depth_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}") # pylint: disable = eval-used
-  ax.cla()
+  ax[0].cla()
+  ax[1].cla()
   #read static canvas
   static_canvas=eval(f"self.static_canvas_load_depth_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}") # pylint: disable = eval-used
   #read inputs from GUI
@@ -62,7 +69,7 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
         i.nextAgilentTest(newTest=False)
         i.nextTest(newTest=False,plotSurface=showFindSurface)
         i.output['plotLoadHoldUnload'] = False
-      ax.set_title(f"{i.testName}")
+      ax[0].set_title(f"{i.testName}")
       i.output['ax']=ax
       try:
         correctDrift = eval(f"self.ui.checkBox_UsingDriftUnloading_{tabName}.isChecked()") # pylint: disable = eval-used
@@ -80,8 +87,7 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
       if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
       elif i.method== indentation.definitions.Method.CSM:
-        i.output['ax'].plot(i.h, i.p)
-      set_aspectRatio(ax=i.output['ax'])
+        i.output['ax'][0].plot(i.h, i.p)
       i.output['ax']=None
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()
