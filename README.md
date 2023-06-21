@@ -1,4 +1,13 @@
-![Welcome](micromechanics_indentationGUI/logo.png "Micromechanics-indentationGUI")
+<h2 align = "center">
+micromechanics-indentationGUI
+</h2>
+<p align="center">
+  <img
+  src="/micromechanics_indentationGUI/logo.png" 
+  width="314"
+  title="micromechanics-indentationGUI " >
+</p>
+
 # Install
 highly recommend: installing in a new environment (python >= 3.8) created by Anaconda (https://www.anaconda.com/)
 
