@@ -3,7 +3,7 @@ micromechanics-indentationGUI
 </h2>
 <p align="center">
   <img
-  src="https://github.com/micromechanics/indentationGUI/blob/main/micromechanics_indentationGUI/logo.png" 
+  src="https://raw.githubusercontent.com/micromechanics/indentationGUI/main/micromechanics_indentationGUI/logo.png" 
   width="314"
   title="micromechanics-indentationGUI " >
 </p>
