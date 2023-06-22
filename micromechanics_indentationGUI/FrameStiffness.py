@@ -1,4 +1,7 @@
 """ Graphical user interface to calculate the frame stiffness """
+
+#pylint: disable= unsubscriptable-object
+
 from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
@@ -69,7 +72,14 @@ def FrameStiffness(self,tabName):
   if i_FrameStiffness.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
     i_FrameStiffness.stiffnessFromUnloading(i_FrameStiffness.p, i_FrameStiffness.h, plot=True)
   elif i_FrameStiffness.method== indentation.definitions.Method.CSM:
-    i_FrameStiffness.output['ax'][0].plot(i_FrameStiffness.h, i_FrameStiffness.p) #pylint: disable = unsubscriptable-object
+    i_FrameStiffness.output['ax'][0].scatter(i_FrameStiffness.h, i_FrameStiffness.p, s=1) #pylint: disable = unsubscriptable-object
+    i_FrameStiffness.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
+    i_FrameStiffness.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
+    i_FrameStiffness.output['ax'][0].legend()
+    i_FrameStiffness.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
+    i_FrameStiffness.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
+    i_FrameStiffness.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
+
   canvas_load_depht.figure.set_tight_layout(True)
   i_FrameStiffness.output['ax'] = None
   canvas_load_depht.draw()

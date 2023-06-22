@@ -676,6 +676,7 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_critForceStiffness_tabTAF = QDoubleSpinBox(self.groupBox_6)
         self.doubleSpinBox_critForceStiffness_tabTAF.setObjectName(u"doubleSpinBox_critForceStiffness_tabTAF")
+        self.doubleSpinBox_critForceStiffness_tabTAF.setMaximum(999.000000000000000)
         self.doubleSpinBox_critForceStiffness_tabTAF.setSingleStep(1.000000000000000)
         self.doubleSpinBox_critForceStiffness_tabTAF.setValue(15.000000000000000)
 
@@ -1515,6 +1516,7 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_12)
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness")
+        self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setMaximum(999.000000000000000)
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setSingleStep(0.010000000000000)
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setValue(15.000000000000000)
 
@@ -2535,6 +2537,7 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_critForceStiffness_tabHE_FrameStiffness = QDoubleSpinBox(self.groupBox_26)
         self.doubleSpinBox_critForceStiffness_tabHE_FrameStiffness.setObjectName(u"doubleSpinBox_critForceStiffness_tabHE_FrameStiffness")
+        self.doubleSpinBox_critForceStiffness_tabHE_FrameStiffness.setMaximum(999.000000000000000)
         self.doubleSpinBox_critForceStiffness_tabHE_FrameStiffness.setValue(15.000000000000000)
 
         self.gridLayout_56.addWidget(self.doubleSpinBox_critForceStiffness_tabHE_FrameStiffness, 1, 1, 1, 1)
@@ -3983,6 +3986,7 @@ class Ui_MainWindow(object):
         self.doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness.setObjectName(u"doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness")
         sizePolicy3.setHeightForWidth(self.doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy3)
+        self.doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness.setMaximum(999.000000000000000)
         self.doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness.setValue(15.000000000000000)
 
         self.gridLayout_74.addWidget(self.doubleSpinBox_critForceStiffness_tabPopIn_FrameStiffness, 1, 1, 1, 1)
@@ -4607,14 +4611,14 @@ class Ui_MainWindow(object):
         self.tabWidget_4.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_5.setCurrentIndex(0)
         self.tabWidget_9.setCurrentIndex(0)
-        self.tabWidget_5.setCurrentIndex(1)
+        self.tabWidget_5.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_3.setCurrentIndex(1)
         self.tabWidget_6.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_4.setCurrentIndex(2)
         self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabHE.setCurrentIndex(0)
         self.tabWidget_7.setCurrentIndex(1)
         self.tabWidget_8.setCurrentIndex(1)
-        self.tabWidget_10.setCurrentIndex(1)
+        self.tabWidget_10.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_6.setCurrentIndex(1)
         self.tabWidget_11.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_7.setCurrentIndex(0)

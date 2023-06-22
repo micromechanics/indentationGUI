@@ -503,7 +503,7 @@ def main():
   window = MainWindow()
   window.setWindowTitle("GUI for micromechanics.indentation")
   logo_icon = QIcon()
-  logo_icon.addFile(f"{window.file_path}{window.slash}logo.png")
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo.png")
   window.setWindowIcon(logo_icon)
   window.show()
   window.activateWindow()

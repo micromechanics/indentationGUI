@@ -1,6 +1,6 @@
 """ Module temporarily used to replace the corresponding Module in micromechanics waited to be upgraded """
 
-#pylint: disable=line-too-long, unsubscriptable-object
+#pylint: disable=line-too-long, unsubscriptable-object, invalid-unary-operand-type
 
 import math, traceback
 import pandas as pd
@@ -451,18 +451,18 @@ class IndentationXXX(indentation.Indentation):
     Calibrate by first frame-stiffness from K^2/P of individual measurement
 
     Args:
-        critDepth (float): frame stiffness: what is the minimum depth of data used
-        critForce (float): frame stiffness: what is the minimum force used for fitting
-        plotStiffness (bool): plot stiffness graph with compliance
-        returnData (bool): return data for external plotting
+      critDepth (float): frame stiffness: what is the minimum depth of data used
+      critForce (float): frame stiffness: what is the minimum force used for fitting
+      plotStiffness (bool): plot stiffness graph with compliance
+      returnData (bool): return data for external plotting
 
     Returns:
-        numpy.arary: data as chosen by arguments
+      numpy.arary: data as chosen by arguments
     """
     print("Start compliance fitting")
     ## output representative values
     if self.method==Method.CSM:
-      x, y, h = None, None, None
+      x, y, h, t = None, None, None, None
       while True:
         if self.output['progressBar'] is not None:
           self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness') #pylint: disable=not-callable
@@ -471,14 +471,19 @@ class IndentationXXX(indentation.Indentation):
           x = 1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) #add 1nm:prevent runtime error
           y = 1./self.slope
           h = self.h[self.valid]
+          t = self.t[self.valid]
+          mask = (t < self.t[self.iLHU[0][1]])
         elif np.count_nonzero(self.valid)>0:
           x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
           y = np.hstack((y,    1./self.slope))
           h = np.hstack((h, self.h[self.valid]))
+          t = self.t[self.valid]
+          mask = np.hstack((mask, (t < self.t[self.iLHU[0][1]]))) # the section after loading will be removed
         if not self.testList:
           break
         self.nextTest()
-      mask = np.logical_and(h>critDepth, x<1./np.sqrt(critForce))
+      mask = np.logical_and(mask, h>critDepth)
+      mask = np.logical_and(mask, x<1./np.sqrt(critForce))
       if len(mask[mask])==0:
         print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
         mask = np.logical_and(h>np.max(h)*0.5, x<np.max(x)*0.5)

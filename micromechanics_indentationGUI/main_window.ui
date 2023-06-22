@@ -1153,6 +1153,9 @@
              </item>
              <item row="1" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabTAF">
+               <property name="maximum">
+                <double>999.000000000000000</double>
+               </property>
                <property name="singleStep">
                 <double>1.000000000000000</double>
                </property>
@@ -2829,6 +2832,9 @@
                  </item>
                  <item row="1" column="1">
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness">
+                   <property name="maximum">
+                    <double>999.000000000000000</double>
+                   </property>
                    <property name="singleStep">
                     <double>0.010000000000000</double>
                    </property>
@@ -3969,7 +3975,7 @@
           <item row="0" column="1">
            <widget class="QTabWidget" name="tabWidget_5">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_14">
              <attribute name="title">
@@ -4832,6 +4838,9 @@
                  </item>
                  <item row="1" column="1">
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabHE_FrameStiffness">
+                   <property name="maximum">
+                    <double>999.000000000000000</double>
+                   </property>
                    <property name="value">
                     <double>15.000000000000000</double>
                    </property>
@@ -6620,7 +6629,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_35">
              <attribute name="title">
@@ -7757,6 +7766,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="maximum">
+                    <double>999.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>15.000000000000000</double>

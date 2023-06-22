@@ -63,18 +63,24 @@ def Calculate_Hardness_Modulus(self):
   Method=i.method.value
   self.ui.comboBox_method_tabHE.setCurrentIndex(Method-1)
   #plot load-depth of test 1
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE[0].cla()
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE[1].cla()
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE[0].set_title(f"{i.testName}")
   i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
+  i.output['ax'][0].cla()
+  i.output['ax'][1].cla()
+  i.output['ax'][0].set_title(f"{i.testName}")
   if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
     correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
     i.stiffnessFromUnloading(i.p, i.h, plot=True)
   elif i.method== indentation.definitions.Method.CSM:
-    i.output['ax'].plot(i.h, i.p)
+    i.output['ax'][0].scatter(i.h, i.p, s=1)
+    i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
+    i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
+    i.output['ax'][0].legend()
+    i.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
+    i.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
+    i.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.figure.set_tight_layout(True)
-  i.output['ax'] = None
+  i.output['ax'] = [None, None]
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
   #changing i.allTestList to calculate using the checked tests
   OriginalAlltest = list(self.i_tabHE.allTestList)

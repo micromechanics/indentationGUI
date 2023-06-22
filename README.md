@@ -5,7 +5,7 @@ micromechanics-indentationGUI
   <img
   src="https://raw.githubusercontent.com/micromechanics/indentationGUI/main/micromechanics_indentationGUI/logo.png" 
   width="314"
-  title="micromechanics-indentationGUI " >
+  title="micromechanics-indentationGUI" >
 </p>
 
 # Install

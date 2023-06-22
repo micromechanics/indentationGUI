@@ -1,6 +1,6 @@
 """ Using iterative method to calibrate Tip area function (TAF) and frame compliance """
 
-# pylint: disable=line-too-long
+# pylint: disable=line-too-long, invalid-unary-operand-type
 
 import numpy as np
 from scipy import signal, ndimage
@@ -34,38 +34,67 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStif
       return Cf + B*x
 
   self.restartFile()
-  pAll, hAll, AcAll, sAll = [], [], [], []
-  while True:
-    print(self.testName)
-    if self.output['progressBar'] is not None:
-      self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness')
-    self.analyse()
-    if isinstance(self.metaUser['pMax_mN'], list):
-      pAll = pAll+list(self.metaUser['pMax_mN'])
-      hAll = hAll+list(self.metaUser['hMax_um'])
-      AcAll = AcAll+list(self.metaUser['A_um2'])
-      sAll  = sAll +list(self.metaUser['S_mN/um'])
-    else:
-      pAll = pAll+[self.metaUser['pMax_mN']]
-      hAll = hAll+[self.metaUser['hMax_um']]
-      AcAll = AcAll+[self.metaUser['A_um2']]
-      sAll  = sAll +[self.metaUser['S_mN/um']]
-    if not self.testList:
-      break
-    self.nextTest()
-  pAll = np.array(pAll)
-  hAll = np.array(hAll)
-  AcAll = np.array(AcAll)
-  sAll  = np.array(sAll)
-  ## determine compliance by intersection of 1/sqrt(Ac) -- compliance curve
-  x = 1./np.sqrt(AcAll)
-  y = 1./sAll
-  mask = hAll > critDepth
-  mask = np.logical_and(mask, pAll>critForce)
-  print("number of data-points:", len(x[mask]))
-  if len(mask[mask])==0:
-    print("ERROR too much filtering, no data left. Decrease critForce and critDepth")
-    return None
+
+  if self.method==Method.CSM:
+    x, y, h, t = None, None, None, None
+    while True:
+      if self.output['progressBar'] is not None:
+        self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness') #pylint: disable=not-callable
+      self.analyse()
+      if x is None:
+        x = 1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) #add 1nm:prevent runtime error
+        y = 1./self.slope
+        h = self.h[self.valid]
+        t = self.t[self.valid]
+        mask = (t < self.t[self.iLHU[0][1]])
+      elif np.count_nonzero(self.valid)>0:
+        x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
+        y = np.hstack((y,    1./self.slope))
+        h = np.hstack((h, self.h[self.valid]))
+        t = self.t[self.valid]
+        mask = np.hstack((mask, (t < self.t[self.iLHU[0][1]]))) # the section after loading will be removed
+      if not self.testList:
+        break
+      self.nextTest()
+    mask = np.logical_and(mask, h>critDepth)
+    mask = np.logical_and(mask, x<1./np.sqrt(critForce))
+    if len(mask[mask])==0:
+      print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
+      mask = np.logical_and(h>np.max(h)*0.5, x<np.max(x)*0.5)
+  else:
+    pAll, hAll, AcAll, sAll = [], [], [], []
+    while True:
+      print(self.testName)
+      if self.output['progressBar'] is not None:
+        self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness')
+      self.analyse()
+      if isinstance(self.metaUser['pMax_mN'], list):
+        pAll = pAll+list(self.metaUser['pMax_mN'])
+        hAll = hAll+list(self.metaUser['hMax_um'])
+        AcAll = AcAll+list(self.metaUser['A_um2'])
+        sAll  = sAll +list(self.metaUser['S_mN/um'])
+      else:
+        pAll = pAll+[self.metaUser['pMax_mN']]
+        hAll = hAll+[self.metaUser['hMax_um']]
+        AcAll = AcAll+[self.metaUser['A_um2']]
+        sAll  = sAll +[self.metaUser['S_mN/um']]
+      if not self.testList:
+        break
+      self.nextTest()
+    pAll = np.array(pAll)
+    hAll = np.array(hAll)
+    AcAll = np.array(AcAll)
+    sAll  = np.array(sAll)
+    ## determine compliance by intersection of 1/sqrt(Ac) -- compliance curve
+    x = 1./np.sqrt(AcAll)
+    y = 1./sAll
+    mask = hAll > critDepth
+    mask = np.logical_and(mask, pAll>critForce)
+    print("number of data-points:", len(x[mask]))
+    if len(mask[mask])==0:
+      print("ERROR too much filtering, no data left. Decrease critForce and critDepth")
+      return None
+
   fig1,ax1 = plt.subplots() # pylint: disable=unused-variable
   ax1.scatter(x[mask],y[mask])
   # fig1.savefig('ERROR.png')
@@ -133,37 +162,12 @@ def calibrateStiffness_iterativeMethod(self, eTarget=False, critDepth=0.5, critF
   """
   print('start calibrateStiffness_iterativeMethod')
   print(f"the tip.prefactors: {self.tip.prefactors}")
-  ## output representative values
-  if self.method==Method.CSM:
-    print ('the iterative method for CSM is in development')
-    # x, y, h = None, None, None
-    # while True:
-    #   if self.output['progressBar'] is not None:
-    #     self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness')
-    #   self.analyse()
-    #   if x is None:
-    #     x = 1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) #add 1nm:prevent runtime error
-    #     y = 1./self.slope
-    #     h = self.h[self.valid]
-    #   elif np.count_nonzero(self.valid)>0:
-    #     x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
-    #     y = np.hstack((y,    1./self.slope))
-    #     h = np.hstack((h, self.h[self.valid]))
-    #   if not self.testList:
-    #     break
-    #   self.nextTest()
-    # mask = np.logical_and(h>critDepth, x<1./np.sqrt(critForce))
-    # if len(mask[mask])==0:
-    #   print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
-    #   mask = np.logical_and(h>np.max(h)*0.5, x<np.max(x)*0.5)
-  else:
-    ## create data-frame of all files
+  frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=False)
+  iteration_numbers=0
+  while np.abs(frameCompliance) > 1e-7 and iteration_numbers<21:
     frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=False)
-    iteration_numbers=0
-    while np.abs(frameCompliance) > 1e-7 and iteration_numbers<21:
-      frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=False)
-      iteration_numbers+=1
-      print('iteration_numbers',iteration_numbers)
+    iteration_numbers+=1
+    print('iteration_numbers',iteration_numbers)
 
 
 def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includedAngel_Cone=30, Radius_Sphere=2, numPolynomial=3, critDepthTip=0.0, plotTip=False, plot_Ac_hc=False, **kwargs): # pylint:disable=too-many-arguments

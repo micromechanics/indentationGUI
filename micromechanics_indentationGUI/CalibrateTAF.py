@@ -75,7 +75,13 @@ def click_OK_calibration(self):
   if self.i_tabTAF.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
     self.i_tabTAF.stiffnessFromUnloading(self.i_tabTAF.p, self.i_tabTAF.h, plot=True)
   elif self.i_tabTAF.method== indentation.definitions.Method.CSM:
-    self.i_tabTAF.output['ax'][0].plot(self.i_tabTAF.h, self.i_tabTAF.p)
+    self.i_tabTAF.output['ax'][0].scatter(self.i_tabTAF.h, self.i_tabTAF.p, s=1)
+    self.i_tabTAF.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
+    self.i_tabTAF.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
+    self.i_tabTAF.output['ax'][0].legend()
+    self.i_tabTAF.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
+    self.i_tabTAF.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
+    self.i_tabTAF.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.figure.set_tight_layout(True)
   self.i_tabTAF.output['ax'] = [None, None]
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.draw()
@@ -101,6 +107,8 @@ def click_OK_calibration(self):
     correctDrift = False
   if correctDrift:
     self.i_tabTAF.model['driftRate'] = True
+  else:
+    self.i_tabTAF.model['driftRate'] = False
   if Index_TipType==0:
     TipType='Berkovich'
   elif Index_TipType==1:

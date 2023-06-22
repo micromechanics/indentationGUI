@@ -59,7 +59,7 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
   max_size_fluctuation = eval(f"self.ui.spinBox_max_size_fluctuation_{tabName}.value()") # pylint: disable = eval-used
   Model = {"unloadPMax": unloaPMax, "unloadPMin": unloaPMin, "relForceRateNoise": relForceRateNoise, "maxSizeFluctuations": max_size_fluctuation}
   i.model.update(Model)
-  for Test in selectedTests:
+  for j, Test in enumerate(selectedTests):
     column=Test.column()
     if column==0:  #Test Names are located at column 0
       i.testName=Test.text()
@@ -87,7 +87,14 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
       if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
       elif i.method== indentation.definitions.Method.CSM:
-        i.output['ax'][0].plot(i.h, i.p)
+        i.output['ax'][0].scatter(i.h, i.p, s=1, label=f"{Test}")
+        if j==len(selectedTests)-1:
+          i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
+          i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
+          i.output['ax'][0].legend()
+          i.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
+          i.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
+          i.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
       i.output['ax']=None
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()
