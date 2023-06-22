@@ -46,7 +46,7 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStif
         y = 1./self.slope
         h = self.h[self.valid]
         t = self.t[self.valid]
-        mask = (t < self.t[self.iLHU[0][1]])
+        mask = (t < self.t[self.iLHU[0][1]]) #pylint: disable = superfluous-parens
       elif np.count_nonzero(self.valid)>0:
         x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
         y = np.hstack((y,    1./self.slope))
