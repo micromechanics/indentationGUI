@@ -95,8 +95,8 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStif
       print("ERROR too much filtering, no data left. Decrease critForce and critDepth")
       return None
 
-  fig1,ax1 = plt.subplots() # pylint: disable=unused-variable
-  ax1.scatter(x[mask],y[mask])
+  # fig1,ax1 = plt.subplots() # pylint: disable=unused-variable
+  # ax1.scatter(x[mask],y[mask])
   # fig1.savefig('ERROR.png')
   # param, covM = np.polyfit(x[mask],y[mask],1, cov=True)
   if eTarget:

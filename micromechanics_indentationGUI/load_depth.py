@@ -59,15 +59,19 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
   max_size_fluctuation = eval(f"self.ui.spinBox_max_size_fluctuation_{tabName}.value()") # pylint: disable = eval-used
   Model = {"unloadPMax": unloaPMax, "unloadPMin": unloaPMin, "relForceRateNoise": relForceRateNoise, "maxSizeFluctuations": max_size_fluctuation}
   i.model.update(Model)
+  plot_multiTest = False
+  if len(selectedTests) > 1:
+    plot_multiTest = True
   for j, Test in enumerate(selectedTests):
     column=Test.column()
     if column==0:  #Test Names are located at column 0
       i.testName=Test.text()
       if i.vendor == indentation.definitions.Vendor.Agilent:
-        if show_iLHU:
+        if show_iLHU and not plot_multiTest:
+          i.output['ax'] = None
           i.output['plotLoadHoldUnload'] = True # plot iLHU
         i.nextAgilentTest(newTest=False)
-        i.nextTest(newTest=False,plotSurface=showFindSurface)
+        i.nextTest(newTest=False,plotSurface=(showFindSurface and not plot_multiTest))
         i.output['plotLoadHoldUnload'] = False
       ax[0].set_title(f"{i.testName}")
       i.output['ax']=ax
@@ -78,16 +82,16 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
       if correctDrift:
         showDrift = eval(f"self.ui.checkBox_showThermalDrift_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used
         ax_thermalDrift = False
-        if showDrift:
+        if showDrift and not plot_multiTest:
           fig_thermalDrift, ax_thermalDrift = plt.subplots()
         correctThermalDrift(indentation=i, ax=ax_thermalDrift, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
         if showDrift:
           fig_thermalDrift.legend()
           fig_thermalDrift.show()
-      if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
+      if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI) and not plot_multiTest:
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
-      elif i.method== indentation.definitions.Method.CSM:
-        i.output['ax'][0].scatter(i.h, i.p, s=1, label=f"{Test}")
+      elif i.method== indentation.definitions.Method.CSM or plot_multiTest:
+        i.output['ax'][0].scatter(i.h, i.p, s=1, label=f"{i.testName}")
         if j==len(selectedTests)-1:
           i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
           i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
