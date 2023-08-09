@@ -332,7 +332,7 @@ class IndentationXXX(indentation.Indentation):
     if len(self.testList)==0: #no sheet left
       return False
     if newTest: #!!!!!!
-      self.testName = self.testList.pop(0)
+      self.testName = self.testList.pop(0) # pylint: disable=attribute-defined-outside-init
     myFile = self.datafile.open(self.testName) #pylint: disable=assignment-from-no-return
     txt = io.TextIOWrapper(myFile, encoding="utf-8")
     success = self.loadMicromaterials(txt)
