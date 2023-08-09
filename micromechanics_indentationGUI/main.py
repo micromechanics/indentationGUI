@@ -114,6 +114,7 @@ class MainWindow(QMainWindow):
                           'H_Index_tabHE',
                           'E_hc_tabHE',
                           'E_Index_tabHE',
+                          'HE_tabHE',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius',
                           'HertzianFitting_tabTipRadius',
                           'CalculatedTipRadius_tabTipRadius',
@@ -121,6 +122,7 @@ class MainWindow(QMainWindow):
                           'HertzianFitting_tabPopIn',
                           'E_tabPopIn',
                           'maxShearStress_tabPopIn',
+                          'PopInLoad_tabPopIn',
                           ]
     for graphicsView in graphicsView_list:
       self.matplotlib_canve_ax(graphicsView=graphicsView)

@@ -67,6 +67,25 @@ def click_OK_calibration(self):
   #show Test method
   Method=self.i_tabTAF.method.value
   self.ui.comboBox_method_tabTAF.setCurrentIndex(Method-1)
+  #setting to correct thermal drift
+  try:
+    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabTAF.isChecked()
+  except:
+    correctDrift = False
+  if correctDrift:
+    self.i_tabTAF.model['driftRate'] = True
+  else:
+    self.i_tabTAF.model['driftRate'] = False
+  #changing i.allTestList to calculate using the checked tests
+  OriginalAlltest = list(self.i_tabTAF.allTestList)
+  for k, theTest in enumerate(OriginalAlltest):
+    try:
+      IsCheck = self.ui.tableWidget_tabTAF.item(k,0).checkState()
+    except:
+      pass
+    else:
+      if IsCheck==Qt.Unchecked:
+        self.i_tabTAF.allTestList.remove(theTest)
   #plot load-depth of test 1
   self.i_tabTAF.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF
   self.i_tabTAF.output['ax'][0].cla()
@@ -85,30 +104,12 @@ def click_OK_calibration(self):
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.figure.set_tight_layout(True)
   self.i_tabTAF.output['ax'] = [None, None]
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTAF.draw()
-  #changing i.allTestList to calculate using the checked tests
-  OriginalAlltest = list(self.i_tabTAF.allTestList)
-  for k, theTest in enumerate(OriginalAlltest):
-    try:
-      IsCheck = self.ui.tableWidget_tabTAF.item(k,0).checkState()
-    except:
-      pass
-    else:
-      if IsCheck==Qt.Unchecked:
-        self.i_tabTAF.allTestList.remove(theTest)
   #calculate frameStiffness and Tip Area Function
   self.i_tabTAF.output['ax'] = self.static_ax_FrameStiffness_tabTAF # ax to plot figure for calculating frame compliance
   self.i_tabTAF.output['ax'][0].cla()
   self.i_tabTAF.output['ax'][1].cla()
   critDepthStiffness=self.ui.doubleSpinBox_critDepthStiffness_tabTAF.value()
   critForceStiffness=self.ui.doubleSpinBox_critForceStiffness_tabTAF.value()
-  try:  #setting to correct thermal drift
-    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabTAF.isChecked()
-  except:
-    correctDrift = False
-  if correctDrift:
-    self.i_tabTAF.model['driftRate'] = True
-  else:
-    self.i_tabTAF.model['driftRate'] = False
   if Index_TipType==0:
     TipType='Berkovich'
   elif Index_TipType==1:

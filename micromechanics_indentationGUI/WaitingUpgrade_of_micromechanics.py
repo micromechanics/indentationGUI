@@ -2,7 +2,7 @@
 
 #pylint: disable=line-too-long, unsubscriptable-object, invalid-unary-operand-type
 
-import math, traceback
+import math, traceback, io
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,6 +17,18 @@ from .Tools4hdf5 import convertXLSXtoHDF5
 class IndentationXXX(indentation.Indentation):
   """
   based on the Main class of micromechanics.indentation
+
+  Functions modified based on functions of micromechanics.indentation:
+    -nextTest
+    -loadAgilent
+    -nextAgilentTest
+    -nextMicromaterialsTest
+    -stiffnessFromUnloading
+    -calibrateStiffness
+
+  new Funtions:
+    -parameters_for_GUI
+
   """
   from .calibration_iterativeMethod import calibrateStiffness_iterativeMethod, calibrateStiffness_OneIteration, calibrateTAF, oneIteration_TAF_frameCompliance, calibrate_TAF_and_FrameStiffness_iterativeMethod
 
@@ -308,6 +320,25 @@ class IndentationXXX(indentation.Indentation):
     return True
 
 
+  def nextMicromaterialsTest(self, newTest=True):
+    """
+    Go to next file in zip or hdf5-file
+
+    Returns:
+        bool: success of going to next sheet
+    """
+    if self.vendor!=Vendor.Micromaterials: #cannot be used
+      return False
+    if len(self.testList)==0: #no sheet left
+      return False
+    if newTest: #!!!!!!
+      self.testName = self.testList.pop(0)
+    myFile = self.datafile.open(self.testName) #pylint: disable=assignment-from-no-return
+    txt = io.TextIOWrapper(myFile, encoding="utf-8")
+    success = self.loadMicromaterials(txt)
+    return success
+
+
   @staticmethod
   def inverse_unloadingPowerFunc(p,B,hf,m):
     """
@@ -561,3 +592,81 @@ class IndentationXXX(indentation.Indentation):
     if returnData:
       return x,y
     return frameCompliance
+
+
+  def popIn(self, correctH=True, plot=True, removeInitialNM=2.):
+    """
+    Search for pop-in by jump in depth rate
+
+    Certainty:
+
+    - deltaSlope: higher is better (difference in elastic - plastic slope). Great indicator
+    - prefactor: higher is better (prefactor of elastic curve). Great indicator
+    - secondRate: lower is better (height of second largest jump). Nice indicator 0.25*deltaRate
+    - covElast: lower is better. bad indicator
+    - deltaH: higher is better (delta depth in jump). bad indicator
+    - deltaRate: higher is better (depth rate during jump). bad indicator
+
+    Future: iterate over largest, to identify best
+
+    Args:
+      correctH (bool): correct depth such that curves aligned
+      plot (bool): plot pop-in curve
+      removeInitialNM (float): remove initial nm from data as they have large scatter
+
+    Returns:
+      list: pop-in force, dictionary of certainty
+    """
+    maxPlasticFit = 150
+    minElasticFit = 0.01
+
+    mask = (self.h[self.valid]-np.min(self.h[self.valid]))  >removeInitialNM/1.e3
+    h = self.h[self.valid][mask]
+    p = self.p[self.valid][mask]
+    h = h[:np.argmax(p)] #!!!!!!
+    p = p[:np.argmax(p)] #!!!!!!
+    depthRate = h[1:]-h[:-1]
+    x_        = np.arange(len(depthRate))
+    fits      = np.polyfit(x_,depthRate,2)  #substract 2nd order fit b/c depthRate increases over time
+    depthRate-= np.polyval(fits,x_)
+    iJump     = np.argmax(depthRate)
+    iMax      = min(np.argmax(p), iJump+maxPlasticFit)      #max for fit: 150 data-points or max. of curve
+    iMin      = np.min(np.where(p>minElasticFit))
+    print(iJump, iMax)
+    fitPlast  = np.polyfit(h[iJump+1:iMax],p[iJump+1:iMax],2) #does not have to be parabola, just close fit
+    slopePlast= np.polyder(np.poly1d(fitPlast))(h[iJump+1] )
+    def funct(depth, prefactor, h0):
+      diff           = depth-h0
+      if isinstance(diff, np.float64):
+        diff = max(diff,0.0)
+      else:
+        diff[diff<0.0] = 0.0
+      return prefactor* (diff)**(3./2.)
+    fitElast, pcov = curve_fit(funct, h[iMin:iJump], p[iMin:iJump], p0=[100.,0.])    # pylint: disable=unbalanced-tuple-unpacking
+    slopeElast= (funct(h[iJump],*fitElast) - funct(h[iJump]*0.9,*fitElast)) / (h[iJump]*0.1)
+    fPopIn    = p[iJump]
+    certainty = {"deltaRate":depthRate[iJump], "prefactor":fitElast[0], "h0":fitElast[1], \
+                  "deltaSlope": slopeElast-slopePlast, 'deltaH':h[iJump+1]-h[iJump],\
+                  "covElast":pcov[0,0] }
+    listDepthRate = depthRate.tolist()
+    iJump2 = np.argmax(listDepthRate)
+    while (iJump2-iJump)<3:
+      del listDepthRate[iJump2]
+      iJump2 = np.argmax(listDepthRate)
+    certainty["secondRate"] = np.max(listDepthRate)
+    if plot:
+      _, ax1 = plt.subplots()
+      ax2 = ax1.twinx()
+      ax1.plot(self.h,self.p)
+      h_ = np.linspace(self.h[iJump+1],self.h[iMax])
+      ax1.plot(h_, np.polyval(fitPlast,h_))
+      ax1.plot(self.h[iMin:iJump], funct(self.h[iMin:iJump],*fitElast))
+      ax2.plot(h[:-1],depthRate,'r')
+      ax1.axvline(h[iJump], color='k', linestyle='dashed')
+      ax1.axhline(fPopIn, color='k', linestyle='dashed')
+      ax1.set_xlim(right=4.*self.h[iJump])
+      ax1.set_ylim(top=4.*self.p[iJump], bottom=0)
+      plt.show()
+    if correctH:
+      self.h -= certainty["h0"]
+    return fPopIn, certainty

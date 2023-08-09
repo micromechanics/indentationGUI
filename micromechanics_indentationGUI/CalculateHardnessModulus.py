@@ -3,10 +3,11 @@ import numpy as np
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from micromechanics import indentation
+from micromechanics.indentation.definitions import Vendor
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 
-def Calculate_Hardness_Modulus(self):
+def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   """ Graphical user interface to calculate hardness and young's modulus """
   #set Progress Bar
   progressBar = self.ui.progressBar_tabHE
@@ -60,8 +61,22 @@ def Calculate_Hardness_Modulus(self):
   self.i_tabHE = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   i = self.i_tabHE
   #show Test method
-  Method=i.method.value
+  Method = i.method.value
   self.ui.comboBox_method_tabHE.setCurrentIndex(Method-1)
+  #show Equipment
+  Equipment = i.vendor.value
+  self.ui.comboBox_equipment_tabHE.setCurrentIndex(Equipment-1)
+  #changing i.allTestList to calculate using the checked tests
+  OriginalAlltest = list(self.i_tabHE.allTestList)
+  for k, theTest in enumerate(OriginalAlltest):
+    try:
+      IsCheck = self.ui.tableWidget_tabHE.item(k,0).checkState()
+    except:
+      pass
+    else:
+      if IsCheck==Qt.Unchecked:
+        self.i_tabHE.allTestList.remove(theTest)
+  self.i_tabHE.restartFile()
   #plot load-depth of test 1
   i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
   i.output['ax'][0].cla()
@@ -82,17 +97,6 @@ def Calculate_Hardness_Modulus(self):
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.figure.set_tight_layout(True)
   i.output['ax'] = [None, None]
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
-  #changing i.allTestList to calculate using the checked tests
-  OriginalAlltest = list(self.i_tabHE.allTestList)
-  for k, theTest in enumerate(OriginalAlltest):
-    try:
-      IsCheck = self.ui.tableWidget_tabHE.item(k,0).checkState()
-    except:
-      pass
-    else:
-      if IsCheck==Qt.Unchecked:
-        self.i_tabHE.allTestList.remove(theTest)
-  self.i_tabHE.restartFile()
   #calculate Hardnss and Modulus for all Tests
   hc_collect=[]
   Pmax_collect=[]
@@ -111,6 +115,9 @@ def Calculate_Hardness_Modulus(self):
   ax_E_hc = self.static_ax_E_hc_tabHE
   ax_H_hc.cla()
   ax_E_hc.cla()
+  #settig initial test number
+  if i.vendor is Vendor.Micromaterials:
+    test_number = 1
   while True:
     i.analyse()
     progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
@@ -132,7 +139,11 @@ def Calculate_Hardness_Modulus(self):
         Hstd_collect.append(0)
         Estd_collect.append(0)
       testName_collect.append(i.testName)
-      test_number_collect.append(int(i.testName[4:]))
+      if i.vendor is Vendor.Micromaterials:
+        test_number_collect.append(test_number)
+        test_number += 1
+      else:
+        test_number_collect.append(int(i.testName[4:]))
       #plotting hardness and young's modulus
       ax_H_hc.plot(i.hc,i.hardness,'.-', linewidth=1)
       ax_E_hc.plot(i.hc,i.modulus,'.-', linewidth=1)
@@ -206,3 +217,12 @@ def Calculate_Hardness_Modulus(self):
   self.static_canvas_E_hc_tabHE.draw()
   self.static_canvas_H_Index_tabHE.draw()
   self.static_canvas_E_Index_tabHE.draw()
+  #plotting hardness-young's modulus
+  ax_HE = self.static_ax_HE_tabHE
+  ax_HE.cla()
+  ax_HE.errorbar(Emean_collect, Hmean_collect, xerr=Estd_collect, yerr=Hstd_collect,marker='s', markersize=10, capsize=10, capthick=5,elinewidth=2, color='black',alpha=0.7,linestyle='')
+  ax_HE.set_ylabel('Hardness [GPa]')
+  ax_HE.set_xlabel('Young\'s Modulus [GPa]')
+  self.static_canvas_HE_tabHE.figure.set_tight_layout(True)
+  self.set_aspectRatio(ax=ax_HE)
+  self.static_canvas_HE_tabHE.draw()

@@ -73,6 +73,13 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
         i.nextAgilentTest(newTest=False)
         i.nextTest(newTest=False,plotSurface=(showFindSurface and not plot_multiTest))
         i.output['plotLoadHoldUnload'] = False
+      if i.vendor == indentation.definitions.Vendor.Micromaterials:
+        if show_iLHU and not plot_multiTest:
+          i.output['ax'] = None
+          i.output['plotLoadHoldUnload'] = True # plot iLHU
+        i.nextMicromaterialsTest(newTest=False)
+        i.nextTest(newTest=False,plotSurface=(showFindSurface and not plot_multiTest))
+        i.output['plotLoadHoldUnload'] = False
       ax[0].set_title(f"{i.testName}")
       i.output['ax']=ax
       try:
@@ -95,7 +102,8 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
         if j==len(selectedTests)-1:
           i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
           i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
-          i.output['ax'][0].legend()
+          if len(selectedTests)<=10: # show legend when the number of curves is smaller than 10
+            i.output['ax'][0].legend()
           i.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
           i.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
           i.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')

@@ -62,6 +62,26 @@ def FrameStiffness(self,tabName):
   #show Test method
   Method=i_FrameStiffness.method.value
   exec(f"self.ui.comboBox_method_{tabName}.setCurrentIndex({Method-1})") # pylint: disable = exec-used
+  #setting to correct thermal drift
+  try:
+    correctDrift = eval(f"self.ui.checkBox_UsingDriftUnloading_{tabName}.isChecked()") #setting to correct thermal drift pylint: disable = eval-used
+  except:
+    correctDrift = False
+  if correctDrift:
+    i_FrameStiffness.model['driftRate'] = True
+  else:
+    i_FrameStiffness.model['driftRate'] = False
+  #changing i.allTestList to calculate using the checked tests
+  OriginalAlltest = list(i_FrameStiffness.allTestList)
+  for k, theTest in enumerate(OriginalAlltest):
+    try:
+      IsCheck = eval(f"self.ui.tableWidget_{tabName}.item(k,0).checkState()") # pylint: disable = eval-used
+    except:
+      pass
+    else:
+      if IsCheck==Qt.Unchecked:
+        i_FrameStiffness.allTestList.remove(theTest)
+  i_FrameStiffness.restartFile()
   #plot load-depth of test 1
   ax_load_depth = eval(f"self.static_ax_load_depth_tab_inclusive_frame_stiffness_{tabName}") # pylint: disable = eval-used
   canvas_load_depht = eval(f"self.static_canvas_load_depth_tab_inclusive_frame_stiffness_{tabName}") # pylint: disable = eval-used
@@ -79,21 +99,9 @@ def FrameStiffness(self,tabName):
     i_FrameStiffness.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
     i_FrameStiffness.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
     i_FrameStiffness.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
-
   canvas_load_depht.figure.set_tight_layout(True)
   i_FrameStiffness.output['ax'] = None
   canvas_load_depht.draw()
-  #changing i.allTestList to calculate using the checked tests
-  OriginalAlltest = list(i_FrameStiffness.allTestList)
-  for k, theTest in enumerate(OriginalAlltest):
-    try:
-      IsCheck = eval(f"self.ui.tableWidget_{tabName}.item(k,0).checkState()") # pylint: disable = eval-used
-    except:
-      pass
-    else:
-      if IsCheck==Qt.Unchecked:
-        i_FrameStiffness.allTestList.remove(theTest)
-  i_FrameStiffness.restartFile()
   #calculate FrameStiffness
   ax = eval(f"self.static_ax_{tabName}") # pylint: disable = eval-used
   ax[0].cla()
@@ -101,15 +109,11 @@ def FrameStiffness(self,tabName):
   i_FrameStiffness.output['ax'] = ax
   critDepth=eval(f"self.ui.doubleSpinBox_critDepthStiffness_{tabName}.value()") # pylint: disable = eval-used
   critForce=eval(f"self.ui.doubleSpinBox_critForceStiffness_{tabName}.value()") # pylint: disable = eval-used
-  try:
-    correctDrift = eval(f"self.ui.checkBox_UsingDriftUnloading_{tabName}.isChecked()") #setting to correct thermal drift pylint: disable = eval-used
-  except:
-    correctDrift = False
-  if correctDrift:
-    i_FrameStiffness.model['driftRate'] = True
   Index_CalculationMethod = eval(f"self.ui.comboBox_CalculationMethod_{tabName}.currentIndex()") # pylint: disable = eval-used
   if Index_CalculationMethod == 0:
-    frameCompliance = i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False)
+    i_FrameStiffness.restartFile()
+    i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=True)
+    frameCompliance = i_FrameStiffness.tip.compliance
   elif Index_CalculationMethod == 1:
     i_FrameStiffness.output['ax'] = [None,None]
     i_FrameStiffness.calibrateStiffness_iterativeMethod(critDepth=critDepth, critForce=critForce, plotStiffness=False)
