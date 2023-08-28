@@ -188,7 +188,7 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   ax3 = self.static_ax_maxShearStress_tabPopIn
   ax3.cla()
   sortedData = np.sort(max_shear_Stress)
-  probability = np.arange(len(sortedData)) / float(len(sortedData))
+  probability = (np.arange(len(sortedData))+1) / float(len(sortedData))
   ax3.plot(sortedData,probability,'-o')
   ax3.axhline(0, color='k', linestyle='-')
   ax3.axhline(1, color='k', linestyle='-')
@@ -201,7 +201,7 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   ax4 = self.static_ax_PopInLoad_tabPopIn
   ax4.cla()
   sortedData = np.sort(fPopIn_collect)
-  probability = np.arange(len(sortedData)) / float(len(sortedData))
+  probability = (np.arange(len(sortedData))+1) / float(len(sortedData))
   ax4.plot(sortedData,probability,'-o')
   ax4.axhline(0, color='k', linestyle='-')
   ax4.axhline(1, color='k', linestyle='-')
@@ -210,6 +210,12 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   self.static_canvas_PopInLoad_tabPopIn.figure.set_tight_layout(True)
   self.set_aspectRatio(ax=ax3)
   self.static_canvas_PopInLoad_tabPopIn.draw()
+  #prepare for export
+  self.tabPopIn_prefactor_collect=prefactor_collect
+  self.tabPopIn_fPopIn_collect=fPopIn_collect
+  self.tabPopIn_E_collect=modulus
+  self.tabPopIn_maxShearStress_collect=max_shear_Stress
+  self.tabPopIn_testName_collect=testName_collect
   #listing Test
   self.ui.tableWidget_tabPopIn.setRowCount(len(OriginalAlltest))
   for k, theTest in enumerate(OriginalAlltest):

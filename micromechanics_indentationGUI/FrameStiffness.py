@@ -72,7 +72,11 @@ def FrameStiffness(self,tabName):
   else:
     i_FrameStiffness.model['driftRate'] = False
   #changing i.allTestList to calculate using the checked tests
-  OriginalAlltest = list(i_FrameStiffness.allTestList)
+  try:
+    OriginalAlltest = list(i_FrameStiffness.allTestList)
+  except Exception as e: # pylint:disable=broad-except
+    suggestion = 'Check if the Path is completed. \n A correct example: C:\G200X\\20230101\Example.xlsx' # pylint: disable=anomalous-backslash-in-string
+    self.show_error(str(e), suggestion)
   for k, theTest in enumerate(OriginalAlltest):
     try:
       IsCheck = eval(f"self.ui.tableWidget_{tabName}.item(k,0).checkState()") # pylint: disable = eval-used

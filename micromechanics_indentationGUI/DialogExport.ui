@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QComboBox" name="comboBox_Tab">
+    <widget class="QComboBox" name="comboBox_ExportTab">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
        <horstretch>0</horstretch>
@@ -39,7 +39,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pop-in </string>
+       <string>Analyse Pop-in Effect</string>
       </property>
      </item>
     </widget>
@@ -108,7 +108,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QComboBox" name="comboBox_Format">
+    <widget class="QComboBox" name="comboBox_ExportFormat">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
        <horstretch>0</horstretch>
@@ -117,7 +117,17 @@
      </property>
      <item>
       <property name="text">
-       <string>Each Test in on sheet</string>
+       <string>Each Test in one Sheet</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>All Tests in one Sheet</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string/>
       </property>
      </item>
     </widget>

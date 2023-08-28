@@ -64,7 +64,11 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   Method = i.method.value
   self.ui.comboBox_method_tabHE.setCurrentIndex(Method-1)
   #show Equipment
-  Equipment = i.vendor.value
+  try:
+    Equipment = i.vendor.value
+  except Exception as e: #pylint: disable=broad-except
+    suggestion = 'Check if the Path is completed. \n A correct example: C:\G200X\\20230101\Example.xlsx' #pylint: disable=anomalous-backslash-in-string
+    self.show_error(str(e), suggestion)
   self.ui.comboBox_equipment_tabHE.setCurrentIndex(Equipment-1)
   #changing i.allTestList to calculate using the checked tests
   OriginalAlltest = list(self.i_tabHE.allTestList)
@@ -99,6 +103,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
   #calculate Hardnss and Modulus for all Tests
   hc_collect=[]
+  hmax_collect=[]
   Pmax_collect=[]
   H_collect=[]
   Hmean_collect=[]
@@ -111,6 +116,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   Notlist=[]
   testName_collect=[]
   test_number_collect=[]
+  X_Position_collect=[]
+  Y_Position_collect=[]
   ax_H_hc = self.static_ax_H_hc_tabHE
   ax_E_hc = self.static_ax_E_hc_tabHE
   ax_H_hc.cla()
@@ -125,8 +132,11 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
     if i.testName not in Notlist:
       Pmax_collect.append(i.Ac*i.hardness)
       hc_collect.append(i.hc)
+      hmax_collect.append(i.h.max())
       H_collect.append(i.hardness)
       E_collect.append(i.modulus)
+      X_Position_collect.append(i.X_Position)
+      Y_Position_collect.append(i.Y_Position)
       marker4mean= np.where((i.hc>=min_hc4mean) & (i.hc<=max_hc4mean))
       Hmean_collect.append(np.mean(i.hardness[marker4mean]))
       H4mean_collect.append(i.hardness[marker4mean])
@@ -157,15 +167,22 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   if np.max(hc_collect[0])*1.1 > max_hc4mean:
     ax_H_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
     ax_E_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
+  # show error if the calculated hc of some test is not in the selected hc range for calculating the mean values of H and E
+  if True in np.isnan(Hmean_collect):
+    suggestion = 'There is Nan in H or E list. Please try to decrease min. (or max.) hc' #pylint: disable=anomalous-backslash-in-string
+    self.show_error(suggestion)
   ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*0.3,np.mean(Hmean_collect)+np.mean(Hmean_collect)*0.3)
   ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*0.3,np.mean(Emean_collect)+np.mean(Emean_collect)*0.3)
   ax_H_hc.legend()
   ax_E_hc.legend()
   #prepare for export
   self.tabHE_hc_collect=hc_collect
+  self.tabHE_hmax_collect=hmax_collect
   self.tabHE_Pmax_collect=Pmax_collect
   self.tabHE_H_collect=H_collect
   self.tabHE_E_collect=E_collect
+  self.tabHE_X_Position_collect=X_Position_collect
+  self.tabHE_Y_Position_collect=Y_Position_collect
   self.tabHE_testName_collect=testName_collect
   #listing Test
   self.ui.tableWidget_tabHE.setRowCount(len(OriginalAlltest))

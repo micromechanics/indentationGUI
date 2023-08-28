@@ -32,17 +32,17 @@ class Ui_DialogExport(object):
 
         self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
 
-        self.comboBox_Tab = QComboBox(DialogExport)
-        self.comboBox_Tab.addItem("")
-        self.comboBox_Tab.addItem("")
-        self.comboBox_Tab.setObjectName(u"comboBox_Tab")
+        self.comboBox_ExportTab = QComboBox(DialogExport)
+        self.comboBox_ExportTab.addItem("")
+        self.comboBox_ExportTab.addItem("")
+        self.comboBox_ExportTab.setObjectName(u"comboBox_ExportTab")
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.comboBox_Tab.sizePolicy().hasHeightForWidth())
-        self.comboBox_Tab.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.comboBox_ExportTab.sizePolicy().hasHeightForWidth())
+        self.comboBox_ExportTab.setSizePolicy(sizePolicy)
 
-        self.gridLayout.addWidget(self.comboBox_Tab, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_ExportTab, 0, 1, 1, 1)
 
         self.label_4 = QLabel(DialogExport)
         self.label_4.setObjectName(u"label_4")
@@ -87,13 +87,15 @@ class Ui_DialogExport(object):
 
         self.gridLayout.addWidget(self.label_3, 3, 0, 1, 1)
 
-        self.comboBox_Format = QComboBox(DialogExport)
-        self.comboBox_Format.addItem("")
-        self.comboBox_Format.setObjectName(u"comboBox_Format")
-        sizePolicy.setHeightForWidth(self.comboBox_Format.sizePolicy().hasHeightForWidth())
-        self.comboBox_Format.setSizePolicy(sizePolicy)
+        self.comboBox_ExportFormat = QComboBox(DialogExport)
+        self.comboBox_ExportFormat.addItem("")
+        self.comboBox_ExportFormat.addItem("")
+        self.comboBox_ExportFormat.addItem("")
+        self.comboBox_ExportFormat.setObjectName(u"comboBox_ExportFormat")
+        sizePolicy.setHeightForWidth(self.comboBox_ExportFormat.sizePolicy().hasHeightForWidth())
+        self.comboBox_ExportFormat.setSizePolicy(sizePolicy)
 
-        self.gridLayout.addWidget(self.comboBox_Format, 3, 1, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_ExportFormat, 3, 1, 1, 1)
 
         self.pushButton_OK = QPushButton(DialogExport)
         self.pushButton_OK.setObjectName(u"pushButton_OK")
@@ -112,15 +114,17 @@ class Ui_DialogExport(object):
     def retranslateUi(self, DialogExport):
         DialogExport.setWindowTitle(QCoreApplication.translate("DialogExport", u"Export Results", None))
         self.label_2.setText(QCoreApplication.translate("DialogExport", u"Tab:", None))
-        self.comboBox_Tab.setItemText(0, QCoreApplication.translate("DialogExport", u"Hardness and Young's Modulus", None))
-        self.comboBox_Tab.setItemText(1, QCoreApplication.translate("DialogExport", u"Pop-in ", None))
+        self.comboBox_ExportTab.setItemText(0, QCoreApplication.translate("DialogExport", u"Hardness and Young's Modulus", None))
+        self.comboBox_ExportTab.setItemText(1, QCoreApplication.translate("DialogExport", u"Analyse Pop-in Effect", None))
 
         self.label_4.setText(QCoreApplication.translate("DialogExport", u"File Name:", None))
         self.lineEdit_ExportFileName.setText(QCoreApplication.translate("DialogExport", u"Ouput.xlsx", None))
         self.label.setText(QCoreApplication.translate("DialogExport", u"Folder:", None))
         self.pushButton_selectPath.setText(QCoreApplication.translate("DialogExport", u"select", None))
         self.label_3.setText(QCoreApplication.translate("DialogExport", u"Format:", None))
-        self.comboBox_Format.setItemText(0, QCoreApplication.translate("DialogExport", u"Each Test in on sheet", None))
+        self.comboBox_ExportFormat.setItemText(0, QCoreApplication.translate("DialogExport", u"Each Test in one Sheet", None))
+        self.comboBox_ExportFormat.setItemText(1, QCoreApplication.translate("DialogExport", u"All Tests in one Sheet", None))
+        self.comboBox_ExportFormat.setItemText(2, "")
 
         self.pushButton_OK.setText(QCoreApplication.translate("DialogExport", u"Export", None))
     # retranslateUi

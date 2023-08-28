@@ -9,14 +9,16 @@ from .main_window_ui import Ui_MainWindow
 from .DialogExport_ui import Ui_DialogExport
 from .DialogSaveAs_ui import Ui_DialogSaveAs
 from .DialogOpen_ui import Ui_DialogOpen
+from .DialogError_ui import Ui_DialogError
 
 # Subclass QMainWindow to customize your application's main window
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   """ Graphical user interface of MainWindow """
   from .TipRadius import Calculate_TipRadius, plot_Hertzian_fitting
   from .AnalysePopIn import Analyse_PopIn
   from .CalculateHardnessModulus import Calculate_Hardness_Modulus
   from .CalibrateTAF import click_OK_calibration, plot_TAF
+  from .Classification import Classification_HE, PlotMappingWithoutClustering, PlotMappingAfterClustering
   from .FrameStiffness import FrameStiffness
   from .load_depth import plot_load_depth, set_aspectRatio
 
@@ -55,6 +57,7 @@ class MainWindow(QMainWindow):
     #clicked.connect in tabTAF
     self.ui.OK_path_tabTAF.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
+    self.ui.pushButton_SelectAll_tabTAF.clicked.connect(self.click_pushButton_SelectAll_tabTAF)
     #clicked.connect in tabTipRadius
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabTipRadius_FrameStiffness)
     self.ui.pushButton_Calculate_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabPopIn_FrameStiffness)
@@ -64,6 +67,8 @@ class MainWindow(QMainWindow):
     self.ui.pushButton_Calculate_tabTipRadius.clicked.connect(self.Calculate_TipRadius)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
+    self.ui.pushButton_SelectAll_tabTipRadius.clicked.connect(self.click_pushButton_SelectAll_tabTipRadius)
+    self.ui.pushButton_SelectAll_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabTipRadius_FrameStiffness)
     #clicked.connect in tabHE
     self.ui.pushButton_Calculate_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness)
@@ -72,6 +77,8 @@ class MainWindow(QMainWindow):
     self.ui.Copy_FrameCompliance_tabHE.clicked.connect(self.Copy_FrameCompliance_tabHE)
     self.ui.Copy_TAF_tabHE_FrameStiffness.clicked.connect(self.Copy_TAF_tabHE_FrameStiffness)
     self.ui.Calculate_tabHE.clicked.connect(self.Calculate_Hardness_Modulus)
+    self.ui.pushButton_SelectAll_tabHE.clicked.connect(self.click_pushButton_SelectAll_tabHE)
+    self.ui.pushButton_SelectAll_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabHE_FrameStiffness)
     #clicked.connect in tabPopIn
     self.ui.pushButton_Analyse_tabPopIn.clicked.connect(self.Analyse_PopIn)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness) # pylint: disable=line-too-long
@@ -80,6 +87,12 @@ class MainWindow(QMainWindow):
     self.ui.Copy_FrameCompliance_tabPopIn.clicked.connect(self.Copy_FrameCompliance_tabPopIn)
     self.ui.Copy_TAF_tabPopIn_FrameStiffness.clicked.connect(self.Copy_TAF_tabPopIn_FrameStiffness)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn)
+    self.ui.pushButton_SelectAll_tabPopIn.clicked.connect(self.click_pushButton_SelectAll_tabPopIn)
+    self.ui.pushButton_SelectAll_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabPopIn_FrameStiffness)
+    #clicked.connect in tabClassification
+    self.ui.pushButton_Classify_tabClassification.clicked.connect(self.click_pushButton_Classify_tabClassification)
+    self.ui.pushButton_PlotMappingWithoutClustering_tabClassification.clicked.connect(self.click_pushButton_PlotMappingWithoutClustering_tabClassification)
+    self.ui.pushButton_PlotMappingAfterClustering_tabClassification.clicked.connect(self.click_pushButton_PlotMappingAfterClustering_tabClassification)
     #clicked.connect to new
     self.ui.actionNew.triggered.connect(self.reNew_windows)
     #clicked.connect in DialogExport
@@ -123,6 +136,7 @@ class MainWindow(QMainWindow):
                           'E_tabPopIn',
                           'maxShearStress_tabPopIn',
                           'PopInLoad_tabPopIn',
+                          'HE_tabClassification',
                           ]
     for graphicsView in graphicsView_list:
       self.matplotlib_canve_ax(graphicsView=graphicsView)
@@ -140,24 +154,28 @@ class MainWindow(QMainWindow):
 
   def show_DialogExport(self): #pylint: disable=no-self-use
     """ showing dialog window for exporting results """
-    if not window_DialogExport.isVisible():
-      window_DialogExport.show()
+    if window_DialogExport.isVisible():
+      window_DialogExport.close()
+    window_DialogExport.renewFilePath()
+    window_DialogExport.show()
 
 
   def show_DialogSaveAs(self): #pylint: disable=no-self-use
     """ showing dialog window for saving file """
-    if not window_DialogSaveAs.isVisible():
-      window_DialogSaveAs.ui.lineEdit_SaveAsFileName.setText(self.FileName_SAVED)
-      window_DialogSaveAs.ui.lineEdit_SaveAsFolder.setText(self.Folder_SAVED)
-      window_DialogSaveAs.show()
+    if window_DialogSaveAs.isVisible():
+      window_DialogSaveAs.close()
+    window_DialogSaveAs.ui.lineEdit_SaveAsFileName.setText(self.FileName_SAVED)
+    window_DialogSaveAs.ui.lineEdit_SaveAsFolder.setText(self.Folder_SAVED)
+    window_DialogSaveAs.show()
 
 
   def show_DialogOpen(self): #pylint: disable=no-self-use
     """ showing dialog window for openning file """
-    if not window_DialogOpen.isVisible():
-      window_DialogOpen.ui.lineEdit_OpenFileName.setText(self.FileName_SAVED)
-      window_DialogOpen.ui.lineEdit_OpenFolder.setText(self.Folder_SAVED)
-      window_DialogOpen.show()
+    if window_DialogOpen.isVisible():
+      window_DialogOpen.close()
+    window_DialogOpen.ui.lineEdit_OpenFileName.setText(self.FileName_SAVED)
+    window_DialogOpen.ui.lineEdit_OpenFolder.setText(self.Folder_SAVED)
+    window_DialogOpen.show()
 
 
   def matplotlib_canve_ax(self,graphicsView): #pylint: disable=no-self-use
@@ -299,6 +317,57 @@ class MainWindow(QMainWindow):
     """ plot the Hertzian fitting curves of the chosen tests in tabTipRadius """
     self.plot_Hertzian_fitting(tabName='tabTipRadius')
 
+  def click_pushButton_SelectAll(self, tabName): #pylint: disable=no-self-use
+    """ select/ unselect all tests in {tabName} """
+    State = Qt.Checked
+    tableWidget = eval(f"self.ui.tableWidget_{tabName}") #pylint: disable = eval-used
+    if tableWidget.item(0,0).checkState() == Qt.Checked:
+      State = Qt.Unchecked
+    for k in range(tableWidget.rowCount()):
+      try:
+        tableWidget.item(k,0).setCheckState(State)
+      except:
+        pass
+
+  def click_pushButton_SelectAll_tabTAF(self):
+    """ select/ unselect all tests in tabTAF """
+    self.click_pushButton_SelectAll(tabName='tabTAF')
+
+  def click_pushButton_SelectAll_tabTipRadius(self):
+    """ select/ unselect all tests in tabTipRadius """
+    self.click_pushButton_SelectAll(tabName='tabTipRadius')
+
+  def click_pushButton_SelectAll_tabTipRadius_FrameStiffness(self):
+    """ select/ unselect all tests in tabTipRadius_FrameStiffness """
+    self.click_pushButton_SelectAll(tabName='tabTipRadius_FrameStiffness')
+
+  def click_pushButton_SelectAll_tabHE(self):
+    """ select/ unselect all tests in tabHE """
+    self.click_pushButton_SelectAll(tabName='tabHE')
+
+  def click_pushButton_SelectAll_tabHE_FrameStiffness(self):
+    """ select/ unselect all tests in tabHE_FrameStiffness """
+    self.click_pushButton_SelectAll(tabName='tabHE_FrameStiffness')
+
+  def click_pushButton_SelectAll_tabPopIn(self):
+    """ select/ unselect all tests in tabPopIn """
+    self.click_pushButton_SelectAll(tabName='tabPopIn')
+
+  def click_pushButton_SelectAll_tabPopIn_FrameStiffness(self):
+    """ select/ unselect all tests in tabPopIn_FrameStiffness """
+    self.click_pushButton_SelectAll(tabName='tabPopIn_FrameStiffness')
+
+  def click_pushButton_Classify_tabClassification(self):
+    """ perform classification """
+    self.Classification_HE()
+
+  def click_pushButton_PlotMappingWithoutClustering_tabClassification(self):
+    """ plot mapping without clustering """
+    self.PlotMappingWithoutClustering()
+
+  def click_pushButton_PlotMappingAfterClustering_tabClassification(self):
+    """ plot mapping After clustering """
+    self.PlotMappingAfterClustering()
 
   def directSave(self):
     """ Save the current file directly to its original path """
@@ -369,6 +438,11 @@ class MainWindow(QMainWindow):
     for theWindow in QApplication.topLevelWidgets():
       theWindow.close()
 
+  def show_error(self, message, suggestion=' '): #pylint: disable=no-self-use
+    """ show the dialog showing error and suggestion """
+    window_DialogError.print_error(message, suggestion)
+    window_DialogError.show()
+
 
 class DialogExport(QDialog):
   """ Graphical user interface of Dialog used to export calculated results """
@@ -378,7 +452,7 @@ class DialogExport(QDialog):
     super().__init__()
     self.ui = Ui_DialogExport()
     self.ui.setupUi(self)
-    if self.ui.comboBox_Tab.currentIndex()==0:
+    if self.ui.comboBox_ExportTab.currentIndex()==0:
       #set default file name und folder path for tabHE
       tab_path = window.ui.lineEdit_path_tabHE_FrameStiffness.text()
       slash = '\\'
@@ -390,9 +464,29 @@ class DialogExport(QDialog):
       Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
       self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
       self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
+    self.ui.comboBox_ExportTab.currentIndexChanged.connect(self.renewFilePath)
     self.ui.pushButton_selectPath.clicked.connect(self.selectPath)
     self.ui.pushButton_OK.clicked.connect(self.go2export)
 
+  def renewFilePath(self):
+    """renew the file path after selecting the tab"""
+    if self.ui.comboBox_ExportTab.currentIndex()==0:
+      tabName='tabHE'
+      self.ui.comboBox_ExportFormat.setCurrentIndex(0)
+    elif self.ui.comboBox_ExportTab.currentIndex()==1:
+      tabName='tabPopIn'
+      self.ui.comboBox_ExportFormat.setCurrentIndex(1)
+    #set default file name und folder path for {tabName}
+    tab_path = eval(f"window.ui.lineEdit_path_{tabName}.text()") # pylint: disable=eval-used
+    slash = '\\'
+    if '\\' in tab_path:
+      slash = '\\'
+    elif '/' in tab_path:
+      slash = '/'
+    Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + f"_{tabName}_output.xlsx"
+    Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
+    self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
+    self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
 
   def selectPath(self):
     """ click "select" Button to select a path for exporting  """
@@ -404,6 +498,19 @@ class DialogExport(QDialog):
     """ exporting  """
     self.export(window)
     self.close()
+
+
+class DialogError(QDialog):
+  """ Graphical user interface of Dialog used to show error """
+  def __init__(self, parent = None):
+    super().__init__()
+    self.ui = Ui_DialogError()
+    self.ui.setupUi(self)
+    self.ui.pushButton_OK_DialogError.clicked.connect(self.close)
+  def print_error(self, error_message, suggestion=' '):
+    """ writing error message and suggestion  """
+    self.ui.textBrowser_Error.setText(error_message)
+    self.ui.textBrowser_Suggestion.setText(suggestion)
 
 
 class DialogSaveAs(QDialog):
@@ -443,9 +550,17 @@ class DialogOpen(QDialog):
 
 
   def selectPath(self):
-    """ click "select" Button to select a path for exporting  """
-    file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-    self.ui.lineEdit_OpenFolder.setText(file)
+    """ click "select" Button to select a folder path for exporting  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    slash = '\\'
+    if '\\' in file:
+      slash = '\\'
+    elif '/' in file:
+      slash = '/'
+    fileName=file[file.rfind(slash)+1:]
+    fileFolder=file[0:file.rfind(slash)+1]
+    self.ui.lineEdit_OpenFolder.setText(fileFolder)
+    self.ui.lineEdit_OpenFileName.setText(fileName)
 
 
   def go2Open(self):
@@ -500,7 +615,7 @@ class DialogOpen(QDialog):
 ## Main function
 def main():
   """ Main method and entry point for commands """
-  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen #pylint: disable=global-variable-undefined
+  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, window_DialogError #pylint: disable=global-variable-undefined
   app = QApplication()
   window = MainWindow()
   window.setWindowTitle("GUI for micromechanics.indentation")
@@ -516,6 +631,8 @@ def main():
   window_DialogSaveAs.setWindowIcon(logo_icon)
   window_DialogOpen = DialogOpen()
   window_DialogOpen.setWindowIcon(logo_icon)
+  window_DialogError = DialogError()
+  window_DialogError.setWindowIcon(logo_icon)
   #open or create Txt-file of OpenRecent
   try:
     file_RecentFiles = open(f"{window.file_path}{window.slash}RecentFiles.txt", 'r', encoding="utf-8") #pylint: disable=consider-using-with

@@ -77,7 +77,11 @@ def click_OK_calibration(self):
   else:
     self.i_tabTAF.model['driftRate'] = False
   #changing i.allTestList to calculate using the checked tests
-  OriginalAlltest = list(self.i_tabTAF.allTestList)
+  try:
+    OriginalAlltest = list(self.i_tabTAF.allTestList)
+  except Exception as e: #pylint: disable=broad-except
+    suggestion = 'Check if the Path is completed. \n A correct example: C:\G200X\\20230101\Example.xlsx' #pylint: disable=anomalous-backslash-in-string
+    self.show_error(str(e), suggestion)
   for k, theTest in enumerate(OriginalAlltest):
     try:
       IsCheck = self.ui.tableWidget_tabTAF.item(k,0).checkState()
@@ -86,13 +90,15 @@ def click_OK_calibration(self):
     else:
       if IsCheck==Qt.Unchecked:
         self.i_tabTAF.allTestList.remove(theTest)
+  #update i_tabTAF
+  self.i_tabTAF.restartFile()
   #plot load-depth of test 1
   self.i_tabTAF.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTAF
   self.i_tabTAF.output['ax'][0].cla()
   self.i_tabTAF.output['ax'][1].cla()
   self.i_tabTAF.output['ax'][0].set_title(f"{self.i_tabTAF.testName}")
   if self.i_tabTAF.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
-    self.i_tabTAF.stiffnessFromUnloading(self.i_tabTAF.p, self.i_tabTAF.h, plot=True)
+    self.i_tabTAF.stiffnessFromUnloading(self.i_tabTAF.p, self.i_tabTAF.h, plot=True, win=self)
   elif self.i_tabTAF.method== indentation.definitions.Method.CSM:
     self.i_tabTAF.output['ax'][0].scatter(self.i_tabTAF.h, self.i_tabTAF.p, s=1)
     self.i_tabTAF.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!

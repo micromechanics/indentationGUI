@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy.ndimage import gaussian_filter1d
+from scipy import ndimage
 from scipy.optimize import curve_fit
 from micromechanics import indentation
 from micromechanics.indentation.definitions import Method, Vendor
@@ -20,6 +21,7 @@ class IndentationXXX(indentation.Indentation):
 
   Functions modified based on functions of micromechanics.indentation:
     -nextTest
+    -identifyLoadHoldUnload
     -loadAgilent
     -nextAgilentTest
     -nextMicromaterialsTest
@@ -137,6 +139,129 @@ class IndentationXXX(indentation.Indentation):
       self.model['driftRate'] = True
     return success
 
+  def identifyLoadHoldUnload(self,plot=False):
+    """
+    internal method: identify ALL load - hold - unload segments in data
+
+    Args:
+        plot (bool): verify by plotting
+
+    Returns:
+        bool: success of identifying the load-hold-unload
+    """
+    if self.method==Method.CSM:
+      success = self.identifyLoadHoldUnloadCSM()
+      return success
+    #use force-rate to identify load-hold-unload
+    if self.model['relForceRateNoiseFilter']=='median':
+      p = signal.medfilt(self.p, 5)
+    else:
+      p = gaussian_filter1d(self.p, 5)
+    rate = np.gradient(p, self.t)
+    rate /= np.max(rate)
+    loadMask  = np.logical_and(rate >  self.model['relForceRateNoise'], p>self.model['forceNoise'])
+    unloadMask= np.logical_and(rate < -self.model['relForceRateNoise'], p>self.model['forceNoise'])
+    if plot:     # verify visually
+      plt.plot(rate)
+      plt.axhline(0, c='k')
+      plt.axhline( self.model['relForceRateNoise'], c='k', linestyle='dashed')
+      plt.axhline(-self.model['relForceRateNoise'], c='k', linestyle='dashed')
+      if plot:
+        plt.ylim([-8*self.model['relForceRateNoise'], 8*self.model['relForceRateNoise']])
+      plt.xlabel('time incr. []')
+      plt.ylabel(r'rate [$\mathrm{mN/sec}$]')
+      plt.title('Identify load, hold, unload: loading and unloading segments - prior to cleaning')
+      plt.show()
+    #try to clean small fluctuations
+    if len(loadMask)>100 and len(unloadMask)>100:
+      size = self.model['maxSizeFluctuations']
+      loadMaskTry = ndimage.binary_closing(loadMask, structure=np.ones((size,)) )
+      unloadMaskTry = ndimage.binary_closing(unloadMask, structure=np.ones((size,)))
+      loadMaskTry = ndimage.binary_opening(loadMaskTry, structure=np.ones((size,)))
+      unloadMaskTry = ndimage.binary_opening(unloadMaskTry, structure=np.ones((size,)))
+    if np.any(loadMaskTry) and np.any(unloadMaskTry):
+      loadMask = loadMaskTry
+      unloadMask = unloadMaskTry
+    # verify visually
+    if plot or self.output['plotLoadHoldUnload']:
+      if self.output['ax'] is None:
+        fig, ax = plt.subplots(2,1, sharex=True, gridspec_kw={'hspace':0})
+      ax[0].plot(rate)
+      ax[0].axhline(0, c='k')
+      x_ = np.arange(len(rate))[loadMask]
+      y_ = np.zeros_like(rate)[loadMask]
+      ax[0].plot(x_, y_, 'C1.', label='load mask')
+      x_ = np.arange(len(rate))[unloadMask]
+      y_ = np.zeros_like(rate)[unloadMask]
+      ax[0].plot(x_, y_, 'C2.', label='unload mask')
+      ax[0].axhline( self.model['relForceRateNoise'], c='k', linestyle='dashed')
+      ax[0].axhline(-self.model['relForceRateNoise'], c='k', linestyle='dashed')
+      ax[0].set_ylim([-8*self.model['relForceRateNoise'], 8*self.model['relForceRateNoise']])
+      ax[0].legend()
+      ax[0].set_ylabel(r'rate [$\mathrm{mN/sec}$]')
+    #find index where masks are changing from true-false
+    loadMask  = np.r_[False,loadMask,False] #pad with false on both sides
+    unloadMask= np.r_[False,unloadMask,False]
+    loadIdx   = np.flatnonzero(loadMask[1:]   != loadMask[:-1])
+    unloadIdx = np.flatnonzero(unloadMask[1:] != unloadMask[:-1])
+    if len(unloadIdx) == len(loadIdx)+2 and np.all(unloadIdx[-4:]>loadIdx[-1]):
+      #for drift: partial unload-hold-full unload
+      unloadIdx = unloadIdx[:-2]
+    while len(unloadIdx) < len(loadIdx) and loadIdx[2]<unloadIdx[0]:
+      #clean loading front
+      loadIdx = loadIdx[2:]
+
+    if plot or self.output['plotLoadHoldUnload']:     # verify visually
+      ax[1].plot(self.p,'o')
+      ax[1].plot(p, 's')
+      ax[1].plot(loadIdx[::2],  self.p[loadIdx[::2]],  'o',label='load',markersize=12)
+      ax[1].plot(loadIdx[1::2], self.p[loadIdx[1::2]], 'o',label='hold',markersize=10)
+      ax[1].plot(unloadIdx[::2],self.p[unloadIdx[::2]],'o',label='unload',markersize=8)
+      try:
+        ax[1].plot(unloadIdx[1::2],self.p[unloadIdx[1::2]],'o',label='unload-end',markersize=6)
+      except IndexError:
+        pass
+      ax[1].legend(loc=0)
+      ax[1].set_xlabel(r'time incr. []')
+      ax[1].set_ylabel(r'force [$\mathrm{mN}$]')
+      fig.tight_layout()
+      if self.output['ax'] is None:
+        plt.show()
+    #store them in a list [[loadStart1, loadEnd1, unloadStart1, unloadEnd1], [loadStart2, loadEnd2, unloadStart2, unloadEnd2],.. ]
+    self.iLHU = []
+    if len(loadIdx) != len(unloadIdx):
+      print("**ERROR: Load-Hold-Unload identification did not work",loadIdx, unloadIdx  )
+    else:
+      self.output['successTest'].append(self.testName)
+    try:
+      for i,_ in enumerate(loadIdx[::2]):
+        if loadIdx[::2][i] < loadIdx[1::2][i] <= unloadIdx[::2][i] < unloadIdx[1::2][i]:
+          newEntry = [loadIdx[::2][i],loadIdx[1::2][i],unloadIdx[::2][i],unloadIdx[1::2][i]]
+          if np.min(newEntry)>0 and np.max(newEntry)<=len(self.h): #!!!!!!
+            self.iLHU.append(newEntry)
+          else:
+            print("**ERROR: iLHU values out of bounds", newEntry,' with length',len(self.h))
+            if len(self.iLHU)>0:
+              self.iLHU.append([])
+        else:
+          print("**ERROR: some segment not found", loadIdx[::2][i], loadIdx[1::2][i], unloadIdx[::2][i], unloadIdx[1::2][i])
+          if len(self.iLHU)>0:
+            self.iLHU.append([])
+    except:
+      print("**ERROR: load-unload-segment not found")
+      self.iLHU = []
+    if len(self.iLHU)>1:
+      self.method=Method.MULTI
+    #drift segments: only add if it makes sense
+    try:
+      iDriftS = unloadIdx[1::2][-1]+1
+      iDriftE = len(self.p)-1
+      if iDriftS+1>iDriftE:
+        iDriftS=iDriftE-1
+      self.iDrift = [iDriftS,iDriftE]
+    except:
+      self.iDrift = [-1,-1]
+    return True
 
   def loadAgilent(self, fileName):
     """
@@ -180,6 +305,21 @@ class IndentationXXX(indentation.Indentation):
         break
       except:
         pass #do nothing;
+    #read sheet of 'Results' #!!!!!!
+    self.code_Results = {"X_Position": "X_Position", "Y_Position": "Y_Position"} #!!!!!!
+    self.workbook_Results = None #!!!!!!
+    self.X_Position=None #!!!!!!
+    self.Y_Position=None #!!!!!!
+    for sheetName in ['Results']: #!!!!!!
+      try: #!!!!!!
+        self.workbook_Results = self.datafile.get(sheetName) #!!!!!!
+        for cell in self.workbook_Results.columns: #!!!!!!
+          if cell in self.code_Results: #!!!!!!
+            self.indicies[self.code_Results[cell]] = cell #!!!!!!
+        break #!!!!!!
+      except: #!!!!!!
+        pass #do nothing; #!!!!!!
+    self.length_indicies_after_readingResults=len(self.indicies) #!!!!!!
     if 'Poissons Ratio' in self.metaVendor and self.metaVendor['Poissons Ratio']!=self.nuMat and \
         self.output['verbose']>0:
       print("*WARNING*: Poisson Ratio different than in file.",self.nuMat,self.metaVendor['Poissons Ratio'])
@@ -213,7 +353,7 @@ class IndentationXXX(indentation.Indentation):
       if "Test " in dfName and not "Tagged" in dfName and not "Test Inputs" in dfName:
         self.testList.append(dfName)
         #print "  I should process sheet |",sheet.name,"|"
-        if len(self.indicies)==0:               #find index of colums for load, etc
+        if len(self.indicies)==self.length_indicies_after_readingResults:               #find index of colums for load, etc #!!!!!!
           for cell in df.columns:
             if cell in code:
               self.indicies[code[cell]] = cell
@@ -282,19 +422,24 @@ class IndentationXXX(indentation.Indentation):
     else:
       self.valid = validFull # pylint: disable=attribute-defined-outside-init
     for index in self.indicies:  #pylint: disable=consider-using-dict-items
-      data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64)
-      mask = np.isfinite(data)
-      mask[mask] = data[mask]<1e99
-      self.valid = np.logical_and(self.valid, mask)  #adopt/reduce mask continously # pylint: disable=attribute-defined-outside-init
-
+      if index not in self.code_Results: #!!!!!!
+        data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64) #!!!!!!
+        mask = np.isfinite(data) #!!!!!!
+        mask[mask] = data[mask]<1e99 #!!!!!!
+        self.valid = np.logical_and(self.valid, mask)  #adopt/reduce mask continously # pylint: disable=attribute-defined-outside-init #!!!!!!
     #Run through all items again and crop to only valid data
     for index in self.indicies:  #pylint: disable=consider-using-dict-items
-      data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64)
-      if not index in self.fullData:
-        data = data[self.valid]
-      else:
-        data = data[validFull]
-      setattr(self, index, data)
+      if index in self.code_Results: #!!!!!!
+        testNumber = int(self.testName[5:]) #!!!!!!
+        data = self.workbook_Results[self.indicies[index]][testNumber] #!!!!!!
+        setattr(self, index, data) #!!!!!!
+      elif index not in self.code_Results: #!!!!!!
+        data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64) #!!!!!!
+        if not index in self.fullData: #!!!!!!
+          data = data[self.valid] #!!!!!!
+        else: #!!!!!!
+          data = data[validFull] #!!!!!!
+        setattr(self, index, data) #!!!!!!
 
     self.valid = self.valid[validFull]  # pylint: disable=attribute-defined-outside-init
     #  now all fields (incl. p) are full and defined
@@ -307,7 +452,6 @@ class IndentationXXX(indentation.Indentation):
     #   self.valid[iMax:] = False
     #   self.valid[:iMin] = False
     #   self.slope = self.slope[iMin:np.sum(self.valid)+iMin]
-
     #correct data and evaluate missing
     self.h /= 1.e3 #from nm in um
     if "Ac" in self.indicies         : self.Ac /= 1.e6  #from nm in um
@@ -354,7 +498,7 @@ class IndentationXXX(indentation.Indentation):
     return value
 
 
-  def stiffnessFromUnloading(self, p, h, plot=False):
+  def stiffnessFromUnloading(self, p, h, plot=False, win=False): #!!!!!!
     """
     Calculate single unloading stiffness from Unloading; see G200 manual, p7-6
 
@@ -362,7 +506,7 @@ class IndentationXXX(indentation.Indentation):
         p (np.array): vector of forces
         h (np.array): vector of depth
         plot (bool): plot results
-
+        win (Class): main_window #!!!!!!
     Returns:
         list: stiffness, validMask, mask, optimalVariables, powerlawFit-success |br|
           validMask is [values of p,h where stiffness is determined]
@@ -384,7 +528,14 @@ class IndentationXXX(indentation.Indentation):
         ax2 = ax_[1]
       ax.plot(h,p, '-ok', markersize=3, linewidth=1, label='data') #!!!!!!
     for cycleNum, cycle in enumerate(self.iLHU):
-      loadStart, loadEnd, unloadStart, unloadEnd = cycle
+      if win: #!!!!!!
+        try: #!!!!!!
+          loadStart, loadEnd, unloadStart, unloadEnd = cycle #!!!!!!
+        except Exception as e: #!!!!!! # pylint:disable=broad-except
+          suggestion = 'Try setting the "max. Size of fluctuation" to a vlaue greater than 10.' #!!!!!!
+          win.show_error(str(e), suggestion) #!!!!!!
+      else: #!!!!!!
+        loadStart, loadEnd, unloadStart, unloadEnd = cycle #!!!!!!
       if loadStart>loadEnd or loadEnd>unloadStart or unloadStart>unloadEnd:
         print('*ERROR* stiffnessFromUnloading: indicies not in order:',cycle)
       maskSegment = np.zeros_like(h, dtype=bool)

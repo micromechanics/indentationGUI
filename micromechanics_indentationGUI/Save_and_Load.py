@@ -57,6 +57,10 @@ class data4save:
                     'doubleSpinBox_half_includedAngle_TabTAF':None, # the half included angle of cone
                     'doubleSpinBox_minhc_Tip':None,            #the minium contact depth of Ac
                     'checkBox_IfTermsGreaterThanZero': None,   # if the terms of TAF should be greater than Zero, except the fisrt term of the sphere tip
+                    'textEdit_Files': None,
+                    'spinBox_NumberClusters': None,
+                    'checkBox_ifUsingFoundNumberClusters': None,
+                    'checkBox_ifPlotElbow': None,
                   }
     
     self.tabName_list = [
@@ -66,7 +70,8 @@ class data4save:
                           'tabHE_FrameStiffness',
                           'tabHE',
                           'tabPopIn_FrameStiffness',
-                          'tabPopIn',       
+                          'tabPopIn',
+                          'tabClassification'       
                         ]
 
     self.tabTAF = allWidgets.copy()
@@ -76,8 +81,17 @@ class data4save:
     self.tabHE = allWidgets.copy()
     self.tabPopIn_FrameStiffness = allWidgets.copy()
     self.tabPopIn = allWidgets.copy()
+    self.tabClassification = allWidgets.copy()
     self.data_time = None # the date and time of save
 
+    # indentation data
+    self.i_tabTAF = None
+    self.i_tabTipRadius = None
+    self.i_tabTipRadius_FrameStiffness = None
+    self.i_tabHE = None
+    self.i_tabHE_FrameStiffness = None
+    self.i_tabPopIn = None
+    self.i_tabPopIn_FrameStiffness = None
 
 def read_data_in_one_Table(Widget):
   data_in_Table=[]
@@ -119,7 +133,6 @@ def reload_data_in_one_Table(Widget, data_in_Table):
         if j==0:
           theData_next_column=data_in_Table[j+1][i]
           qtablewidgetitem=QTableWidgetItem(theData_next_column)
-          print('theData', theData)
           if theData == False:
             qtablewidgetitem.setCheckState(Qt.Unchecked)
           else:
@@ -141,6 +154,8 @@ def read_data_in_one_Tab(win,Tab,tabName):
     else:
       if 'lineEdit' in widget:
         Tab[widget] = Widget.text()
+      elif 'textEdit' in widget:
+        Tab[widget] = Widget.toPlainText()
       elif ('SpinBox' in widget) or ('spinBox' in widget):
         Tab[widget] = Widget.value()
       elif 'comboBox' in widget:
@@ -169,6 +184,11 @@ def reload_data_in_one_Tab(win,Tab, tabName):
           Widget.setText(' ')
         else:
           Widget.setText(Tab[widget])
+      elif 'textEdit' in widget:
+        if Tab[widget]=='':
+          Widget.setPlainText(' ')
+        else:
+          Widget.setPlainText(Tab[widget])
       elif ('SpinBox' in widget) or ('spinBox' in widget):
         Widget.setValue(Tab[widget])
       elif 'comboBox' in widget:
@@ -192,8 +212,12 @@ def SAVE(self, win):
   data.data_time = now.strftime("%b-%d-%Y %H:%M:%S")
   #read data from all tab
   for tabName in data.tabName_list:
-    Tab = eval(f"data.{tabName}")
-    read_data_in_one_Tab(win=win, Tab=Tab, tabName=tabName)
+    try:
+      Tab = eval(f"data.{tabName}")
+    except:
+      pass
+    else:
+      read_data_in_one_Tab(win=win, Tab=Tab, tabName=tabName)
   #get the file path
   win.FileName_SAVED = self.ui.lineEdit_SaveAsFileName.text()
   win.Folder_SAVED = self.ui.lineEdit_SaveAsFolder.text()
@@ -234,8 +258,12 @@ def LOAD(self, win):
   data = pickle.load(file)
   #load data to all tab
   for tabName in data4save().tabName_list:
-    Tab = eval(f"data.{tabName}")
-    reload_data_in_one_Tab(win=win,Tab=Tab, tabName=tabName)
+    try:
+      Tab = eval(f"data.{tabName}")
+    except:
+      pass
+    else:
+      reload_data_in_one_Tab(win=win,Tab=Tab, tabName=tabName)
   # close the file
   file.close()
   try:

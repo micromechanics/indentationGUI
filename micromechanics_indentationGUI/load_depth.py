@@ -31,6 +31,8 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
     tabName (string): the name of Tab Widget
     If_inclusive_frameStiffness (string): 'inclusive' or 'exclusive'
   """
+  #close all matplot figures before plotting new figures
+  plt.close('all')
   #define indentation
   i = eval(f"self.i_{tabName}") # pylint: disable = eval-used
   #reset testList
@@ -93,8 +95,12 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
           fig_thermalDrift, ax_thermalDrift = plt.subplots()
         correctThermalDrift(indentation=i, ax=ax_thermalDrift, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
         if showDrift:
-          fig_thermalDrift.legend()
-          fig_thermalDrift.show()
+          try:
+            fig_thermalDrift.legend()
+            fig_thermalDrift.show()
+          except Exception as e: #pylint: disable=broad-except
+            suggestion = 'If you want to plot load-depth curves of more than 1 test, please do not check "show thermal drift"' #pylint: disable=anomalous-backslash-in-string
+            self.show_error(str(e), suggestion)
       if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI) and not plot_multiTest:
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
       elif i.method== indentation.definitions.Method.CSM or plot_multiTest:
