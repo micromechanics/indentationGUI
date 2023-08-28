@@ -228,7 +228,7 @@ class IndentationXXX(indentation.Indentation):
       if self.output['ax'] is None:
         plt.show()
     #store them in a list [[loadStart1, loadEnd1, unloadStart1, unloadEnd1], [loadStart2, loadEnd2, unloadStart2, unloadEnd2],.. ]
-    self.iLHU = []
+    self.iLHU = [] #pylint:disable=attribute-defined-outside-init
     if len(loadIdx) != len(unloadIdx):
       print("**ERROR: Load-Hold-Unload identification did not work",loadIdx, unloadIdx  )
     else:
@@ -249,18 +249,18 @@ class IndentationXXX(indentation.Indentation):
             self.iLHU.append([])
     except:
       print("**ERROR: load-unload-segment not found")
-      self.iLHU = []
+      self.iLHU = [] #pylint:disable=attribute-defined-outside-init
     if len(self.iLHU)>1:
-      self.method=Method.MULTI
+      self.method=Method.MULTI #pylint:disable=attribute-defined-outside-init
     #drift segments: only add if it makes sense
     try:
       iDriftS = unloadIdx[1::2][-1]+1
       iDriftE = len(self.p)-1
       if iDriftS+1>iDriftE:
         iDriftS=iDriftE-1
-      self.iDrift = [iDriftS,iDriftE]
+      self.iDrift = [iDriftS,iDriftE] #pylint:disable=attribute-defined-outside-init
     except:
-      self.iDrift = [-1,-1]
+      self.iDrift = [-1,-1] #pylint:disable=attribute-defined-outside-init
     return True
 
   def loadAgilent(self, fileName):
@@ -306,20 +306,20 @@ class IndentationXXX(indentation.Indentation):
       except:
         pass #do nothing;
     #read sheet of 'Results' #!!!!!!
-    self.code_Results = {"X_Position": "X_Position", "Y_Position": "Y_Position"} #!!!!!!
-    self.workbook_Results = None #!!!!!!
-    self.X_Position=None #!!!!!!
-    self.Y_Position=None #!!!!!!
+    self.code_Results = {"X_Position": "X_Position", "Y_Position": "Y_Position"} #!!!!!! #pylint:disable=attribute-defined-outside-init
+    self.workbook_Results = None #!!!!!!#pylint:disable=attribute-defined-outside-init
+    self.X_Position=None #!!!!!!#pylint:disable=attribute-defined-outside-init
+    self.Y_Position=None #!!!!!!#pylint:disable=attribute-defined-outside-init
     for sheetName in ['Results']: #!!!!!!
       try: #!!!!!!
-        self.workbook_Results = self.datafile.get(sheetName) #!!!!!!
+        self.workbook_Results = self.datafile.get(sheetName) #!!!!!!#pylint:disable=attribute-defined-outside-init
         for cell in self.workbook_Results.columns: #!!!!!!
           if cell in self.code_Results: #!!!!!!
             self.indicies[self.code_Results[cell]] = cell #!!!!!!
         break #!!!!!!
       except: #!!!!!!
         pass #do nothing; #!!!!!!
-    self.length_indicies_after_readingResults=len(self.indicies) #!!!!!!
+    self.length_indicies_after_readingResults=len(self.indicies) #!!!!!!#pylint:disable=attribute-defined-outside-init
     if 'Poissons Ratio' in self.metaVendor and self.metaVendor['Poissons Ratio']!=self.nuMat and \
         self.output['verbose']>0:
       print("*WARNING*: Poisson Ratio different than in file.",self.nuMat,self.metaVendor['Poissons Ratio'])

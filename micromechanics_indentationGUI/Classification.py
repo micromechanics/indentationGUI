@@ -188,8 +188,8 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     mapping2 = axs[1].scatter(X_Position, Y_Position, c=E, vmin=E.min()-(E.max()-E.min())*0.5, vmax=E.max(), cmap=cm_E)
     #markering indent region
     for i, _ in enumerate(X_Position):
-      plotCycle(ax=axs[0],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20)
-      plotCycle(ax=axs[1],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20)
+      plotCycle(ax=axs[0],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: diable=unnecessary-list-index-lookup
+      plotCycle(ax=axs[1],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: diable=unnecessary-list-index-lookup
     axs[3].plot([0,Spacing],[-Y_length*0.05,-Y_length*0.05], color='black', linewidth=8)
     axs[3].text(0, Y_length*0., f"{Spacing:.1f} µm", fontsize=14)
     Plot2ExplainCycle(ax=axs[3],x0=X_length*0.7,y0=Y_length*0,radius=X_length*0.15)
@@ -215,7 +215,7 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
       axs[2].set_title('K-means Clustering')
       cluster_collect=[]
       for i, _ in enumerate(X_Position):
-        plotCycle(ax=axs[2],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20)
+        plotCycle(ax=axs[2],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: diable=unnecessary-list-index-lookup
         index = np.where( (np.absolute((X[:,1]/factor_y)-H[i])<1.e-5) & (np.absolute(X[:,0]-E[i])<1.e-5) )
         cluster_collect.append(int(cluster.labels_[index])+1)
       #Cluster mapping
