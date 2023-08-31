@@ -18,7 +18,7 @@ def export(self, win):
   elif '/' in __file__:
     slash = '/'
   try:
-    writer = ExcelWriter(f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}") # pylint: disable=abstract-class-instantiated
+    writer = ExcelWriter(f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}", engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
   except Exception as e: #pylint:disable=broad-except
     suggestion = 'Close the opened Excel file.'
     win.show_error(str(e), suggestion)
@@ -109,6 +109,9 @@ def export(self, win):
       #define the data frame of each tests for tabHE
       for j, _ in enumerate(win.tabHE_testName_collect):
         sheetName = win.tabHE_testName_collect[j]
+        if win.tabHE_X_Position_collect[j] is None:
+          win.tabHE_X_Position_collect[j]=0
+          win.tabHE_Y_Position_collect[j]=0
         df = DataFrame(
                         [
                           win.tabHE_hc_collect[j],
@@ -249,5 +252,5 @@ def export(self, win):
 
 
   #save the writer and create the excel file (.xlsx)
-  writer.save()
+  writer.close()
   return
