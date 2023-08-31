@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1536</width>
+    <width>1473</width>
     <height>836</height>
    </rect>
   </property>
@@ -25,7 +25,7 @@
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>3000</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="cursor">
@@ -878,8 +878,8 @@
                <widget class="QGraphicsView" name="graphicsView_TAF_tabTAF">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>100</horstretch>
-                  <verstretch>100</verstretch>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
                </widget>
@@ -887,14 +887,14 @@
               <item row="1" column="0" colspan="12">
                <widget class="QGroupBox" name="groupBox_22">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>800</width>
+                  <width>0</width>
                   <height>0</height>
                  </size>
                 </property>
@@ -930,6 +930,18 @@
                  </item>
                  <item row="0" column="5">
                   <widget class="QLineEdit" name="lineEdit_TAF3_tabTAF">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -940,6 +952,12 @@
                  </item>
                  <item row="0" column="3">
                   <widget class="QLineEdit" name="lineEdit_TAF2_tabTAF">
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -950,6 +968,12 @@
                  </item>
                  <item row="0" column="7">
                   <widget class="QLineEdit" name="lineEdit_TAF4_tabTAF">
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -960,6 +984,18 @@
                  </item>
                  <item row="0" column="1">
                   <widget class="QLineEdit" name="lineEdit_TAF1_tabTAF">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -1009,6 +1045,12 @@
                  </item>
                  <item row="0" column="9">
                   <widget class="QLineEdit" name="lineEdit_TAF5_tabTAF">
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -1032,6 +1074,12 @@
                  </item>
                  <item row="1" column="3">
                   <widget class="QLineEdit" name="lineEdit_TAF6_tabTAF">
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -1046,6 +1094,18 @@
                  </item>
                  <item row="1" column="5">
                   <widget class="QLineEdit" name="lineEdit_TAF7_tabTAF">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -1060,6 +1120,12 @@
                  </item>
                  <item row="1" column="7">
                   <widget class="QLineEdit" name="lineEdit_TAF8_tabTAF">
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -1074,6 +1140,12 @@
                  </item>
                  <item row="1" column="9">
                   <widget class="QLineEdit" name="lineEdit_TAF9_tabTAF">
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -3397,7 +3469,7 @@
                  </sizepolicy>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <property name="usesScrollButtons">
                  <bool>true</bool>
@@ -7288,7 +7360,7 @@
                  </sizepolicy>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <property name="usesScrollButtons">
                  <bool>true</bool>
@@ -7301,7 +7373,7 @@
                   <item row="1" column="0">
                    <widget class="QTabWidget" name="tabWidget_11">
                     <property name="currentIndex">
-                     <number>1</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_37">
                      <attribute name="title">
@@ -9546,7 +9618,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1536</width>
+     <width>1473</width>
      <height>22</height>
     </rect>
    </property>

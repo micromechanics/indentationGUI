@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: skip-file
+
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
@@ -27,14 +27,14 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1536, 836)
+        MainWindow.resize(1473, 836)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QSize(0, 0))
-        MainWindow.setMaximumSize(QSize(16777215, 3000))
+        MainWindow.setMaximumSize(QSize(16777215, 16777215))
         MainWindow.setCursor(QCursor(Qt.ArrowCursor))
         MainWindow.setMouseTracking(False)
         self.actionNew = QAction(MainWindow)
@@ -485,101 +485,105 @@ class Ui_MainWindow(object):
         self.gridLayout_13.setObjectName(u"gridLayout_13")
         self.graphicsView_TAF_tabTAF = QGraphicsView(self.tab_2)
         self.graphicsView_TAF_tabTAF.setObjectName(u"graphicsView_TAF_tabTAF")
-        sizePolicy8 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy8.setHorizontalStretch(100)
-        sizePolicy8.setVerticalStretch(100)
-        sizePolicy8.setHeightForWidth(self.graphicsView_TAF_tabTAF.sizePolicy().hasHeightForWidth())
-        self.graphicsView_TAF_tabTAF.setSizePolicy(sizePolicy8)
+        sizePolicy.setHeightForWidth(self.graphicsView_TAF_tabTAF.sizePolicy().hasHeightForWidth())
+        self.graphicsView_TAF_tabTAF.setSizePolicy(sizePolicy)
 
         self.gridLayout_13.addWidget(self.graphicsView_TAF_tabTAF, 2, 0, 1, 12)
 
         self.groupBox_22 = QGroupBox(self.tab_2)
         self.groupBox_22.setObjectName(u"groupBox_22")
-        sizePolicy9 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        sizePolicy9.setHorizontalStretch(0)
-        sizePolicy9.setVerticalStretch(0)
-        sizePolicy9.setHeightForWidth(self.groupBox_22.sizePolicy().hasHeightForWidth())
-        self.groupBox_22.setSizePolicy(sizePolicy9)
-        self.groupBox_22.setMinimumSize(QSize(800, 0))
+        sizePolicy1.setHeightForWidth(self.groupBox_22.sizePolicy().hasHeightForWidth())
+        self.groupBox_22.setSizePolicy(sizePolicy1)
+        self.groupBox_22.setMinimumSize(QSize(0, 0))
         self.gridLayout_42 = QGridLayout(self.groupBox_22)
         self.gridLayout_42.setObjectName(u"gridLayout_42")
         self.label_30 = QLabel(self.groupBox_22)
         self.label_30.setObjectName(u"label_30")
-        sizePolicy10 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
-        sizePolicy10.setHorizontalStretch(0)
-        sizePolicy10.setVerticalStretch(0)
-        sizePolicy10.setHeightForWidth(self.label_30.sizePolicy().hasHeightForWidth())
-        self.label_30.setSizePolicy(sizePolicy10)
+        sizePolicy8 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy8.setHorizontalStretch(0)
+        sizePolicy8.setVerticalStretch(0)
+        sizePolicy8.setHeightForWidth(self.label_30.sizePolicy().hasHeightForWidth())
+        self.label_30.setSizePolicy(sizePolicy8)
 
         self.gridLayout_42.addWidget(self.label_30, 0, 8, 1, 1)
 
         self.label_26 = QLabel(self.groupBox_22)
         self.label_26.setObjectName(u"label_26")
-        sizePolicy10.setHeightForWidth(self.label_26.sizePolicy().hasHeightForWidth())
-        self.label_26.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_26.sizePolicy().hasHeightForWidth())
+        self.label_26.setSizePolicy(sizePolicy8)
 
         self.gridLayout_42.addWidget(self.label_26, 0, 0, 1, 1)
 
         self.lineEdit_TAF3_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF3_tabTAF.setObjectName(u"lineEdit_TAF3_tabTAF")
+        sizePolicy1.setHeightForWidth(self.lineEdit_TAF3_tabTAF.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabTAF.setSizePolicy(sizePolicy1)
+        self.lineEdit_TAF3_tabTAF.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF3_tabTAF.setReadOnly(True)
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF3_tabTAF, 0, 5, 1, 1)
 
         self.lineEdit_TAF2_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF2_tabTAF.setObjectName(u"lineEdit_TAF2_tabTAF")
+        self.lineEdit_TAF2_tabTAF.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF2_tabTAF.setReadOnly(True)
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF2_tabTAF, 0, 3, 1, 1)
 
         self.lineEdit_TAF4_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF4_tabTAF.setObjectName(u"lineEdit_TAF4_tabTAF")
+        self.lineEdit_TAF4_tabTAF.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF4_tabTAF.setReadOnly(True)
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF4_tabTAF, 0, 7, 1, 1)
 
         self.lineEdit_TAF1_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF1_tabTAF.setObjectName(u"lineEdit_TAF1_tabTAF")
+        sizePolicy1.setHeightForWidth(self.lineEdit_TAF1_tabTAF.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF1_tabTAF.setSizePolicy(sizePolicy1)
+        self.lineEdit_TAF1_tabTAF.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF1_tabTAF.setReadOnly(True)
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF1_tabTAF, 0, 1, 1, 1)
 
         self.label_29 = QLabel(self.groupBox_22)
         self.label_29.setObjectName(u"label_29")
-        sizePolicy10.setHeightForWidth(self.label_29.sizePolicy().hasHeightForWidth())
-        self.label_29.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_29.sizePolicy().hasHeightForWidth())
+        self.label_29.setSizePolicy(sizePolicy8)
 
         self.gridLayout_42.addWidget(self.label_29, 0, 6, 1, 1)
 
         self.label_28 = QLabel(self.groupBox_22)
         self.label_28.setObjectName(u"label_28")
-        sizePolicy10.setHeightForWidth(self.label_28.sizePolicy().hasHeightForWidth())
-        self.label_28.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_28.sizePolicy().hasHeightForWidth())
+        self.label_28.setSizePolicy(sizePolicy8)
 
         self.gridLayout_42.addWidget(self.label_28, 0, 4, 1, 1)
 
         self.label_27 = QLabel(self.groupBox_22)
         self.label_27.setObjectName(u"label_27")
-        sizePolicy10.setHeightForWidth(self.label_27.sizePolicy().hasHeightForWidth())
-        self.label_27.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_27.sizePolicy().hasHeightForWidth())
+        self.label_27.setSizePolicy(sizePolicy8)
 
         self.gridLayout_42.addWidget(self.label_27, 0, 2, 1, 1)
 
         self.lineEdit_TAF5_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF5_tabTAF.setObjectName(u"lineEdit_TAF5_tabTAF")
+        self.lineEdit_TAF5_tabTAF.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF5_tabTAF.setReadOnly(True)
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF5_tabTAF, 0, 9, 1, 1)
 
         self.label_31 = QLabel(self.groupBox_22)
         self.label_31.setObjectName(u"label_31")
-        sizePolicy10.setHeightForWidth(self.label_31.sizePolicy().hasHeightForWidth())
-        self.label_31.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_31.sizePolicy().hasHeightForWidth())
+        self.label_31.setSizePolicy(sizePolicy8)
 
         self.gridLayout_42.addWidget(self.label_31, 0, 10, 1, 1)
 
         self.lineEdit_TAF6_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF6_tabTAF.setObjectName(u"lineEdit_TAF6_tabTAF")
+        self.lineEdit_TAF6_tabTAF.setMaximumSize(QSize(80, 16777215))
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF6_tabTAF, 1, 3, 1, 1)
 
@@ -590,6 +594,9 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF7_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF7_tabTAF.setObjectName(u"lineEdit_TAF7_tabTAF")
+        sizePolicy1.setHeightForWidth(self.lineEdit_TAF7_tabTAF.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF7_tabTAF.setSizePolicy(sizePolicy1)
+        self.lineEdit_TAF7_tabTAF.setMaximumSize(QSize(80, 16777215))
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF7_tabTAF, 1, 5, 1, 1)
 
@@ -600,6 +607,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF8_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF8_tabTAF.setObjectName(u"lineEdit_TAF8_tabTAF")
+        self.lineEdit_TAF8_tabTAF.setMaximumSize(QSize(80, 16777215))
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF8_tabTAF, 1, 7, 1, 1)
 
@@ -610,6 +618,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF9_tabTAF = QLineEdit(self.groupBox_22)
         self.lineEdit_TAF9_tabTAF.setObjectName(u"lineEdit_TAF9_tabTAF")
+        self.lineEdit_TAF9_tabTAF.setMaximumSize(QSize(80, 16777215))
 
         self.gridLayout_42.addWidget(self.lineEdit_TAF9_tabTAF, 1, 9, 1, 1)
 
@@ -635,11 +644,11 @@ class Ui_MainWindow(object):
         self.gridLayout_15.setObjectName(u"gridLayout_15")
         self.label_34 = QLabel(self.groupBox_7)
         self.label_34.setObjectName(u"label_34")
-        sizePolicy11 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        sizePolicy11.setHorizontalStretch(0)
-        sizePolicy11.setVerticalStretch(0)
-        sizePolicy11.setHeightForWidth(self.label_34.sizePolicy().hasHeightForWidth())
-        self.label_34.setSizePolicy(sizePolicy11)
+        sizePolicy9 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        sizePolicy9.setHorizontalStretch(0)
+        sizePolicy9.setVerticalStretch(0)
+        sizePolicy9.setHeightForWidth(self.label_34.sizePolicy().hasHeightForWidth())
+        self.label_34.setSizePolicy(sizePolicy9)
         font1 = QFont()
         font1.setPointSize(10)
         self.label_34.setFont(font1)
@@ -720,8 +729,8 @@ class Ui_MainWindow(object):
 
         self.label_64 = QLabel(self.groupBox_7)
         self.label_64.setObjectName(u"label_64")
-        sizePolicy11.setHeightForWidth(self.label_64.sizePolicy().hasHeightForWidth())
-        self.label_64.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_64.sizePolicy().hasHeightForWidth())
+        self.label_64.setSizePolicy(sizePolicy9)
         self.label_64.setFont(font)
         self.label_64.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -729,19 +738,19 @@ class Ui_MainWindow(object):
 
         self.label_63 = QLabel(self.groupBox_7)
         self.label_63.setObjectName(u"label_63")
-        sizePolicy11.setHeightForWidth(self.label_63.sizePolicy().hasHeightForWidth())
-        self.label_63.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_63.sizePolicy().hasHeightForWidth())
+        self.label_63.setSizePolicy(sizePolicy9)
         self.label_63.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_15.addWidget(self.label_63, 0, 0, 1, 2)
 
         self.lineEdit_TipName_tabTAF = QLineEdit(self.groupBox_7)
         self.lineEdit_TipName_tabTAF.setObjectName(u"lineEdit_TipName_tabTAF")
-        sizePolicy12 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
-        sizePolicy12.setHorizontalStretch(0)
-        sizePolicy12.setVerticalStretch(0)
-        sizePolicy12.setHeightForWidth(self.lineEdit_TipName_tabTAF.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TipName_tabTAF.setSizePolicy(sizePolicy12)
+        sizePolicy10 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        sizePolicy10.setHorizontalStretch(0)
+        sizePolicy10.setVerticalStretch(0)
+        sizePolicy10.setHeightForWidth(self.lineEdit_TipName_tabTAF.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TipName_tabTAF.setSizePolicy(sizePolicy10)
 
         self.gridLayout_15.addWidget(self.lineEdit_TipName_tabTAF, 0, 2, 1, 2)
 
@@ -762,8 +771,8 @@ class Ui_MainWindow(object):
 
         self.spinBox_number_of_TAFterms_tabTAF = QSpinBox(self.groupBox_64)
         self.spinBox_number_of_TAFterms_tabTAF.setObjectName(u"spinBox_number_of_TAFterms_tabTAF")
-        sizePolicy11.setHeightForWidth(self.spinBox_number_of_TAFterms_tabTAF.sizePolicy().hasHeightForWidth())
-        self.spinBox_number_of_TAFterms_tabTAF.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.spinBox_number_of_TAFterms_tabTAF.sizePolicy().hasHeightForWidth())
+        self.spinBox_number_of_TAFterms_tabTAF.setSizePolicy(sizePolicy9)
         self.spinBox_number_of_TAFterms_tabTAF.setMinimum(2)
         self.spinBox_number_of_TAFterms_tabTAF.setMaximum(9)
         self.spinBox_number_of_TAFterms_tabTAF.setValue(3)
@@ -825,8 +834,8 @@ class Ui_MainWindow(object):
 
         self.OK_path_tabTAF = QPushButton(self.tab_calibration)
         self.OK_path_tabTAF.setObjectName(u"OK_path_tabTAF")
-        sizePolicy10.setHeightForWidth(self.OK_path_tabTAF.sizePolicy().hasHeightForWidth())
-        self.OK_path_tabTAF.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.OK_path_tabTAF.sizePolicy().hasHeightForWidth())
+        self.OK_path_tabTAF.setSizePolicy(sizePolicy8)
         self.OK_path_tabTAF.setMinimumSize(QSize(200, 0))
         self.OK_path_tabTAF.setMaximumSize(QSize(200, 46))
 
@@ -834,16 +843,16 @@ class Ui_MainWindow(object):
 
         self.groupBox_6 = QGroupBox(self.tab_calibration)
         self.groupBox_6.setObjectName(u"groupBox_6")
-        sizePolicy10.setHeightForWidth(self.groupBox_6.sizePolicy().hasHeightForWidth())
-        self.groupBox_6.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.groupBox_6.sizePolicy().hasHeightForWidth())
+        self.groupBox_6.setSizePolicy(sizePolicy8)
         self.groupBox_6.setMinimumSize(QSize(224, 0))
         self.groupBox_6.setMaximumSize(QSize(224, 300))
         self.gridLayout_14 = QGridLayout(self.groupBox_6)
         self.gridLayout_14.setObjectName(u"gridLayout_14")
         self.label_12 = QLabel(self.groupBox_6)
         self.label_12.setObjectName(u"label_12")
-        sizePolicy10.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
-        self.label_12.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
+        self.label_12.setSizePolicy(sizePolicy8)
 
         self.gridLayout_14.addWidget(self.label_12, 0, 1, 1, 1)
 
@@ -857,8 +866,8 @@ class Ui_MainWindow(object):
 
         self.label_13 = QLabel(self.groupBox_6)
         self.label_13.setObjectName(u"label_13")
-        sizePolicy10.setHeightForWidth(self.label_13.sizePolicy().hasHeightForWidth())
-        self.label_13.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_13.sizePolicy().hasHeightForWidth())
+        self.label_13.setSizePolicy(sizePolicy8)
 
         self.gridLayout_14.addWidget(self.label_13, 1, 1, 1, 1)
 
@@ -899,8 +908,8 @@ class Ui_MainWindow(object):
 
         self.label_7 = QLabel(self.groupBox_55)
         self.label_7.setObjectName(u"label_7")
-        sizePolicy11.setHeightForWidth(self.label_7.sizePolicy().hasHeightForWidth())
-        self.label_7.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_7.sizePolicy().hasHeightForWidth())
+        self.label_7.setSizePolicy(sizePolicy9)
         self.label_7.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_52.addWidget(self.label_7, 1, 0, 1, 1)
@@ -1016,15 +1025,15 @@ class Ui_MainWindow(object):
 
         self.label_128 = QLabel(self.groupBox_61)
         self.label_128.setObjectName(u"label_128")
-        sizePolicy10.setHeightForWidth(self.label_128.sizePolicy().hasHeightForWidth())
-        self.label_128.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_128.sizePolicy().hasHeightForWidth())
+        self.label_128.setSizePolicy(sizePolicy8)
 
         self.gridLayout_109.addWidget(self.label_128, 2, 2, 1, 1)
 
         self.label_126 = QLabel(self.groupBox_61)
         self.label_126.setObjectName(u"label_126")
-        sizePolicy10.setHeightForWidth(self.label_126.sizePolicy().hasHeightForWidth())
-        self.label_126.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_126.sizePolicy().hasHeightForWidth())
+        self.label_126.setSizePolicy(sizePolicy8)
 
         self.gridLayout_109.addWidget(self.label_126, 2, 6, 1, 1)
 
@@ -1040,19 +1049,19 @@ class Ui_MainWindow(object):
 
         self.label_84 = QLabel(self.groupBox_61)
         self.label_84.setObjectName(u"label_84")
-        sizePolicy10.setHeightForWidth(self.label_84.sizePolicy().hasHeightForWidth())
-        self.label_84.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_84.sizePolicy().hasHeightForWidth())
+        self.label_84.setSizePolicy(sizePolicy8)
         self.label_84.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_109.addWidget(self.label_84, 2, 0, 1, 1)
 
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabTipRadius_FrameStiffness")
-        sizePolicy13 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy13.setHorizontalStretch(0)
-        sizePolicy13.setVerticalStretch(0)
-        sizePolicy13.setHeightForWidth(self.lineEdit_TAF3_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy13)
+        sizePolicy11 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy11.setHorizontalStretch(0)
+        sizePolicy11.setVerticalStretch(0)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setReadOnly(True)
@@ -1080,31 +1089,31 @@ class Ui_MainWindow(object):
 
         self.label_129 = QLabel(self.groupBox_61)
         self.label_129.setObjectName(u"label_129")
-        sizePolicy11.setHeightForWidth(self.label_129.sizePolicy().hasHeightForWidth())
-        self.label_129.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_129.sizePolicy().hasHeightForWidth())
+        self.label_129.setSizePolicy(sizePolicy9)
         self.label_129.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_109.addWidget(self.label_129, 0, 0, 1, 2)
 
         self.label_124 = QLabel(self.groupBox_61)
         self.label_124.setObjectName(u"label_124")
-        sizePolicy10.setHeightForWidth(self.label_124.sizePolicy().hasHeightForWidth())
-        self.label_124.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_124.sizePolicy().hasHeightForWidth())
+        self.label_124.setSizePolicy(sizePolicy8)
 
         self.gridLayout_109.addWidget(self.label_124, 2, 8, 1, 1)
 
         self.label_127 = QLabel(self.groupBox_61)
         self.label_127.setObjectName(u"label_127")
-        sizePolicy10.setHeightForWidth(self.label_127.sizePolicy().hasHeightForWidth())
-        self.label_127.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_127.sizePolicy().hasHeightForWidth())
+        self.label_127.setSizePolicy(sizePolicy8)
         self.label_127.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_109.addWidget(self.label_127, 2, 4, 1, 1)
 
         self.label_125 = QLabel(self.groupBox_61)
         self.label_125.setObjectName(u"label_125")
-        sizePolicy10.setHeightForWidth(self.label_125.sizePolicy().hasHeightForWidth())
-        self.label_125.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_125.sizePolicy().hasHeightForWidth())
+        self.label_125.setSizePolicy(sizePolicy8)
 
         self.gridLayout_109.addWidget(self.label_125, 2, 10, 1, 1)
 
@@ -1298,11 +1307,11 @@ class Ui_MainWindow(object):
         if (self.tableWidget_tabTipRadius_FrameStiffness.rowCount() < 1):
             self.tableWidget_tabTipRadius_FrameStiffness.setRowCount(1)
         self.tableWidget_tabTipRadius_FrameStiffness.setObjectName(u"tableWidget_tabTipRadius_FrameStiffness")
-        sizePolicy14 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-        sizePolicy14.setHorizontalStretch(0)
-        sizePolicy14.setVerticalStretch(0)
-        sizePolicy14.setHeightForWidth(self.tableWidget_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy14)
+        sizePolicy12 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+        sizePolicy12.setHorizontalStretch(0)
+        sizePolicy12.setVerticalStretch(0)
+        sizePolicy12.setHeightForWidth(self.tableWidget_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy12)
         self.tableWidget_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 0))
         self.tableWidget_tabTipRadius_FrameStiffness.setMaximumSize(QSize(200, 16777215))
         self.tableWidget_tabTipRadius_FrameStiffness.setAutoScroll(True)
@@ -1335,8 +1344,8 @@ class Ui_MainWindow(object):
 
         self.label_86 = QLabel(self.groupBox_8)
         self.label_86.setObjectName(u"label_86")
-        sizePolicy11.setHeightForWidth(self.label_86.sizePolicy().hasHeightForWidth())
-        self.label_86.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_86.sizePolicy().hasHeightForWidth())
+        self.label_86.setSizePolicy(sizePolicy9)
         self.label_86.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_24.addWidget(self.label_86, 1, 0, 1, 1)
@@ -1371,8 +1380,8 @@ class Ui_MainWindow(object):
         self.gridLayout_25.setObjectName(u"gridLayout_25")
         self.label_23 = QLabel(self.groupBox_11)
         self.label_23.setObjectName(u"label_23")
-        sizePolicy11.setHeightForWidth(self.label_23.sizePolicy().hasHeightForWidth())
-        self.label_23.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_23.sizePolicy().hasHeightForWidth())
+        self.label_23.setSizePolicy(sizePolicy9)
         self.label_23.setMaximumSize(QSize(16777215, 16777215))
         self.label_23.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -1427,8 +1436,8 @@ class Ui_MainWindow(object):
 
         self.label_77 = QLabel(self.groupBox_9)
         self.label_77.setObjectName(u"label_77")
-        sizePolicy10.setHeightForWidth(self.label_77.sizePolicy().hasHeightForWidth())
-        self.label_77.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_77.sizePolicy().hasHeightForWidth())
+        self.label_77.setSizePolicy(sizePolicy8)
 
         self.gridLayout_17.addWidget(self.label_77, 0, 0, 1, 1)
 
@@ -1462,8 +1471,8 @@ class Ui_MainWindow(object):
 
         self.label_15 = QLabel(self.groupBox_50)
         self.label_15.setObjectName(u"label_15")
-        sizePolicy11.setHeightForWidth(self.label_15.sizePolicy().hasHeightForWidth())
-        self.label_15.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_15.sizePolicy().hasHeightForWidth())
+        self.label_15.setSizePolicy(sizePolicy9)
         self.label_15.setMinimumSize(QSize(0, 0))
         self.label_15.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -1500,15 +1509,15 @@ class Ui_MainWindow(object):
 
         self.label_24 = QLabel(self.groupBox_12)
         self.label_24.setObjectName(u"label_24")
-        sizePolicy10.setHeightForWidth(self.label_24.sizePolicy().hasHeightForWidth())
-        self.label_24.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_24.sizePolicy().hasHeightForWidth())
+        self.label_24.setSizePolicy(sizePolicy8)
 
         self.gridLayout_26.addWidget(self.label_24, 0, 0, 1, 1)
 
         self.label_25 = QLabel(self.groupBox_12)
         self.label_25.setObjectName(u"label_25")
-        sizePolicy11.setHeightForWidth(self.label_25.sizePolicy().hasHeightForWidth())
-        self.label_25.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_25.sizePolicy().hasHeightForWidth())
+        self.label_25.setSizePolicy(sizePolicy9)
         self.label_25.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_26.addWidget(self.label_25, 1, 0, 1, 1)
@@ -1618,15 +1627,15 @@ class Ui_MainWindow(object):
 
         self.label_74 = QLabel(self.groupBox_29)
         self.label_74.setObjectName(u"label_74")
-        sizePolicy10.setHeightForWidth(self.label_74.sizePolicy().hasHeightForWidth())
-        self.label_74.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_74.sizePolicy().hasHeightForWidth())
+        self.label_74.setSizePolicy(sizePolicy8)
 
         self.gridLayout_60.addWidget(self.label_74, 3, 2, 1, 1)
 
         self.lineEdit_path_tabTipRadius = QLineEdit(self.groupBox_29)
         self.lineEdit_path_tabTipRadius.setObjectName(u"lineEdit_path_tabTipRadius")
-        sizePolicy12.setHeightForWidth(self.lineEdit_path_tabTipRadius.sizePolicy().hasHeightForWidth())
-        self.lineEdit_path_tabTipRadius.setSizePolicy(sizePolicy12)
+        sizePolicy10.setHeightForWidth(self.lineEdit_path_tabTipRadius.sizePolicy().hasHeightForWidth())
+        self.lineEdit_path_tabTipRadius.setSizePolicy(sizePolicy10)
         self.lineEdit_path_tabTipRadius.setMinimumSize(QSize(0, 0))
         self.lineEdit_path_tabTipRadius.setMaximumSize(QSize(292, 16777215))
 
@@ -1634,11 +1643,11 @@ class Ui_MainWindow(object):
 
         self.lineEdit_MaterialName_tabTipRadius = QLineEdit(self.groupBox_29)
         self.lineEdit_MaterialName_tabTipRadius.setObjectName(u"lineEdit_MaterialName_tabTipRadius")
-        sizePolicy15 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy15.setHorizontalStretch(0)
-        sizePolicy15.setVerticalStretch(0)
-        sizePolicy15.setHeightForWidth(self.lineEdit_MaterialName_tabTipRadius.sizePolicy().hasHeightForWidth())
-        self.lineEdit_MaterialName_tabTipRadius.setSizePolicy(sizePolicy15)
+        sizePolicy13 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy13.setHorizontalStretch(0)
+        sizePolicy13.setVerticalStretch(0)
+        sizePolicy13.setHeightForWidth(self.lineEdit_MaterialName_tabTipRadius.sizePolicy().hasHeightForWidth())
+        self.lineEdit_MaterialName_tabTipRadius.setSizePolicy(sizePolicy13)
 
         self.gridLayout_60.addWidget(self.lineEdit_MaterialName_tabTipRadius, 0, 1, 1, 3)
 
@@ -1655,11 +1664,11 @@ class Ui_MainWindow(object):
         self.gridLayout_36.setObjectName(u"gridLayout_36")
         self.label_70 = QLabel(self.groupBox_17)
         self.label_70.setObjectName(u"label_70")
-        sizePolicy16 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        sizePolicy16.setHorizontalStretch(0)
-        sizePolicy16.setVerticalStretch(0)
-        sizePolicy16.setHeightForWidth(self.label_70.sizePolicy().hasHeightForWidth())
-        self.label_70.setSizePolicy(sizePolicy16)
+        sizePolicy14 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy14.setHorizontalStretch(0)
+        sizePolicy14.setVerticalStretch(0)
+        sizePolicy14.setHeightForWidth(self.label_70.sizePolicy().hasHeightForWidth())
+        self.label_70.setSizePolicy(sizePolicy14)
         self.label_70.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_36.addWidget(self.label_70, 0, 0, 1, 1)
@@ -1712,8 +1721,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_15 = QGroupBox(self.tab_8)
         self.groupBox_15.setObjectName(u"groupBox_15")
-        sizePolicy11.setHeightForWidth(self.groupBox_15.sizePolicy().hasHeightForWidth())
-        self.groupBox_15.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.groupBox_15.sizePolicy().hasHeightForWidth())
+        self.groupBox_15.setSizePolicy(sizePolicy9)
         self.groupBox_15.setMinimumSize(QSize(460, 0))
         self.groupBox_15.setMaximumSize(QSize(460, 16777215))
         self.gridLayout_65 = QGridLayout(self.groupBox_15)
@@ -1896,11 +1905,11 @@ class Ui_MainWindow(object):
 
         self.groupBox_4 = QGroupBox(self.tab_8)
         self.groupBox_4.setObjectName(u"groupBox_4")
-        sizePolicy17 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Maximum)
-        sizePolicy17.setHorizontalStretch(0)
-        sizePolicy17.setVerticalStretch(0)
-        sizePolicy17.setHeightForWidth(self.groupBox_4.sizePolicy().hasHeightForWidth())
-        self.groupBox_4.setSizePolicy(sizePolicy17)
+        sizePolicy15 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Maximum)
+        sizePolicy15.setHorizontalStretch(0)
+        sizePolicy15.setVerticalStretch(0)
+        sizePolicy15.setHeightForWidth(self.groupBox_4.sizePolicy().hasHeightForWidth())
+        self.groupBox_4.setSizePolicy(sizePolicy15)
         self.groupBox_4.setMinimumSize(QSize(230, 0))
         self.groupBox_4.setMaximumSize(QSize(230, 16777215))
         self.gridLayout_57 = QGridLayout(self.groupBox_4)
@@ -1929,11 +1938,11 @@ class Ui_MainWindow(object):
 
         self.label_72 = QLabel(self.groupBox_4)
         self.label_72.setObjectName(u"label_72")
-        sizePolicy18 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        sizePolicy18.setHorizontalStretch(0)
-        sizePolicy18.setVerticalStretch(0)
-        sizePolicy18.setHeightForWidth(self.label_72.sizePolicy().hasHeightForWidth())
-        self.label_72.setSizePolicy(sizePolicy18)
+        sizePolicy16 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy16.setHorizontalStretch(0)
+        sizePolicy16.setVerticalStretch(0)
+        sizePolicy16.setHeightForWidth(self.label_72.sizePolicy().hasHeightForWidth())
+        self.label_72.setSizePolicy(sizePolicy16)
         self.label_72.setMaximumSize(QSize(16777215, 16777215))
         self.label_72.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -1941,8 +1950,8 @@ class Ui_MainWindow(object):
 
         self.label_37 = QLabel(self.groupBox_4)
         self.label_37.setObjectName(u"label_37")
-        sizePolicy10.setHeightForWidth(self.label_37.sizePolicy().hasHeightForWidth())
-        self.label_37.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_37.sizePolicy().hasHeightForWidth())
+        self.label_37.setSizePolicy(sizePolicy8)
 
         self.gridLayout_57.addWidget(self.label_37, 2, 1, 1, 1)
 
@@ -1951,8 +1960,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_49 = QGroupBox(self.tab_8)
         self.groupBox_49.setObjectName(u"groupBox_49")
-        sizePolicy17.setHeightForWidth(self.groupBox_49.sizePolicy().hasHeightForWidth())
-        self.groupBox_49.setSizePolicy(sizePolicy17)
+        sizePolicy15.setHeightForWidth(self.groupBox_49.sizePolicy().hasHeightForWidth())
+        self.groupBox_49.setSizePolicy(sizePolicy15)
         self.groupBox_49.setMinimumSize(QSize(230, 0))
         self.groupBox_49.setMaximumSize(QSize(230, 16777215))
         self.gridLayout_99 = QGridLayout(self.groupBox_49)
@@ -1976,8 +1985,8 @@ class Ui_MainWindow(object):
 
         self.label_76 = QLabel(self.groupBox_49)
         self.label_76.setObjectName(u"label_76")
-        sizePolicy11.setHeightForWidth(self.label_76.sizePolicy().hasHeightForWidth())
-        self.label_76.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_76.sizePolicy().hasHeightForWidth())
+        self.label_76.setSizePolicy(sizePolicy9)
         self.label_76.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_99.addWidget(self.label_76, 1, 0, 1, 1)
@@ -1996,8 +2005,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_27 = QGroupBox(self.tab_8)
         self.groupBox_27.setObjectName(u"groupBox_27")
-        sizePolicy17.setHeightForWidth(self.groupBox_27.sizePolicy().hasHeightForWidth())
-        self.groupBox_27.setSizePolicy(sizePolicy17)
+        sizePolicy15.setHeightForWidth(self.groupBox_27.sizePolicy().hasHeightForWidth())
+        self.groupBox_27.setSizePolicy(sizePolicy15)
         self.groupBox_27.setMinimumSize(QSize(0, 0))
         self.groupBox_27.setMaximumSize(QSize(224, 16777215))
         self.gridLayout_3 = QGridLayout(self.groupBox_27)
@@ -2082,8 +2091,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_46 = QGroupBox(self.tab_8)
         self.groupBox_46.setObjectName(u"groupBox_46")
-        sizePolicy17.setHeightForWidth(self.groupBox_46.sizePolicy().hasHeightForWidth())
-        self.groupBox_46.setSizePolicy(sizePolicy17)
+        sizePolicy15.setHeightForWidth(self.groupBox_46.sizePolicy().hasHeightForWidth())
+        self.groupBox_46.setSizePolicy(sizePolicy15)
         self.groupBox_46.setMinimumSize(QSize(230, 0))
         self.groupBox_46.setMaximumSize(QSize(230, 16777215))
         self.gridLayout_96 = QGridLayout(self.groupBox_46)
@@ -2111,11 +2120,11 @@ class Ui_MainWindow(object):
         if (self.tableWidget_tabTipRadius.rowCount() < 1):
             self.tableWidget_tabTipRadius.setRowCount(1)
         self.tableWidget_tabTipRadius.setObjectName(u"tableWidget_tabTipRadius")
-        sizePolicy19 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy19.setHorizontalStretch(0)
-        sizePolicy19.setVerticalStretch(0)
-        sizePolicy19.setHeightForWidth(self.tableWidget_tabTipRadius.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabTipRadius.setSizePolicy(sizePolicy19)
+        sizePolicy17 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy17.setHorizontalStretch(0)
+        sizePolicy17.setVerticalStretch(0)
+        sizePolicy17.setHeightForWidth(self.tableWidget_tabTipRadius.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabTipRadius.setSizePolicy(sizePolicy17)
         self.tableWidget_tabTipRadius.setMinimumSize(QSize(205, 500))
         self.tableWidget_tabTipRadius.setMaximumSize(QSize(205, 16777215))
         self.tableWidget_tabTipRadius.setAutoScroll(True)
@@ -2212,8 +2221,11 @@ class Ui_MainWindow(object):
         self.gridLayout_32.setObjectName(u"gridLayout_32")
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness = QGraphicsView(self.tab_17)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness")
-        sizePolicy8.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.setSizePolicy(sizePolicy8)
+        sizePolicy18 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy18.setHorizontalStretch(100)
+        sizePolicy18.setVerticalStretch(100)
+        sizePolicy18.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.setSizePolicy(sizePolicy18)
 
         self.gridLayout_32.addWidget(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness, 1, 0, 1, 5)
 
@@ -2330,8 +2342,8 @@ class Ui_MainWindow(object):
         self.gridLayout_108.setObjectName(u"gridLayout_108")
         self.label_116 = QLabel(self.groupBox_60)
         self.label_116.setObjectName(u"label_116")
-        sizePolicy10.setHeightForWidth(self.label_116.sizePolicy().hasHeightForWidth())
-        self.label_116.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_116.sizePolicy().hasHeightForWidth())
+        self.label_116.setSizePolicy(sizePolicy8)
 
         self.gridLayout_108.addWidget(self.label_116, 2, 3, 1, 1)
 
@@ -2348,8 +2360,8 @@ class Ui_MainWindow(object):
 
         self.label_59 = QLabel(self.groupBox_60)
         self.label_59.setObjectName(u"label_59")
-        sizePolicy11.setHeightForWidth(self.label_59.sizePolicy().hasHeightForWidth())
-        self.label_59.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_59.sizePolicy().hasHeightForWidth())
+        self.label_59.setSizePolicy(sizePolicy9)
         self.label_59.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_108.addWidget(self.label_59, 0, 0, 1, 3)
@@ -2364,16 +2376,16 @@ class Ui_MainWindow(object):
 
         self.label_122 = QLabel(self.groupBox_60)
         self.label_122.setObjectName(u"label_122")
-        sizePolicy10.setHeightForWidth(self.label_122.sizePolicy().hasHeightForWidth())
-        self.label_122.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_122.sizePolicy().hasHeightForWidth())
+        self.label_122.setSizePolicy(sizePolicy8)
         self.label_122.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_108.addWidget(self.label_122, 2, 5, 1, 1)
 
         self.lineEdit_TAF3_tabHE_FrameStiffness = QLineEdit(self.groupBox_60)
         self.lineEdit_TAF3_tabHE_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabHE_FrameStiffness")
-        sizePolicy13.setHeightForWidth(self.lineEdit_TAF3_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabHE_FrameStiffness.setSizePolicy(sizePolicy13)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabHE_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabHE_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabHE_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF3_tabHE_FrameStiffness.setReadOnly(True)
@@ -2392,8 +2404,8 @@ class Ui_MainWindow(object):
 
         self.label_123 = QLabel(self.groupBox_60)
         self.label_123.setObjectName(u"label_123")
-        sizePolicy10.setHeightForWidth(self.label_123.sizePolicy().hasHeightForWidth())
-        self.label_123.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_123.sizePolicy().hasHeightForWidth())
+        self.label_123.setSizePolicy(sizePolicy8)
 
         self.gridLayout_108.addWidget(self.label_123, 2, 7, 1, 1)
 
@@ -2407,15 +2419,15 @@ class Ui_MainWindow(object):
 
         self.label_98 = QLabel(self.groupBox_60)
         self.label_98.setObjectName(u"label_98")
-        sizePolicy10.setHeightForWidth(self.label_98.sizePolicy().hasHeightForWidth())
-        self.label_98.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_98.sizePolicy().hasHeightForWidth())
+        self.label_98.setSizePolicy(sizePolicy8)
 
         self.gridLayout_108.addWidget(self.label_98, 2, 9, 1, 1)
 
         self.label_121 = QLabel(self.groupBox_60)
         self.label_121.setObjectName(u"label_121")
-        sizePolicy10.setHeightForWidth(self.label_121.sizePolicy().hasHeightForWidth())
-        self.label_121.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_121.sizePolicy().hasHeightForWidth())
+        self.label_121.setSizePolicy(sizePolicy8)
 
         self.gridLayout_108.addWidget(self.label_121, 2, 11, 1, 1)
 
@@ -2465,8 +2477,8 @@ class Ui_MainWindow(object):
 
         self.label_60 = QLabel(self.groupBox_60)
         self.label_60.setObjectName(u"label_60")
-        sizePolicy10.setHeightForWidth(self.label_60.sizePolicy().hasHeightForWidth())
-        self.label_60.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_60.sizePolicy().hasHeightForWidth())
+        self.label_60.setSizePolicy(sizePolicy8)
         self.label_60.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_108.addWidget(self.label_60, 2, 0, 1, 2)
@@ -2502,8 +2514,8 @@ class Ui_MainWindow(object):
         self.gridLayout_29.setObjectName(u"gridLayout_29")
         self.label_36 = QLabel(self.groupBox_14)
         self.label_36.setObjectName(u"label_36")
-        sizePolicy11.setHeightForWidth(self.label_36.sizePolicy().hasHeightForWidth())
-        self.label_36.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_36.sizePolicy().hasHeightForWidth())
+        self.label_36.setSizePolicy(sizePolicy9)
         self.label_36.setMaximumSize(QSize(16777215, 16777215))
         self.label_36.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -2570,8 +2582,8 @@ class Ui_MainWindow(object):
 
         self.label_89 = QLabel(self.groupBox_25)
         self.label_89.setObjectName(u"label_89")
-        sizePolicy11.setHeightForWidth(self.label_89.sizePolicy().hasHeightForWidth())
-        self.label_89.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_89.sizePolicy().hasHeightForWidth())
+        self.label_89.setSizePolicy(sizePolicy9)
         self.label_89.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_55.addWidget(self.label_89, 1, 0, 1, 1)
@@ -2637,15 +2649,15 @@ class Ui_MainWindow(object):
 
         self.label_68 = QLabel(self.groupBox_26)
         self.label_68.setObjectName(u"label_68")
-        sizePolicy10.setHeightForWidth(self.label_68.sizePolicy().hasHeightForWidth())
-        self.label_68.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_68.sizePolicy().hasHeightForWidth())
+        self.label_68.setSizePolicy(sizePolicy8)
 
         self.gridLayout_56.addWidget(self.label_68, 0, 0, 1, 1)
 
         self.label_69 = QLabel(self.groupBox_26)
         self.label_69.setObjectName(u"label_69")
-        sizePolicy11.setHeightForWidth(self.label_69.sizePolicy().hasHeightForWidth())
-        self.label_69.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_69.sizePolicy().hasHeightForWidth())
+        self.label_69.setSizePolicy(sizePolicy9)
         self.label_69.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_56.addWidget(self.label_69, 1, 0, 1, 1)
@@ -2686,8 +2698,8 @@ class Ui_MainWindow(object):
 
         self.label_44 = QLabel(self.groupBox_51)
         self.label_44.setObjectName(u"label_44")
-        sizePolicy11.setHeightForWidth(self.label_44.sizePolicy().hasHeightForWidth())
-        self.label_44.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_44.sizePolicy().hasHeightForWidth())
+        self.label_44.setSizePolicy(sizePolicy9)
         self.label_44.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_101.addWidget(self.label_44, 1, 0, 1, 1)
@@ -2789,16 +2801,16 @@ class Ui_MainWindow(object):
         self.gridLayout_48.setObjectName(u"gridLayout_48")
         self.groupBox_19 = QGroupBox(self.tab_15)
         self.groupBox_19.setObjectName(u"groupBox_19")
-        sizePolicy11.setHeightForWidth(self.groupBox_19.sizePolicy().hasHeightForWidth())
-        self.groupBox_19.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.groupBox_19.sizePolicy().hasHeightForWidth())
+        self.groupBox_19.setSizePolicy(sizePolicy9)
         self.groupBox_19.setMinimumSize(QSize(230, 0))
         self.groupBox_19.setMaximumSize(QSize(230, 16777215))
         self.gridLayout_39 = QGridLayout(self.groupBox_19)
         self.gridLayout_39.setObjectName(u"gridLayout_39")
         self.label_47 = QLabel(self.groupBox_19)
         self.label_47.setObjectName(u"label_47")
-        sizePolicy11.setHeightForWidth(self.label_47.sizePolicy().hasHeightForWidth())
-        self.label_47.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_47.sizePolicy().hasHeightForWidth())
+        self.label_47.setSizePolicy(sizePolicy9)
         self.label_47.setMaximumSize(QSize(16777215, 16777215))
         self.label_47.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -2882,8 +2894,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_18 = QGroupBox(self.tab_15)
         self.groupBox_18.setObjectName(u"groupBox_18")
-        sizePolicy11.setHeightForWidth(self.groupBox_18.sizePolicy().hasHeightForWidth())
-        self.groupBox_18.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.groupBox_18.sizePolicy().hasHeightForWidth())
+        self.groupBox_18.setSizePolicy(sizePolicy9)
         self.groupBox_18.setMinimumSize(QSize(460, 0))
         self.groupBox_18.setMaximumSize(QSize(460, 16777215))
         self.gridLayout_38 = QGridLayout(self.groupBox_18)
@@ -2896,8 +2908,8 @@ class Ui_MainWindow(object):
 
         self.label_66 = QLabel(self.groupBox_18)
         self.label_66.setObjectName(u"label_66")
-        sizePolicy10.setHeightForWidth(self.label_66.sizePolicy().hasHeightForWidth())
-        self.label_66.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_66.sizePolicy().hasHeightForWidth())
+        self.label_66.setSizePolicy(sizePolicy8)
 
         self.gridLayout_38.addWidget(self.label_66, 0, 0, 1, 1)
 
@@ -3001,8 +3013,8 @@ class Ui_MainWindow(object):
 
         self.label_57 = QLabel(self.groupBox_23)
         self.label_57.setObjectName(u"label_57")
-        sizePolicy10.setHeightForWidth(self.label_57.sizePolicy().hasHeightForWidth())
-        self.label_57.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_57.sizePolicy().hasHeightForWidth())
+        self.label_57.setSizePolicy(sizePolicy8)
 
         self.gridLayout_43.addWidget(self.label_57, 3, 3, 1, 1)
 
@@ -3020,8 +3032,8 @@ class Ui_MainWindow(object):
 
         self.label_54 = QLabel(self.groupBox_23)
         self.label_54.setObjectName(u"label_54")
-        sizePolicy10.setHeightForWidth(self.label_54.sizePolicy().hasHeightForWidth())
-        self.label_54.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_54.sizePolicy().hasHeightForWidth())
+        self.label_54.setSizePolicy(sizePolicy8)
 
         self.gridLayout_43.addWidget(self.label_54, 3, 9, 1, 2)
 
@@ -3032,16 +3044,16 @@ class Ui_MainWindow(object):
 
         self.label_55 = QLabel(self.groupBox_23)
         self.label_55.setObjectName(u"label_55")
-        sizePolicy10.setHeightForWidth(self.label_55.sizePolicy().hasHeightForWidth())
-        self.label_55.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_55.sizePolicy().hasHeightForWidth())
+        self.label_55.setSizePolicy(sizePolicy8)
         self.label_55.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_43.addWidget(self.label_55, 3, 6, 1, 1)
 
         self.lineEdit_TAF3_tabHE = QLineEdit(self.groupBox_23)
         self.lineEdit_TAF3_tabHE.setObjectName(u"lineEdit_TAF3_tabHE")
-        sizePolicy13.setHeightForWidth(self.lineEdit_TAF3_tabHE.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabHE.setSizePolicy(sizePolicy13)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabHE.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabHE.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabHE.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabHE.setMaximumSize(QSize(60, 16777215))
         self.lineEdit_TAF3_tabHE.setReadOnly(True)
@@ -3076,8 +3088,8 @@ class Ui_MainWindow(object):
 
         self.label_56 = QLabel(self.groupBox_23)
         self.label_56.setObjectName(u"label_56")
-        sizePolicy10.setHeightForWidth(self.label_56.sizePolicy().hasHeightForWidth())
-        self.label_56.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_56.sizePolicy().hasHeightForWidth())
+        self.label_56.setSizePolicy(sizePolicy8)
         self.label_56.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_43.addWidget(self.label_56, 3, 0, 1, 1)
@@ -3103,8 +3115,8 @@ class Ui_MainWindow(object):
 
         self.label_58 = QLabel(self.groupBox_23)
         self.label_58.setObjectName(u"label_58")
-        sizePolicy10.setHeightForWidth(self.label_58.sizePolicy().hasHeightForWidth())
-        self.label_58.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_58.sizePolicy().hasHeightForWidth())
+        self.label_58.setSizePolicy(sizePolicy8)
 
         self.gridLayout_43.addWidget(self.label_58, 3, 17, 1, 1)
 
@@ -3131,16 +3143,16 @@ class Ui_MainWindow(object):
 
         self.label_52 = QLabel(self.groupBox_23)
         self.label_52.setObjectName(u"label_52")
-        sizePolicy11.setHeightForWidth(self.label_52.sizePolicy().hasHeightForWidth())
-        self.label_52.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_52.sizePolicy().hasHeightForWidth())
+        self.label_52.setSizePolicy(sizePolicy9)
         self.label_52.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_43.addWidget(self.label_52, 0, 0, 1, 3)
 
         self.label_53 = QLabel(self.groupBox_23)
         self.label_53.setObjectName(u"label_53")
-        sizePolicy10.setHeightForWidth(self.label_53.sizePolicy().hasHeightForWidth())
-        self.label_53.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_53.sizePolicy().hasHeightForWidth())
+        self.label_53.setSizePolicy(sizePolicy8)
 
         self.gridLayout_43.addWidget(self.label_53, 3, 14, 1, 1)
 
@@ -3188,8 +3200,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_20 = QGroupBox(self.tab_15)
         self.groupBox_20.setObjectName(u"groupBox_20")
-        sizePolicy11.setHeightForWidth(self.groupBox_20.sizePolicy().hasHeightForWidth())
-        self.groupBox_20.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.groupBox_20.sizePolicy().hasHeightForWidth())
+        self.groupBox_20.setSizePolicy(sizePolicy9)
         self.groupBox_20.setMinimumSize(QSize(460, 0))
         self.groupBox_20.setMaximumSize(QSize(460, 16777215))
         self.gridLayout_40 = QGridLayout(self.groupBox_20)
@@ -3414,8 +3426,8 @@ class Ui_MainWindow(object):
         if (self.tableWidget_tabHE.rowCount() < 1):
             self.tableWidget_tabHE.setRowCount(1)
         self.tableWidget_tabHE.setObjectName(u"tableWidget_tabHE")
-        sizePolicy14.setHeightForWidth(self.tableWidget_tabHE.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabHE.setSizePolicy(sizePolicy14)
+        sizePolicy12.setHeightForWidth(self.tableWidget_tabHE.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabHE.setSizePolicy(sizePolicy12)
         self.tableWidget_tabHE.setMinimumSize(QSize(200, 0))
         self.tableWidget_tabHE.setMaximumSize(QSize(200, 16777215))
         self.tableWidget_tabHE.setAutoScroll(True)
@@ -3430,23 +3442,23 @@ class Ui_MainWindow(object):
 
         self.groupBox_47 = QGroupBox(self.tab_15)
         self.groupBox_47.setObjectName(u"groupBox_47")
-        sizePolicy11.setHeightForWidth(self.groupBox_47.sizePolicy().hasHeightForWidth())
-        self.groupBox_47.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.groupBox_47.sizePolicy().hasHeightForWidth())
+        self.groupBox_47.setSizePolicy(sizePolicy9)
         self.groupBox_47.setMinimumSize(QSize(224, 0))
         self.groupBox_47.setMaximumSize(QSize(224, 16777215))
         self.gridLayout_97 = QGridLayout(self.groupBox_47)
         self.gridLayout_97.setObjectName(u"gridLayout_97")
         self.label_108 = QLabel(self.groupBox_47)
         self.label_108.setObjectName(u"label_108")
-        sizePolicy10.setHeightForWidth(self.label_108.sizePolicy().hasHeightForWidth())
-        self.label_108.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_108.sizePolicy().hasHeightForWidth())
+        self.label_108.setSizePolicy(sizePolicy8)
 
         self.gridLayout_97.addWidget(self.label_108, 1, 0, 1, 1)
 
         self.label_120 = QLabel(self.groupBox_47)
         self.label_120.setObjectName(u"label_120")
-        sizePolicy10.setHeightForWidth(self.label_120.sizePolicy().hasHeightForWidth())
-        self.label_120.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_120.sizePolicy().hasHeightForWidth())
+        self.label_120.setSizePolicy(sizePolicy8)
 
         self.gridLayout_97.addWidget(self.label_120, 2, 0, 1, 1)
 
@@ -3475,8 +3487,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_21 = QGroupBox(self.tab_15)
         self.groupBox_21.setObjectName(u"groupBox_21")
-        sizePolicy10.setHeightForWidth(self.groupBox_21.sizePolicy().hasHeightForWidth())
-        self.groupBox_21.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.groupBox_21.sizePolicy().hasHeightForWidth())
+        self.groupBox_21.setSizePolicy(sizePolicy8)
         self.groupBox_21.setMinimumSize(QSize(230, 0))
         self.groupBox_21.setMaximumSize(QSize(230, 16777215))
         self.gridLayout_41 = QGridLayout(self.groupBox_21)
@@ -3568,8 +3580,8 @@ class Ui_MainWindow(object):
 
         self.label_101 = QLabel(self.groupBox_33)
         self.label_101.setObjectName(u"label_101")
-        sizePolicy11.setHeightForWidth(self.label_101.sizePolicy().hasHeightForWidth())
-        self.label_101.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_101.sizePolicy().hasHeightForWidth())
+        self.label_101.setSizePolicy(sizePolicy9)
         self.label_101.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_75.addWidget(self.label_101, 1, 0, 1, 1)
@@ -3646,8 +3658,8 @@ class Ui_MainWindow(object):
         if (self.tableWidget_tabPopIn_FrameStiffness.rowCount() < 1):
             self.tableWidget_tabPopIn_FrameStiffness.setRowCount(1)
         self.tableWidget_tabPopIn_FrameStiffness.setObjectName(u"tableWidget_tabPopIn_FrameStiffness")
-        sizePolicy14.setHeightForWidth(self.tableWidget_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy14)
+        sizePolicy12.setHeightForWidth(self.tableWidget_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy12)
         self.tableWidget_tabPopIn_FrameStiffness.setMinimumSize(QSize(200, 0))
         self.tableWidget_tabPopIn_FrameStiffness.setMaximumSize(QSize(200, 16777215))
         self.tableWidget_tabPopIn_FrameStiffness.setAutoScroll(True)
@@ -3787,8 +3799,8 @@ class Ui_MainWindow(object):
         self.gridLayout_110.setObjectName(u"gridLayout_110")
         self.label_130 = QLabel(self.groupBox_62)
         self.label_130.setObjectName(u"label_130")
-        sizePolicy10.setHeightForWidth(self.label_130.sizePolicy().hasHeightForWidth())
-        self.label_130.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_130.sizePolicy().hasHeightForWidth())
+        self.label_130.setSizePolicy(sizePolicy8)
         self.label_130.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_110.addWidget(self.label_130, 2, 0, 1, 2)
@@ -3806,8 +3818,8 @@ class Ui_MainWindow(object):
 
         self.label_135 = QLabel(self.groupBox_62)
         self.label_135.setObjectName(u"label_135")
-        sizePolicy10.setHeightForWidth(self.label_135.sizePolicy().hasHeightForWidth())
-        self.label_135.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_135.sizePolicy().hasHeightForWidth())
+        self.label_135.setSizePolicy(sizePolicy8)
 
         self.gridLayout_110.addWidget(self.label_135, 2, 3, 1, 1)
 
@@ -3829,24 +3841,24 @@ class Ui_MainWindow(object):
 
         self.label_136 = QLabel(self.groupBox_62)
         self.label_136.setObjectName(u"label_136")
-        sizePolicy11.setHeightForWidth(self.label_136.sizePolicy().hasHeightForWidth())
-        self.label_136.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_136.sizePolicy().hasHeightForWidth())
+        self.label_136.setSizePolicy(sizePolicy9)
         self.label_136.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_110.addWidget(self.label_136, 0, 0, 1, 3)
 
         self.label_134 = QLabel(self.groupBox_62)
         self.label_134.setObjectName(u"label_134")
-        sizePolicy10.setHeightForWidth(self.label_134.sizePolicy().hasHeightForWidth())
-        self.label_134.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_134.sizePolicy().hasHeightForWidth())
+        self.label_134.setSizePolicy(sizePolicy8)
         self.label_134.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_110.addWidget(self.label_134, 2, 5, 1, 1)
 
         self.lineEdit_TAF3_tabPopIn_FrameStiffness = QLineEdit(self.groupBox_62)
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabPopIn_FrameStiffness")
-        sizePolicy13.setHeightForWidth(self.lineEdit_TAF3_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy13)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setReadOnly(True)
@@ -3855,8 +3867,8 @@ class Ui_MainWindow(object):
 
         self.label_133 = QLabel(self.groupBox_62)
         self.label_133.setObjectName(u"label_133")
-        sizePolicy10.setHeightForWidth(self.label_133.sizePolicy().hasHeightForWidth())
-        self.label_133.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_133.sizePolicy().hasHeightForWidth())
+        self.label_133.setSizePolicy(sizePolicy8)
 
         self.gridLayout_110.addWidget(self.label_133, 2, 7, 1, 1)
 
@@ -3870,8 +3882,8 @@ class Ui_MainWindow(object):
 
         self.label_131 = QLabel(self.groupBox_62)
         self.label_131.setObjectName(u"label_131")
-        sizePolicy10.setHeightForWidth(self.label_131.sizePolicy().hasHeightForWidth())
-        self.label_131.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_131.sizePolicy().hasHeightForWidth())
+        self.label_131.setSizePolicy(sizePolicy8)
 
         self.gridLayout_110.addWidget(self.label_131, 2, 9, 1, 1)
 
@@ -3885,8 +3897,8 @@ class Ui_MainWindow(object):
 
         self.label_132 = QLabel(self.groupBox_62)
         self.label_132.setObjectName(u"label_132")
-        sizePolicy10.setHeightForWidth(self.label_132.sizePolicy().hasHeightForWidth())
-        self.label_132.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_132.sizePolicy().hasHeightForWidth())
+        self.label_132.setSizePolicy(sizePolicy8)
 
         self.gridLayout_110.addWidget(self.label_132, 2, 11, 1, 1)
 
@@ -3961,8 +3973,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_34 = QGroupBox(self.tab_35)
         self.groupBox_34.setObjectName(u"groupBox_34")
-        sizePolicy11.setHeightForWidth(self.groupBox_34.sizePolicy().hasHeightForWidth())
-        self.groupBox_34.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.groupBox_34.sizePolicy().hasHeightForWidth())
+        self.groupBox_34.setSizePolicy(sizePolicy9)
         self.groupBox_34.setMinimumSize(QSize(460, 0))
         self.groupBox_34.setMaximumSize(QSize(460, 16777215))
         self.gridLayout_76 = QGridLayout(self.groupBox_34)
@@ -4048,8 +4060,8 @@ class Ui_MainWindow(object):
 
         self.label_92 = QLabel(self.groupBox_53)
         self.label_92.setObjectName(u"label_92")
-        sizePolicy11.setHeightForWidth(self.label_92.sizePolicy().hasHeightForWidth())
-        self.label_92.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_92.sizePolicy().hasHeightForWidth())
+        self.label_92.setSizePolicy(sizePolicy9)
         self.label_92.setMinimumSize(QSize(0, 0))
         self.label_92.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -4086,15 +4098,15 @@ class Ui_MainWindow(object):
 
         self.label_99 = QLabel(self.groupBox_32)
         self.label_99.setObjectName(u"label_99")
-        sizePolicy10.setHeightForWidth(self.label_99.sizePolicy().hasHeightForWidth())
-        self.label_99.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_99.sizePolicy().hasHeightForWidth())
+        self.label_99.setSizePolicy(sizePolicy8)
 
         self.gridLayout_74.addWidget(self.label_99, 0, 0, 1, 1)
 
         self.label_100 = QLabel(self.groupBox_32)
         self.label_100.setObjectName(u"label_100")
-        sizePolicy11.setHeightForWidth(self.label_100.sizePolicy().hasHeightForWidth())
-        self.label_100.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_100.sizePolicy().hasHeightForWidth())
+        self.label_100.setSizePolicy(sizePolicy9)
         self.label_100.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_74.addWidget(self.label_100, 1, 0, 1, 1)
@@ -4235,8 +4247,8 @@ class Ui_MainWindow(object):
         self.gridLayout_78.setObjectName(u"gridLayout_78")
         self.label_103 = QLabel(self.groupBox_35)
         self.label_103.setObjectName(u"label_103")
-        sizePolicy10.setHeightForWidth(self.label_103.sizePolicy().hasHeightForWidth())
-        self.label_103.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_103.sizePolicy().hasHeightForWidth())
+        self.label_103.setSizePolicy(sizePolicy8)
 
         self.gridLayout_78.addWidget(self.label_103, 0, 0, 1, 1)
 
@@ -4250,8 +4262,8 @@ class Ui_MainWindow(object):
 
         self.label_105 = QLabel(self.groupBox_35)
         self.label_105.setObjectName(u"label_105")
-        sizePolicy10.setHeightForWidth(self.label_105.sizePolicy().hasHeightForWidth())
-        self.label_105.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_105.sizePolicy().hasHeightForWidth())
+        self.label_105.setSizePolicy(sizePolicy8)
         self.label_105.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_78.addWidget(self.label_105, 0, 2, 1, 1)
@@ -4346,11 +4358,11 @@ class Ui_MainWindow(object):
         self.gridLayout_81.setObjectName(u"gridLayout_81")
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn = QGraphicsView(self.tab_42)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn")
-        sizePolicy20 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy20.setHorizontalStretch(0)
-        sizePolicy20.setVerticalStretch(0)
-        sizePolicy20.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setSizePolicy(sizePolicy20)
+        sizePolicy19 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy19.setHorizontalStretch(0)
+        sizePolicy19.setVerticalStretch(0)
+        sizePolicy19.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setSizePolicy(sizePolicy19)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setMinimumSize(QSize(0, 0))
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setMaximumSize(QSize(16777215, 16777215))
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setSizeIncrement(QSize(0, 0))
@@ -4421,8 +4433,8 @@ class Ui_MainWindow(object):
         self.gridLayout_84.setObjectName(u"gridLayout_84")
         self.label_107 = QLabel(self.tab_45)
         self.label_107.setObjectName(u"label_107")
-        sizePolicy10.setHeightForWidth(self.label_107.sizePolicy().hasHeightForWidth())
-        self.label_107.setSizePolicy(sizePolicy10)
+        sizePolicy8.setHeightForWidth(self.label_107.sizePolicy().hasHeightForWidth())
+        self.label_107.setSizePolicy(sizePolicy8)
 
         self.gridLayout_84.addWidget(self.label_107, 0, 2, 1, 1)
 
@@ -4568,8 +4580,8 @@ class Ui_MainWindow(object):
 
         self.label_111 = QLabel(self.groupBox_37)
         self.label_111.setObjectName(u"label_111")
-        sizePolicy18.setHeightForWidth(self.label_111.sizePolicy().hasHeightForWidth())
-        self.label_111.setSizePolicy(sizePolicy18)
+        sizePolicy16.setHeightForWidth(self.label_111.sizePolicy().hasHeightForWidth())
+        self.label_111.setSizePolicy(sizePolicy16)
         self.label_111.setMaximumSize(QSize(16777215, 16777215))
         self.label_111.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -4620,8 +4632,8 @@ class Ui_MainWindow(object):
 
         self.label_112 = QLabel(self.groupBox_54)
         self.label_112.setObjectName(u"label_112")
-        sizePolicy11.setHeightForWidth(self.label_112.sizePolicy().hasHeightForWidth())
-        self.label_112.setSizePolicy(sizePolicy11)
+        sizePolicy9.setHeightForWidth(self.label_112.sizePolicy().hasHeightForWidth())
+        self.label_112.setSizePolicy(sizePolicy9)
         self.label_112.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_104.addWidget(self.label_112, 1, 0, 1, 1)
@@ -4696,8 +4708,8 @@ class Ui_MainWindow(object):
         if (self.tableWidget_tabPopIn.rowCount() < 1):
             self.tableWidget_tabPopIn.setRowCount(1)
         self.tableWidget_tabPopIn.setObjectName(u"tableWidget_tabPopIn")
-        sizePolicy14.setHeightForWidth(self.tableWidget_tabPopIn.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabPopIn.setSizePolicy(sizePolicy14)
+        sizePolicy12.setHeightForWidth(self.tableWidget_tabPopIn.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabPopIn.setSizePolicy(sizePolicy12)
         self.tableWidget_tabPopIn.setMinimumSize(QSize(205, 0))
         self.tableWidget_tabPopIn.setMaximumSize(QSize(200, 16777215))
         self.tableWidget_tabPopIn.setAutoScroll(True)
@@ -4822,7 +4834,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 1536, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 1473, 22))
         self.menuData = QMenu(self.menuBar)
         self.menuData.setObjectName(u"menuData")
         self.menuOpenRecent = QMenu(self.menuData)
@@ -4847,7 +4859,7 @@ class Ui_MainWindow(object):
         self.tabWidget_2.setCurrentIndex(1)
         self.graphicsView_tab_TipAreaFunction_2.setCurrentIndex(0)
         self.tabWidget_4.setCurrentIndex(0)
-        self.graphicsView_tab_TipAreaFunction_5.setCurrentIndex(0)
+        self.graphicsView_tab_TipAreaFunction_5.setCurrentIndex(2)
         self.tabWidget_9.setCurrentIndex(0)
         self.tabWidget_5.setCurrentIndex(1)
         self.graphicsView_tab_TipAreaFunction_3.setCurrentIndex(0)
@@ -4857,8 +4869,8 @@ class Ui_MainWindow(object):
         self.tabWidget_7.setCurrentIndex(1)
         self.tabWidget_8.setCurrentIndex(1)
         self.tabWidget_10.setCurrentIndex(0)
-        self.graphicsView_tab_TipAreaFunction_6.setCurrentIndex(0)
-        self.tabWidget_11.setCurrentIndex(1)
+        self.graphicsView_tab_TipAreaFunction_6.setCurrentIndex(1)
+        self.tabWidget_11.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_7.setCurrentIndex(0)
         self.tabWidget_12.setCurrentIndex(0)
 

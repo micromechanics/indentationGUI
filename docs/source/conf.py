@@ -19,7 +19,7 @@ copyright = u'2022-{}, Micromechanics team'.format(datetime.datetime.now().year)
 author = u'Micromechanics team'
 
 # The full version, including alpha/beta/rc tags
-version = "0.1.7"
+version = "0.1.8"
 release = version
 
 # -- General configuration ---------------------------------------------------
