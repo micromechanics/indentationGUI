@@ -42,9 +42,12 @@ def export(self, win):
                     [win.ui.lineEdit_TAF5_tabHE.text()],
                     [' '],
                     [win.ui.lineEdit_FrameCompliance_tabHE.text()],
-                    [' Unloading Range to Calculate Stiffness'],
+                    ['Unloading Range to Calculate Stiffness'],
                     [win.ui.doubleSpinBox_Start_Pmax_tabHE.value()],
                     [win.ui.doubleSpinBox_End_Pmax_tabHE.value()],
+                    ['Range for calculating mean value'],
+                    [win.ui.doubleSpinBox_minhc4mean_tabHE.value()],
+                    [win.ui.doubleSpinBox_maxhc4mean_tabHE.value()],
 
                   ],
                   index=[
@@ -65,8 +68,11 @@ def export(self, win):
                           ' ',
                           'Frame Compliance [µm/mN]',
                           ' ',
-                          'Start[100\% of Pmax ]', #pylint: disable=anomalous-backslash-in-string
-                          'End[100\% of Pmax ]', #pylint: disable=anomalous-backslash-in-string
+                          'Start[100\% of Pmax]', #pylint: disable=anomalous-backslash-in-string
+                          'End[100\% of Pmax]', #pylint: disable=anomalous-backslash-in-string
+                          ' ',
+                          'min. hc [µm]', #pylint: disable=anomalous-backslash-in-string
+                          'max. hc [µm]', #pylint: disable=anomalous-backslash-in-string
                         ],
                     columns=[' '])
   elif Index_ExportTab == 1:
@@ -169,36 +175,43 @@ def export(self, win):
       All_hc_collect = []
       All_hmax_collect = []
       All_Pmax_collect = []
-      All_H_collect = []
-      All_E_collect = []
+      All_Hmean_collect = []
+      All_Hstd_collect = []
+      All_Emean_collect = []
+      All_Estd_collect = []
       All_X_Position_collect=win.tabHE_X_Position_collect
       All_Y_Position_collect=win.tabHE_Y_Position_collect
       for j, _ in enumerate(win.tabHE_testName_collect):
-        for k, _ in enumerate(win.tabHE_hc_collect[j]):
-          All_testName_collect.append(win.tabHE_testName_collect[j])
-          All_hc_collect.append(win.tabHE_hc_collect[j][k])
-          All_hmax_collect.append(win.tabHE_hmax_collect[j])
-          All_Pmax_collect.append(win.tabHE_Pmax_collect[j][k])
-          All_H_collect.append(win.tabHE_H_collect[j][k])
-          All_E_collect.append(win.tabHE_E_collect[j][k])
+        All_testName_collect.append(win.tabHE_testName_collect[j])
+        All_hc_collect.append(win.tabHE_hc_collect[j][-1])
+        All_hmax_collect.append(win.tabHE_hmax_collect[-1])
+        All_Pmax_collect.append(win.tabHE_Pmax_collect[j][-1])
+        All_Hmean_collect.append(win.tabHE_Hmean_collect[j])
+        All_Hstd_collect.append(win.tabHE_Hstd_collect[j])
+        All_Emean_collect.append(win.tabHE_Emean_collect[j])
+        All_Estd_collect.append(win.tabHE_Estd_collect[j])
       df = DataFrame(
                       [
                         All_testName_collect,
                         All_hc_collect,
                         All_hmax_collect,
                         All_Pmax_collect,
-                        All_H_collect,
-                        All_E_collect,
+                        All_Hmean_collect,
+                        All_Hstd_collect,
+                        All_Emean_collect,
+                        All_Estd_collect,
                         All_X_Position_collect,
                         All_Y_Position_collect,
                       ],
                       index =[
                               'Test Name',
-                              'hc[µm]',
-                              'hmax[µm]',
-                              'Pmax[mN]',
-                              'H[GPa]',
-                              'E[GPa]',
+                              'max. hc [µm]',
+                              'max. hmax [µm]',
+                              'max. Pmax [mN]',
+                              'mean of H [GPa]',
+                              'std of H [GPa]',
+                              'mean of E [GPa]',
+                              'std of E [GPa]',
                               'X Position [µm]',
                               'Y Position [µm]',
                               ],

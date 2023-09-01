@@ -24,9 +24,9 @@ def Classification_HE(self):
     except Exception as e: #pylint: disable=broad-except
       suggestion = 'Please check the typed complete paths of files' #pylint: disable=anomalous-backslash-in-string
       self.show_error(str(e), suggestion)
-    H = data.get('Results')['H[GPa]'].to_numpy()
+    H = data.get('Results')['mean of H [GPa]'].to_numpy()
     H_collect = np.concatenate((H_collect, H), axis=0)
-    E = data.get('Results')['E[GPa]'].to_numpy()
+    E = data.get('Results')['mean of E [GPa]'].to_numpy()
     E_collect = np.concatenate((E_collect, E), axis=0)
 
   # factor_y is used to correct the big difference of absolute value between hardness and modulus
@@ -145,7 +145,7 @@ def Plot2ExplainCycle(ax,x0,y0,radius):
   ax.plot([x1,x0],[y1,y0], color='black', linewidth=1)
   ax.plot([x2,x0],[y2,y0], color='black', linewidth=1)
   ax.plot([x3,x0],[y3,y0], color='black', linewidth=1)
-  ax.text(x2-2*radius,y0-1.6*radius,'Berkovich Indentation Region', fontsize=11)
+  ax.text(x2+2*radius,y0-0.5*radius,'Berkovich Indentation Region', fontsize=11)
 
 def PlotMappingWithoutClustering(self, plotClustering=False):
   """
@@ -166,20 +166,28 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     ax1 = fig.add_subplot(2,2,1)
     ax2 = fig.add_subplot(2,2,2, sharex=ax1, sharey=ax1)
     ax3 = fig.add_subplot(2,2,3, sharex=ax1, sharey=ax1)
-    ax4 = fig.add_subplot(2,2,4,)
+    ax4 = fig.add_subplot(2,2,4, sharex=ax1, sharey=ax1)
     axs = [ax1,ax2,ax3,ax4]
     data = pd.read_excel(file, sheet_name=None)
-    hmax = data.get('Results')['hmax[µm]'].to_numpy()
-    H = data.get('Results')['H[GPa]'].to_numpy()
-    E = data.get('Results')['E[GPa]'].to_numpy()
+    hmax = data.get('Results')['max. hmax [µm]'].to_numpy()
+    H = data.get('Results')['mean of H [GPa]'].to_numpy()
+    E = data.get('Results')['mean of E [GPa]'].to_numpy()
     X_Position = data.get('Results')['X Position [µm]'].to_numpy() #µm
     Y_Position = data.get('Results')['Y Position [µm]'].to_numpy() #µm
+    # X_Position[0] Y_Position[0] setting as the zero position, and filp left and right
     X0_Position = X_Position[0]
     for i, _ in enumerate(X_Position):
-      X_Position[i] = X0_Position-(X_Position[i]-X0_Position)
+      X_Position[i] = -(X_Position[i]-X0_Position)
+    Y0_Position = Y_Position[0]
+    for i, _ in enumerate(Y_Position):
+      Y_Position[i] = Y_Position[i]-Y0_Position
     Spacing = ( (X_Position[1]-X_Position[0])**2 + (Y_Position[1]-Y_Position[0])**2 )**0.5 #µm
     X_length = X_Position.max()-X_Position.min()
     Y_length = Y_Position.max()-Y_Position.min()
+    if X_length > Y_length:
+      Length = X_length
+    else:
+      Length = Y_length
     #hardness mapping
     cm_H = plt.cm.get_cmap('Blues')
     mapping1 = axs[0].scatter(X_Position, Y_Position, c=H, vmin=H.min()-(H.max()-H.min())*0.5, vmax=H.max(), cmap=cm_H)
@@ -190,16 +198,16 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     for i, _ in enumerate(X_Position):
       plotCycle(ax=axs[0],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
       plotCycle(ax=axs[1],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
-    axs[3].plot([0,Spacing],[-Y_length*0.05,-Y_length*0.05], color='black', linewidth=8)
-    axs[3].text(0, Y_length*0., f"{Spacing:.1f} µm", fontsize=14)
-    Plot2ExplainCycle(ax=axs[3],x0=X_length*0.7,y0=Y_length*0,radius=X_length*0.15)
+    axs[3].plot([0,Spacing],[Length*0.15,Length*0.15], color='black', linewidth=8)
+    axs[3].text(0, Length*0., f"{Spacing:.1f} µm", fontsize=14)
+    Plot2ExplainCycle(ax=axs[3],x0=Length*0,y0=Length*0.4,radius=Length*0.1)
     for ax in axs:
       ax.tick_params(axis='both', which='both', bottom=False, top=False, left=False, right=False, labelbottom=False, labeltop=False, labelleft=False, labelright=False)
-      ax.set_aspect(Y_length/X_length)
+      ax.set_aspect(1)
       ax.set_xlim(X_Position.min()-Spacing, X_Position.max()+Spacing)
       ax.set_ylim(Y_Position.min()-Spacing, Y_Position.max()+Spacing)
-    axs[3].set_xlim(-Spacing, X_length+Spacing)
-    axs[3].set_ylim(-Spacing, Y_length+Spacing)
+    axs[0].set_xlim(-Spacing, Length+Spacing)
+    axs[0].set_ylim(-Spacing, Length+Spacing)
     axs[3].set_frame_on(False)
     axs[2].set_frame_on(False)
     axs[0].set_title('Hardness mapping')
