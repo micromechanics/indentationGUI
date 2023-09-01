@@ -145,7 +145,7 @@ def Plot2ExplainCycle(ax,x0,y0,radius):
   ax.plot([x1,x0],[y1,y0], color='black', linewidth=1)
   ax.plot([x2,x0],[y2,y0], color='black', linewidth=1)
   ax.plot([x3,x0],[y3,y0], color='black', linewidth=1)
-  ax.text(x2+2*radius,y0-0.5*radius,'Berkovich Indentation Region', fontsize=11)
+  ax.text(x2+2.5*radius,y0-1*radius,'Berkovich\nIndentation Region', fontsize=11)
 
 def PlotMappingWithoutClustering(self, plotClustering=False):
   """
@@ -198,9 +198,9 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     for i, _ in enumerate(X_Position):
       plotCycle(ax=axs[0],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
       plotCycle(ax=axs[1],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
-    axs[3].plot([0,Spacing],[Length*0.15,Length*0.15], color='black', linewidth=8)
+    axs[3].plot([0,Spacing],[Length*0.12,Length*0.12], color='black', linewidth=8)
     axs[3].text(0, Length*0., f"{Spacing:.1f} µm", fontsize=14)
-    Plot2ExplainCycle(ax=axs[3],x0=Length*0,y0=Length*0.4,radius=Length*0.1)
+    Plot2ExplainCycle(ax=axs[3],x0=Length*0.58,y0=Length*0.1,radius=Length*0.08)
     for ax in axs:
       ax.tick_params(axis='both', which='both', bottom=False, top=False, left=False, right=False, labelbottom=False, labeltop=False, labelleft=False, labelright=False)
       ax.set_aspect(1)
