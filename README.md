@@ -9,9 +9,11 @@ micromechanics-indentationGUI
 </p>
 
 # Install
-highly recommend: installing in a new environment (python >= 3.8) created by Anaconda (https://www.anaconda.com/)
+Create a new environment (python >= 3.8) using Anaconda Navigator (https://www.anaconda.com/). In Anaconda's documentation (https://docs.anaconda.com/free/navigator/) you will learn:
+  - how to install Anaconda Navigator in the section of "Anaconda Navigator => Installation" (reading takes ~5 min), 
+  - how to create and activate a new environment in the section of "Anaconda Navigator => Tutorials => How to create a Python 3.5 environment from Anaconda2 or Anaconda3" (reading takes ~5 min).
 
-In the terminal, keyboard type the following command and press Enter
+In the terminal of the environment created by Anaconda Navigator, keyboard type the following command and press Enter
 ``` bash
 pip install micromechanics-indentationGUI
 ```
