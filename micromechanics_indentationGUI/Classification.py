@@ -174,20 +174,20 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     E = data.get('Results')['mean of E [GPa]'].to_numpy()
     X_Position = data.get('Results')['X Position [µm]'].to_numpy() #µm
     Y_Position = data.get('Results')['Y Position [µm]'].to_numpy() #µm
-    # X_Position[0] Y_Position[0] setting as the zero position, and filp left and right
-    X0_Position = X_Position[0]
-    for i, _ in enumerate(X_Position):
-      X_Position[i] = -(X_Position[i]-X0_Position)
-    Y0_Position = Y_Position[0]
-    for i, _ in enumerate(Y_Position):
-      Y_Position[i] = Y_Position[i]-Y0_Position
-    Spacing = ( (X_Position[1]-X_Position[0])**2 + (Y_Position[1]-Y_Position[0])**2 )**0.5 #µm
     X_length = X_Position.max()-X_Position.min()
     Y_length = Y_Position.max()-Y_Position.min()
     if X_length > Y_length:
       Length = X_length
     else:
       Length = Y_length
+    # X_Position.min() Y_Position.min() setting as the zero position, and filp left and right
+    X0_Position = X_Position.min()
+    for i, _ in enumerate(X_Position):
+      X_Position[i] = -(X_Position[i]-X0_Position) + Length
+    Y0_Position = Y_Position.min()
+    for i, _ in enumerate(Y_Position):
+      Y_Position[i] = Y_Position[i]-Y0_Position
+    Spacing = ( (X_Position[1]-X_Position[0])**2 + (Y_Position[1]-Y_Position[0])**2 )**0.5 #µm
     #hardness mapping
     cm_H = plt.cm.get_cmap('Blues')
     mapping1 = axs[0].scatter(X_Position, Y_Position, c=H, vmin=H.min()-(H.max()-H.min())*0.5, vmax=H.max(), cmap=cm_H)
@@ -204,8 +204,6 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     for ax in axs:
       ax.tick_params(axis='both', which='both', bottom=False, top=False, left=False, right=False, labelbottom=False, labeltop=False, labelleft=False, labelright=False)
       ax.set_aspect(1)
-      ax.set_xlim(X_Position.min()-Spacing, X_Position.max()+Spacing)
-      ax.set_ylim(Y_Position.min()-Spacing, Y_Position.max()+Spacing)
     axs[0].set_xlim(-Spacing, Length+Spacing)
     axs[0].set_ylim(-Spacing, Length+Spacing)
     axs[3].set_frame_on(False)
