@@ -16,13 +16,17 @@ def convertXLSXtoHDF5(XLSX_File,progressbar=None):
     data = df.parse(sheet_name)
     for i, _ in enumerate(data.columns):
       if i==0:
-        data.iloc[:,i]=data.iloc[:,i].astype(str)
+        if data.columns[i] == 'Markers':
+          data.iloc[:,i]=data.iloc[:,i].astype(str)
+        else:
+          data.iloc[:,i] = pd.to_numeric(data.iloc[:,i], errors='coerce')
       elif i>0:
         data.iloc[:,i] = pd.to_numeric(data.iloc[:,i], errors='coerce')
     try:
       store.put(sheet_name, data, format='table', append=True)
     except:
       store.put(sheet_name, data, format='fixed')
+      print('fixed', sheet_name)
     if progressbar is not None:
       progressbar(idx/len(df.sheet_names)*100, 'convert')
   print (store.keys())

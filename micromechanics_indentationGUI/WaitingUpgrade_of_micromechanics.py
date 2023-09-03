@@ -14,12 +14,14 @@ from micromechanics import indentation
 from micromechanics.indentation.definitions import Method, Vendor
 from .CorrectThermalDrift import correctThermalDrift
 from .Tools4hdf5 import convertXLSXtoHDF5
+from .load_depth import pick
 
 class IndentationXXX(indentation.Indentation):
   """
   based on the Main class of micromechanics.indentation
 
   Functions modified based on functions of micromechanics.indentation:
+    -analyse
     -nextTest
     -identifyLoadHoldUnload
     -loadAgilent
@@ -39,6 +41,36 @@ class IndentationXXX(indentation.Indentation):
     intinally define parameters for GUI
     """
     self.IfTermsGreaterThanZero = 0  #pylint: disable=attribute-defined-outside-init
+
+  def analyse(self):
+    """
+    update slopes/stiffness, Young's modulus and hardness after displacement correction by:
+
+    - compliance change
+
+    ONLY DO ONCE AFTER LOADING FILE: if this causes issues introduce flag analysed
+      which is toggled during loading and analysing
+    """
+    self.h -= self.tip.compliance*self.p
+    if self.method == Method.CSM:
+      if len(self.slope) == len(self.valid):                            #!!!!!!
+        self.slope = 1./(1./self.slope[self.valid]-self.tip.compliance) #!!!!!!
+      else:                                                             #!!!!!!
+        self.slope = 1./(1./self.slope-self.tip.compliance)             #!!!!!!
+    else:
+      self.slope, self.valid, _, _ , _= self.stiffnessFromUnloading(self.p, self.h)
+      self.slope = np.array(self.slope)
+    try:
+      self.k2p = self.slope*self.slope/self.p[self.valid]
+    except:
+      print('**WARNING SKIP ANALYSE')
+      print(traceback.format_exc())
+      return
+    #Calculate Young's modulus
+    self.calcYoungsModulus()
+    self.calcHardness()
+    self.saveToUserMeta()
+    return
 
   def nextTest(self, newTest=True, plotSurface=False):
     """
@@ -94,7 +126,7 @@ class IndentationXXX(indentation.Indentation):
 
       if found:
         #interpolate nan with neighboring values
-        nans = np.isnan(thresValues)
+        nans = np.isnan(thresValues) #pylint:disable=used-before-assignment
         def tempX(z):
           """
           Temporary function
@@ -117,7 +149,7 @@ class IndentationXXX(indentation.Indentation):
           valueB, valueA = signal.butter(*self.surface['butterfilter'])
           thresValues = signal.filtfilt(valueB, valueA, thresValues)
         if 'phase angle' in self.surface:
-          surface  = np.where(thresValues<thresValue)[0][0]
+          surface  = np.where(thresValues<thresValue)[0][0]  #pylint:disable=used-before-assignment
         else:
           surface  = np.where(thresValues>thresValue)[0][0]
         if plotSurface or 'plot' in self.surface:
@@ -132,6 +164,7 @@ class IndentationXXX(indentation.Indentation):
           plt.show()
         self.h -= self.h[surface]  #only change surface, not force
         self.p -= self.p[surface]  #!!!!!:Different from micromechanics: change load
+        self.valid = np.logical_and(self.valid, self.h>=0) #!!!!!
         self.identifyLoadHoldUnload() #!!!!!:Different from micromechanics: moved from nextAgilentTest
     #correct thermal drift !!!!!
     if self.model['driftRate']:
@@ -643,6 +676,7 @@ class IndentationXXX(indentation.Indentation):
     """
     print("Start compliance fitting")
     ## output representative values
+    testNameAll=[]
     if self.method==Method.CSM:
       x, y, h, t = None, None, None, None
       while True:
@@ -654,12 +688,14 @@ class IndentationXXX(indentation.Indentation):
           y = 1./self.slope
           h = self.h[self.valid]
           t = self.t[self.valid]
+          testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
           mask = (t < self.t[self.iLHU[0][1]]) #pylint: disable = superfluous-parens
         elif np.count_nonzero(self.valid)>0:
           x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
           y = np.hstack((y,    1./self.slope))
           h = np.hstack((h, self.h[self.valid]))
           t = self.t[self.valid]
+          testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
           mask = np.hstack((mask, (t < self.t[self.iLHU[0][1]]))) # the section after loading will be removed
         if not self.testList:
           break
@@ -680,10 +716,12 @@ class IndentationXXX(indentation.Indentation):
           pAll = pAll+list(self.metaUser['pMax_mN'])
           hAll = hAll+list(self.metaUser['hMax_um'])
           sAll = sAll+list(self.metaUser['S_mN/um'])
+          testNameAll = np.append( testNameAll, [self.testName] * len(self.metaUser['pMax_mN']), axis=0 )
         else:
           pAll = pAll+[self.metaUser['pMax_mN']]
           hAll = hAll+[self.metaUser['hMax_um']]
           sAll = sAll+[self.metaUser['S_mN/um']]
+          testNameAll = np.append( testNameAll, [self.testName] * len(self.metaUser['pMax_mN']), axis=0 )
         if not self.testList:
           break
         self.nextTest()
@@ -718,9 +756,11 @@ class IndentationXXX(indentation.Indentation):
       else:
         ax = self.output['ax'][0]  #!!!!!!
         ax1= self.output['ax'][1]  #!!!!!!
-
-      ax.plot(x[~mask], y[~mask], 'o', color='#165480', fillstyle='none', markersize=1, label='excluded')
-      ax.plot(x[mask], y[mask],   'C0o', markersize=5, label='for fit')
+      for _, testName in enumerate(self.allTestList):
+        mask1 = np.where(testNameAll[~mask]==testName)
+        ax.plot(x[~mask][mask1], y[~mask][mask1], 'o', color='#165480', fillstyle='none', markersize=1, label=f"{testName}", picker=True)
+        mask2 = np.where(testNameAll[mask]==testName)
+        ax.plot(x[mask][mask2], y[mask][mask2],   'C0o', markersize=5, label=f"{testName}", picker=True)
       y_fitted = np.polyval(param, x[mask]) # !!!!!!
       error = (y_fitted - y[mask]) / y[mask] *100 # !!!!!!
       x_ = np.linspace(0, np.max(x)*1.1, 50)
@@ -730,7 +770,9 @@ class IndentationXXX(indentation.Indentation):
       ax.plot([0,np.min(x)/2],[frameCompliance,frameCompliance],'k')
       ax.text(np.min(x)/2,frameCompliance,'frame compliance')
       ax.set_ylabel(r"total compliance, $C_{\rm total}$ [$\mathrm{\mu m/mN}$]")
-      ax.legend(loc=4)
+      #ax.legend(loc=4)
+      #pick the label of datapoints
+      ax.figure.canvas.mpl_connect("pick_event", pick)
       ax.set_ylim([0,np.max(y[mask])*1.5])
       ax.set_xlim([0,np.max(x[mask])*1.5])
       ax1.scatter(x[mask], error, color='grey',s=5) # !!!!!!

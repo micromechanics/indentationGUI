@@ -6,6 +6,7 @@ from micromechanics import indentation
 from micromechanics.indentation.definitions import Vendor
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
+from .load_depth import pick
 
 def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   """ Graphical user interface to calculate hardness and young's modulus """
@@ -24,6 +25,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabHE.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabHE.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabHE.value()
+  DecreaseDataDensity = self.ui.spinBox_DecreaseDataDensity_tabHE.value()
   min_hc4mean = self.ui.doubleSpinBox_minhc4mean_tabHE.value()
   max_hc4mean = self.ui.doubleSpinBox_maxhc4mean_tabHE.value()
   if DataFilterSize%2==0:
@@ -57,8 +59,12 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
     Surface = {
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
+  #open waiting dialog
+  self.show_wait('GUI is reading the file')
   #Reading Inputs
   self.i_tabHE = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
+  #close waiting dialog
+  self.close_wait()
   i = self.i_tabHE
   #show Test method
   Method = i.method.value
@@ -155,8 +161,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       else:
         test_number_collect.append(int(i.testName[4:]))
       #plotting hardness and young's modulus
-      ax_H_hc.plot(i.hc,i.hardness,'.-', linewidth=1)
-      ax_E_hc.plot(i.hc,i.modulus,'.-', linewidth=1)
+      ax_H_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'.-', linewidth=1, picker=True, label=i.testName)
+      ax_E_hc.plot(i.hc[::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '.-', linewidth=1, picker=True, label=i.testName)
       if not i.testList:
         break
     i.nextTest()
@@ -171,10 +177,14 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   if True in np.isnan(Hmean_collect):
     suggestion = 'There is Nan in H or E list. Please try to decrease min. (or max.) hc' #pylint: disable=anomalous-backslash-in-string
     self.show_error(suggestion)
-  ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*0.3,np.mean(Hmean_collect)+np.mean(Hmean_collect)*0.3)
-  ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*0.3,np.mean(Emean_collect)+np.mean(Emean_collect)*0.3)
-  ax_H_hc.legend()
-  ax_E_hc.legend()
+  ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*2,np.mean(Hmean_collect)+np.mean(Hmean_collect)*2)
+  ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*2,np.mean(Emean_collect)+np.mean(Emean_collect)*2)
+  if len(H_collect)<10:
+    ax_H_hc.legend()
+    ax_E_hc.legend()
+  #pick the label of datapoints
+  self.static_canvas_H_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
+  self.static_canvas_E_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
   #prepare for export
   self.tabHE_hc_collect=hc_collect
   self.tabHE_hmax_collect=hmax_collect
@@ -201,6 +211,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       self.ui.tableWidget_tabHE.setItem(k,1,QTableWidgetItem("Yes"))
     else:
       self.ui.tableWidget_tabHE.setItem(k,1,QTableWidgetItem("No"))
+  #open waiting dialog
+  self.show_wait('GUI is plotting results!')
   #plotting hardness-Indent's Nummber and young's modulus-Indent's Nummber
   ax_H_Index = self.static_ax_H_Index_tabHE
   ax_E_Index = self.static_ax_E_Index_tabHE
@@ -209,13 +221,13 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   H4mean_collect=np.hstack(H4mean_collect)
   E4mean_collect=np.hstack(E4mean_collect)
   ax_H_Index.errorbar(test_number_collect,Hmean_collect,yerr=Hstd_collect,marker='s', markersize=10, capsize=10, capthick=5,elinewidth=2, color='black',alpha=0.7,linestyle='')
-  ax_H_Index.axhline(np.mean(H4mean_collect), color = 'tab:orange', label = f"average Hardenss: {np.mean(H4mean_collect)} GPa")
-  ax_H_Index.axhline(np.mean(H4mean_collect)+np.std(H4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(H4mean_collect,ddof=1)} GPa")
-  ax_H_Index.axhline(np.mean(H4mean_collect)-np.std(H4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed')
+  ax_H_Index.axhline(np.mean(H4mean_collect), color = 'tab:orange', label = f"average Hardenss: {np.mean(H4mean_collect)} GPa",zorder=3)
+  ax_H_Index.axhline(np.mean(H4mean_collect)+np.std(H4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(H4mean_collect,ddof=1)} GPa",zorder=3)
+  ax_H_Index.axhline(np.mean(H4mean_collect)-np.std(H4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed',zorder=3)
   ax_E_Index.errorbar(test_number_collect,Emean_collect,yerr=Estd_collect,marker='s', markersize=10, capsize=10, capthick=5,elinewidth=2, color='black',alpha=0.7,linestyle='')
-  ax_E_Index.axhline(np.mean(E4mean_collect), color = 'tab:orange', label = f"average Young's Modulus: {np.mean(E4mean_collect)} GPa")
-  ax_E_Index.axhline(np.mean(E4mean_collect)+np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(E4mean_collect,ddof=1)} GPa")
-  ax_E_Index.axhline(np.mean(E4mean_collect)-np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed')
+  ax_E_Index.axhline(np.mean(E4mean_collect), color = 'tab:orange', label = f"average Young's Modulus: {np.mean(E4mean_collect)} GPa",zorder=3)
+  ax_E_Index.axhline(np.mean(E4mean_collect)+np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(E4mean_collect,ddof=1)} GPa",zorder=3)
+  ax_E_Index.axhline(np.mean(E4mean_collect)-np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed',zorder=3)
   ax_H_hc.set_xlabel('Contact depth [µm]')
   ax_H_hc.set_ylabel('Hardness [GPa]')
   ax_H_Index.set_xlabel('Indents\'s Nummber')
@@ -247,3 +259,5 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.static_canvas_HE_tabHE.figure.set_tight_layout(True)
   self.set_aspectRatio(ax=ax_HE)
   self.static_canvas_HE_tabHE.draw()
+  #close waiting dialog
+  self.close_wait(info='Calculation of Hardness and Modulus is finished!')

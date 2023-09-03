@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1473, 836)
+        MainWindow.resize(1485, 834)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -3527,6 +3527,26 @@ class Ui_MainWindow(object):
 
         self.gridLayout_48.addWidget(self.groupBox_21, 4, 0, 2, 1)
 
+        self.groupBox_65 = QGroupBox(self.tab_15)
+        self.groupBox_65.setObjectName(u"groupBox_65")
+        self.groupBox_65.setMaximumSize(QSize(230, 16777215))
+        self.gridLayout_117 = QGridLayout(self.groupBox_65)
+        self.gridLayout_117.setObjectName(u"gridLayout_117")
+        self.spinBox_DecreaseDataDensity_tabHE = QSpinBox(self.groupBox_65)
+        self.spinBox_DecreaseDataDensity_tabHE.setObjectName(u"spinBox_DecreaseDataDensity_tabHE")
+        self.spinBox_DecreaseDataDensity_tabHE.setMinimum(1)
+
+        self.gridLayout_117.addWidget(self.spinBox_DecreaseDataDensity_tabHE, 0, 1, 1, 1)
+
+        self.label_161 = QLabel(self.groupBox_65)
+        self.label_161.setObjectName(u"label_161")
+        self.label_161.setFont(font)
+
+        self.gridLayout_117.addWidget(self.label_161, 0, 0, 1, 1)
+
+
+        self.gridLayout_48.addWidget(self.groupBox_65, 8, 0, 2, 1)
+
         self.tabWidget_5.addTab(self.tab_15, "")
 
         self.gridLayout_27.addWidget(self.tabWidget_5, 0, 1, 1, 1)
@@ -4834,7 +4854,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 1473, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 1485, 22))
         self.menuData = QMenu(self.menuBar)
         self.menuData.setObjectName(u"menuData")
         self.menuOpenRecent = QMenu(self.menuData)
@@ -4851,7 +4871,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         self.comboBox_equipment_tabTAF.setCurrentIndex(0)
         self.comboBox_method_tabTAF.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction.setCurrentIndex(0)
@@ -5258,6 +5278,9 @@ class Ui_MainWindow(object):
         self.groupBox_21.setTitle(QCoreApplication.translate("MainWindow", u"Find Surface", None))
         self.checkBox_UsingRate2findSurface_tabHE.setText(QCoreApplication.translate("MainWindow", u"when dP/dh [mN/\u00b5m] >", None))
         self.label_88.setText(QCoreApplication.translate("MainWindow", u"Size of data filter:", None))
+        self.groupBox_65.setTitle(QCoreApplication.translate("MainWindow", u"Options for Big Data", None))
+        self.label_161.setText(QCoreApplication.translate("MainWindow", u"Level decreasing Data\n"
+"Density (only for Plotting)", None))
         self.tabWidget_5.setTabText(self.tabWidget_5.indexOf(self.tab_15), QCoreApplication.translate("MainWindow", u"Calculate Hardness and Modulus", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_13), QCoreApplication.translate("MainWindow", u"Hardness and Young's Modulus", None))
         self.pushButton_SelectAll_tabPopIn_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all", None))

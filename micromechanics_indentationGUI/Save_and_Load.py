@@ -61,6 +61,7 @@ class data4save:
                     'spinBox_NumberClusters': None,
                     'checkBox_ifUsingFoundNumberClusters': None,
                     'checkBox_ifPlotElbow': None,
+                    'spinBox_DecreaseDataDensity': None,
                   }
     
     self.tabName_list = [

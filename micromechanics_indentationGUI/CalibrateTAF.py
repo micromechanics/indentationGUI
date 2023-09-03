@@ -4,7 +4,7 @@ from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-
+from .load_depth import pick
 
 def click_OK_calibration(self):
   """ Graphical user interface to calibrate tip area function """

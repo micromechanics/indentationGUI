@@ -6,7 +6,7 @@ from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-
+from .load_depth import pick
 
 def FrameStiffness(self,tabName):
   """
@@ -124,6 +124,8 @@ def FrameStiffness(self,tabName):
     i_FrameStiffness.output['ax'] = ax
     i_FrameStiffness.calibrateStiffness_OneIteration(eTarget=False, critDepth=critDepth, critForce=critForce, plotStiffness=False)
     frameCompliance = i_FrameStiffness.tip.compliance
+  #pick the label of datapoints
+  ax[0].figure.canvas.mpl_connect("pick_event", pick)
   i_FrameStiffness.model['driftRate'] = False #reset
   exec(f"self.static_canvas_{tabName}.draw()") # pylint: disable = exec-used
   i_FrameStiffness.output['ax'] = [None,None]

@@ -104,15 +104,46 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
       if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI) and not plot_multiTest:
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
       elif i.method== indentation.definitions.Method.CSM or plot_multiTest:
-        i.output['ax'][0].scatter(i.h, i.p, s=1, label=f"{i.testName}")
+        i.output['ax'][0].scatter(i.h, i.p, s=1, label=f"{i.testName}", picker=True)
         if j==len(selectedTests)-1:
           i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
           i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
           if len(selectedTests)<=10: # show legend when the number of curves is smaller than 10
             i.output['ax'][0].legend()
+          #pick the label of datapoints
+          i.output['ax'][0].figure.canvas.mpl_connect("pick_event", pick)
           i.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
           i.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
           i.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
       i.output['ax']=None
   static_canvas.figure.set_tight_layout(True)
   static_canvas.draw()
+
+def pick(event):
+  """
+  picking annotation
+
+  Args:
+    event (class): matplotlib event see: https://matplotlib.org/stable/users/explain/event_handling.html
+  """
+  global annot #pylint:disable=global-variable-undefined
+  try:
+    annot.set_visible(False) #pylint:disable=used-before-assignment
+  except:
+    pass
+  annot = event.mouseevent.inaxes.annotate("", xy=(0,0), xytext=(20,10),textcoords="offset points",
+                  bbox=dict(boxstyle="round", fc="w"), #pylint:disable=use-dict-literal
+                  arrowprops=dict(arrowstyle="->"))    #pylint:disable=use-dict-literal
+  annot.set_visible(False)
+  try:
+    text = event.artist.get_label()
+    print(text)
+  except:
+    pass
+  else:
+    annot.xy = [event.mouseevent.xdata, event.mouseevent.ydata]
+    annot.set_text(text)
+    annot.get_bbox_patch().set_facecolor('gray')
+    annot.get_bbox_patch().set_alpha(0.4)
+    annot.set_visible(True)
+    event.mouseevent.canvas.draw_idle()

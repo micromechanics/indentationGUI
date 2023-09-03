@@ -10,6 +10,7 @@ from .DialogExport_ui import Ui_DialogExport
 from .DialogSaveAs_ui import Ui_DialogSaveAs
 from .DialogOpen_ui import Ui_DialogOpen
 from .DialogError_ui import Ui_DialogError
+from .DialogWait_ui import Ui_DialogWait
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
@@ -76,7 +77,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.Copy_TAF_tabHE.clicked.connect(self.Copy_TAF)
     self.ui.Copy_FrameCompliance_tabHE.clicked.connect(self.Copy_FrameCompliance_tabHE)
     self.ui.Copy_TAF_tabHE_FrameStiffness.clicked.connect(self.Copy_TAF_tabHE_FrameStiffness)
-    self.ui.Calculate_tabHE.clicked.connect(self.Calculate_Hardness_Modulus)
+    self.ui.Calculate_tabHE.clicked.connect(self.click_pushButton_Calculate_Hardness_Modulus)
     self.ui.pushButton_SelectAll_tabHE.clicked.connect(self.click_pushButton_SelectAll_tabHE)
     self.ui.pushButton_SelectAll_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabHE_FrameStiffness)
     #clicked.connect in tabPopIn
@@ -287,6 +288,9 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """ plot the load-depth curves of the chosen tests in tabHE for calculating frame stiffness """
     self.plot_load_depth(tabName='tabHE_FrameStiffness')
 
+  def click_pushButton_Calculate_Hardness_Modulus(self):
+    """ calculate the hardness and modulus in tabHE """
+    self.Calculate_Hardness_Modulus()
 
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE(self):
     """ plot the load-depth curves of the chosen tests in tabHE """
@@ -443,6 +447,19 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     window_DialogError.print_error(message, suggestion)
     window_DialogError.show()
 
+  def show_wait(self, info=' '): #pylint: disable=no-self-use
+    """ show the dialog showing waiting info """
+    window_DialogWait.setWindowTitle('Waiting ... ... :)  '+info)
+    window_DialogWait.show()
+
+  def close_wait(self, info=False): #pylint: disable=no-self-use
+    """ clsoe the dialog showing waiting info """
+    if info:
+      window_DialogWait.setWindowTitle('Done!')
+      window_DialogWait.print_wait(info)
+    else:
+      window_DialogWait.close()
+
 
 class DialogExport(QDialog):
   """ Graphical user interface of Dialog used to export calculated results """
@@ -499,6 +516,16 @@ class DialogExport(QDialog):
     self.export(window)
     self.close()
 
+class DialogWait(QDialog):
+  """ Graphical user interface of Dialog used to show waiting :) """
+  def __init__(self, parent = None):
+    super().__init__()
+    self.ui = Ui_DialogWait()
+    self.ui.setupUi(self)
+    self.ui.pushButton_OK_DialogWait.clicked.connect(self.close)
+  def print_wait(self,info=' '):
+    """ writing info  """
+    self.ui.textBrowser_Info.setText(info)
 
 class DialogError(QDialog):
   """ Graphical user interface of Dialog used to show error """
@@ -615,7 +642,7 @@ class DialogOpen(QDialog):
 ## Main function
 def main():
   """ Main method and entry point for commands """
-  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, window_DialogError #pylint: disable=global-variable-undefined
+  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, window_DialogError, window_DialogWait #pylint: disable=global-variable-undefined
   app = QApplication()
   window = MainWindow()
   window.setWindowTitle("GUI for micromechanics.indentation")
@@ -633,6 +660,8 @@ def main():
   window_DialogOpen.setWindowIcon(logo_icon)
   window_DialogError = DialogError()
   window_DialogError.setWindowIcon(logo_icon)
+  window_DialogWait = DialogWait()
+  window_DialogWait.setWindowIcon(logo_icon)
   #open or create Txt-file of OpenRecent
   try:
     file_RecentFiles = open(f"{window.file_path}{window.slash}RecentFiles.txt", 'r', encoding="utf-8") #pylint: disable=consider-using-with

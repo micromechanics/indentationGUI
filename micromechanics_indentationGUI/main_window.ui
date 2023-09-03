@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1473</width>
-    <height>836</height>
+    <width>1485</width>
+    <height>834</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -61,7 +61,7 @@
          </font>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_calibration">
          <property name="sizePolicy">
@@ -7028,6 +7028,41 @@
                 </layout>
                </widget>
               </item>
+              <item row="8" column="0" rowspan="2">
+               <widget class="QGroupBox" name="groupBox_65">
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Options for Big Data</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_117">
+                 <item row="0" column="1">
+                  <widget class="QSpinBox" name="spinBox_DecreaseDataDensity_tabHE">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_161">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Level decreasing Data
+Density (only for Plotting)</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
              </layout>
             </widget>
            </widget>
@@ -9618,7 +9653,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1473</width>
+     <width>1485</width>
      <height>22</height>
     </rect>
    </property>
