@@ -227,7 +227,7 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
       #Cluster mapping
       try:
         # create a colormap for plotting the K-means Clustering Mapping
-        colors =  ['tab:blue','blue','tab:orange', 'gold','tab:green','lime','tab:red','k','tab:purple','indigo','tab:brown','peru', 'tab:pink', 'pink', 'tab:olive', 'yellow','tab:cyan','cyan']
+        colors =  ['white', 'tab:cyan', 'tab:olive', 'pink', 'tab:brown', 'tab:pink', 'lime', 'indigo','tab:orange', 'gold', 'tab:green','tab:red','k','tab:purple', 'yellow','cyan','tab:blue','blue', 'peru']
         my_cmap = mpl.colors.ListedColormap(colors, name="my_cmap", N=np.max(cluster_collect))
         mpl.colormaps.register(cmap=my_cmap, force=True)
       except:
@@ -236,6 +236,7 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
       mapping3 = axs[2].scatter(X_Position, Y_Position, c=cluster_collect, vmin=1, vmax=np.max(cluster_collect)+1, cmap=cm_cluster)
       cax_mapping3 = fig.add_axes([0.58, 0.27, 0.3, 0.02])
       fig.colorbar(mapping3, cax=cax_mapping3, orientation='horizontal', label='Cluster Number [-]', ticks=np.arange(np.min(cluster_collect), np.max(cluster_collect)+1, 2), spacing='uniform')
+      fig.savefig(f"{file[:-5]}.svg", transparent=True)
     else:
       plt.show()
 
