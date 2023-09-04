@@ -195,9 +195,9 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
     cm_E = plt.cm.get_cmap('Purples')
     mapping2 = axs[1].scatter(X_Position, Y_Position, c=E, vmin=E.min()-(E.max()-E.min())*0.5, vmax=E.max(), cmap=cm_E)
     #markering indent region
-    for i, _ in enumerate(X_Position):
-      plotCycle(ax=axs[0],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
-      plotCycle(ax=axs[1],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
+    # for i, _ in enumerate(X_Position):
+    #   plotCycle(ax=axs[0],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
+    #   plotCycle(ax=axs[1],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
     axs[3].plot([0,Spacing],[Length*0.12,Length*0.12], color='black', linewidth=8)
     axs[3].text(0, Length*0., f"{Spacing:.1f} µm", fontsize=14)
     Plot2ExplainCycle(ax=axs[3],x0=Length*0.58,y0=Length*0.1,radius=Length*0.08)
@@ -221,13 +221,13 @@ def PlotMappingWithoutClustering(self, plotClustering=False):
       axs[2].set_title('K-means Clustering')
       cluster_collect=[]
       for i, _ in enumerate(X_Position):
-        plotCycle(ax=axs[2],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
+        # plotCycle(ax=axs[2],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
         index = np.where( (np.absolute((X[:,1]/factor_y)-H[i])<1.e-5) & (np.absolute(X[:,0]-E[i])<1.e-5) )
         cluster_collect.append(int(cluster.labels_[index])+1)
       #Cluster mapping
       try:
         # create a colormap for plotting the K-means Clustering Mapping
-        colors =  ['white', 'tab:cyan', 'tab:olive', 'pink', 'tab:brown', 'tab:pink', 'lime', 'indigo','tab:orange', 'gold', 'tab:green','tab:red','k','tab:purple', 'yellow','cyan','tab:blue','blue', 'peru']
+        colors =  ['white', 'tab:cyan', 'tab:olive', 'pink', 'tab:brown', 'tab:pink', 'lime', 'indigo','tab:orange', 'gold', 'tab:green','tab:red','k','tab:purple', 'yellow','cyan','tab:blue','blue', 'peru'] #pylint:disable=line-too-long
         my_cmap = mpl.colors.ListedColormap(colors, name="my_cmap", N=np.max(cluster_collect))
         mpl.colormaps.register(cmap=my_cmap, force=True)
       except:
