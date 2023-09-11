@@ -21,6 +21,7 @@ def FrameStiffness(self,tabName):
   fileName =eval(f"self.ui.lineEdit_path_{tabName}.text()") # pylint: disable = eval-used
   unloaPMax = eval(f"self.ui.doubleSpinBox_Start_Pmax_{tabName}.value()") # pylint: disable = eval-used
   unloaPMin = eval(f"self.ui.doubleSpinBox_End_Pmax_{tabName}.value()") # pylint: disable = eval-used
+  maxhc_Tip = self.ui.doubleSpinBox_maxhc_Tip_tabTAF.value()
   relForceRateNoise = eval(f"self.ui.doubleSpinBox_relForceRateNoise_{tabName}.value()") # pylint: disable = eval-used
   max_size_fluctuation = eval(f"self.ui.spinBox_max_size_fluctuation_{tabName}.value()") # pylint: disable = eval-used
   UsingRate2findSurface = eval(f"self.ui.checkBox_UsingRate2findSurface_{tabName}.isChecked()") # pylint: disable = eval-used
@@ -120,9 +121,9 @@ def FrameStiffness(self,tabName):
     frameCompliance = i_FrameStiffness.tip.compliance
   elif Index_CalculationMethod == 1:
     i_FrameStiffness.output['ax'] = [None,None]
-    i_FrameStiffness.calibrateStiffness_iterativeMethod(critDepth=critDepth, critForce=critForce, plotStiffness=False)
+    i_FrameStiffness.calibrateStiffness_iterativeMethod(critDepth=critDepth, critMaxDepth=maxhc_Tip, critForce=critForce, plotStiffness=False)
     i_FrameStiffness.output['ax'] = ax
-    i_FrameStiffness.calibrateStiffness_OneIteration(eTarget=False, critDepth=critDepth, critForce=critForce, plotStiffness=False)
+    i_FrameStiffness.calibrateStiffness_OneIteration(eTarget=False, critDepth=critDepth, critMaxDepth=maxhc_Tip, critForce=critForce, plotStiffness=False)
     frameCompliance = i_FrameStiffness.tip.compliance
   #pick the label of datapoints
   ax[0].figure.canvas.mpl_connect("pick_event", pick)

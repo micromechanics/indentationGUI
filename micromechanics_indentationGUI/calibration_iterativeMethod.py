@@ -13,13 +13,14 @@ from scipy import interpolate
 import lmfit
 
 
-def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStiffness=False, returnData=False):
+def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, critForce,plotStiffness=False, returnData=False):
   """
   Calibrate the frame-stiffness using the known Ac=f(hc) according to Eq.(22) in paper of Ovliver 2004
 
   Args:
     eTarget (float): the targert elastic modulus for the calibration
     critDepth (float): frame stiffness: what is the minimum depth of data used
+    critMaxDepth (float): frame stiffness: what is the maximum depth of data used
     critForce (float): frame stiffness: what is the minimum force used for fitting
     plotStiffness (bool): plot stiffness graph with compliance
     returnData (bool): return data for external plotting
@@ -57,6 +58,7 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStif
         break
       self.nextTest()
     mask = np.logical_and(mask, h>critDepth)
+    mask = np.logical_and(mask, h<critMaxDepth)
     mask = np.logical_and(mask, x<1./np.sqrt(critForce))
     if len(mask[mask])==0:
       print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
@@ -89,6 +91,7 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStif
     x = 1./np.sqrt(AcAll)
     y = 1./sAll
     mask = hAll > critDepth
+    mask = np.logical_and(mask, hAll < critMaxDepth)
     mask = np.logical_and(mask, pAll>critForce)
     print("number of data-points:", len(x[mask]))
     if len(mask[mask])==0:
@@ -149,28 +152,29 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critForce,plotStif
   return frameCompliance
 
 
-def calibrateStiffness_iterativeMethod(self, eTarget=False, critDepth=0.5, critForce=0.0001, plotStiffness=False, returnData=False):
+def calibrateStiffness_iterativeMethod(self, eTarget=False, critDepth=0.5, critMaxDepth=1000.0, critForce=0.0001, plotStiffness=False, returnData=False):
   """
   iteratively Calibrate the frame-stiffness using the known Ac=f(hc) according to Eq.(22) in paper of Ovliver 2004
 
   Args:
     eTarget (float): the targert elastic modulus for the calibration
     critDepth (float): frame stiffness: what is the minimum depth of data used
+    critMaxDepth (float): frame stiffness: what is the maximum depth of data used
     critForce (float): frame stiffness: what is the minimum force used for fitting
     plotStiffness (bool): plot stiffness graph with compliance
     returnData (bool): return data for external plotting
   """
   print('start calibrateStiffness_iterativeMethod')
   print(f"the tip.prefactors: {self.tip.prefactors}")
-  frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=False)
+  frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critMaxDepth=critMaxDepth,critForce=critForce, plotStiffness=False, returnData=False)
   iteration_numbers=0
   while np.abs(frameCompliance) > 1e-7 and iteration_numbers<21:
-    frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=False)
+    frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critMaxDepth=critMaxDepth, critForce=critForce, plotStiffness=False, returnData=False)
     iteration_numbers+=1
     print('iteration_numbers',iteration_numbers)
 
 
-def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includedAngel_Cone=30, Radius_Sphere=2, numPolynomial=3, critDepthTip=0.0, plotTip=False, plot_Ac_hc=False, **kwargs): # pylint:disable=too-many-arguments
+def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includedAngel_Cone=30, Radius_Sphere=2, numPolynomial=3, critDepthTip=0.0, critMaxDepthTip=1000.0, plotTip=False, plot_Ac_hc=False, **kwargs): # pylint:disable=too-many-arguments
   """
   Calibrate the area-function calibration using the known frame stiffness
 
@@ -182,6 +186,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
       Radius_Sphere (float): the radius of the Sphere, µm
       numPolynomial (int): number of area function polynomial; if None: return interpolation function
       critDepthTip (float): area function what is the minimum depth of data used
+      critMaxDepthTip (float): area function what is the maximum depth of data used
       plotTip (bool): plot tip shape after fitting
       plot_Ac_hc (bool): plot the Ac-hc and the fitted function
       kwargs (dict): additional keyword arguments
@@ -221,7 +226,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
       self.nextTest()
 
   #the max. depth has to be greater than the given value
-  mask = h>critDepthTip
+  mask = (h>critDepthTip)&(h<critMaxDepthTip)
   slope = slope[mask]
   h = h[mask]
   p = p[mask]
@@ -323,7 +328,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
     return hc, Ac
   return True
 
-def oneIteration_TAF_frameCompliance(self, eTarget, frameCompliance, TipType, half_includedAngel_Cone, Radius_Sphere, numPolynomial, critDepthTip, constantTerm, critDepthStiffness, critForceStiffness): #pylint: disable=too-many-arguments
+def oneIteration_TAF_frameCompliance(self, eTarget, frameCompliance, TipType, half_includedAngel_Cone, Radius_Sphere, numPolynomial, critDepthTip, critMaxDepthTip, constantTerm, critDepthStiffness, critForceStiffness): #pylint: disable=too-many-arguments
   """
   Calibrate the area-function calibration using the known frame stiffness
 
@@ -335,6 +340,7 @@ def oneIteration_TAF_frameCompliance(self, eTarget, frameCompliance, TipType, ha
     Radius_Sphere (float): the radius of the Sphere, µm
     numPolynomial (int): number of area function polynomial; if None: return interpolation function
     critDepthTip (float): area function: what is the minimum depth of data used
+    critMaxDepthTip (float): area function: what is the maximum depth of data used
     constantTerm (bool): wheater to use a constant term for TAF
     critDepthStiffness (float): frame stiffness: what is the minimum depth of data used
     critForceStiffness (float): frame stiffness: what is the minimum force of data used
@@ -344,13 +350,13 @@ def oneIteration_TAF_frameCompliance(self, eTarget, frameCompliance, TipType, ha
   """
 
   #using frameCompliance to calculate TAF
-  hc, Ac = self.calibrateTAF(eTarget=eTarget, frameCompliance = frameCompliance, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone,Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, plotTip=False, constantTerm=constantTerm, plot_Ac_hc=False, returnArea=True) # pylint: disable=unused-variable
+  hc, Ac = self.calibrateTAF(eTarget=eTarget, frameCompliance = frameCompliance, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone,Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, critMaxDepthTip=critMaxDepthTip, plotTip=False, constantTerm=constantTerm, plot_Ac_hc=False, returnArea=True) # pylint: disable=unused-variable
   #using TAF to calculate frameCompliance
-  self.calibrateStiffness_iterativeMethod(eTarget=eTarget, critDepth=critDepthStiffness, critForce=critForceStiffness, plotStiffness=False, returnData=False)
+  self.calibrateStiffness_iterativeMethod(eTarget=eTarget, critDepth=critDepthStiffness, critMaxDepth=critMaxDepthTip, critForce=critForceStiffness, plotStiffness=False, returnData=False)
   return (frameCompliance - self.tip.compliance) # pylint: disable=superfluous-parens
 
 
-def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Berkovich', half_includedAngel_Cone=30., Radius_Sphere=2, numPolynomial=3, critDepthStiffness=1.0, critForceStiffness=1.0, critDepthTip=0.0, **kwargs):
+def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Berkovich', half_includedAngel_Cone=30., Radius_Sphere=2, numPolynomial=3, critDepthStiffness=1.0, critForceStiffness=1.0, critDepthTip=0.0, critMaxDepthTip=1000.0, **kwargs): # pylint:disable=too-many-arguments
   """
   iteratively Calibrate the area-function and frame compliance simutaneously according to Eq.(22) in the paper of Oliver 2004
 
@@ -363,6 +369,7 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
     critDepthStiffness (float): frame stiffness: what is the minimum depth of data used
     critForceStiffness (float): frame stiffness: what is the minimum force of data used
     critDepthTip (float): area function: what is the minimum depth of data used
+    critMaxDepthTip (float): area function: what is the maximum depth of data used
     kwargs (dict): additional keyword arguments
         - constantTerm (bool): add constant term into area function
 
@@ -377,8 +384,8 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
   frameCompliance = self.tip.compliance
   Number_of_ChaningBetweenIncreaseDecrease = 0
   change_Value = np.abs( frameCompliance*(0.08/2**Number_of_ChaningBetweenIncreaseDecrease) )
-  change_afterIncrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance+change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness) # pylint: disable=no-name-in-module
-  change_afterDecrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance-change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness) # pylint: disable=no-name-in-module
+  change_afterIncrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance+change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, critMaxDepthTip=critMaxDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness) # pylint: disable=no-name-in-module
+  change_afterDecrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance-change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, critMaxDepthTip=critMaxDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness) # pylint: disable=no-name-in-module
   Increase_Status = 0
   Decrease_Status = 0
   frameCompliance_Old = frameCompliance
@@ -394,7 +401,7 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
   while change_Value > 1e-7:
     change_Value = np.abs( frameCompliance*(0.08/2**Number_of_ChaningBetweenIncreaseDecrease) )
     if Decrease_Status == 1:
-      change_afterDecrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance-change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness)
+      change_afterDecrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance-change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, critMaxDepthTip=critMaxDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness)
       if np.abs(change_afterDecrease) <= change_afterDecreaseORIncrease:
         change_afterDecreaseORIncrease = np.abs(change_afterDecrease)
         frameCompliance_Old = frameCompliance
@@ -407,7 +414,7 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
         Number_of_ChaningBetweenIncreaseDecrease += 1
         print(f"Number_of_ChaningBetweenIncreaseDecrease: {Number_of_ChaningBetweenIncreaseDecrease}")
     elif Increase_Status == 1:
-      change_afterIncrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance+change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness)
+      change_afterIncrease = self.oneIteration_TAF_frameCompliance(frameCompliance=frameCompliance+change_Value, eTarget=eTarget, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone, Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, critMaxDepthTip=critMaxDepthTip, constantTerm=constantTerm, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness)
       if np.abs(change_afterIncrease) <= change_afterDecreaseORIncrease:
         change_afterDecreaseORIncrease = np.abs(change_afterIncrease)
         frameCompliance_Old = frameCompliance
@@ -467,5 +474,4 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
     #   print('Ac_max', Ac_max)
     # else:
     #   Func_IF_self_convergence()
-
   return frameCompliance

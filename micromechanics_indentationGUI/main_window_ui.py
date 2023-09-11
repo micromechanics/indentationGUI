@@ -27,13 +27,13 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1485, 834)
+        MainWindow.resize(1473, 806)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QSize(0, 0))
+        MainWindow.setMinimumSize(QSize(1473, 0))
         MainWindow.setMaximumSize(QSize(16777215, 16777215))
         MainWindow.setCursor(QCursor(Qt.ArrowCursor))
         MainWindow.setMouseTracking(False)
@@ -678,8 +678,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_63 = QGroupBox(self.groupBox_7)
         self.groupBox_63.setObjectName(u"groupBox_63")
-        sizePolicy1.setHeightForWidth(self.groupBox_63.sizePolicy().hasHeightForWidth())
-        self.groupBox_63.setSizePolicy(sizePolicy1)
+        sizePolicy9.setHeightForWidth(self.groupBox_63.sizePolicy().hasHeightForWidth())
+        self.groupBox_63.setSizePolicy(sizePolicy9)
         self.gridLayout_111 = QGridLayout(self.groupBox_63)
         self.gridLayout_111.setObjectName(u"gridLayout_111")
         self.label_21 = QLabel(self.groupBox_63)
@@ -756,11 +756,17 @@ class Ui_MainWindow(object):
 
         self.groupBox_64 = QGroupBox(self.groupBox_7)
         self.groupBox_64.setObjectName(u"groupBox_64")
-        sizePolicy1.setHeightForWidth(self.groupBox_64.sizePolicy().hasHeightForWidth())
-        self.groupBox_64.setSizePolicy(sizePolicy1)
+        sizePolicy9.setHeightForWidth(self.groupBox_64.sizePolicy().hasHeightForWidth())
+        self.groupBox_64.setSizePolicy(sizePolicy9)
         self.groupBox_64.setMinimumSize(QSize(0, 102))
         self.gridLayout_113 = QGridLayout(self.groupBox_64)
         self.gridLayout_113.setObjectName(u"gridLayout_113")
+        self.checkBox_IfTermsGreaterThanZero_tabTAF = QCheckBox(self.groupBox_64)
+        self.checkBox_IfTermsGreaterThanZero_tabTAF.setObjectName(u"checkBox_IfTermsGreaterThanZero_tabTAF")
+        self.checkBox_IfTermsGreaterThanZero_tabTAF.setChecked(True)
+
+        self.gridLayout_113.addWidget(self.checkBox_IfTermsGreaterThanZero_tabTAF, 0, 2, 1, 4)
+
         self.label_14 = QLabel(self.groupBox_64)
         self.label_14.setObjectName(u"label_14")
         sizePolicy1.setHeightForWidth(self.label_14.sizePolicy().hasHeightForWidth())
@@ -768,6 +774,14 @@ class Ui_MainWindow(object):
         self.label_14.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_113.addWidget(self.label_14, 0, 0, 1, 1)
+
+        self.label_45 = QLabel(self.groupBox_64)
+        self.label_45.setObjectName(u"label_45")
+        sizePolicy8.setHeightForWidth(self.label_45.sizePolicy().hasHeightForWidth())
+        self.label_45.setSizePolicy(sizePolicy8)
+        self.label_45.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_113.addWidget(self.label_45, 1, 0, 1, 1)
 
         self.spinBox_number_of_TAFterms_tabTAF = QSpinBox(self.groupBox_64)
         self.spinBox_number_of_TAFterms_tabTAF.setObjectName(u"spinBox_number_of_TAFterms_tabTAF")
@@ -779,17 +793,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout_113.addWidget(self.spinBox_number_of_TAFterms_tabTAF, 0, 1, 1, 1)
 
-        self.checkBox_IfTermsGreaterThanZero_tabTAF = QCheckBox(self.groupBox_64)
-        self.checkBox_IfTermsGreaterThanZero_tabTAF.setObjectName(u"checkBox_IfTermsGreaterThanZero_tabTAF")
-        self.checkBox_IfTermsGreaterThanZero_tabTAF.setChecked(True)
+        self.label_164 = QLabel(self.groupBox_64)
+        self.label_164.setObjectName(u"label_164")
+        sizePolicy8.setHeightForWidth(self.label_164.sizePolicy().hasHeightForWidth())
+        self.label_164.setSizePolicy(sizePolicy8)
 
-        self.gridLayout_113.addWidget(self.checkBox_IfTermsGreaterThanZero_tabTAF, 0, 2, 1, 1)
-
-        self.label_45 = QLabel(self.groupBox_64)
-        self.label_45.setObjectName(u"label_45")
-        self.label_45.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_113.addWidget(self.label_45, 1, 0, 1, 1)
+        self.gridLayout_113.addWidget(self.label_164, 1, 2, 1, 1)
 
         self.doubleSpinBox_minhc_Tip_tabTAF = QDoubleSpinBox(self.groupBox_64)
         self.doubleSpinBox_minhc_Tip_tabTAF.setObjectName(u"doubleSpinBox_minhc_Tip_tabTAF")
@@ -798,6 +807,13 @@ class Ui_MainWindow(object):
         self.doubleSpinBox_minhc_Tip_tabTAF.setDecimals(3)
 
         self.gridLayout_113.addWidget(self.doubleSpinBox_minhc_Tip_tabTAF, 1, 1, 1, 1)
+
+        self.doubleSpinBox_maxhc_Tip_tabTAF = QDoubleSpinBox(self.groupBox_64)
+        self.doubleSpinBox_maxhc_Tip_tabTAF.setObjectName(u"doubleSpinBox_maxhc_Tip_tabTAF")
+        self.doubleSpinBox_maxhc_Tip_tabTAF.setDecimals(3)
+        self.doubleSpinBox_maxhc_Tip_tabTAF.setValue(2.000000000000000)
+
+        self.gridLayout_113.addWidget(self.doubleSpinBox_maxhc_Tip_tabTAF, 1, 3, 1, 1)
 
 
         self.gridLayout_15.addWidget(self.groupBox_64, 6, 0, 1, 6)
@@ -4765,67 +4781,21 @@ class Ui_MainWindow(object):
         self.tab_48.setObjectName(u"tab_48")
         self.gridLayout_116 = QGridLayout(self.tab_48)
         self.gridLayout_116.setObjectName(u"gridLayout_116")
-        self.textEdit_Files_tabClassification = QTextEdit(self.tab_48)
-        self.textEdit_Files_tabClassification.setObjectName(u"textEdit_Files_tabClassification")
-        sizePolicy.setHeightForWidth(self.textEdit_Files_tabClassification.sizePolicy().hasHeightForWidth())
-        self.textEdit_Files_tabClassification.setSizePolicy(sizePolicy)
-
-        self.gridLayout_116.addWidget(self.textEdit_Files_tabClassification, 2, 0, 1, 2)
-
-        self.label_160 = QLabel(self.tab_48)
-        self.label_160.setObjectName(u"label_160")
-
-        self.gridLayout_116.addWidget(self.label_160, 6, 0, 1, 1)
-
         self.label_159 = QLabel(self.tab_48)
         self.label_159.setObjectName(u"label_159")
         self.label_159.setWordWrap(True)
 
-        self.gridLayout_116.addWidget(self.label_159, 1, 0, 1, 2)
-
-        self.graphicsView_HE_tabClassification = QGraphicsView(self.tab_48)
-        self.graphicsView_HE_tabClassification.setObjectName(u"graphicsView_HE_tabClassification")
-        sizePolicy.setHeightForWidth(self.graphicsView_HE_tabClassification.sizePolicy().hasHeightForWidth())
-        self.graphicsView_HE_tabClassification.setSizePolicy(sizePolicy)
-
-        self.gridLayout_116.addWidget(self.graphicsView_HE_tabClassification, 0, 2, 3, 1)
-
-        self.spinBox_NumberClusters_tabClassification = QSpinBox(self.tab_48)
-        self.spinBox_NumberClusters_tabClassification.setObjectName(u"spinBox_NumberClusters_tabClassification")
-
-        self.gridLayout_116.addWidget(self.spinBox_NumberClusters_tabClassification, 6, 1, 1, 1)
+        self.gridLayout_116.addWidget(self.label_159, 0, 0, 1, 2)
 
         self.pushButton_PlotMappingAfterClustering_tabClassification = QPushButton(self.tab_48)
         self.pushButton_PlotMappingAfterClustering_tabClassification.setObjectName(u"pushButton_PlotMappingAfterClustering_tabClassification")
         self.pushButton_PlotMappingAfterClustering_tabClassification.setEnabled(False)
 
-        self.gridLayout_116.addWidget(self.pushButton_PlotMappingAfterClustering_tabClassification, 9, 0, 1, 2)
-
-        self.pushButton_Classify_tabClassification = QPushButton(self.tab_48)
-        self.pushButton_Classify_tabClassification.setObjectName(u"pushButton_Classify_tabClassification")
-
-        self.gridLayout_116.addWidget(self.pushButton_Classify_tabClassification, 7, 0, 1, 2)
-
-        self.checkBox_ifPlotElbow_tabClassification = QCheckBox(self.tab_48)
-        self.checkBox_ifPlotElbow_tabClassification.setObjectName(u"checkBox_ifPlotElbow_tabClassification")
-        self.checkBox_ifPlotElbow_tabClassification.setChecked(True)
-
-        self.gridLayout_116.addWidget(self.checkBox_ifPlotElbow_tabClassification, 5, 0, 1, 1)
-
-        self.pushButton_PlotMappingWithoutClustering_tabClassification = QPushButton(self.tab_48)
-        self.pushButton_PlotMappingWithoutClustering_tabClassification.setObjectName(u"pushButton_PlotMappingWithoutClustering_tabClassification")
-
-        self.gridLayout_116.addWidget(self.pushButton_PlotMappingWithoutClustering_tabClassification, 8, 0, 1, 2)
-
-        self.checkBox_ifUsingFoundNumberClusters_tabClassification = QCheckBox(self.tab_48)
-        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setObjectName(u"checkBox_ifUsingFoundNumberClusters_tabClassification")
-        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setChecked(True)
-
-        self.gridLayout_116.addWidget(self.checkBox_ifUsingFoundNumberClusters_tabClassification, 4, 0, 1, 2)
+        self.gridLayout_116.addWidget(self.pushButton_PlotMappingAfterClustering_tabClassification, 10, 0, 1, 2)
 
         self.tableWidget_tabClassification = QTableWidget(self.tab_48)
-        if (self.tableWidget_tabClassification.columnCount() < 6):
-            self.tableWidget_tabClassification.setColumnCount(6)
+        if (self.tableWidget_tabClassification.columnCount() < 7):
+            self.tableWidget_tabClassification.setColumnCount(7)
         __qtablewidgetitem16 = QTableWidgetItem()
         self.tableWidget_tabClassification.setHorizontalHeaderItem(0, __qtablewidgetitem16)
         __qtablewidgetitem17 = QTableWidgetItem()
@@ -4838,11 +4808,104 @@ class Ui_MainWindow(object):
         self.tableWidget_tabClassification.setHorizontalHeaderItem(4, __qtablewidgetitem20)
         __qtablewidgetitem21 = QTableWidgetItem()
         self.tableWidget_tabClassification.setHorizontalHeaderItem(5, __qtablewidgetitem21)
+        __qtablewidgetitem22 = QTableWidgetItem()
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(6, __qtablewidgetitem22)
         self.tableWidget_tabClassification.setObjectName(u"tableWidget_tabClassification")
         sizePolicy.setHeightForWidth(self.tableWidget_tabClassification.sizePolicy().hasHeightForWidth())
         self.tableWidget_tabClassification.setSizePolicy(sizePolicy)
 
-        self.gridLayout_116.addWidget(self.tableWidget_tabClassification, 4, 2, 6, 1)
+        self.gridLayout_116.addWidget(self.tableWidget_tabClassification, 2, 2, 9, 1)
+
+        self.textEdit_Files_tabClassification = QTextEdit(self.tab_48)
+        self.textEdit_Files_tabClassification.setObjectName(u"textEdit_Files_tabClassification")
+        sizePolicy.setHeightForWidth(self.textEdit_Files_tabClassification.sizePolicy().hasHeightForWidth())
+        self.textEdit_Files_tabClassification.setSizePolicy(sizePolicy)
+
+        self.gridLayout_116.addWidget(self.textEdit_Files_tabClassification, 1, 0, 1, 2)
+
+        self.spinBox_NumberClusters_tabClassification = QSpinBox(self.tab_48)
+        self.spinBox_NumberClusters_tabClassification.setObjectName(u"spinBox_NumberClusters_tabClassification")
+        sizePolicy13.setHeightForWidth(self.spinBox_NumberClusters_tabClassification.sizePolicy().hasHeightForWidth())
+        self.spinBox_NumberClusters_tabClassification.setSizePolicy(sizePolicy13)
+
+        self.gridLayout_116.addWidget(self.spinBox_NumberClusters_tabClassification, 4, 1, 1, 1)
+
+        self.checkBox_ifPlotElbow_tabClassification = QCheckBox(self.tab_48)
+        self.checkBox_ifPlotElbow_tabClassification.setObjectName(u"checkBox_ifPlotElbow_tabClassification")
+        sizePolicy7.setHeightForWidth(self.checkBox_ifPlotElbow_tabClassification.sizePolicy().hasHeightForWidth())
+        self.checkBox_ifPlotElbow_tabClassification.setSizePolicy(sizePolicy7)
+        self.checkBox_ifPlotElbow_tabClassification.setChecked(True)
+
+        self.gridLayout_116.addWidget(self.checkBox_ifPlotElbow_tabClassification, 3, 0, 1, 1)
+
+        self.label_162 = QLabel(self.tab_48)
+        self.label_162.setObjectName(u"label_162")
+        sizePolicy8.setHeightForWidth(self.label_162.sizePolicy().hasHeightForWidth())
+        self.label_162.setSizePolicy(sizePolicy8)
+
+        self.gridLayout_116.addWidget(self.label_162, 5, 0, 1, 1)
+
+        self.pushButton_Classify_tabClassification = QPushButton(self.tab_48)
+        self.pushButton_Classify_tabClassification.setObjectName(u"pushButton_Classify_tabClassification")
+
+        self.gridLayout_116.addWidget(self.pushButton_Classify_tabClassification, 6, 0, 1, 2)
+
+        self.graphicsView_HE_tabClassification = QGraphicsView(self.tab_48)
+        self.graphicsView_HE_tabClassification.setObjectName(u"graphicsView_HE_tabClassification")
+        sizePolicy.setHeightForWidth(self.graphicsView_HE_tabClassification.sizePolicy().hasHeightForWidth())
+        self.graphicsView_HE_tabClassification.setSizePolicy(sizePolicy)
+
+        self.gridLayout_116.addWidget(self.graphicsView_HE_tabClassification, 0, 2, 2, 1)
+
+        self.label_160 = QLabel(self.tab_48)
+        self.label_160.setObjectName(u"label_160")
+        sizePolicy8.setHeightForWidth(self.label_160.sizePolicy().hasHeightForWidth())
+        self.label_160.setSizePolicy(sizePolicy8)
+
+        self.gridLayout_116.addWidget(self.label_160, 4, 0, 1, 1)
+
+        self.checkBox_ifUsingFoundNumberClusters_tabClassification = QCheckBox(self.tab_48)
+        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setObjectName(u"checkBox_ifUsingFoundNumberClusters_tabClassification")
+        sizePolicy7.setHeightForWidth(self.checkBox_ifUsingFoundNumberClusters_tabClassification.sizePolicy().hasHeightForWidth())
+        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setSizePolicy(sizePolicy7)
+        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setChecked(True)
+
+        self.gridLayout_116.addWidget(self.checkBox_ifUsingFoundNumberClusters_tabClassification, 2, 0, 1, 2)
+
+        self.checkBox_ifShowRealSizeIndent_tabClassification = QCheckBox(self.tab_48)
+        self.checkBox_ifShowRealSizeIndent_tabClassification.setObjectName(u"checkBox_ifShowRealSizeIndent_tabClassification")
+        sizePolicy13.setHeightForWidth(self.checkBox_ifShowRealSizeIndent_tabClassification.sizePolicy().hasHeightForWidth())
+        self.checkBox_ifShowRealSizeIndent_tabClassification.setSizePolicy(sizePolicy13)
+        self.checkBox_ifShowRealSizeIndent_tabClassification.setChecked(True)
+
+        self.gridLayout_116.addWidget(self.checkBox_ifShowRealSizeIndent_tabClassification, 7, 0, 1, 2)
+
+        self.doubleSpinBox_WeightingRatio_tabClassification = QDoubleSpinBox(self.tab_48)
+        self.doubleSpinBox_WeightingRatio_tabClassification.setObjectName(u"doubleSpinBox_WeightingRatio_tabClassification")
+        sizePolicy13.setHeightForWidth(self.doubleSpinBox_WeightingRatio_tabClassification.sizePolicy().hasHeightForWidth())
+        self.doubleSpinBox_WeightingRatio_tabClassification.setSizePolicy(sizePolicy13)
+        self.doubleSpinBox_WeightingRatio_tabClassification.setValue(1.000000000000000)
+
+        self.gridLayout_116.addWidget(self.doubleSpinBox_WeightingRatio_tabClassification, 5, 1, 1, 1)
+
+        self.pushButton_PlotMappingWithoutClustering_tabClassification = QPushButton(self.tab_48)
+        self.pushButton_PlotMappingWithoutClustering_tabClassification.setObjectName(u"pushButton_PlotMappingWithoutClustering_tabClassification")
+
+        self.gridLayout_116.addWidget(self.pushButton_PlotMappingWithoutClustering_tabClassification, 9, 0, 1, 2)
+
+        self.comboBox_FlipMapping_tabClassification = QComboBox(self.tab_48)
+        self.comboBox_FlipMapping_tabClassification.addItem("")
+        self.comboBox_FlipMapping_tabClassification.addItem("")
+        self.comboBox_FlipMapping_tabClassification.addItem("")
+        self.comboBox_FlipMapping_tabClassification.addItem("")
+        self.comboBox_FlipMapping_tabClassification.setObjectName(u"comboBox_FlipMapping_tabClassification")
+
+        self.gridLayout_116.addWidget(self.comboBox_FlipMapping_tabClassification, 8, 1, 1, 1)
+
+        self.label_163 = QLabel(self.tab_48)
+        self.label_163.setObjectName(u"label_163")
+
+        self.gridLayout_116.addWidget(self.label_163, 8, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_48, "")
 
@@ -4854,7 +4917,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 1485, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 1473, 22))
         self.menuData = QMenu(self.menuBar)
         self.menuData.setObjectName(u"menuData")
         self.menuOpenRecent = QMenu(self.menuData)
@@ -4871,12 +4934,12 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         self.comboBox_equipment_tabTAF.setCurrentIndex(0)
         self.comboBox_method_tabTAF.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(0)
-        self.tabWidget_2.setCurrentIndex(1)
+        self.tabWidget_2.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_2.setCurrentIndex(0)
         self.tabWidget_4.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_5.setCurrentIndex(2)
@@ -4989,14 +5052,16 @@ class Ui_MainWindow(object):
         self.label_63.setText(QCoreApplication.translate("MainWindow", u"Tip's Name:", None))
         self.lineEdit_TipName_tabTAF.setText(QCoreApplication.translate("MainWindow", u"a Berkovich Tip ", None))
         self.groupBox_64.setTitle(QCoreApplication.translate("MainWindow", u"Parametres for Tip Area Function (TAF)", None))
-        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Number of Terms:", None))
         self.checkBox_IfTermsGreaterThanZero_tabTAF.setText(QCoreApplication.translate("MainWindow", u"Terms > 0 (except the first Term of Sphere)", None))
+        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Number of Terms:", None))
         self.label_45.setText(QCoreApplication.translate("MainWindow", u"min. Depth [\u00b5m]:", None))
+        self.label_164.setText(QCoreApplication.translate("MainWindow", u"max. Depth [\u00b5m]:", None))
         ___qtablewidgetitem = self.tableWidget_tabTAF.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
         ___qtablewidgetitem1 = self.tableWidget_tabTAF.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Indentify?", None));
-        self.OK_path_tabTAF.setText(QCoreApplication.translate("MainWindow", u"Calcultate Frame Compliance and TAF", None))
+        self.OK_path_tabTAF.setText(QCoreApplication.translate("MainWindow", u"Calcultate\n"
+"Frame Compliance and TAF", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Range to calculate Frame Compliance", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"min. Depth [\u00b5m]:", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"min. Force [mN]:", None))
@@ -5411,25 +5476,35 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Pop-in?", None));
         self.tabWidget_10.setTabText(self.tabWidget_10.indexOf(self.tab_40), QCoreApplication.translate("MainWindow", u"Analyse Pop-in Effect", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_analysePopIn), QCoreApplication.translate("MainWindow", u"Analyse Pop-in Effect", None))
-        self.label_160.setText(QCoreApplication.translate("MainWindow", u"Number of Clusters:", None))
         self.label_159.setText(QCoreApplication.translate("MainWindow", u"Type the complete paths of files, which were exported using this GUI, to classify their tests:", None))
         self.pushButton_PlotMappingAfterClustering_tabClassification.setText(QCoreApplication.translate("MainWindow", u"Plot mapping after clustering", None))
-        self.pushButton_Classify_tabClassification.setText(QCoreApplication.translate("MainWindow", u"Run K-means Clustering", None))
-        self.checkBox_ifPlotElbow_tabClassification.setText(QCoreApplication.translate("MainWindow", u"plot Elbow figure", None))
-        self.pushButton_PlotMappingWithoutClustering_tabClassification.setText(QCoreApplication.translate("MainWindow", u"Plot mapping without Clustering", None))
-        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setText(QCoreApplication.translate("MainWindow", u"determine N using Elbow Method", None))
         ___qtablewidgetitem16 = self.tableWidget_tabClassification.horizontalHeaderItem(0)
         ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"#Cluster ", None));
         ___qtablewidgetitem17 = self.tableWidget_tabClassification.horizontalHeaderItem(1)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Number of data", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Color", None));
         ___qtablewidgetitem18 = self.tableWidget_tabClassification.horizontalHeaderItem(2)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"mean of x", None));
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Number of data", None));
         ___qtablewidgetitem19 = self.tableWidget_tabClassification.horizontalHeaderItem(3)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"std of x", None));
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"mean of x", None));
         ___qtablewidgetitem20 = self.tableWidget_tabClassification.horizontalHeaderItem(4)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"mean of y", None));
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"std of x", None));
         ___qtablewidgetitem21 = self.tableWidget_tabClassification.horizontalHeaderItem(5)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"std of y", None));
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"mean of y", None));
+        ___qtablewidgetitem22 = self.tableWidget_tabClassification.horizontalHeaderItem(6)
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("MainWindow", u"std of y", None));
+        self.checkBox_ifPlotElbow_tabClassification.setText(QCoreApplication.translate("MainWindow", u"plot Elbow figure", None))
+        self.label_162.setText(QCoreApplication.translate("MainWindow", u"Weighting Ratio (y/x):", None))
+        self.pushButton_Classify_tabClassification.setText(QCoreApplication.translate("MainWindow", u"Run K-means Clustering", None))
+        self.label_160.setText(QCoreApplication.translate("MainWindow", u"Number of Clusters:", None))
+        self.checkBox_ifUsingFoundNumberClusters_tabClassification.setText(QCoreApplication.translate("MainWindow", u"determine N using Elbow Method", None))
+        self.checkBox_ifShowRealSizeIndent_tabClassification.setText(QCoreApplication.translate("MainWindow", u"mapping marker szie =  size of indent", None))
+        self.pushButton_PlotMappingWithoutClustering_tabClassification.setText(QCoreApplication.translate("MainWindow", u"Plot mapping without Clustering", None))
+        self.comboBox_FlipMapping_tabClassification.setItemText(0, QCoreApplication.translate("MainWindow", u"None", None))
+        self.comboBox_FlipMapping_tabClassification.setItemText(1, QCoreApplication.translate("MainWindow", u"Left-Right", None))
+        self.comboBox_FlipMapping_tabClassification.setItemText(2, QCoreApplication.translate("MainWindow", u"Top-Bottom", None))
+        self.comboBox_FlipMapping_tabClassification.setItemText(3, QCoreApplication.translate("MainWindow", u"Both", None))
+
+        self.label_163.setText(QCoreApplication.translate("MainWindow", u"Flip Mapping:", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_48), QCoreApplication.translate("MainWindow", u"K-means Clustering", None))
         self.menuData.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuOpenRecent.setTitle(QCoreApplication.translate("MainWindow", u"Open Recent", None))

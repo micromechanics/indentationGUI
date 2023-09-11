@@ -17,6 +17,7 @@ def click_OK_calibration(self):
   E_Tip = self.ui.doubleSpinBox_E_Tip_tabTAF.value()
   Poisson_Tip = self.ui.doubleSpinBox_Poisson_Tip_tabTAF.value()
   minhc_Tip = self.ui.doubleSpinBox_minhc_Tip_tabTAF.value()
+  maxhc_Tip = self.ui.doubleSpinBox_maxhc_Tip_tabTAF.value()
   unloaPMax = self.ui.doubleSpinBox_Start_Pmax_tabTAF.value()
   unloaPMin = self.ui.doubleSpinBox_End_Pmax_tabTAF.value()
   relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabTAF.value()
@@ -39,7 +40,8 @@ def click_OK_calibration(self):
             'unloadPMax': unloaPMax,                    # upper end of fitting domain of unloading stiffness: Vendor-specific change
             'unloadPMin': unloaPMin,                    # lower end of fitting domain of unloading stiffness: Vendor-specific change
             'relForceRateNoise': relForceRateNoise,     # threshold of dp/dt use to identify start of loading: Vendor-specific change
-            'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+            'maxSizeFluctuations': max_size_fluctuation, # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+            'driftRate': 0
             }
   def guiProgressBar(value, location):
     if location=='convert':
@@ -75,7 +77,7 @@ def click_OK_calibration(self):
   if correctDrift:
     self.i_tabTAF.model['driftRate'] = True
   else:
-    self.i_tabTAF.model['driftRate'] = False
+    self.i_tabTAF.model['driftRate'] = 0
   #changing i.allTestList to calculate using the checked tests
   try:
     OriginalAlltest = list(self.i_tabTAF.allTestList)
@@ -126,13 +128,17 @@ def click_OK_calibration(self):
     self.i_tabTAF.restartFile()
     self.i_tabTAF.calibrateStiffness(critDepth=critDepthStiffness, critForce=critForceStiffness, plotStiffness=False, returnData=True)
     frameCompliance = self.i_tabTAF.tip.compliance
-    hc, Ac = self.i_tabTAF.calibrateTAF(eTarget=E_target, frameCompliance = frameCompliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip) #pylint: disable=line-too-long
+    hc, Ac = self.i_tabTAF.calibrateTAF(eTarget=E_target, frameCompliance = frameCompliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip, critMaxDepthTip=maxhc_Tip) #pylint: disable=line-too-long
   elif Index_CalculationMethod == 1: # assume constant Modulus but neglect Pile-up (Eq.(22), Oliver 2004)
     self.i_tabTAF.output['ax'] = [None, None]
-    self.i_tabTAF.calibrate_TAF_and_FrameStiffness_iterativeMethod(eTarget=E_target, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness, critDepthTip=minhc_Tip) # pylint: disable=line-too-long
+    #open waiting dialog
+    self.show_wait('Iterative calculation is being performed')
+    self.i_tabTAF.calibrate_TAF_and_FrameStiffness_iterativeMethod(eTarget=E_target, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, critDepthStiffness=critDepthStiffness, critForceStiffness=critForceStiffness, critDepthTip=minhc_Tip,critMaxDepthTip=maxhc_Tip) # pylint: disable=line-too-long
+    #close waiting dialog
+    self.close_wait()
     self.i_tabTAF.output['ax'] = self.static_ax_FrameStiffness_tabTAF
-    self.i_tabTAF.calibrateStiffness_OneIteration(eTarget=E_target, critDepth=critDepthStiffness, critForce=critForceStiffness, plotStiffness=False)
-    hc, Ac = self.i_tabTAF.calibrateTAF(eTarget=E_target, frameCompliance = self.i_tabTAF.tip.compliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip) # pylint: disable=line-too-long
+    self.i_tabTAF.calibrateStiffness_OneIteration(eTarget=E_target, critDepth=critDepthStiffness, critMaxDepth=maxhc_Tip, critForce=critForceStiffness, plotStiffness=False)
+    hc, Ac = self.i_tabTAF.calibrateTAF(eTarget=E_target, frameCompliance = self.i_tabTAF.tip.compliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip, critMaxDepthTip=maxhc_Tip) # pylint: disable=line-too-long
   self.i_tabTAF.model['driftRate'] = False   #reset
   self.static_canvas_FrameStiffness_tabTAF.figure.set_tight_layout(True)
   self.i_tabTAF.output['ax'] = [None, None]

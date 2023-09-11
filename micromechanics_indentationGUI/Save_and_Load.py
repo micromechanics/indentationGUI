@@ -3,9 +3,11 @@
 import pickle
 from datetime import datetime
 import numpy as np
+from matplotlib import colors as mcolors
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
-
+from PySide6.QtWidgets import QTableWidgetItem,QComboBox # pylint: disable=no-name-in-module
+from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
+from .Classification import colors_clustering
 class data4save:
   """ class used for saving all things in a file and reloading """
 
@@ -55,13 +57,17 @@ class data4save:
                     'comboBox_TipType': 0,                     #the tip type used by the iterative method cacluating TAF
                     'doubleSpinBox_idealRadiusSphere': None,   #the ideal radius of the spherical Tip 
                     'doubleSpinBox_half_includedAngle_TabTAF':None, # the half included angle of cone
-                    'doubleSpinBox_minhc_Tip':None,            #the minium contact depth of Ac
+                    'doubleSpinBox_minhc_Tip':None,            #the minimum depth of Ac
+                    'doubleSpinBox_maxhc_Tip': None,           #the maximum depth of Ac
                     'checkBox_IfTermsGreaterThanZero': None,   # if the terms of TAF should be greater than Zero, except the fisrt term of the sphere tip
                     'textEdit_Files': None,
                     'spinBox_NumberClusters': None,
                     'checkBox_ifUsingFoundNumberClusters': None,
                     'checkBox_ifPlotElbow': None,
                     'spinBox_DecreaseDataDensity': None,
+                    'doubleSpinBox_WeightingRatio': None,
+                    'checkBox_ifShowRealSizeIndent': None,
+                    'comboBox_FlipMapping': None,
                   }
     
     self.tabName_list = [
@@ -94,7 +100,7 @@ class data4save:
     self.i_tabPopIn = None
     self.i_tabPopIn_FrameStiffness = None
 
-def read_data_in_one_Table(Widget):
+def read_data_in_one_Table(Widget,tabName=' '):
   data_in_Table=[]
   rowCount = Widget.rowCount()
   columnCount = Widget.columnCount()
@@ -102,6 +108,7 @@ def read_data_in_one_Table(Widget):
     data_in_Table.append([])
     for i in range(rowCount):
       if j==-1:
+        #try to save the check state of the first column
         try:
           theItem = Widget.item(i,int(j+1))
           if theItem.checkState() == Qt.Unchecked:
@@ -110,6 +117,10 @@ def read_data_in_one_Table(Widget):
             data_in_Table[-1].append(True)
         except:
           pass
+      elif j==0 and ('tabClassification' in tabName):
+        #save the color index in tabClassification
+        currentIndex = Widget.cellWidget(i,1).currentIndex()
+        data_in_Table[-1].append(int(currentIndex))
       else:
         theItem = Widget.item(i,j)
         try:
@@ -119,7 +130,7 @@ def read_data_in_one_Table(Widget):
   return data_in_Table
 
 
-def reload_data_in_one_Table(Widget, data_in_Table):
+def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
   try:
     rowCount = len(data_in_Table[0])
     columnCount = len(data_in_Table)
@@ -131,7 +142,7 @@ def reload_data_in_one_Table(Widget, data_in_Table):
     for j in range(columnCount):
       for i in range(rowCount):
         theData = data_in_Table[j][i]
-        if j==0:
+        if j==0 and ('tabClassification' not in tabName):
           theData_next_column=data_in_Table[j+1][i]
           qtablewidgetitem=QTableWidgetItem(theData_next_column)
           if theData == False:
@@ -139,6 +150,28 @@ def reload_data_in_one_Table(Widget, data_in_Table):
           else:
             qtablewidgetitem.setCheckState(Qt.Checked)
           Widget.setItem(i,j,qtablewidgetitem)
+        elif j==1 and ('tabClassification' in tabName):
+          comboBox = QComboBox()
+          Widget.setItem(i,1,QTableWidgetItem())
+          Widget.setCellWidget(i, 1, comboBox)
+          for row, color in enumerate(colors_clustering):
+            Color = mcolors.to_rgba(color)
+            comboBox.addItem(color)
+            model = comboBox.model()
+            model.setData(model.index(row, 0), QColor(Color[0]*255,Color[1]*255,Color[2]*255,Color[3]*255), Qt.BackgroundRole)
+          if not isinstance(theData, int):
+            theData=i
+          Color = mcolors.to_rgba(colors_clustering[theData])
+          def ComboBoxBGcolorChanged():
+            for k in range(rowCount):
+              # setting the background color of comboBox
+              currentIndex = Widget.cellWidget(k,1).currentIndex()
+              Color = mcolors.to_rgba(colors_clustering[currentIndex])
+              Widget.cellWidget(k,1).setStyleSheet(f"background-color : rgba({Color[0]*255},{Color[1]*255},{Color[2]*255},{Color[3]*255});")
+          #setting the background color of comboBox
+          Widget.cellWidget(i,1).setCurrentIndex(theData)
+          Widget.cellWidget(i,1).setStyleSheet(f"background-color : rgba({Color[0]*255},{Color[1]*255},{Color[2]*255},{Color[3]*255});")
+          Widget.cellWidget(i,1).currentIndexChanged.connect(ComboBoxBGcolorChanged)
         elif j>1:
           Widget.setItem(i,j-1,QTableWidgetItem(theData))
     return
@@ -166,7 +199,7 @@ def read_data_in_one_Tab(win,Tab,tabName):
       elif 'progressBar' in widget:
         Tab[widget] = Widget.value()
       elif 'tableWidget' in widget:
-        Tab[widget] = read_data_in_one_Table(Widget)
+        Tab[widget] = read_data_in_one_Table(Widget,tabName=tabName)
       else:
         print(f"**ERROR: {widget}_{tabName} is not defined in Save_and_Load")
 
@@ -200,7 +233,7 @@ def reload_data_in_one_Tab(win,Tab, tabName):
       elif 'progressBar' in widget:
         Widget.setValue(Tab[widget])
       elif 'tableWidget' in widget:
-        reload_data_in_one_Table(Widget, data_in_Table=Tab[widget])
+        reload_data_in_one_Table(Widget, data_in_Table=Tab[widget], tabName=tabName)
       else:
         print(f"**ERROR: {widget}_{tabName} is not defined in Save_and_Load")
 
