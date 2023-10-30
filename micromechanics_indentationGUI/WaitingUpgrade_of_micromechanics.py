@@ -796,7 +796,7 @@ class IndentationXXX(indentation.Indentation):
       if plotStiffness:
         _, ax_ = plt.subplots(2,1,sharex=True, gridspec_kw={'hspace':0, 'height_ratios':[4, 1]}) #!!!!!!
         ax = ax_[0] #!!!!!!
-        ax = ax_[1] #!!!!!!
+        ax1 = ax_[1] #!!!!!!
       else:
         ax = self.output['ax'][0]  #!!!!!!
         ax1= self.output['ax'][1]  #!!!!!!
