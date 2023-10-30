@@ -3,6 +3,7 @@
 #pylint: disable=line-too-long, unsubscriptable-object, invalid-unary-operand-type, access-member-before-definition, attribute-defined-outside-init
 
 import math, traceback, io
+from zipfile import ZipFile
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -496,6 +497,49 @@ class IndentationXXX(indentation.Indentation):
       self.k2p = self.slope * self.slope / self.p[self.valid] # pylint: disable=attribute-defined-outside-init
     return True
 
+  def loadMicromaterials(self, fileName):
+    """
+    Load Micromaterials txt/zip file for processing, contains only one test
+
+    Args:
+        fileName (str): file name or file-content
+
+    Returns:
+        bool: success
+    """
+    if isinstance(fileName, io.TextIOWrapper) or fileName.endswith('.txt'):
+      #if singe file or file in zip-archive
+      try:            #file-content given
+        dataTest = np.loadtxt(fileName)  #exception caught
+        if not isinstance(fileName, io.TextIOWrapper):
+          self.fileName = fileName
+          if self.output['verbose']>1: print("Open Micromaterials file: "+self.fileName)
+          self.metaUser = {'measurementType': 'Micromaterials Indentation TXT'}
+      except:
+        if self.output['verbose']>1:
+          print("Is not a Micromaterials file")
+        return False
+      index_move_to_sample = np.where(dataTest[:,0] == 0)[0] #!!!!!!
+      self.t = dataTest[index_move_to_sample[-1]:,0]         #!!!!!!
+      self.h = dataTest[index_move_to_sample[-1]:,1]/1.e3    #!!!!!!
+      self.p = dataTest[index_move_to_sample[-1]:,2]         #!!!!!!
+      self.valid = np.ones_like(self.t, dtype=bool)
+      self.identifyLoadHoldUnload()
+    elif fileName.endswith('.zip'):
+      #if zip-archive of multilpe files: datafile has to remain open
+      #    next pylint statement for github actions
+      self.datafile = ZipFile(fileName)  # pylint: disable=consider-using-with
+      self.testList = self.datafile.namelist()
+      if len(np.nonzero([not i.endswith('txt') for i in self.datafile.namelist()])[0])>0:
+        print('Not a Micromaterials zip of txt-files')
+        return False
+      if self.output['verbose']>1:
+        print("Open Micromaterials zip of txt-files: "+fileName)
+      self.allTestList =  list(self.testList)
+      self.fileName = fileName
+      self.metaUser = {'measurementType': 'Micromaterials Indentation ZIP'}
+      self.nextTest()
+    return True
 
   def nextMicromaterialsTest(self, newTest=True):
     """

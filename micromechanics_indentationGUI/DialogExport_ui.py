@@ -35,6 +35,7 @@ class Ui_DialogExport(object):
         self.comboBox_ExportTab = QComboBox(DialogExport)
         self.comboBox_ExportTab.addItem("")
         self.comboBox_ExportTab.addItem("")
+        self.comboBox_ExportTab.addItem("")
         self.comboBox_ExportTab.setObjectName(u"comboBox_ExportTab")
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -105,8 +106,9 @@ class Ui_DialogExport(object):
 
         self.gridLayout.addWidget(self.pushButton_OK, 4, 1, 1, 1)
 
-
         self.retranslateUi(DialogExport)
+
+        self.comboBox_ExportFormat.setCurrentIndex(1)
 
         QMetaObject.connectSlotsByName(DialogExport)
     # setupUi
@@ -116,7 +118,7 @@ class Ui_DialogExport(object):
         self.label_2.setText(QCoreApplication.translate("DialogExport", u"Tab:", None))
         self.comboBox_ExportTab.setItemText(0, QCoreApplication.translate("DialogExport", u"Hardness and Young's Modulus", None))
         self.comboBox_ExportTab.setItemText(1, QCoreApplication.translate("DialogExport", u"Analyse Pop-in Effect", None))
-
+        self.comboBox_ExportTab.setItemText(2, QCoreApplication.translate("DialogExport", u"K-means Clustering", None))
         self.label_4.setText(QCoreApplication.translate("DialogExport", u"File Name:", None))
         self.lineEdit_ExportFileName.setText(QCoreApplication.translate("DialogExport", u"Ouput.xlsx", None))
         self.label.setText(QCoreApplication.translate("DialogExport", u"Folder:", None))

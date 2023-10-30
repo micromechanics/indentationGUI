@@ -59,6 +59,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.OK_path_tabTAF.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
     self.ui.pushButton_SelectAll_tabTAF.clicked.connect(self.click_pushButton_SelectAll_tabTAF)
+    self.ui.pushButton_select_tabTAF.clicked.connect(self.selectFile_tabTAF)
     #clicked.connect in tabTipRadius
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabTipRadius_FrameStiffness)
     self.ui.pushButton_Calculate_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabPopIn_FrameStiffness)
@@ -70,6 +71,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
     self.ui.pushButton_SelectAll_tabTipRadius.clicked.connect(self.click_pushButton_SelectAll_tabTipRadius)
     self.ui.pushButton_SelectAll_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabTipRadius_FrameStiffness)
+    self.ui.pushButton_select_tabTipRadius.clicked.connect(self.selectFile_tabTipRadius)
+    self.ui.pushButton_select_tabTipRadius_FrameStiffness.clicked.connect(self.selectFile_tabTipRadius_FrameStiffness)
     #clicked.connect in tabHE
     self.ui.pushButton_Calculate_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness)
@@ -80,6 +83,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.Calculate_tabHE.clicked.connect(self.click_pushButton_Calculate_Hardness_Modulus)
     self.ui.pushButton_SelectAll_tabHE.clicked.connect(self.click_pushButton_SelectAll_tabHE)
     self.ui.pushButton_SelectAll_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabHE_FrameStiffness)
+    self.ui.pushButton_select_tabHE.clicked.connect(self.selectFile_tabHE)
+    self.ui.pushButton_select_tabHE_FrameStiffness.clicked.connect(self.selectFile_tabHE_FrameStiffness)
     #clicked.connect in tabPopIn
     self.ui.pushButton_Analyse_tabPopIn.clicked.connect(self.Analyse_PopIn)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness) # pylint: disable=line-too-long
@@ -90,6 +95,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn)
     self.ui.pushButton_SelectAll_tabPopIn.clicked.connect(self.click_pushButton_SelectAll_tabPopIn)
     self.ui.pushButton_SelectAll_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabPopIn_FrameStiffness)
+    self.ui.pushButton_select_tabPopIn.clicked.connect(self.selectFile_tabPopIn)
+    self.ui.pushButton_select_tabPopIn_FrameStiffness.clicked.connect(self.selectFile_tabPopIn_FrameStiffness)
     #clicked.connect in tabClassification
     self.ui.pushButton_Classify_tabClassification.clicked.connect(self.click_pushButton_Classify_tabClassification)
     self.ui.pushButton_PlotMappingWithoutClustering_tabClassification.clicked.connect(self.click_pushButton_PlotMappingWithoutClustering_tabClassification)
@@ -373,6 +380,48 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """ plot mapping After clustering """
     self.PlotMappingAfterClustering()
 
+  def selectFile_tabTAF(self):
+    """ click "select" Button to select a file path for tabTAF  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabTAF.setText(file)
+
+  def selectFile_tabTipRadius_FrameStiffness(self):
+    """ click "select" Button to select a file path for tabTipRadius_FrameStiffness  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabTipRadius_FrameStiffness.setText(file)
+
+  def selectFile_tabTipRadius(self):
+    """ click "select" Button to select a file path for tabTipRadius  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabTipRadius.setText(file)
+
+  def selectFile_tabHE_FrameStiffness(self):
+    """ click "select" Button to select a file path for tabHE_FrameStiffness  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabHE_FrameStiffness.setText(file)
+
+  def selectFile_tabHE(self):
+    """ click "select" Button to select a file path for tabHE  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabHE.setText(file)
+
+  def selectFile_tabPopIn_FrameStiffness(self):
+    """ click "select" Button to select a file path for tabPopIn_FrameStiffness  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabPopIn_FrameStiffness.setText(file)
+
+  def selectFile_tabPopIn(self):
+    """ click "select" Button to select a file path for tabPopIn  """
+    file = str(QFileDialog.getOpenFileName(self, "Select File")[0])
+    if file != '':
+      self.ui.lineEdit_path_tabPopIn.setText(file)
+
   def directSave(self):
     """ Save the current file directly to its original path """
     window_DialogSaveAs.ui.lineEdit_SaveAsFileName.setText(self.FileName_SAVED)
@@ -489,18 +538,28 @@ class DialogExport(QDialog):
     """renew the file path after selecting the tab"""
     if self.ui.comboBox_ExportTab.currentIndex()==0:
       tabName='tabHE'
-      self.ui.comboBox_ExportFormat.setCurrentIndex(0)
+      self.ui.comboBox_ExportFormat.setCurrentIndex(1)
     elif self.ui.comboBox_ExportTab.currentIndex()==1:
       tabName='tabPopIn'
       self.ui.comboBox_ExportFormat.setCurrentIndex(1)
+    elif self.ui.comboBox_ExportTab.currentIndex()==2:
+      tabName='tabClassification'
+      self.ui.comboBox_ExportFormat.setCurrentIndex(1)
+      files_list = (window.ui.textEdit_Files_tabClassification.toPlainText()).split("\n")
     #set default file name und folder path for {tabName}
-    tab_path = eval(f"window.ui.lineEdit_path_{tabName}.text()") # pylint: disable=eval-used
+    if tabName == 'tabClassification':
+      tab_path = files_list[0]
+    else:
+      tab_path = eval(f"window.ui.lineEdit_path_{tabName}.text()") # pylint: disable=eval-used
     slash = '\\'
     if '\\' in tab_path:
       slash = '\\'
     elif '/' in tab_path:
       slash = '/'
-    Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + f"_{tabName}_output.xlsx"
+    if tabName == 'tabClassification':
+      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('_tab')] + "_tabKmeansClustering_output.xlsx"
+    else:
+      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + f"_{tabName}_output.xlsx"
     Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
     self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
     self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)

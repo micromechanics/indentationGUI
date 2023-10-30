@@ -104,12 +104,32 @@ def export(self, win):
                           'Frame Compliance [µm/mN]',
                         ],
                     columns=[' '])
+  elif Index_ExportTab == 2:
+    #define the data frame of experimental parameters of tabClassification
+    df = DataFrame([
+                    [win.ui.textEdit_Files_tabClassification.toPlainText()],
+                    ['Parameters'],
+                    [win.ui.spinBox_NumberClusters_tabClassification.value()],
+                    [win.ui.doubleSpinBox_WeightingRatio_tabClassification.value()],
+                    [win.ui.comboBox_FlipMapping_tabClassification.currentIndex()],
+                  ],
+                  index=[
+                          'Files',
+                          ' ',
+                          'Number of Clusters [-]',
+                          'Weighting ratio, y/x [-]',
+                          'Flip mapping (0=None, 1=Left-Right, 2=Top-Bottom, 3=Both)',
+                        ],
+                    columns=[' '])
 
   #write to excel
   df.to_excel(writer,sheet_name='Experimental Parameters')
   #set the width of column
   writer.sheets['Experimental Parameters'].set_column(0, 1, 30)
   writer.sheets['Experimental Parameters'].set_column(0, 2, 60)
+  if Index_ExportTab == 2:
+    #set the height of column
+    writer.sheets['Experimental Parameters'].set_row(1, 30)
   if Index_ExportFormat == 0:
     if Index_ExportTab == 0:
       #define the data frame of each tests for tabHE
@@ -125,6 +145,7 @@ def export(self, win):
                           win.tabHE_Pmax_collect[j],
                           win.tabHE_H_collect[j],
                           win.tabHE_E_collect[j],
+                          win.tabHE_Er_collect[j],
                           win.tabHE_X_Position_collect[j] * np.ones(len(win.tabHE_E_collect[j])),
                           win.tabHE_Y_Position_collect[j] * np.ones(len(win.tabHE_E_collect[j])),
                         ],
@@ -134,6 +155,7 @@ def export(self, win):
                                   'Pmax[mN]',
                                   'H[GPa]',
                                   'E[GPa]',
+                                  'Er[GPa]',
                                   'X Position [µm]',
                                   'Y Position [µm]',
                                 ],
@@ -179,6 +201,8 @@ def export(self, win):
       All_Hstd_collect = []
       All_Emean_collect = []
       All_Estd_collect = []
+      All_Er_mean_collect = []
+      All_Er_std_collect = []
       All_X_Position_collect=win.tabHE_X_Position_collect
       All_Y_Position_collect=win.tabHE_Y_Position_collect
       for j, _ in enumerate(win.tabHE_testName_collect):
@@ -190,6 +214,8 @@ def export(self, win):
         All_Hstd_collect.append(win.tabHE_Hstd_collect[j])
         All_Emean_collect.append(win.tabHE_Emean_collect[j])
         All_Estd_collect.append(win.tabHE_Estd_collect[j])
+        All_Er_mean_collect.append(win.tabHE_Er_mean_collect[j])
+        All_Er_std_collect.append(win.tabHE_Er_std_collect[j])
       df = DataFrame(
                       [
                         All_testName_collect,
@@ -200,6 +226,8 @@ def export(self, win):
                         All_Hstd_collect,
                         All_Emean_collect,
                         All_Estd_collect,
+                        All_Er_mean_collect,
+                        All_Er_std_collect,
                         All_X_Position_collect,
                         All_Y_Position_collect,
                       ],
@@ -212,6 +240,8 @@ def export(self, win):
                               'std of H [GPa]',
                               'mean of E [GPa]',
                               'std of E [GPa]',
+                              'mean of Er [GPa]',
+                              'std of Er [GPa]',
                               'X Position [µm]',
                               'Y Position [µm]',
                               ],
@@ -254,15 +284,34 @@ def export(self, win):
                                 'calculated max. shear stress [GPa]',
                               ],
                       )
+    if Index_ExportTab == 2:
+      #define the data frame of all tests for tabClassification
+      df = DataFrame(
+                      [
+                        win.tabClassification_FileNumber_collect,
+                        win.tabClassification_TestName_collect,
+                        win.tabClassification_ClusterLabels,
+                        win.tabClassification_H_collect,
+                        win.tabClassification_E_collect,
+                        win.tabClassification_Er_collect,
+                      ],
+                      index =[
+                              'File Number',
+                              'Test Name',
+                              'Cluster Number',
+                              'mean of H [GPa]',
+                              'mean of E [GPa]',
+                              'mean of Er [GPa]',
+                              ],
+                      )
 
     df = df.T
     sheetName = 'Results'
     #write to excel
     df.to_excel(writer,sheet_name=sheetName, index=False)
-    for k in range(10):
+    for k in range(15):
       #set the width of column
       writer.sheets[sheetName].set_column(0, k, 20)
-
 
   #save the writer and create the excel file (.xlsx)
   writer.close()

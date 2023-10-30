@@ -119,6 +119,10 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   Emean_collect=[]
   E4mean_collect=[]
   Estd_collect=[]
+  Er_collect=[]
+  Er_mean_collect=[]
+  Er_4mean_collect=[]
+  Er_std_collect=[]
   Notlist=[]
   testName_collect=[]
   test_number_collect=[]
@@ -141,19 +145,36 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       hmax_collect.append(i.h.max())
       H_collect.append(i.hardness)
       E_collect.append(i.modulus)
-      X_Position_collect.append(i.X_Position)
-      Y_Position_collect.append(i.Y_Position)
+      Er_collect.append(i.modulusRed)
+      try:
+        X_Position_collect.append(i.X_Position)
+      except Exception as e: #pylint: disable=broad-except
+        X_Position_collect.append(0)
+        # show error
+        suggestion = 're-export raw data from the machince to add X- and Y-Position' #pylint: disable=anomalous-backslash-in-string
+        self.show_error(str(e),suggestion)
+      try:
+        Y_Position_collect.append(i.Y_Position)
+      except Exception as e: #pylint: disable=broad-except
+        Y_Position_collect.append(0)
+        # show error
+        suggestion = 're-export raw data from the machince to add X- and Y-Position' #pylint: disable=anomalous-backslash-in-string
+        self.show_error(str(e),suggestion)
       marker4mean= np.where((i.hc>=min_hc4mean) & (i.hc<=max_hc4mean))
       Hmean_collect.append(np.mean(i.hardness[marker4mean]))
       H4mean_collect.append(i.hardness[marker4mean])
       Emean_collect.append(np.mean(i.modulus[marker4mean]))
       E4mean_collect.append(i.modulus[marker4mean])
+      Er_mean_collect.append(np.mean(i.modulusRed[marker4mean]))
+      Er_4mean_collect.append(i.modulusRed[marker4mean])
       if len(i.hardness[marker4mean]) > 1:
         Hstd_collect.append(np.std(i.hardness[marker4mean], ddof=1))
         Estd_collect.append(np.std(i.modulus[marker4mean], ddof=1))
+        Er_std_collect.append(np.std(i.modulusRed[marker4mean], ddof=1))
       elif len(i.hardness[marker4mean]) == 1:
         Hstd_collect.append(0)
         Estd_collect.append(0)
+        Er_std_collect.append(0)
       testName_collect.append(i.testName)
       if i.vendor is Vendor.Micromaterials:
         test_number_collect.append(test_number)
@@ -193,8 +214,11 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.tabHE_Hmean_collect=Hmean_collect
   self.tabHE_Hstd_collect=Hstd_collect
   self.tabHE_E_collect=E_collect
+  self.tabHE_Er_collect=Er_collect
   self.tabHE_Emean_collect=Emean_collect
+  self.tabHE_Er_mean_collect=Er_mean_collect
   self.tabHE_Estd_collect=Estd_collect
+  self.tabHE_Er_std_collect=Er_std_collect
   self.tabHE_X_Position_collect=X_Position_collect
   self.tabHE_Y_Position_collect=Y_Position_collect
   self.tabHE_testName_collect=testName_collect

@@ -42,6 +42,11 @@
        <string>Analyse Pop-in Effect</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>K-means Clustering</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="1" column="0">
@@ -114,6 +119,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
      </property>
      <item>
       <property name="text">

@@ -9,7 +9,9 @@ from PySide6.QtWidgets import QTableWidgetItem, QComboBox # pylint: disable=no-n
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 
-colors_clustering =  ['grey', 'tab:cyan', 'tab:olive', 'pink', 'tab:brown', 'tab:pink', 'lime', 'indigo','tab:orange', 'gold', 'tab:green','white','k','tab:purple', 'yellow','cyan','tab:blue','blue', 'peru', 'cadetblue', 'powderblue', 'lightblue', 'deepskyblue', 'skyblue','lightskyblue', 'steelblue', 'greenyellow', 'olivedrab', 'yellowgreen', 'darkolivegreen', 'greenyellow', 'chartreuse', 'lawngreen','honeydew','darkseagreen', 'dimgray', 'dimgrey', 'darkgray', 'darkgrey', 'silver', 'lightgray', 'lightgrey', 'gainsboro','whitesmoke','snow'] #pylint:disable=line-too-long
+colors_clustering =  ['grey', 'tab:cyan', 'tab:olive', 'pink', 'tab:brown', 'tab:pink', 'lime', 'indigo','tab:orange', 'gold', 'tab:green','white','k','tab:purple', 'yellow','cyan','tab:blue','blue', 'peru', 'cadetblue', 'lightblue', 'deepskyblue', 'skyblue', 'steelblue', 'greenyellow', 'olivedrab', 'yellowgreen', 'darkolivegreen', 'greenyellow', 'lawngreen','honeydew','darkseagreen', 'dimgray', 'darkgray', 'silver', 'lightgray', 'gainsboro','whitesmoke','snow'] #pylint:disable=line-too-long
+AllParameters = ['mean of H [GPa]', 'mean of E [GPa]', 'mean of Er [GPa]']
+Labels = ['Hardness [GPa]', 'Young\'s Modulus [GPa]', 'reduced Modulus [GPa]']
 
 colors_clustering_using = []
 
@@ -19,49 +21,69 @@ def Classification_HE(self):
   #get Inputs
   files_list = (self.ui.textEdit_Files_tabClassification.toPlainText()).split("\n")
   IfUsingFoundNumberClusters = self.ui.checkBox_ifUsingFoundNumberClusters_tabClassification.isChecked()
+  maxMSD = self.ui.doubleSpinBox_MSD_tabClassification.value() # the maximum Mean of Squared Distances
   IfPlotElbow = self.ui.checkBox_ifPlotElbow_tabClassification.isChecked()
   WeightingRatio = self.ui.doubleSpinBox_WeightingRatio_tabClassification.value()
+  DimensionX = self.ui.comboBox_DimensionX_tabClassification.currentIndex()
+  DimensionY = self.ui.comboBox_DimensionY_tabClassification.currentIndex()
+  DimensionX_Name = AllParameters[DimensionX]
+  DimensionY_Name = AllParameters[DimensionY]
   ax_HE = self.static_ax_HE_tabClassification
   ax_HE.cla()
-  H_collect=[]
-  E_collect=[]
-  for file in files_list:
+  DimensionXvalue_collect=[]
+  DimensionYvalue_collect=[]
+  FileNumber_collect=[]
+  TestName_collect=[]
+  for FileNumber, file in enumerate(files_list):
     try:
       data = pd.read_excel(file, sheet_name=None)
     except Exception as e: #pylint: disable=broad-except
       suggestion = 'Please check the typed complete paths of files' #pylint: disable=anomalous-backslash-in-string
       self.show_error(str(e), suggestion)
-    H = data.get('Results')['mean of H [GPa]'].to_numpy()
-    H_collect = np.concatenate((H_collect, H), axis=0)
-    E = data.get('Results')['mean of E [GPa]'].to_numpy()
-    E_collect = np.concatenate((E_collect, E), axis=0)
+    try:
+      DimensionYvalue = data.get('Results')[DimensionY_Name].to_numpy()
+      DimensionYvalue_collect = np.concatenate((DimensionYvalue_collect, DimensionYvalue), axis=0)
+      DimensionXvalue = data.get('Results')[DimensionX_Name].to_numpy()
+      DimensionXvalue_collect = np.concatenate((DimensionXvalue_collect, DimensionXvalue), axis=0)
+      for TestName in data.get('Results')['Test Name'].to_numpy():
+        TestName_collect.append(TestName)
+        FileNumber_collect.append(FileNumber)
+
+    except Exception as e: #pylint: disable=broad-except
+      suggestion = f"Please check the Column Names of H and E in {file}" #pylint: disable=anomalous-backslash-in-string
+      self.show_error(str(e), suggestion)
 
   # factor_y is used to correct the big difference of absolute value between hardness and modulus
-  factor_y = (np.std(E_collect, ddof=1))/ (np.std(H_collect, ddof=1)) * WeightingRatio
+  # factor_y = (np.std(E_collect, ddof=1))/ (np.std(H_collect, ddof=1)) * WeightingRatio
+  factor_y = (np.max(DimensionXvalue_collect)-np.min(DimensionXvalue_collect))/ (np.max(DimensionYvalue_collect)-np.min(DimensionYvalue_collect)) * WeightingRatio
   # constrcuting the data set X for K-means Clustering
-  X = np.concatenate((np.array([E_collect]).T, np.array([H_collect]).T*factor_y), axis=1)
+  X = np.concatenate((np.array([DimensionXvalue_collect]).T, np.array([DimensionYvalue_collect]).T*factor_y), axis=1)
   # using the sum of squared distances (ssd) to find an optimal cluster Number
   ssd={} # sum of squared distances
   if IfUsingFoundNumberClusters:
-    for k in range(1, 30):
+    if len(DimensionYvalue_collect)>30:
+      max_K = 30
+    else:
+      max_K = len(DimensionYvalue_collect)
+    for k in range(1, max_K):
       cluster = KMeans(n_clusters=k,random_state=0,n_init=10).fit(X)
       ssd[k] = cluster.inertia_ #inertia_: Sum of squared distances of samples to their closest cluster center, weighted by the sample weights if provided.
-    ssd_values = np.array(list(ssd.values()))
+    ssd_values = np.array(list(ssd.values()))/len(DimensionXvalue_collect) # ssd per data ponit
     ssd_keys = np.array(list(ssd.keys()))
-    change_amplitude = np.absolute((ssd_values[2:]-ssd_values[1:-1])/np.absolute((ssd_values[1:-1]-ssd_values[:-2])))
     try:
-      index = np.where(change_amplitude>=1)
-      n_clusters=int(ssd_keys[1:-1][index][1])
+      index = np.where(ssd_values<=maxMSD)
+      n_clusters=int(ssd_keys[index][0])
       if IfPlotElbow:
         # plot cluster number vs ssd
         plt.close()
         _, ax = plt.subplots()
         ax.plot(ssd_keys,ssd_values)
         ax.scatter(ssd_keys,ssd_values)
-        ax.scatter(ssd_keys[1:-1][index][1],ssd_values[1:-1][index][1], label='optimal N of Clusters determined by Elbow Method')
+        ax.scatter(ssd_keys[index][0],ssd_values[index][0], label=f"N at MSD = {ssd_values[index][0]:.1f}")
         ax.legend()
         ax.set_xlabel('Number of Clusters')
-        ax.set_ylabel('Sum of squared Distances [-]')
+        ax.set_ylabel('Mean of squared Distances (MSD) [-]')
+        ax.set_title(f"MSD < {maxMSD:.1f}")
         plt.show()
     except Exception as e: #pylint:disable=broad-except
       if IfPlotElbow:
@@ -71,7 +93,7 @@ def Classification_HE(self):
         ax.plot(ssd_keys,ssd_values)
         ax.scatter(ssd_keys,ssd_values)
         ax.set_xlabel('Number of Clusters')
-        ax.set_ylabel('Sum of squared Distances [-]')
+        ax.set_ylabel('Mean of squared Distances (MSD) [-]')
         plt.show()
       suggestion = 'the optimal number of clusters cannot be found.'
       self.show_error(str(e), suggestion)
@@ -115,8 +137,9 @@ def Classification_HE(self):
     ax.plot([x0,x1,x2,x0],[y0,y1,y2,y0])
     ax.text(x0-0.2*width*xl,y0-0.08*yl,'Weighting\n    Ratio', color='tab:blue')
   showWeightingRatio(ax=ax_HE)
-  ax_HE.set_ylabel('Hardness [GPa]')
-  ax_HE.set_xlabel('Young\'s Modulus [GPa]')
+  ax_HE.set_ylabel(Labels[DimensionY])
+  ax_HE.set_xlabel(Labels[DimensionX])
+  ax_HE.set_title(f"{files_list[0].split(self.slash)[-2]}{self.slash}{files_list[0].split(self.slash)[-1]}\n")
   self.static_canvas_HE_tabClassification.figure.set_tight_layout(True)
   self.static_canvas_HE_tabClassification.draw()
   #listing Results
@@ -159,6 +182,32 @@ def Classification_HE(self):
     self.ui.tableWidget_tabClassification.setItem(k,6,QTableWidgetItem(f"{(X[y_pred==k, 1]/factor_y).std(ddof=1):.2f}"))
   # the mapping can be plotted after the K-means clustering
   self.ui.pushButton_PlotMappingAfterClustering_tabClassification.setEnabled(True)
+
+  #prepare for export
+  if DimensionX == 0:
+    self.tabClassification_H_collect=DimensionXvalue_collect
+  elif DimensionX == 1:
+    self.tabClassification_E_collect=DimensionXvalue_collect
+  elif DimensionX == 2:
+    self.tabClassification_Er_collect=DimensionXvalue_collect
+
+  if DimensionY == 0:
+    self.tabClassification_H_collect=DimensionYvalue_collect
+  elif DimensionY == 1:
+    self.tabClassification_E_collect=DimensionYvalue_collect
+  elif DimensionY == 2:
+    self.tabClassification_Er_collect=DimensionYvalue_collect
+
+  if 0 not in (DimensionX, DimensionY):
+    self.tabClassification_H_collect=np.zeros(len(DimensionXvalue_collect))
+  if 1 not in (DimensionX, DimensionY):
+    self.tabClassification_E_collect=np.zeros(len(DimensionXvalue_collect))
+  if 2 not in (DimensionX, DimensionY):
+    self.tabClassification_Er_collect=np.zeros(len(DimensionXvalue_collect))
+
+  self.tabClassification_ClusterLabels=cluster.labels_
+  self.tabClassification_FileNumber_collect = FileNumber_collect
+  self.tabClassification_TestName_collect = TestName_collect
 
 def plotCycle(ax,x0,y0,radius,stepsize=20,markersize=1):
   """
@@ -232,8 +281,11 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
 
   #get Inputs
   files_list = (self.ui.textEdit_Files_tabClassification.toPlainText()).split("\n")
+  DimensionX = self.ui.comboBox_DimensionX_tabClassification.currentIndex()
+  DimensionY = self.ui.comboBox_DimensionY_tabClassification.currentIndex()
   IfShowRealSizeIndent = self.ui.checkBox_ifShowRealSizeIndent_tabClassification.isChecked()
   FlipMapping = self.ui.comboBox_FlipMapping_tabClassification.currentIndex()
+  MarkerType = self.ui.comboBox_MarkerType_tabClassification.currentIndex()
 
   axs_collect=[]
   paths_DICT = {}
@@ -248,8 +300,10 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
     axs = [ax1,ax2,ax3,ax4]
     data = pd.read_excel(file, sheet_name=None)
     hmax = data.get('Results')['max. hmax [µm]'].to_numpy()
-    H = data.get('Results')['mean of H [GPa]'].to_numpy()
-    E = data.get('Results')['mean of E [GPa]'].to_numpy()
+    DimensionX_Name = AllParameters[DimensionX]
+    DimensionY_Name = AllParameters[DimensionY]
+    DimensionYvalue = data.get('Results')[DimensionY_Name].to_numpy()
+    DimensionXvalue = data.get('Results')[DimensionX_Name].to_numpy()
     X_Position = data.get('Results')['X Position [µm]'].to_numpy() #µm
     Y_Position = data.get('Results')['Y Position [µm]'].to_numpy() #µm
     X_length = X_Position.max()-X_Position.min()
@@ -284,10 +338,27 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
       for i, _ in enumerate(X_Position):
         X_Position[i] = X_Position[i]-X0_Position
 
-    Spacing = ( (X_Position[1]-X_Position[0])**2 + (Y_Position[1]-Y_Position[0])**2 )**0.5 #µm
-    Spacing1 = ( (X_Position[1]-X_Position[0])**2 + (Y_Position[1]-Y_Position[0])**2 )**0.5 #µm
-    if Spacing1>Spacing:
-      Spacing=Spacing1
+    try:
+      Spacing = ( (X_Position[1]-X_Position[0])**2 + (Y_Position[1]-Y_Position[0])**2 )**0.5 #µm
+    except:
+      Spacing = 100
+    else:
+      if Spacing <0.01:
+        Spacing = 100
+    try:
+      Spacing1 = ( (X_Position[2]-X_Position[1])**2 + (Y_Position[2]-Y_Position[1])**2 )**0.5 #µm
+    except:
+      pass
+    else:
+      if 0.01 < Spacing1 < Spacing:
+        Spacing=Spacing1
+    try:
+      Spacing2 = ( (X_Position[-2]-X_Position[-1])**2 + (Y_Position[-2]-Y_Position[-1])**2 )**0.5 #µm
+    except:
+      pass
+    else:
+      if 0.01 < Spacing2 < Spacing:
+        Spacing=Spacing2
     #hardness mapping
     cm_H = plt.cm.get_cmap('Blues')
     OnePixel = 72./ fig.dpi # 1point== fig.dpi/72. * pixels  # Pixel/Point
@@ -295,14 +366,14 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
     if IfShowRealSizeIndent:
       markersize = (hmax[i]*np.tan(65.3/180*np.pi)*4*OneMicroMeter)**2
     else:
-      markersize = 10
-    mapping1 = axs[0].scatter(X_Position, Y_Position, c=H, s=markersize, vmin=np.mean(H)-2*np.std(H,ddof=1), vmax=np.mean(H)+2*np.std(H,ddof=1), cmap=cm_H,marker='o')
+      markersize = Spacing
+    mapping1 = axs[0].scatter(X_Position, Y_Position, c=DimensionYvalue, s=markersize, vmin=np.mean(DimensionYvalue)-2*np.std(DimensionYvalue,ddof=1), vmax=np.mean(DimensionYvalue)+2*np.std(DimensionYvalue,ddof=1), cmap=cm_H,marker='o')#pylint:disable=line-too-long
     paths_DICT[axs[0]] = mapping1
     print('mapping1',mapping1)
     point_sizes_DICT[axs[0]] = paths_DICT[axs[0]].get_sizes()
     #Young's modulus mapping
     cm_E = plt.cm.get_cmap('Purples')
-    mapping2 = axs[1].scatter(X_Position, Y_Position, c=E, s=markersize, vmin=np.mean(E)-2*np.std(E,ddof=1), vmax=np.mean(E)+2*np.std(E,ddof=1), cmap=cm_E)
+    mapping2 = axs[1].scatter(X_Position, Y_Position, c=DimensionXvalue, s=markersize, vmin=np.mean(DimensionXvalue)-2*np.std(DimensionXvalue,ddof=1), vmax=np.mean(DimensionXvalue)+2*np.std(DimensionXvalue,ddof=1), cmap=cm_E)#pylint:disable=line-too-long
     paths_DICT[axs[1]] = mapping2
     point_sizes_DICT[axs[1]] = paths_DICT[axs[1]].get_sizes()
     if IfShowRealSizeIndent:
@@ -319,12 +390,12 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
     axs[0].set_ylim(-Spacing, Length+Spacing)
     axs[3].set_frame_on(False)
     axs[2].set_frame_on(False)
-    axs[0].set_title('Hardness mapping')
-    axs[1].set_title('Young\'s Modulus mapping')
+    axs[0].set_title(Labels[DimensionY][:-5]+'mapping')
+    axs[1].set_title(Labels[DimensionX][:-5]+'mapping')
     cax_mapping1 = fig.add_axes([0.58, 0.45, 0.3, 0.02])
     cax_mapping2 = fig.add_axes([0.58, 0.36, 0.3, 0.02])
-    fig.colorbar(mapping1, cax=cax_mapping1, orientation='horizontal', label='Hardness [GPa]')
-    fig.colorbar(mapping2, cax=cax_mapping2, orientation='horizontal', label='Young\'s Modulus  [GPa]')
+    fig.colorbar(mapping1, cax=cax_mapping1, orientation='horizontal', label=Labels[DimensionY])
+    fig.colorbar(mapping2, cax=cax_mapping2, orientation='horizontal', label=Labels[DimensionX])
     fig.suptitle(f"{file.split(self.slash)[-2]}{self.slash}{file.split(self.slash)[-1]}\nSpacing = {Spacing:.1f} µm")
 
     if plotClustering:
@@ -334,7 +405,7 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
       cluster_collect=[]
       for i, _ in enumerate(X_Position):
         # plotCycle(ax=axs[2],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
-        index = np.where( (np.absolute((X[:,1]/factor_y)-H[i])<1.e-5) & (np.absolute(X[:,0]-E[i])<1.e-5) )
+        index = np.where( (np.absolute((X[:,1]/factor_y)-DimensionYvalue[i])<1.e-5) & (np.absolute(X[:,0]-DimensionXvalue[i])<1.e-5) )
         cluster_collect.append(int(cluster.labels_[index])+1)
       #Cluster mapping
       try:
@@ -344,12 +415,22 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
       except:
         pass
       cm_cluster = plt.cm.get_cmap('my_cmap')
-      mapping3 = axs[2].scatter(X_Position, Y_Position, c=cluster_collect, s=markersize, vmin=1, vmax=np.max(cluster_collect)+1, cmap=cm_cluster)
+      edgecolors =[]
+      circleWidth = 0
+      if MarkerType == 1:
+        circleWidth = Spacing*0.05
+        for cluster_number in cluster_collect:
+          edgecolors.append(colors_clustering_using[cluster_number-1])
+      mapping3 = axs[2].scatter(X_Position, Y_Position, c=cluster_collect, s=markersize, vmin=1, vmax=np.max(cluster_collect)+1, cmap=cm_cluster, facecolors='none', edgecolors=edgecolors, lw=markersize**0.5*circleWidth)#pylint:disable=line-too-long
+      if MarkerType == 1:
+        mapping3.set_facecolor('none')
       paths_DICT[axs[2]] = mapping3
       point_sizes_DICT[axs[2]] = paths_DICT[axs[2]].get_sizes()
       cax_mapping3 = fig.add_axes([0.58, 0.27, 0.3, 0.02])
       fig.colorbar(mapping3, cax=cax_mapping3, orientation='horizontal', label='Cluster Number [-]', ticks=np.arange(np.min(cluster_collect), np.max(cluster_collect)+1, 2), spacing='uniform')
       fig.suptitle(f"{file.split(self.slash)[-2]}{self.slash}{file.split(self.slash)[-1]}\nSpacing = {Spacing:.1f} µm, Number of Clusters = {len(cluster.cluster_centers_)} ")
+      for ax in axs:
+        ax.tick_params(axis='both', which='both', bottom=False, top=False, left=False, right=False, labelbottom=False, labeltop=False, labelleft=False, labelright=False)
       fig.savefig(f"{file[:-5]}.svg", transparent=True)
 
     for ax in axs:

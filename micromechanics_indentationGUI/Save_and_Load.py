@@ -35,15 +35,25 @@ class data4save:
                     'progressBar': None,                       #progressBar
                     'lineEdit_FrameStiffness': None,           #FrameStiffness
                     'lineEdit_FrameCompliance': None,          #FrameCompliance
-                    'lineEdit_TAF1': None,                     #C0
-                    'lineEdit_TAF2': None,                     #C1
-                    'lineEdit_TAF3': None,                     #C2
-                    'lineEdit_TAF4': None,                     #C3
-                    'lineEdit_TAF5': None,                     #C4
-                    'lineEdit_TAF6': None,                     #C5
-                    'lineEdit_TAF7': None,                     #C6
-                    'lineEdit_TAF8': None,                     #C7
-                    'lineEdit_TAF9': None,                     #C8
+                    'lineEdit_TAF1': 24.5,                     #C0
+                    'lineEdit_TAF2': 0,                        #C1
+                    'lineEdit_TAF3': 0,                        #C2
+                    'lineEdit_TAF4': 0,                        #C3
+                    'lineEdit_TAF5': 0,                        #C4
+                    'lineEdit_TAF6': 0,                        #C5
+                    'lineEdit_TAF7': 0,                        #C6
+                    'lineEdit_TAF8': 0,                        #C7
+                    'lineEdit_TAF9': 0,                        #C8
+                    'lineEdit_TAF1_2': 24.5,                   #C0  reference tip area function
+                    'lineEdit_TAF2_2': 0,                      #C1
+                    'lineEdit_TAF3_2': 0,                      #C2
+                    'lineEdit_TAF4_2': 0,                      #C3
+                    'lineEdit_TAF5_2': 0,                      #C4
+                    'lineEdit_TAF6_2': 0,                      #C5
+                    'lineEdit_TAF7_2': 0,                      #C6
+                    'lineEdit_TAF8_2': 0,                      #C7
+                    'lineEdit_TAF9_2': 0,                      #C8
+                    'checkBox_plotReferenceTAF':None,          #if plot the reference TAF nearby the calculated
                     'doubleSpinBox_minhc4mean': None,          #min. hc used for calculate the average hardness and Modulus
                     'doubleSpinBox_maxhc4mean': None,          #max. hc used for calculate the average hardness and Modulus
                     'lineEdit_TipRadius': None,                #Tip Radius
@@ -68,6 +78,10 @@ class data4save:
                     'doubleSpinBox_WeightingRatio': None,
                     'checkBox_ifShowRealSizeIndent': None,
                     'comboBox_FlipMapping': None,
+                    'doubleSpinBox_MSD': None,
+                    'comboBox_MarkerType': 0,
+                    'comboBox_DimensionX': 1,
+                    'comboBox_DimensionY': 0,
                   }
     
     self.tabName_list = [
@@ -138,7 +152,10 @@ def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
     pass
   else:
     Widget.setRowCount(rowCount)
-    Widget.setColumnCount(columnCount-1)
+    if 'tabClassification' in tabName:
+      Widget.setColumnCount(7)
+    else:
+      Widget.setColumnCount(columnCount-1)
     for j in range(columnCount):
       for i in range(rowCount):
         theData = data_in_Table[j][i]
@@ -161,7 +178,10 @@ def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
             model.setData(model.index(row, 0), QColor(Color[0]*255,Color[1]*255,Color[2]*255,Color[3]*255), Qt.BackgroundRole)
           if not isinstance(theData, int):
             theData=i
-          Color = mcolors.to_rgba(colors_clustering[theData])
+          try:
+            Color = mcolors.to_rgba(colors_clustering[theData])
+          except:
+            Color = mcolors.to_rgba(colors_clustering[0])
           def ComboBoxBGcolorChanged():
             for k in range(rowCount):
               # setting the background color of comboBox
@@ -265,7 +285,7 @@ def SAVE(self, win):
   pickle.dump(data, file)
   # close the file
   file.close()
-  win.setWindowTitle(f"GUI for micromechanics.indentation - {FilePath} - [saved at {data.data_time}]")
+  win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at {data.data_time}] - {FilePath}")
 
 
 def LOAD(self, win):

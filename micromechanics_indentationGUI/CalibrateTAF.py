@@ -183,9 +183,22 @@ def plot_TAF(self,hc,Ac):
   ax[0].scatter(hc,Ac,color='b',label='data')
   hc_new = np.arange(0,hc.max()*1.05,hc.max()/100)
   Ac_new = self.i_tabTAF.tip.areaFunction(hc_new)
-  ax[0].plot(hc_new,Ac_new,color='r',label='fitted Tip Area Function')
-  ax[0].legend()
+  ax[0].plot(hc_new,Ac_new,color='r',label='the fitted Tip Area Function')
   ax[0].set_ylabel(r"Contact Area $A_{c}$ [µm$^2$]")
+  if self.ui.checkBox_plotReferenceTAF_tabTAF.isChecked():
+    Reference_TAF_terms =[]
+    for j in range(9):
+      lineEdit = eval(f"self.ui.lineEdit_TAF{j+1}_2_tabTAF") # pylint: disable=eval-used
+      Reference_TAF_terms.append(float(lineEdit.text()))
+    Ac_reference = (
+                    Reference_TAF_terms[0] * (hc_new*1000) ** (2/2**0) + Reference_TAF_terms[1] * (hc_new*1000) ** (2/2**1) +
+                    Reference_TAF_terms[2] * (hc_new*1000) ** (2/2**2) + Reference_TAF_terms[3] * (hc_new*1000) ** (2/2**3) +
+                    Reference_TAF_terms[4] * (hc_new*1000) ** (2/2**4) + Reference_TAF_terms[5] * (hc_new*1000) ** (2/2**5) +
+                    Reference_TAF_terms[6] * (hc_new*1000) ** (2/2**6) + Reference_TAF_terms[7] * (hc_new*1000) ** (2/2**7) +
+                    Reference_TAF_terms[8] * (hc_new*1000) ** (2/2**8)
+                    )/1.e6 # conversion of unit from nm^2 to um^2
+    ax[0].plot(hc_new,Ac_reference,color='gray',linestyle='dashed', label='teh reference Tip Area Function')
+  ax[0].legend()
   Ac_cal = self.i_tabTAF.tip.areaFunction(hc)
   error = (Ac_cal - Ac) / Ac *100
   ax[1].scatter(hc, error, color='grey',s=5)
