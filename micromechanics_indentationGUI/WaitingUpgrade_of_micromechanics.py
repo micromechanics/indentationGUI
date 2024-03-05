@@ -59,14 +59,15 @@ class IndentationXXX(indentation.Indentation):
       else:                                                             #!!!!!!
         self.slope = 1./(1./self.slope-self.tip.compliance)             #!!!!!!
     else:
+      #for nonCSM #!!!!!!
       self.slope, self.valid, _, _ , _= self.stiffnessFromUnloading(self.p, self.h)
       self.slope = np.array(self.slope)
-    try:
-      self.k2p = self.slope*self.slope/self.p[self.valid]
-    except:
-      print('**WARNING SKIP ANALYSE')
-      print(traceback.format_exc())
-      return
+      try: #!!!!!!
+        self.k2p = self.slope*self.slope/self.p[self.valid] #!!!!!!
+      except: #!!!!!!
+        print('**WARNING SKIP ANALYSE') #!!!!!!
+        print(traceback.format_exc()) #!!!!!!
+        return #!!!!!!
     #Calculate Young's modulus
     self.calcYoungsModulus()
     self.calcHardness()
@@ -165,6 +166,9 @@ class IndentationXXX(indentation.Indentation):
           plt.show()
         self.h -= self.h[surface]  #only change surface, not force
         self.p -= self.p[surface]  #!!!!!:Different from micromechanics: change load
+        h = self.h[self.valid] #!!!!!!
+        if self.method==Method.CSM: #!!!!!!
+          self.slope = self.slope[h>=0] #!!!!!!
         self.valid = np.logical_and(self.valid, self.h>=0) #!!!!!
         self.identifyLoadHoldUnload() #!!!!!:Different from micromechanics: moved from nextAgilentTest
     #correct thermal drift !!!!!
@@ -183,9 +187,9 @@ class IndentationXXX(indentation.Indentation):
     Returns:
         bool: success of identifying the load-hold-unload
     """
-    if self.method==Method.CSM:
-      success = self.identifyLoadHoldUnloadCSM()
-      return success
+    # if self.method==Method.CSM: #!!!!!!
+    #   success = self.identifyLoadHoldUnloadCSM() #!!!!!!
+    #   return success #!!!!!!
     #use force-rate to identify load-hold-unload
     if self.model['relForceRateNoiseFilter']=='median':
       p = signal.medfilt(self.p, 5)
@@ -371,8 +375,8 @@ class IndentationXXX(indentation.Indentation):
           ,"Harmonic Stiffness":"slopeInvalid"\
           ,"Harmonic Contact Stiffness":"slope", "STIFFNESS":"slope","Stiffness":"slope" \
           ,"Stiffness Squared Over Load":"k2p","Dyn. Stiff.^2/Load":"k2p"\
-          ,"Hardness":"hardness", "H_IT Channel":"hardness","HARDNESS":"hardness"\
-          ,"Modulus": "modulus", "E_IT Channel": "modulus","MODULUS":"modulus","Reduced Modulus":"modulusRed"\
+          # ,"Hardness":"hardness", "H_IT Channel":"hardness","HARDNESS":"hardness"\ #!!!!!!
+          # ,"Modulus": "modulus", "E_IT Channel": "modulus","MODULUS":"modulus","Reduced Modulus":"modulusRed"\ #!!!!!!
           ,"Scratch Distance": "s", "XNanoPosition": "x", "YNanoPosition": "y"\
           ,"X Position": "xCoarse", "Y Position": "yCoarse","X Axis Position":"xCoarse"\
           ,"Y Axis Position":"yCoarse"\
@@ -451,7 +455,7 @@ class IndentationXXX(indentation.Indentation):
     validFull = np.isfinite(h)
     if 'slope' in self.indicies:
       slope   = np.array(df[self.indicies['slope']][1:-1], dtype=np.float64)
-      self.valid =  np.isfinite(slope) # pylint: disable=attribute-defined-outside-init
+      self.valid =  np.isfinite(slope) * np.isfinite(h) # pylint: disable=attribute-defined-outside-init #!!!!!!
       self.valid[self.valid] = slope[self.valid] > 0.0  #only valid points if stiffness is positiv
     else:
       self.valid = validFull # pylint: disable=attribute-defined-outside-init
@@ -723,24 +727,39 @@ class IndentationXXX(indentation.Indentation):
     testNameAll=[]
     if self.method==Method.CSM:
       x, y, h, t = None, None, None, None
+      x_single, y_single, h_single, mask_single = None, None, None, None #!!!!!!
+      frameCompliance_collect = [] #!!!!!!
       while True:
         if self.output['progressBar'] is not None:
           self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness') #pylint: disable=not-callable
         self.analyse()
+        x_single = 1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) #add 1nm:prevent runtime error #!!!!!!
+        y_single = 1./self.slope #!!!!!!
+        h_single = self.h[self.valid] #!!!!!!
+        t = self.t[self.valid] #!!!!!!
+        mask_single = t < self.t[self.iLHU[0][1]] #!!!!!!
         if x is None:
-          x = 1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) #add 1nm:prevent runtime error
-          y = 1./self.slope
-          h = self.h[self.valid]
-          t = self.t[self.valid]
+          x = x_single
+          y = y_single
+          h = h_single
           testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
-          mask = (t < self.t[self.iLHU[0][1]]) #pylint: disable = superfluous-parens
+          mask = mask_single #pylint: disable = superfluous-parens #!!!!!!
         elif np.count_nonzero(self.valid)>0:
-          x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
-          y = np.hstack((y,    1./self.slope))
-          h = np.hstack((h, self.h[self.valid]))
-          t = self.t[self.valid]
+          x = np.hstack((x,    x_single )) #!!!!!!
+          y = np.hstack((y,    y_single )) #!!!!!!
+          h = np.hstack((h,    h_single )) #!!!!!!
           testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
-          mask = np.hstack((mask, (t < self.t[self.iLHU[0][1]]))) # the section after loading will be removed
+          mask = np.hstack((mask, mask_single)) # the section after loading will be removed #!!!!!!
+        #calculate compliance for each tets !!!!!!
+        mask_single = np.logical_and(mask_single, h_single>critDepth)
+        mask_single = np.logical_and(mask_single, x_single<1./np.sqrt(critForce))
+        try:
+          param, covM = np.polyfit(x_single[mask_single],y_single[mask_single],1, cov=True)
+        except:
+          frameCompliance_collect.append(None)
+        else:
+          frameCompliance_collect.append(param[1])
+        #check if run through all tests
         if not self.testList:
           break
         self.nextTest()
@@ -752,23 +771,53 @@ class IndentationXXX(indentation.Indentation):
     else:
       ## create data-frame of all files
       pAll, hAll, sAll = [], [], []
+      p_collect, h_collect, s_collect = [], [], [] #!!!!!!
       while True:
         if self.output['progressBar'] is not None:
           self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness') # pylint: disable=not-callable
         self.analyse()
         if isinstance(self.metaUser['pMax_mN'], list):
           pAll = pAll+list(self.metaUser['pMax_mN'])
+          p_collect.append(list(self.metaUser['pMax_mN'])) #!!!!!!
           hAll = hAll+list(self.metaUser['hMax_um'])
+          h_collect.append(list(self.metaUser['hMax_um'])) #!!!!!!
           sAll = sAll+list(self.metaUser['S_mN/um'])
+          s_collect.append(list(self.metaUser['S_mN/um'])) #!!!!!!
           testNameAll = np.append( testNameAll, [self.testName] * len(self.metaUser['pMax_mN']), axis=0 )
         else:
           pAll = pAll+[self.metaUser['pMax_mN']]
+          p_collect.append([self.metaUser['pMax_mN']]) #!!!!!!
           hAll = hAll+[self.metaUser['hMax_um']]
+          h_collect.append([self.metaUser['hMax_um']]) #!!!!!!
           sAll = sAll+[self.metaUser['S_mN/um']]
+          s_collect.append([self.metaUser['S_mN/um']]) #!!!!!!
           testNameAll = np.append( testNameAll, [self.testName] * len(self.metaUser['pMax_mN']), axis=0 )
         if not self.testList:
           break
         self.nextTest()
+
+      #calculate compliance for each tets !!!!!!
+      frameCompliance_collect=[]
+      p_collect = np.array(p_collect)
+      h_collect = np.array(h_collect)
+      s_collect = np.array(s_collect)
+      for number_test,_ in enumerate(h_collect):
+        ## determine compliance by intersection of 1/sqrt(p) -- compliance curve
+        x = 1./np.sqrt(p_collect[number_test])
+        y = 1./s_collect[number_test]
+        mask = h_collect[number_test] > critDepth # pylint: disable=unnecessary-list-index-lookup
+        mask = np.logical_and(mask, p_collect[number_test] > critForce)
+        try:
+          param = np.polyfit(x[mask],y[mask],1)
+        except:
+          print('WARNING in def calibrateStiffness')
+          print(y[mask])
+          print(x[mask])
+          frameCompliance_collect.append(None)
+        else:
+          frameCompliance_collect.append(param[1])
+
+      #calculate compoliance using all data
       pAll = np.array(pAll)
       hAll = np.array(hAll)
       sAll = np.array(sAll)
@@ -827,7 +876,7 @@ class IndentationXXX(indentation.Indentation):
         plt.show()
     #end of function # !!!!!!
     if returnData:
-      return x,y
+      return x,y,frameCompliance_collect
     return frameCompliance
 
 

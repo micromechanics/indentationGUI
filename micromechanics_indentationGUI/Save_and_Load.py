@@ -154,11 +154,16 @@ def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
     Widget.setRowCount(rowCount)
     if 'tabClassification' in tabName:
       Widget.setColumnCount(7)
+    if 'FrameStiffness' in tabName or 'tabTAF' in tabName:
+      Widget.setColumnCount(3)
     else:
       Widget.setColumnCount(columnCount-1)
     for j in range(columnCount):
       for i in range(rowCount):
-        theData = data_in_Table[j][i]
+        try:
+          theData = data_in_Table[j][i]
+        except:
+          theData = 'None'
         if j==0 and ('tabClassification' not in tabName):
           theData_next_column=data_in_Table[j+1][i]
           qtablewidgetitem=QTableWidgetItem(theData_next_column)
@@ -285,7 +290,11 @@ def SAVE(self, win):
   pickle.dump(data, file)
   # close the file
   file.close()
-  win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at {data.data_time}] - {FilePath}")
+  if len(FilePath) <70:
+    showPath = FilePath
+  else:
+    showPath = FilePath[:50] + '... ...' + win.slash + FilePath.split(win.slash)[-1]
+  win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at {data.data_time}] - {showPath}")
 
 
 def LOAD(self, win):
@@ -320,8 +329,12 @@ def LOAD(self, win):
       reload_data_in_one_Tab(win=win,Tab=Tab, tabName=tabName)
   # close the file
   file.close()
+  if len(FilePath) <70:
+    showPath = FilePath
+  else:
+    showPath = FilePath[:50] + '... ...' + win.slash + FilePath.split(win.slash)[-1]
   try:
-    win.setWindowTitle(f"GUI for micromechanics.indentation - {FilePath} - [saved at {data.data_time}]")
+    win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at {data.data_time}] - {showPath}")
   except:
-    win.setWindowTitle(f"GUI for micromechanics.indentation - {FilePath} - [saved at unkown time]")
+    win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at unkown time] - {showPath}")
 

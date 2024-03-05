@@ -132,6 +132,9 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   ax_E_hc = self.static_ax_E_hc_tabHE
   ax_H_hc.cla()
   ax_E_hc.cla()
+  #plotting H/E**2 - hc
+  ax_HE2_hc = self.static_ax_HE2_hc_tabHE
+  ax_HE2_hc.cla()
   #settig initial test number
   if i.vendor is Vendor.Micromaterials:
     test_number = 1
@@ -184,6 +187,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       #plotting hardness and young's modulus
       ax_H_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'.-', linewidth=1, picker=True, label=i.testName)
       ax_E_hc.plot(i.hc[::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '.-', linewidth=1, picker=True, label=i.testName)
+      #plotting H/E**2 - hc
+      ax_HE2_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity]/i.modulus[::DecreaseDataDensity]**2,'.-', linewidth=1, picker=True, label=i.testName)
       if not i.testList:
         break
     i.nextTest()
@@ -203,9 +208,11 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   if len(H_collect)<10:
     ax_H_hc.legend()
     ax_E_hc.legend()
+    ax_HE2_hc.legend()
   #pick the label of datapoints
   self.static_canvas_H_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
   self.static_canvas_E_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
+  self.static_canvas_HE2_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
   #prepare for export
   self.tabHE_hc_collect=hc_collect
   self.tabHE_hmax_collect=hmax_collect
@@ -258,6 +265,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   ax_H_Index.set_ylabel('Hardness [GPa]')
   ax_E_hc.set_xlabel('Contact depth [µm]')
   ax_E_hc.set_ylabel('Young\'s Modulus [GPa]')
+  ax_HE2_hc.set_xlabel('Contact depth [µm]')
+  ax_HE2_hc.set_ylabel('H/E² [-]')
   ax_E_Index.set_xlabel('Indents\'s Nummber')
   ax_E_Index.set_ylabel('Young\'s Modulus [GPa]')
   ax_H_Index.legend()
@@ -268,10 +277,12 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.static_canvas_E_Index_tabHE.figure.set_tight_layout(True)
   self.set_aspectRatio(ax=ax_H_hc)
   self.set_aspectRatio(ax=ax_E_hc)
+  self.set_aspectRatio(ax=ax_HE2_hc)
   self.set_aspectRatio(ax=ax_H_Index)
   self.set_aspectRatio(ax=ax_E_Index)
   self.static_canvas_H_hc_tabHE.draw()
   self.static_canvas_E_hc_tabHE.draw()
+  self.static_canvas_HE2_hc_tabHE.draw()
   self.static_canvas_H_Index_tabHE.draw()
   self.static_canvas_E_Index_tabHE.draw()
   #plotting hardness-young's modulus

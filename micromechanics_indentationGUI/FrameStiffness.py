@@ -115,9 +115,10 @@ def FrameStiffness(self,tabName):
   critDepth=eval(f"self.ui.doubleSpinBox_critDepthStiffness_{tabName}.value()") # pylint: disable = eval-used
   critForce=eval(f"self.ui.doubleSpinBox_critForceStiffness_{tabName}.value()") # pylint: disable = eval-used
   Index_CalculationMethod = eval(f"self.ui.comboBox_CalculationMethod_{tabName}.currentIndex()") # pylint: disable = eval-used
+  frameCompliance_collect = None
   if Index_CalculationMethod == 0:
     i_FrameStiffness.restartFile()
-    i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=True)
+    _, _, frameCompliance_collect = i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=True)
     frameCompliance = i_FrameStiffness.tip.compliance
   elif Index_CalculationMethod == 1:
     i_FrameStiffness.output['ax'] = [None,None]
@@ -136,11 +137,18 @@ def FrameStiffness(self,tabName):
   #listing Test
   tableWidget=eval(f"self.ui.tableWidget_{tabName}") # pylint: disable = eval-used
   tableWidget.setRowCount(len(OriginalAlltest))
+  k_frameCompliance_collect=0
   for k, theTest in enumerate(OriginalAlltest):
     qtablewidgetitem=QTableWidgetItem(theTest)
     if theTest in i_FrameStiffness.allTestList:
+      try:
+        tableWidget.setItem(k,2,QTableWidgetItem(f"{frameCompliance_collect[k_frameCompliance_collect]:.10f}"))
+      except:
+        tableWidget.setItem(k,2,QTableWidgetItem('None'))
+      k_frameCompliance_collect += 1
       qtablewidgetitem.setCheckState(Qt.Checked)
     else:
+      tableWidget.setItem(k,2,QTableWidgetItem('None'))
       qtablewidgetitem.setCheckState(Qt.Unchecked)
     exec(f"self.ui.tableWidget_{tabName}.setItem({k},0,qtablewidgetitem)") # pylint: disable = exec-used
     if theTest in i_FrameStiffness.output['successTest']:

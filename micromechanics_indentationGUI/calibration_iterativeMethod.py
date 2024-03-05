@@ -35,7 +35,7 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
       return Cf + B*x
 
   self.restartFile()
-
+  testNameAll=[]
   if self.method==Method.CSM:
     x, y, h, t = None, None, None, None
     while True:
@@ -47,12 +47,14 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
         y = 1./self.slope
         h = self.h[self.valid]
         t = self.t[self.valid]
+        testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
         mask = (t < self.t[self.iLHU[0][1]]) #pylint: disable = superfluous-parens
       elif np.count_nonzero(self.valid)>0:
         x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
         y = np.hstack((y,    1./self.slope))
         h = np.hstack((h, self.h[self.valid]))
         t = self.t[self.valid]
+        testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
         mask = np.hstack((mask, (t < self.t[self.iLHU[0][1]]))) # the section after loading will be removed
       if not self.testList:
         break
@@ -75,11 +77,13 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
         hAll = hAll+list(self.metaUser['hMax_um'])
         AcAll = AcAll+list(self.metaUser['A_um2'])
         sAll  = sAll +list(self.metaUser['S_mN/um'])
+        testNameAll = np.append( testNameAll, [self.testName] * len(self.metaUser['pMax_mN']), axis=0 )
       else:
         pAll = pAll+[self.metaUser['pMax_mN']]
         hAll = hAll+[self.metaUser['hMax_um']]
         AcAll = AcAll+[self.metaUser['A_um2']]
         sAll  = sAll +[self.metaUser['S_mN/um']]
+        testNameAll = np.append( testNameAll, [self.testName] * len(self.metaUser['pMax_mN']), axis=0 )
       if not self.testList:
         break
       self.nextTest()
@@ -125,8 +129,13 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
     else:
       ax = self.output['ax'][0]
       ax1= self.output['ax'][1]
-    ax.plot(x[~mask], y[~mask], 'o', color='#165480', fillstyle='none', markersize=1, label='excluded')
-    ax.plot(x[mask], y[mask],   'C0o', markersize=5, label='for fit')
+    for _, testName in enumerate(self.allTestList):
+      mask1 = np.where(testNameAll[~mask]==testName)
+      ax.plot(x[~mask][mask1], y[~mask][mask1], 'o', color='#165480', fillstyle='none', markersize=1, label=f"{testName}", picker=True)
+      mask2 = np.where(testNameAll[mask]==testName)
+      ax.plot(x[mask][mask2], y[mask][mask2],   'C0o', markersize=5, label=f"{testName}", picker=True)
+    # ax.plot(x[~mask], y[~mask], 'o', color='#165480', fillstyle='none', markersize=1, label='excluded')
+    # ax.plot(x[mask], y[mask],   'C0o', markersize=5, label='for fit')
     x_ = np.linspace(0, np.max(x)*1.1, 50)
     if eTarget:
       y_ = func_(x_, frameCompliance)
@@ -138,7 +147,7 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
     ax.plot(x_,y_,'w-')
     ax.plot(x_,y_,'C0--')
     ax.set_ylabel(r"Contact Compliance, $C_{\rm cont}$[$\mathrm{\mu m/mN}$]")
-    ax.legend(loc=4)
+    # ax.legend(loc=4)
     ax.set_ylim([0,np.max(y[mask])*1.5])
     ax.set_xlim([0,np.max(x[mask])*1.5])
     ax1.scatter(x[mask], error, color='grey',s=5)

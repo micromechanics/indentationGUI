@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QTableWidgetItem, QComboBox # pylint: disable=no-n
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 
-colors_clustering =  ['grey', 'tab:cyan', 'tab:olive', 'pink', 'tab:brown', 'tab:pink', 'lime', 'indigo','tab:orange', 'gold', 'tab:green','white','k','tab:purple', 'yellow','cyan','tab:blue','blue', 'peru', 'cadetblue', 'lightblue', 'deepskyblue', 'skyblue', 'steelblue', 'greenyellow', 'olivedrab', 'yellowgreen', 'darkolivegreen', 'greenyellow', 'lawngreen','honeydew','darkseagreen', 'dimgray', 'darkgray', 'silver', 'lightgray', 'gainsboro','whitesmoke','snow'] #pylint:disable=line-too-long
+colors_clustering =  ['tab:blue', 'tab:brown', 'tab:orange', 'tab:pink', 'tab:green', 'tab:gray', 'tab:red', 'tab:olive', 'tab:purple','tab:cyan', 'lime', 'indigo', 'pink', 'gold','white','k', 'yellow','cyan','blue', 'peru', 'cadetblue', 'lightblue', 'deepskyblue', 'skyblue', 'steelblue', 'greenyellow', 'olivedrab', 'yellowgreen', 'darkolivegreen', 'greenyellow', 'lawngreen','honeydew','darkseagreen', 'dimgray', 'darkgray', 'silver', 'lightgray', 'gainsboro','whitesmoke','snow'] #pylint:disable=line-too-long
 AllParameters = ['mean of H [GPa]', 'mean of E [GPa]', 'mean of Er [GPa]']
 Labels = ['Hardness [GPa]', 'Young\'s Modulus [GPa]', 'reduced Modulus [GPa]']
 

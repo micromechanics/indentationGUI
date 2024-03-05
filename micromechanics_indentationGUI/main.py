@@ -134,6 +134,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
                           'H_hc_tabHE',
                           'H_Index_tabHE',
                           'E_hc_tabHE',
+                          'HE2_hc_tabHE',
                           'E_Index_tabHE',
                           'HE_tabHE',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius',

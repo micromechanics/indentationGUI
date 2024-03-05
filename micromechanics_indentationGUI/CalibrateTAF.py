@@ -124,9 +124,10 @@ def click_OK_calibration(self):
     TipType='Sphere'
   elif Index_TipType==2:
     TipType='Sphere+Cone'
+  frameCompliance_collect = None
   if Index_CalculationMethod == 0: # assume constant Hardness and Modulus (Eq.(24), Oliver 2004)
     self.i_tabTAF.restartFile()
-    self.i_tabTAF.calibrateStiffness(critDepth=critDepthStiffness, critForce=critForceStiffness, plotStiffness=False, returnData=True)
+    _, _, frameCompliance_collect = self.i_tabTAF.calibrateStiffness(critDepth=critDepthStiffness, critForce=critForceStiffness, plotStiffness=False, returnData=True)
     frameCompliance = self.i_tabTAF.tip.compliance
     hc, Ac = self.i_tabTAF.calibrateTAF(eTarget=E_target, frameCompliance = frameCompliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip, critMaxDepthTip=maxhc_Tip) #pylint: disable=line-too-long
   elif Index_CalculationMethod == 1: # assume constant Modulus but neglect Pile-up (Eq.(22), Oliver 2004)
@@ -146,18 +147,26 @@ def click_OK_calibration(self):
   #plot the calibrated tip area funcitonS
   self.plot_TAF(hc,Ac)
   #listing Test
-  self.ui.tableWidget_tabTAF.setRowCount(len(OriginalAlltest))
+  tableWidget=self.ui.tableWidget_tabTAF
+  tableWidget.setRowCount(len(OriginalAlltest))
+  k_frameCompliance_collect=0
   for k, theTest in enumerate(OriginalAlltest):
     qtablewidgetitem=QTableWidgetItem(theTest)
     if theTest in self.i_tabTAF.allTestList:
+      try:
+        tableWidget.setItem(k,2,QTableWidgetItem(f"{frameCompliance_collect[k_frameCompliance_collect]:.10f}"))
+      except:
+        tableWidget.setItem(k,2,QTableWidgetItem('None'))
+      k_frameCompliance_collect += 1
       qtablewidgetitem.setCheckState(Qt.Checked)
     else:
+      tableWidget.setItem(k,2,QTableWidgetItem('None'))
       qtablewidgetitem.setCheckState(Qt.Unchecked)
-    self.ui.tableWidget_tabTAF.setItem(k,0,qtablewidgetitem)
+    tableWidget.setItem(k,0,qtablewidgetitem)
     if theTest in self.i_tabTAF.output['successTest']:
-      self.ui.tableWidget_tabTAF.setItem(k,1,QTableWidgetItem("Yes"))
+      tableWidget.setItem(k,1,QTableWidgetItem("Yes"))
     else:
-      self.ui.tableWidget_tabTAF.setItem(k,1,QTableWidgetItem("No"))
+      tableWidget.setItem(k,1,QTableWidgetItem("No"))
   #output: calibrated frame compliance and frame stiffness
   self.ui.lineEdit_FrameCompliance_tabTAF.setText(f"{self.i_tabTAF.tip.compliance:.10f}")
   self.ui.lineEdit_FrameStiffness_tabTAF.setText(f"{(1/self.i_tabTAF.tip.compliance):.10f}")
