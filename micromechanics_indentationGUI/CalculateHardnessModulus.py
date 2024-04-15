@@ -6,7 +6,7 @@ from micromechanics import indentation
 from micromechanics.indentation.definitions import Vendor
 from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-from .load_depth import pick
+from .load_depth import pick, right_click_set_ContactSurface
 
 def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   """ Graphical user interface to calculate hardness and young's modulus """
@@ -23,6 +23,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabHE.value()
   max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabHE.value()
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabHE.isChecked()
+  UsingSurfaceIndex = self.ui.checkBox_UsingSurfaceIndex_tabHE.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabHE.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabHE.value()
   DecreaseDataDensity = self.ui.spinBox_DecreaseDataDensity_tabHE.value()
@@ -63,6 +64,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.show_wait('GUI is reading the file')
   #Reading Inputs
   self.i_tabHE = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
+  #initial surfaceIdx
+  self.i_tabHE.surface['surfaceIdx']={}
   #close waiting dialog
   self.close_wait()
   i = self.i_tabHE
@@ -87,26 +90,28 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       if IsCheck==Qt.Unchecked:
         self.i_tabHE.allTestList.remove(theTest)
   self.i_tabHE.restartFile()
-  #plot load-depth of test 1
+  # searching SurfaceIdx in the table
+  if UsingSurfaceIndex:
+    for k, theTest in enumerate(OriginalAlltest):
+      qtablewidgetitem = self.ui.tableWidget_tabHE.item(k, 2)
+      self.i_tabHE.testName=theTest
+      if self.i_tabHE.vendor == indentation.definitions.Vendor.Agilent:
+        self.i_tabHE.nextAgilentTest(newTest=False)
+        self.i_tabHE.nextTest(newTest=False)
+      if self.i_tabHE.vendor == indentation.definitions.Vendor.Micromaterials:
+        self.i_tabHE.nextMicromaterialsTest(newTest=False)
+        self.i_tabHE.nextTest(newTest=False)
+      try:
+        indexX = int(qtablewidgetitem.text())
+        self.i_tabHE.surface['surfaceIdx'].update({theTest:indexX})
+      except:
+        pass
+    self.i_tabHE.restartFile()
+  # save test 1 and set the data in the load depht curve can be picked
   i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
-  i.output['ax'][0].cla()
-  i.output['ax'][1].cla()
-  i.output['ax'][0].set_title(f"{i.testName}")
-  if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
-    correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
-  if i.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
-    i.stiffnessFromUnloading(i.p, i.h, plot=True)
-  elif i.method== indentation.definitions.Method.CSM:
-    i.output['ax'][0].scatter(i.h, i.p, s=1)
-    i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
-    i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
-    i.output['ax'][0].legend()
-    i.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
-    i.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
-    i.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.figure.set_tight_layout(True)
+  i.output['ax'][0].figure.canvas.mpl_connect("pick_event", self.right_click_set_ContactSurface)
+  self.indentation_inLoadDepth_tabHE = i
   i.output['ax'] = [None, None]
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabHE.draw()
   #calculate Hardnss and Modulus for all Tests
   hc_collect=[]
   hmax_collect=[]
@@ -229,7 +234,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.tabHE_X_Position_collect=X_Position_collect
   self.tabHE_Y_Position_collect=Y_Position_collect
   self.tabHE_testName_collect=testName_collect
-  #listing Test
+  #listing Test in the Table
   self.ui.tableWidget_tabHE.setRowCount(len(OriginalAlltest))
   for k, theTest in enumerate(OriginalAlltest):
     qtablewidgetitem=QTableWidgetItem(theTest)
@@ -294,5 +299,9 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.static_canvas_HE_tabHE.figure.set_tight_layout(True)
   self.set_aspectRatio(ax=ax_HE)
   self.static_canvas_HE_tabHE.draw()
+  #select the test 1 and run plot load-depth curve
+  item = self.ui.tableWidget_tabHE.item(0, 0)
+  self.ui.tableWidget_tabHE.setCurrentItem(item)
+  self.plot_load_depth(tabName='tabHE')
   #close waiting dialog
   self.close_wait(info='Calculation of Hardness and Modulus is finished!')

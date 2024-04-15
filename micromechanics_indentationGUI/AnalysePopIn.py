@@ -41,6 +41,7 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabPopIn.value()
   max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabPopIn.value()
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabPopIn.isChecked()
+  UsingSurfaceIndex = self.ui.checkBox_UsingSurfaceIndex_tabPopIn.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabPopIn.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabPopIn.value()
   if DataFilterSize%2==0:
@@ -69,8 +70,15 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
     Surface = {
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
+  #open waiting dialog
+  self.show_wait('GUI is reading the file')
   #Reading Inputs
   self.i_tabPopIn = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
+  i = self.i_tabPopIn
+  #initial surfaceIdx
+  i.surface['surfaceIdx']={}
+  #close waiting dialog
+  self.close_wait()
   #show Test method
   Method=self.i_tabPopIn.method.value
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
@@ -87,19 +95,29 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
     else:
       if IsCheck==Qt.Unchecked:
         self.i_tabPopIn.allTestList.remove(theTest)
-  self.i_tabPopIn.restartFile()
-  #plot load-depth of test 1
-  ax0=self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabPopIn
-  ax0[0].cla()
-  ax0[1].cla()
-  ax0[0].set_title(f"{self.i_tabPopIn.testName}")
-  self.i_tabPopIn.output['ax']=ax0
-  if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
-    correctThermalDrift(indentation=self.i_tabPopIn, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
-  self.i_tabPopIn.stiffnessFromUnloading(self.i_tabPopIn.p, self.i_tabPopIn.h, plot=True)
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.figure.set_tight_layout(True)
-  self.i_tabPopIn.output['ax']=None
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabPopIn.draw()
+  i.restartFile()
+  # searching SurfaceIdx in the table
+  if UsingSurfaceIndex:
+    for k, theTest in enumerate(OriginalAlltest):
+      qtablewidgetitem = self.ui.tableWidget_tabPopIn.item(k, 3)
+      i.testName=theTest
+      if i.vendor == indentation.definitions.Vendor.Agilent:
+        i.nextAgilentTest(newTest=False)
+        i.nextTest(newTest=False)
+      if i.vendor == indentation.definitions.Vendor.Micromaterials:
+        i.nextMicromaterialsTest(newTest=False)
+        i.nextTest(newTest=False)
+      try:
+        indexX = int(qtablewidgetitem.text())
+        i.surface['surfaceIdx'].update({theTest:indexX})
+      except:
+        pass
+    i.restartFile()
+  # save test 1 and set the data in the load depht curve can be picked
+  i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabPopIn
+  i.output['ax'][0].figure.canvas.mpl_connect("pick_event", self.right_click_set_ContactSurface)
+  self.indentation_inLoadDepth_tabTipRadius = i
+  i.output['ax'] = [None, None]
   #calculate the pop-in force and the Hertzian contact parameters
   try:
     fPopIn, certainty = self.i_tabPopIn.popIn(plot=False, correctH=False)
@@ -170,6 +188,8 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   #calculate the maxium shear stress
   fPopIn_collect = np.asarray(fPopIn_collect)
   max_shear_Stress = 0.31 * ( 6 * Er**2 * fPopIn_collect / (np.pi**3 * TipRadius**2) )**(1./3.)
+  #open waiting dialog
+  self.show_wait('GUI is plotting results!')
   #plot Young's Modulus
   ax2 = self.static_ax_E_tabPopIn
   ax2.cla()
@@ -235,3 +255,9 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
     else:
       qtablewidgetitem.setCheckState(Qt.Unchecked)
     self.ui.tableWidget_tabPopIn.setItem(k,0,qtablewidgetitem)
+  #select the test 1 and run plot load-depth curve
+  item = self.ui.tableWidget_tabPopIn.item(0, 0)
+  self.ui.tableWidget_tabPopIn.setCurrentItem(item)
+  self.plot_load_depth(tabName='tabPopIn')
+  #close waiting dialog
+  self.close_wait(info='analyse of pop-in is finished!')

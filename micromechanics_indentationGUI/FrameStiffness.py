@@ -6,7 +6,7 @@ from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
-from .load_depth import pick
+from .load_depth import pick, right_click_set_ContactSurface
 
 def FrameStiffness(self,tabName):
   """
@@ -25,6 +25,7 @@ def FrameStiffness(self,tabName):
   relForceRateNoise = eval(f"self.ui.doubleSpinBox_relForceRateNoise_{tabName}.value()") # pylint: disable = eval-used
   max_size_fluctuation = eval(f"self.ui.spinBox_max_size_fluctuation_{tabName}.value()") # pylint: disable = eval-used
   UsingRate2findSurface = eval(f"self.ui.checkBox_UsingRate2findSurface_{tabName}.isChecked()") # pylint: disable = eval-used
+  UsingSurfaceIndex = eval(f"self.ui.checkBox_UsingSurfaceIndex_{tabName}.isChecked()") # pylint: disable = eval-used
   Rate2findSurface = eval(f"self.ui.doubleSpinBox_Rate2findSurface_{tabName}.value()") # pylint: disable = eval-used
   DataFilterSize = eval(f"self.ui.spinBox_DataFilterSize_{tabName}.value()") # pylint: disable = eval-used
   if DataFilterSize%2==0:
@@ -60,6 +61,8 @@ def FrameStiffness(self,tabName):
                 }
   #Reading Inputs
   i_FrameStiffness = IndentationXXX(fileName=fileName, tip=Tip, surface=Surface, model=Model, output=Output)
+  #initial surfaceIdx
+  i_FrameStiffness.surface['surfaceIdx']={}
   #show Test method
   Method=i_FrameStiffness.method.value
   exec(f"self.ui.comboBox_method_{tabName}.setCurrentIndex({Method-1})") # pylint: disable = exec-used
@@ -87,26 +90,28 @@ def FrameStiffness(self,tabName):
       if IsCheck==Qt.Unchecked:
         i_FrameStiffness.allTestList.remove(theTest)
   i_FrameStiffness.restartFile()
-  #plot load-depth of test 1
-  ax_load_depth = eval(f"self.static_ax_load_depth_tab_inclusive_frame_stiffness_{tabName}") # pylint: disable = eval-used
-  canvas_load_depht = eval(f"self.static_canvas_load_depth_tab_inclusive_frame_stiffness_{tabName}") # pylint: disable = eval-used
-  ax_load_depth[0].cla()
-  ax_load_depth[1].cla()
-  ax_load_depth[0].set_title(f"{i_FrameStiffness.testName}")
-  i_FrameStiffness.output['ax'] = ax_load_depth
-  if i_FrameStiffness.method in (indentation.definitions.Method.ISO, indentation.definitions.Method.MULTI):
-    i_FrameStiffness.stiffnessFromUnloading(i_FrameStiffness.p, i_FrameStiffness.h, plot=True)
-  elif i_FrameStiffness.method== indentation.definitions.Method.CSM:
-    i_FrameStiffness.output['ax'][0].scatter(i_FrameStiffness.h, i_FrameStiffness.p, s=1) #pylint: disable = unsubscriptable-object
-    i_FrameStiffness.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
-    i_FrameStiffness.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
-    i_FrameStiffness.output['ax'][0].legend()
-    i_FrameStiffness.output['ax'][0].set_ylabel(r'force [$\mathrm{mN}$]')
-    i_FrameStiffness.output['ax'][1].set_ylabel(r"$\frac{P_{cal}-P_{mea}}{P_{mea}}x100$ [%]")
-    i_FrameStiffness.output['ax'][1].set_xlabel(r'depth [$\mathrm{\mu m}$]')
-  canvas_load_depht.figure.set_tight_layout(True)
-  i_FrameStiffness.output['ax'] = None
-  canvas_load_depht.draw()
+  # searching SurfaceIdx in the table
+  if UsingSurfaceIndex:
+    for k, theTest in enumerate(OriginalAlltest):
+      qtablewidgetitem = eval(f"self.ui.tableWidget_{tabName}.item(k, 2)") #pylint: disable=eval-used
+      i_FrameStiffness.testName=theTest
+      if i_FrameStiffness.vendor == indentation.definitions.Vendor.Agilent:
+        i_FrameStiffness.nextAgilentTest(newTest=False)
+        i_FrameStiffness.nextTest(newTest=False)
+      if i_FrameStiffness.vendor == indentation.definitions.Vendor.Micromaterials:
+        i_FrameStiffness.nextMicromaterialsTest(newTest=False)
+        i_FrameStiffness.nextTest(newTest=False)
+      try:
+        indexX = int(qtablewidgetitem.text())
+        i_FrameStiffness.surface['surfaceIdx'].update({theTest:indexX})
+      except:
+        pass
+    i_FrameStiffness.restartFile()
+  # save test 1 and set the data in the load depht curve can be picked
+  i_FrameStiffness.output['ax'] = eval(f"self.static_ax_load_depth_tab_inclusive_frame_stiffness_{tabName}") #pylint: disable=eval-used
+  i_FrameStiffness.output['ax'][0].figure.canvas.mpl_connect("pick_event", self.right_click_set_ContactSurface)
+  exec(f"self.indentation_inLoadDepth_{tabName} = i_FrameStiffness") #pylint: disable=exec-used
+  i_FrameStiffness.output['ax'] = [None, None]
   #calculate FrameStiffness
   ax = eval(f"self.static_ax_{tabName}") # pylint: disable = eval-used
   ax[0].cla()
@@ -134,6 +139,8 @@ def FrameStiffness(self,tabName):
   exec(f"self.ui.lineEdit_FrameCompliance_{tabName}.setText('{frameCompliance:.10f}')") # pylint: disable = exec-used
   exec(f"self.ui.lineEdit_FrameStiffness_{tabName}.setText('{(1/frameCompliance):.10f}')") # pylint: disable = exec-used
   exec(f"self.i_{tabName} = i_FrameStiffness") # pylint: disable = exec-used
+  #open waiting dialog
+  self.show_wait('GUI is plotting results!')
   #listing Test
   tableWidget=eval(f"self.ui.tableWidget_{tabName}") # pylint: disable = eval-used
   tableWidget.setRowCount(len(OriginalAlltest))
@@ -142,18 +149,24 @@ def FrameStiffness(self,tabName):
     qtablewidgetitem=QTableWidgetItem(theTest)
     if theTest in i_FrameStiffness.allTestList:
       try:
-        tableWidget.setItem(k,2,QTableWidgetItem(f"{frameCompliance_collect[k_frameCompliance_collect]:.10f}"))
+        tableWidget.setItem(k,3,QTableWidgetItem(f"{frameCompliance_collect[k_frameCompliance_collect]:.10f}"))
       except:
-        tableWidget.setItem(k,2,QTableWidgetItem('None'))
+        tableWidget.setItem(k,3,QTableWidgetItem('None'))
       k_frameCompliance_collect += 1
       qtablewidgetitem.setCheckState(Qt.Checked)
     else:
-      tableWidget.setItem(k,2,QTableWidgetItem('None'))
+      tableWidget.setItem(k,3,QTableWidgetItem('None'))
       qtablewidgetitem.setCheckState(Qt.Unchecked)
     exec(f"self.ui.tableWidget_{tabName}.setItem({k},0,qtablewidgetitem)") # pylint: disable = exec-used
     if theTest in i_FrameStiffness.output['successTest']:
       tableWidget.setItem(k,1,QTableWidgetItem("Yes"))
     else:
       tableWidget.setItem(k,1,QTableWidgetItem("No"))
+  #select the test 1 and run plot load-depth curve
+  item = tableWidget.item(0, 0)
+  tableWidget.setCurrentItem(item)
+  self.plot_load_depth(tabName=tabName)
   #the End of frame stiffness calibration
   progressBar.setValue(100)
+  #close waiting dialog
+  self.close_wait(info='Calculation of Frame Stiffness is finished!')

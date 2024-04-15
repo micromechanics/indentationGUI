@@ -1,15 +1,13 @@
 """ Using iterative method to calibrate Tip area function (TAF) and frame compliance """
 
-# pylint: disable=line-too-long, invalid-unary-operand-type
+# pylint: disable=line-too-long, invalid-unary-operand-type, missing-param-doc, differing-param-doc, differing-type-doc
 
 import numpy as np
-from scipy import signal, ndimage
-from scipy.ndimage import gaussian_filter1d
 import matplotlib.pyplot as plt
 from micromechanics.indentation.definitions import Method
 from scipy.signal import savgol_filter # pylint: disable=ungrouped-imports
-from scipy.optimize import curve_fit
-from scipy import interpolate
+from scipy.optimize import curve_fit # pylint: disable=ungrouped-imports
+from scipy import interpolate # pylint: disable=ungrouped-imports
 import lmfit
 
 

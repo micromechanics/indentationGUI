@@ -26,6 +26,7 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   relForceRateNoise = self.ui.doubleSpinBox_relForceRateNoise_tabTipRadius.value()
   max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabTipRadius.value()
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabTipRadius.isChecked()
+  UsingSurfaceIndex = self.ui.checkBox_UsingSurfaceIndex_tabTipRadius.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabTipRadius.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabTipRadius.value()
   if DataFilterSize%2==0:
@@ -54,13 +55,20 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
     Surface = {
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
+  #open waiting dialog
+  self.show_wait('GUI is reading the file')
   #Reading Inputs
   self.i_tabTipRadius = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
+  i = self.i_tabTipRadius
+  #initial surfaceIdx
+  i.surface['surfaceIdx']={}
+  #close waiting dialog
+  self.close_wait()
   #show Test method
-  Method=self.i_tabTipRadius.method.value
+  Method=i.method.value
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
   #changing i.allTestList to calculate using the checked tests
-  OriginalAlltest = list(self.i_tabTipRadius.allTestList)
+  OriginalAlltest = list(i.allTestList)
   for k, theTest in enumerate(OriginalAlltest):
     try:
       IsCheck = self.ui.tableWidget_tabTipRadius.item(k,0).checkState()
@@ -68,37 +76,48 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
       pass
     else:
       if IsCheck==Qt.Unchecked:
-        self.i_tabTipRadius.allTestList.remove(theTest)
-  self.i_tabTipRadius.restartFile()
-  #plot load-depth of test 1
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius[0].cla()
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius[1].cla()
-  self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius[0].set_title(f"{self.i_tabTipRadius.testName}")
-  self.i_tabTipRadius.output['ax']=self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius
-  if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
-    correctThermalDrift(indentation=self.i_tabTipRadius, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
-  self.i_tabTipRadius.stiffnessFromUnloading(self.i_tabTipRadius.p, self.i_tabTipRadius.h, plot=True)
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.figure.set_tight_layout(True)
-  self.i_tabTipRadius.output['ax']=None
-  self.static_canvas_load_depth_tab_inclusive_frame_stiffness_tabTipRadius.draw()
+        i.allTestList.remove(theTest)
+  i.restartFile()
+  # searching SurfaceIdx in the table
+  if UsingSurfaceIndex:
+    for k, theTest in enumerate(OriginalAlltest):
+      qtablewidgetitem = self.ui.tableWidget_tabTipRadius.item(k, 3)
+      i.testName=theTest
+      if i.vendor == indentation.definitions.Vendor.Agilent:
+        i.nextAgilentTest(newTest=False)
+        i.nextTest(newTest=False)
+      if i.vendor == indentation.definitions.Vendor.Micromaterials:
+        i.nextMicromaterialsTest(newTest=False)
+        i.nextTest(newTest=False)
+      try:
+        indexX = int(qtablewidgetitem.text())
+        i.surface['surfaceIdx'].update({theTest:indexX})
+      except:
+        pass
+    i.restartFile()
+  # save test 1 and set the data in the load depht curve can be picked
+  i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabTipRadius
+  i.output['ax'][0].figure.canvas.mpl_connect("pick_event", self.right_click_set_ContactSurface)
+  self.indentation_inLoadDepth_tabTipRadius = i
+  i.output['ax'] = [None, None]
   #calculate the pop-in force and the Hertzian contact parameters
-  fPopIn, certainty = self.i_tabTipRadius.popIn(plot=False, correctH=False)
+  fPopIn, certainty = i.popIn(plot=False, correctH=False)
   #calculate the index of pop-in and surface
-  iJump = np.where(self.i_tabTipRadius.p>=fPopIn)[0][0]
-  iMin  = np.where(self.i_tabTipRadius.h>=0)[0][0]
+  iJump = np.where(i.p>=fPopIn)[0][0]
+  iMin  = np.where(i.h>=0)[0][0]
   #plot Hertzian fitting of test 1
   ax1 = self.static_ax_HertzianFitting_tabTipRadius
   ax1.cla()
-  ax1.plot(self.i_tabTipRadius.h,self.i_tabTipRadius.p,marker='.',alpha=0.8)
+  ax1.plot(i.h, i.p,marker='.',alpha=0.8)
   fitElast = [certainty['prefactor'],certainty['h0']]
-  ax1.plot(self.i_tabTipRadius.h[iMin:int(1.2*iJump)], Hertzian_contact_funct(self.i_tabTipRadius.h[iMin:int(1.2*iJump)],*fitElast), color='tab:red', label='fitted loading')
-  ax1.axvline(self.i_tabTipRadius.h[iJump], color='tab:orange', linestyle='dashed', label='Depth at pop-in')
+  ax1.plot(i.h[iMin:int(1.2*iJump)], Hertzian_contact_funct(i.h[iMin:int(1.2*iJump)],*fitElast), color='tab:red', label='fitted loading')
+  ax1.axvline(i.h[iJump], color='tab:orange', linestyle='dashed', label='Depth at pop-in')
   ax1.axhline(fPopIn, color='k', linestyle='dashed', label='Force at pop-in')
-  ax1.set_xlim(left=-0.0001,right=4*self.i_tabTipRadius.h[iJump])
-  ax1.set_ylim(top=1.5*self.i_tabTipRadius.p[iJump], bottom=-0.0001)
+  ax1.set_xlim(left=-0.0001,right=4*i.h[iJump])
+  ax1.set_ylim(top=1.5*i.p[iJump], bottom=-0.0001)
   ax1.set_xlabel('Depth [µm]')
   ax1.set_ylabel('Force [mN]')
-  ax1.set_title(f"{self.i_tabTipRadius.testName}")
+  ax1.set_title(f"{i.testName}")
   ax1.legend()
   self.set_aspectRatio(ax=ax1)
   self.static_canvas_HertzianFitting_tabTipRadius.figure.set_tight_layout(True)
@@ -113,7 +132,6 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   depth_collect=[]
   loadHertzian_collect=[]
   depth = np.arange(0,0.1,0.001)
-  i = self.i_tabTipRadius
   test_Index=1
   ax2 = self.static_ax_CalculatedTipRadius_tabTipRadius #plot the fitted prefactor
   ax2[0].cla()
@@ -146,7 +164,7 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
       if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
         correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   #calculate Tip Radius
-  Er = self.i_tabTipRadius.ReducedModulus(modulus=E_Mat)
+  Er = i.ReducedModulus(modulus=E_Mat)
   self.ui.lineEdit_reducedModulus_tabTipRadius.setText(f"{Er:.10f}")
   prefactor_collect = np.asarray(prefactor_collect)
   TipRadius = ( 3*prefactor_collect/(4*Er) )**2
@@ -154,6 +172,8 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   ax2[0].set_xlabel('Depth [µm]')
   ax2[0].set_ylabel('Load [mN]')
   ax2[0].set_title('the fitted Hertzian Contact Function', fontsize=9)
+  #open waiting dialog
+  self.show_wait('GUI is plotting results!')
   #plot the calculated Tip Radius
   ax2[1].cla()
   ax2[1].plot(test_Index_collect,TipRadius,'o')
@@ -196,6 +216,12 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
     else:
       qtablewidgetitem.setCheckState(Qt.Unchecked)
     self.ui.tableWidget_tabTipRadius.setItem(k,0,qtablewidgetitem)
+  #select the test 1 and run plot load-depth curve
+  item = self.ui.tableWidget_tabTipRadius.item(0, 0)
+  self.ui.tableWidget_tabTipRadius.setCurrentItem(item)
+  self.plot_load_depth(tabName='tabTipRadius')
+  #close waiting dialog
+  self.close_wait(info='Calculation of Tip Radius is finished!')
 
 
 def plot_Hertzian_fitting(self,tabName):

@@ -66,7 +66,7 @@ class data4save:
                     'tableWidget': None,                       #the table listing the tests
                     'comboBox_TipType': 0,                     #the tip type used by the iterative method cacluating TAF
                     'doubleSpinBox_idealRadiusSphere': None,   #the ideal radius of the spherical Tip 
-                    'doubleSpinBox_half_includedAngle_TabTAF':None, # the half included angle of cone
+                    'doubleSpinBox_half_includedAngle':None, # the half included angle of cone
                     'doubleSpinBox_minhc_Tip':None,            #the minimum depth of Ac
                     'doubleSpinBox_maxhc_Tip': None,           #the maximum depth of Ac
                     'checkBox_IfTermsGreaterThanZero': None,   # if the terms of TAF should be greater than Zero, except the fisrt term of the sphere tip
@@ -82,6 +82,7 @@ class data4save:
                     'comboBox_MarkerType': 0,
                     'comboBox_DimensionX': 1,
                     'comboBox_DimensionY': 0,
+                    'checkBox_UsingSurfaceIndex':False,
                   }
     
     self.tabName_list = [
@@ -154,8 +155,12 @@ def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
     Widget.setRowCount(rowCount)
     if 'tabClassification' in tabName:
       Widget.setColumnCount(7)
-    if 'FrameStiffness' in tabName or 'tabTAF' in tabName:
+    elif 'FrameStiffness' in tabName or 'tabTAF' in tabName:
+      Widget.setColumnCount(4)
+    elif tabName == 'tabHE':
       Widget.setColumnCount(3)
+    elif tabName in ['tabTipRadius', 'tabPopIn']:
+      Widget.setColumnCount(4)
     else:
       Widget.setColumnCount(columnCount-1)
     for j in range(columnCount):
@@ -254,7 +259,10 @@ def reload_data_in_one_Tab(win,Tab, tabName):
         if Tab[widget] is not None:
           Widget.setCurrentIndex(Tab[widget])
       elif 'checkBox' in widget:
-        Widget.setChecked(Tab[widget])
+        if Tab[widget] is None:
+          Widget.setChecked(False)
+        else:
+          Widget.setChecked(Tab[widget])
       elif 'progressBar' in widget:
         Widget.setValue(Tab[widget])
       elif 'tableWidget' in widget:

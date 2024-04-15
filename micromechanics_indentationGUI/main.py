@@ -1,8 +1,10 @@
 """ Graphical user interface includes all widgets """
 import sys
-from PySide6.QtGui import QAction, QKeySequence, QShortcut, QIcon # pylint: disable=no-name-in-module
+import os
+import numpy as np
+from PySide6.QtGui import QDesktopServices, QAction, QKeySequence, QShortcut, QIcon # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QFileDialog # pylint: disable=no-name-in-module
-from PySide6.QtCore import Qt, QRectF, QCoreApplication # pylint: disable=no-name-in-module
+from PySide6.QtCore import QUrl, Qt, QRectF, QCoreApplication, QSize # pylint: disable=no-name-in-module
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.figure import Figure
 from .main_window_ui import Ui_MainWindow
@@ -11,6 +13,8 @@ from .DialogSaveAs_ui import Ui_DialogSaveAs
 from .DialogOpen_ui import Ui_DialogOpen
 from .DialogError_ui import Ui_DialogError
 from .DialogWait_ui import Ui_DialogWait
+
+os.environ['PYGOBJECT_DISABLE_CAIRO'] = '1'
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
@@ -21,7 +25,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   from .CalibrateTAF import click_OK_calibration, plot_TAF
   from .Classification import Classification_HE, PlotMappingWithoutClustering, PlotMappingAfterClustering
   from .FrameStiffness import FrameStiffness
-  from .load_depth import plot_load_depth, set_aspectRatio
+  from .load_depth import plot_load_depth, set_aspectRatio, setAsContactSurface, right_click_set_ContactSurface
 
   def __init__(self):
     #global setting
@@ -45,6 +49,14 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     #new
     self.new()
 
+  def get_current_tab_name(self):
+    """ get the name of the current tabWidget """
+    current_widget = self.ui.tabAll.currentWidget()
+    if '0' in current_widget.objectName():
+      current_current_widget = eval(f"self.ui.tabWidget_{current_widget.objectName()[3:-2]}.currentWidget()") #pylint: disable=eval-used
+    else:
+      current_current_widget = current_widget
+    return current_current_widget.objectName()
 
   def new(self):
     """ initial settings """
@@ -58,17 +70,22 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     #clicked.connect in tabTAF
     self.ui.OK_path_tabTAF.clicked.connect(self.click_OK_calibration)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness)
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness)
     self.ui.pushButton_SelectAll_tabTAF.clicked.connect(self.click_pushButton_SelectAll_tabTAF)
+    self.ui.pushButton_SelectTypedTest_tabHE.clicked.connect(self.Select_TypedTest_tabHE)
+    self.ui.pushButton_SelectTypedTest_tabHE_FrameStiffness.clicked.connect(self.Select_TypedTest_tabHE_FrameStiffness)
     self.ui.pushButton_select_tabTAF.clicked.connect(self.selectFile_tabTAF)
     #clicked.connect in tabTipRadius
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabTipRadius_FrameStiffness)
     self.ui.pushButton_Calculate_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabPopIn_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness) # pylint: disable=line-too-long
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness) # pylint: disable=line-too-long
     self.ui.Copy_FrameCompliance_tabTipRadius.clicked.connect(self.Copy_FrameCompliance_tabTipRadius)
     self.ui.Copy_TAF_tabTipRadius_FrameStiffness.clicked.connect(self.Copy_TAF_tabTipRadius_FrameStiffness)
     self.ui.pushButton_Calculate_tabTipRadius.clicked.connect(self.Calculate_TipRadius)
     self.ui.pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius.clicked.connect(self.click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius)
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius)
     self.ui.pushButton_SelectAll_tabTipRadius.clicked.connect(self.click_pushButton_SelectAll_tabTipRadius)
     self.ui.pushButton_SelectAll_tabTipRadius_FrameStiffness.clicked.connect(self.click_pushButton_SelectAll_tabTipRadius_FrameStiffness)
     self.ui.pushButton_select_tabTipRadius.clicked.connect(self.selectFile_tabTipRadius)
@@ -76,7 +93,9 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     #clicked.connect in tabHE
     self.ui.pushButton_Calculate_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_Calculate_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness)
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabHE_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabHE_FrameStiffness)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE)
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabHE.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabHE)
     self.ui.Copy_TAF_tabHE.clicked.connect(self.Copy_TAF)
     self.ui.Copy_FrameCompliance_tabHE.clicked.connect(self.Copy_FrameCompliance_tabHE)
     self.ui.Copy_TAF_tabHE_FrameStiffness.clicked.connect(self.Copy_TAF_tabHE_FrameStiffness)
@@ -88,7 +107,9 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     #clicked.connect in tabPopIn
     self.ui.pushButton_Analyse_tabPopIn.clicked.connect(self.Analyse_PopIn)
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness) # pylint: disable=line-too-long
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabPopIn_FrameStiffness.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabPopIn_FrameStiffness) # pylint: disable=line-too-long
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn.clicked.connect(self.click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn)
+    self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabPopIn.clicked.connect(self.click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabPopIn)
     self.ui.Copy_TipRadius_tabPopIn.clicked.connect(self.Copy_TipRadius)
     self.ui.Copy_FrameCompliance_tabPopIn.clicked.connect(self.Copy_FrameCompliance_tabPopIn)
     self.ui.Copy_TAF_tabPopIn_FrameStiffness.clicked.connect(self.Copy_TAF_tabPopIn_FrameStiffness)
@@ -111,6 +132,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.actionSave.triggered.connect(self.directSave)
     #clicked.connect to DialogOpen
     self.ui.actionLoad.triggered.connect(self.show_DialogOpen)
+    #clicked.connect to Document
+    self.ui.actionDocument.triggered.connect(self.openDocument)
     #initializing variables for collecting analysed results
     self.tabHE_hc_collect=[]
     self.tabHE_Pmax_collect=[]
@@ -122,15 +145,20 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
 
     #graphicsView
     graphicsView_list = [ 'load_depth_tab_inclusive_frame_stiffness_tabTAF',
+                          'load_depth_tab_exclusive_frame_stiffness_tabTAF',
                           'FrameStiffness_tabTAF',                                #Framestiffness_TabTAF
                           'TAF_tabTAF',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness',
+                          'load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness',
                           'tabTipRadius_FrameStiffness',
                           'load_depth_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness',
+                          'load_depth_tab_exclusive_frame_stiffness_tabPopIn_FrameStiffness',
                           'tabPopIn_FrameStiffness',
                           'tabHE_FrameStiffness',
                           'load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness',
+                          'load_depth_tab_exclusive_frame_stiffness_tabHE_FrameStiffness',
                           'load_depth_tab_inclusive_frame_stiffness_tabHE',
+                          'load_depth_tab_exclusive_frame_stiffness_tabHE',
                           'H_hc_tabHE',
                           'H_Index_tabHE',
                           'E_hc_tabHE',
@@ -138,9 +166,11 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
                           'E_Index_tabHE',
                           'HE_tabHE',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius',
+                          'load_depth_tab_exclusive_frame_stiffness_tabTipRadius',
                           'HertzianFitting_tabTipRadius',
                           'CalculatedTipRadius_tabTipRadius',
                           'load_depth_tab_inclusive_frame_stiffness_tabPopIn',
+                          'load_depth_tab_exclusive_frame_stiffness_tabPopIn',
                           'HertzianFitting_tabPopIn',
                           'E_tabPopIn',
                           'maxShearStress_tabPopIn',
@@ -186,6 +216,15 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     window_DialogOpen.ui.lineEdit_OpenFolder.setText(self.Folder_SAVED)
     window_DialogOpen.show()
 
+  def openDocument(self): #pylint: disable=no-self-use
+    """ open document """
+    URL = f"{window.file_path[:-30]}{window.slash}docs{window.slash}build{window.slash}html{window.slash}index.html"
+    print(URL)
+    # Define the URL
+    url = QUrl(URL)
+    # Open the URL in the default web browser
+    QDesktopServices.openUrl(url)
+
 
   def matplotlib_canve_ax(self,graphicsView): #pylint: disable=no-self-use
     """
@@ -210,6 +249,39 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
       ax = eval(f"self.static_ax_{graphicsView}") #pylint: disable=eval-used
     self.canvas_dict.update({f"{graphicsView}":canvas})
     self.ax_dict.update({f"{graphicsView}":ax})
+
+  def Select_TypedTest(self,tabName): #pylint: disable=no-self-use
+    "select the tests for calculation in one tab"
+    tableWidget = eval(f"self.ui.tableWidget_{tabName}") #pylint: disable = eval-used
+    Text = eval(f"self.ui.plainTextEdit_SelectTypedTest_{tabName}.toPlainText()") #pylint: disable=eval-used
+    TypedTests = Text.split(',')
+    for k in range(tableWidget.rowCount()):
+      try:
+        tableWidget.item(k,0).setCheckState(Qt.Unchecked)
+      except:
+        pass
+    for k, theTest in enumerate(TypedTests):
+      if '-' in theTest:
+        startNumber = int(theTest.split('-')[0])-1
+        EndNumber = int(theTest.split('-')[1])-1
+        for j in np.arange(startNumber, EndNumber+1, 1):
+          try:
+            tableWidget.item(j,0).setCheckState(Qt.Checked)
+          except:
+            pass
+      else:
+        try:
+          tableWidget.item(int(theTest)-1,0).setCheckState(Qt.Checked)
+        except:
+          pass
+
+  def Select_TypedTest_tabHE(self):
+    "select the typed tests in tabHE"
+    self.Select_TypedTest(tabName='tabHE')
+
+  def Select_TypedTest_tabHE_FrameStiffness(self):
+    "select the typed tests in tabHE_FrameStiffness"
+    self.Select_TypedTest(tabName='tabHE_FrameStiffness')
 
   def Copy_TAF(self):
     """ get the calibrated tip are function from the tabTAF """
@@ -271,6 +343,9 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """ plot the load-depth curves of the chosen tests """
     self.plot_load_depth(tabName='tabTAF')
 
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness(self):
+    """ plot the load-depth curves of the chosen tests """
+    self.plot_load_depth(tabName='tabTAF', If_inclusive_frameStiffness='exclusive')
 
   def click_pushButton_Calculate_tabTipRadius_FrameStiffness(self):
     """ calculate the frame stiffness in tabTipRadius """
@@ -287,6 +362,11 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.plot_load_depth(tabName='tabTipRadius_FrameStiffness')
 
 
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness(self):
+    """ plot the load-depth curves of the chosen tests in tabTipRadius for calculating frame stiffness"""
+    self.plot_load_depth(tabName='tabTipRadius_FrameStiffness', If_inclusive_frameStiffness='exclusive')
+
+
   def click_pushButton_Calculate_tabHE_FrameStiffness(self):
     """ calculate the frame stiffness in tabHE """
     self.FrameStiffness(tabName='tabHE_FrameStiffness')
@@ -295,6 +375,12 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabHE_FrameStiffness(self):
     """ plot the load-depth curves of the chosen tests in tabHE for calculating frame stiffness """
     self.plot_load_depth(tabName='tabHE_FrameStiffness')
+
+
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabHE_FrameStiffness(self):
+    """ plot the load-depth curves of the chosen tests in tabHE for calculating frame stiffness """
+    self.plot_load_depth(tabName='tabHE_FrameStiffness', If_inclusive_frameStiffness='exclusive')
+
 
   def click_pushButton_Calculate_Hardness_Modulus(self):
     """ calculate the hardness and modulus in tabHE """
@@ -305,14 +391,29 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.plot_load_depth(tabName='tabHE')
 
 
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabHE(self):
+    """ plot the load-depth curves of the chosen tests in tabHE """
+    self.plot_load_depth(tabName='tabHE', If_inclusive_frameStiffness='exclusive')
+
+
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn_FrameStiffness(self):
     """ plot the load-depth curves of the chosen tests in tabPopIn for calculating frame stiffness """
     self.plot_load_depth(tabName='tabPopIn_FrameStiffness')
 
 
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabPopIn_FrameStiffness(self):
+    """ plot the load-depth curves of the chosen tests in tabPopIn for calculating frame stiffness """
+    self.plot_load_depth(tabName='tabPopIn_FrameStiffness', If_inclusive_frameStiffness='exclusive')
+
+
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabPopIn(self):
     """ plot the load-depth curves of the chosen tests in tabPopIn """
     self.plot_load_depth(tabName='tabPopIn')
+
+
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabPopIn(self):
+    """ plot the load-depth curves of the chosen tests in tabPopIn """
+    self.plot_load_depth(tabName='tabPopIn', If_inclusive_frameStiffness='exclusive')
 
 
   def click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabPopIn(self):
@@ -323,6 +424,11 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   def click_pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius(self):
     """ plot the load-depth curves of the chosen tests in tabTipRadius """
     self.plot_load_depth(tabName='tabTipRadius')
+
+
+  def click_pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius(self):
+    """ plot the load-depth curves of the chosen tests in tabTipRadius """
+    self.plot_load_depth(tabName='tabTipRadius', If_inclusive_frameStiffness='exclusive')
 
 
   def click_pushButton_plot_Hertzian_fitting_of_chosen_test_tabTipRadius(self):
@@ -707,7 +813,12 @@ def main():
   window = MainWindow()
   window.setWindowTitle("GUI for micromechanics.indentation")
   logo_icon = QIcon()
-  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo.png")
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo.png", QSize(1000,1000))
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo_16x16.png", QSize(16,16))
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo_24x24.png", QSize(24,24))
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo_32x32.png", QSize(32,32))
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo_48x48.png", QSize(48,48))
+  logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo_256x256.png", QSize(256,256))
   window.setWindowIcon(logo_icon)
   window.show()
   window.activateWindow()

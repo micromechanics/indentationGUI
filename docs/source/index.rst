@@ -1,19 +1,20 @@
-Welcome to micromechanics indentationGUI documentation
+Micromechanics indentationGUI documentation
 ******************************************************
 
 This GUI allows ...
 
-
 Tutorials
 =========
-
 .. toctree::
    :maxdepth: 1
 
+   Tutorial1
 
-Indices and tables
-==================
+Frequently asked questions
+==========================
+.. toctree::
+   :maxdepth: 1
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   FAQ1
+   FAQ2
+   FAQ3

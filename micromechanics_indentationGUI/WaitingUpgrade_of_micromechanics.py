@@ -103,6 +103,8 @@ class IndentationXXX(indentation.Indentation):
     if self.testName in self.surface['surfaceIdx']:
       surface = self.surface['surfaceIdx'][self.testName]
       self.h -= self.h[surface]  #only change surface, not force
+      self.p -= self.p[surface]  #!!!!!:Different from micromechanics: change load
+      self.identifyLoadHoldUnload() #!!!!!:Different from micromechanics: moved from nextAgilentTest
     else:
       found = False
       if 'load' in self.surface:
@@ -344,7 +346,8 @@ class IndentationXXX(indentation.Indentation):
       except:
         pass #do nothing;
     #read sheet of 'Results' #!!!!!!
-    self.code_Results = {"X_Position": "X_Position", "Y_Position": "Y_Position"} #!!!!!! #pylint:disable=attribute-defined-outside-init
+    self.code_Results = {"X_Position": "X_Position", "X": "X_Position",\
+                         "Y_Position": "Y_Position", "Y": "Y_Position"} #!!!!!! #pylint:disable=attribute-defined-outside-init
     self.workbook_Results = None #!!!!!!#pylint:disable=attribute-defined-outside-init
     self.X_Position=None #!!!!!!#pylint:disable=attribute-defined-outside-init
     self.Y_Position=None #!!!!!!#pylint:disable=attribute-defined-outside-init
@@ -599,6 +602,7 @@ class IndentationXXX(indentation.Indentation):
       print("Number of unloading segments:"+str(len(self.iLHU))+"  Method:"+str(self.method))
     stiffness, mask, opt, powerlawFit = [], None, None, []
     validMask = np.zeros_like(p, dtype=bool)
+    ax = None
     if plot:
       if self.output['ax'] is not None:
         ax  = self.output['ax'][0]
@@ -607,7 +611,7 @@ class IndentationXXX(indentation.Indentation):
         ax_ = plt.subplots(2,1,sharex=True, gridspec_kw={'hspace':0})
         ax  = ax_[0]
         ax2 = ax_[1]
-      ax.plot(h,p, '-ok', markersize=3, linewidth=1, label='data') #!!!!!!
+      ax.plot(h,p, '-ok', markersize=3, linewidth=1, label='data', picker=True) #!!!!!!
     for cycleNum, cycle in enumerate(self.iLHU):
       if win: #!!!!!!
         try: #!!!!!!
