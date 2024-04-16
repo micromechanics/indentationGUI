@@ -218,9 +218,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
 
   def openDocument(self): #pylint: disable=no-self-use
     """ open document """
-    URL = f"{window.file_path[:-30]}{window.slash}docs{window.slash}build{window.slash}html{window.slash}index.html"
-    print(URL)
     # Define the URL
+    URL = "https://micromechanics.github.io/indentationGUI/"
     url = QUrl(URL)
     # Open the URL in the default web browser
     QDesktopServices.openUrl(url)
