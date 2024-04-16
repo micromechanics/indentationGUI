@@ -83,6 +83,7 @@ class data4save:
                     'comboBox_DimensionX': 1,
                     'comboBox_DimensionY': 0,
                     'checkBox_UsingSurfaceIndex':False,
+                    'plainTextEdit_SelectTypedTest':None,
                   }
     
     self.tabName_list = [
@@ -218,7 +219,7 @@ def read_data_in_one_Tab(win,Tab,tabName):
     else:
       if 'lineEdit' in widget:
         Tab[widget] = Widget.text()
-      elif 'textEdit' in widget:
+      elif ('textEdit' in widget) or ('plainTextEdit' in widget):
         Tab[widget] = Widget.toPlainText()
       elif ('SpinBox' in widget) or ('spinBox' in widget):
         Tab[widget] = Widget.value()
@@ -248,7 +249,7 @@ def reload_data_in_one_Tab(win,Tab, tabName):
           Widget.setText(' ')
         else:
           Widget.setText(Tab[widget])
-      elif 'textEdit' in widget:
+      elif ('textEdit' in widget) or ('plainTextEdit' in widget):
         if Tab[widget]=='':
           Widget.setPlainText(' ')
         else:
