@@ -1,3 +1,5 @@
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
+
 """ Graphical user interface to calibrate tip area function """
 import numpy as np
 from micromechanics import indentation

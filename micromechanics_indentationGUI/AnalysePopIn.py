@@ -1,3 +1,4 @@
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
 """ Graphical user interface calculate tip radius """
 import numpy as np
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module

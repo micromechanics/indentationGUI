@@ -1,6 +1,7 @@
 """ Graphical user interface to calculate the frame stiffness """
 
 #pylint: disable= unsubscriptable-object
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
 
 from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module

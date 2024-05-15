@@ -1,3 +1,5 @@
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
+
 """ Graphical user interface includes all widgets """
 import sys
 import os

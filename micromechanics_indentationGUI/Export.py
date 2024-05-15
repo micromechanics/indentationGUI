@@ -1,3 +1,5 @@
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
+
 """ Graphical user interface to export results """
 from pandas import ExcelWriter, DataFrame
 import numpy as np

@@ -1,6 +1,7 @@
 """ Module temporarily used to replace the corresponding Module in micromechanics waited to be upgraded """
 
 #pylint: disable=line-too-long, unsubscriptable-object, invalid-unary-operand-type, access-member-before-definition, attribute-defined-outside-init
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
 
 import math, traceback, io
 from zipfile import ZipFile

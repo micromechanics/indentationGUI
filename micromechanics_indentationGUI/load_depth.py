@@ -1,3 +1,5 @@
+#pylint: disable=possibly-used-before-assignment, used-before-assignment
+
 """ Graphical user interface to plot load-depth curves """
 from micromechanics import indentation
 import numpy as np

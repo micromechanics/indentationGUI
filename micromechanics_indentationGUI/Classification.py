@@ -1,3 +1,4 @@
+#pylint: disable=unsubscriptable-object
 """ Graphical user interface to classify the tests """
 import pandas as pd
 import numpy as np
