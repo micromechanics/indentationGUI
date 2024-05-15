@@ -84,6 +84,7 @@ class data4save:
                     'comboBox_DimensionY': 0,
                     'checkBox_UsingSurfaceIndex':False,
                     'plainTextEdit_SelectTypedTest':None,
+                    'checkBox_UsingAreaPileUp': None,
                   }
     
     self.tabName_list = [
@@ -159,7 +160,7 @@ def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
     elif 'FrameStiffness' in tabName or 'tabTAF' in tabName:
       Widget.setColumnCount(4)
     elif tabName == 'tabHE':
-      Widget.setColumnCount(3)
+      Widget.setColumnCount(4)
     elif tabName in ['tabTipRadius', 'tabPopIn']:
       Widget.setColumnCount(4)
     else:
@@ -303,7 +304,7 @@ def SAVE(self, win):
     showPath = FilePath
   else:
     showPath = FilePath[:50] + '... ...' + win.slash + FilePath.split(win.slash)[-1]
-  win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at {data.data_time}] - {showPath}")
+  win.setWindowTitle(f"indentationGUI - [saved at {data.data_time}] - {showPath}")
 
 
 def LOAD(self, win):
@@ -343,7 +344,7 @@ def LOAD(self, win):
   else:
     showPath = FilePath[:50] + '... ...' + win.slash + FilePath.split(win.slash)[-1]
   try:
-    win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at {data.data_time}] - {showPath}")
+    win.setWindowTitle(f"indentationGUI - [saved at {data.data_time}] - {showPath}")
   except:
-    win.setWindowTitle(f"GUI for micromechanics.indentation - [saved at unkown time] - {showPath}")
+    win.setWindowTitle(f"indentationGUI - [saved at unkown time] - {showPath}")
 

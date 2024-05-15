@@ -24,6 +24,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   max_size_fluctuation = self.ui.spinBox_max_size_fluctuation_tabHE.value()
   UsingRate2findSurface = self.ui.checkBox_UsingRate2findSurface_tabHE.isChecked()
   UsingSurfaceIndex = self.ui.checkBox_UsingSurfaceIndex_tabHE.isChecked()
+  UsingAreaPileUp = self.ui.checkBox_UsingAreaPileUp_tabHE.isChecked()
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabHE.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabHE.value()
   DecreaseDataDensity = self.ui.spinBox_DecreaseDataDensity_tabHE.value()
@@ -66,6 +67,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.i_tabHE = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   #initial surfaceIdx
   self.i_tabHE.surface['surfaceIdx']={}
+  #initial AreaPileUp
+  self.i_tabHE.AreaPileUp_collect={}
   #close waiting dialog
   self.close_wait()
   i = self.i_tabHE
@@ -90,22 +93,31 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       if IsCheck==Qt.Unchecked:
         self.i_tabHE.allTestList.remove(theTest)
   self.i_tabHE.restartFile()
-  # searching SurfaceIdx in the table
-  if UsingSurfaceIndex:
+  # searching SurfaceIdx, AreaPileUp in the table
+  if UsingSurfaceIndex or UsingAreaPileUp:
     for k, theTest in enumerate(OriginalAlltest):
-      qtablewidgetitem = self.ui.tableWidget_tabHE.item(k, 2)
-      self.i_tabHE.testName=theTest
-      if self.i_tabHE.vendor == indentation.definitions.Vendor.Agilent:
-        self.i_tabHE.nextAgilentTest(newTest=False)
-        self.i_tabHE.nextTest(newTest=False)
-      if self.i_tabHE.vendor == indentation.definitions.Vendor.Micromaterials:
-        self.i_tabHE.nextMicromaterialsTest(newTest=False)
-        self.i_tabHE.nextTest(newTest=False)
-      try:
-        indexX = int(qtablewidgetitem.text())
-        self.i_tabHE.surface['surfaceIdx'].update({theTest:indexX})
-      except:
-        pass
+      if UsingSurfaceIndex:
+        qtablewidgetitem = self.ui.tableWidget_tabHE.item(k, 2)
+        self.i_tabHE.testName=theTest
+        if self.i_tabHE.vendor == indentation.definitions.Vendor.Agilent:
+          self.i_tabHE.nextAgilentTest(newTest=False)
+          self.i_tabHE.nextTest(newTest=False)
+        if self.i_tabHE.vendor == indentation.definitions.Vendor.Micromaterials:
+          self.i_tabHE.nextMicromaterialsTest(newTest=False)
+          self.i_tabHE.nextTest(newTest=False)
+        try:
+          indexX = int(qtablewidgetitem.text())
+          self.i_tabHE.surface['surfaceIdx'].update({theTest:indexX})
+        except:
+          pass
+      if UsingAreaPileUp:
+        qtablewidgetitem = self.ui.tableWidget_tabHE.item(k, 3)
+        self.i_tabHE.testName=theTest
+        try:
+          AreaPileUp = float(qtablewidgetitem.text())
+          self.i_tabHE.AreaPileUp_collect.update({theTest:AreaPileUp})
+        except:
+          pass
     self.i_tabHE.restartFile()
   # save test 1 and set the data in the load depht curve can be picked
   i.output['ax'] = self.static_ax_load_depth_tab_inclusive_frame_stiffness_tabHE
@@ -148,6 +160,9 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
     progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
     progressBar.setValue(progressBar_Value)
     if i.testName not in Notlist:
+      if UsingAreaPileUp and (i.testName in i.AreaPileUp_collect):
+        # correct pile-up
+        i.PileUpCorrection(i.AreaPileUp_collect[i.testName])
       Pmax_collect.append(i.Ac*i.hardness)
       hc_collect.append(i.hc)
       hmax_collect.append(i.h.max())

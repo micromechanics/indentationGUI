@@ -37,6 +37,18 @@ class IndentationXXX(indentation.Indentation):
   """
   from .calibration_iterativeMethod import calibrateStiffness_iterativeMethod, calibrateStiffness_OneIteration, calibrateTAF, oneIteration_TAF_frameCompliance, calibrate_TAF_and_FrameStiffness_iterativeMethod
 
+  def PileUpCorrection(self, AreaPileUp): #!!!!!!
+    """
+    correct the Ac, hardness and reduced modulus, youngs modulus
+    Args:
+      AreaPileUp (float): the pile-up area µm2
+    """
+    A_total = self.Ac + AreaPileUp
+    self.hardness = self.hardness * self.Ac / A_total
+    self.modulusRed = self.modulusRed * np.sqrt(self.Ac)/ np.sqrt(A_total)
+    self.modulus = self.YoungsModulus(self.modulusRed)
+    self.Ac = self.Ac + AreaPileUp
+
   def parameters_for_GUI(self): # !!!!!!
     """
     intinally define parameters for GUI

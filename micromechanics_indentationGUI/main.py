@@ -808,9 +808,9 @@ class DialogOpen(QDialog):
 def main():
   """ Main method and entry point for commands """
   global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, window_DialogError, window_DialogWait #pylint: disable=global-variable-undefined
-  app = QApplication()
+  app = QApplication(sys.argv)
   window = MainWindow()
-  window.setWindowTitle("GUI for micromechanics.indentation")
+  window.setWindowTitle("indentationGUI")
   logo_icon = QIcon()
   logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo.png", QSize(1000,1000))
   logo_icon.addFile(f"{window.file_path}{window.slash}pic{window.slash}logo_16x16.png", QSize(16,16))
