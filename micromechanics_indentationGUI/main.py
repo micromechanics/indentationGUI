@@ -14,7 +14,9 @@ from .DialogExport_ui import Ui_DialogExport
 from .DialogSaveAs_ui import Ui_DialogSaveAs
 from .DialogOpen_ui import Ui_DialogOpen
 from .DialogError_ui import Ui_DialogError
+from .DialogAbout_ui import Ui_DialogAbout
 from .DialogWait_ui import Ui_DialogWait
+from .__init__ import __version__
 
 os.environ['PYGOBJECT_DISABLE_CAIRO'] = '1'
 
@@ -134,6 +136,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.actionSave.triggered.connect(self.directSave)
     #clicked.connect to DialogOpen
     self.ui.actionLoad.triggered.connect(self.show_DialogOpen)
+    #clicked.connect to DialogAbout
+    self.ui.actionAbout.triggered.connect(self.show_DialogAbout)
     #clicked.connect to Document
     self.ui.actionDocument.triggered.connect(self.openDocument)
     #initializing variables for collecting analysed results
@@ -217,6 +221,13 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     window_DialogOpen.ui.lineEdit_OpenFileName.setText(self.FileName_SAVED)
     window_DialogOpen.ui.lineEdit_OpenFolder.setText(self.Folder_SAVED)
     window_DialogOpen.show()
+
+  def show_DialogAbout(self): #pylint: disable=no-self-use
+    """ showing dialog window for About """
+    if window_DialogAbout.isVisible():
+      window_DialogAbout.close()
+    window_DialogAbout.print_about(f"Version is {__version__}")
+    window_DialogAbout.show()
 
   def openDocument(self): #pylint: disable=no-self-use
     """ open document """
@@ -604,6 +615,11 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     window_DialogError.print_error(message, suggestion)
     window_DialogError.show()
 
+  def show_About(self, message): #pylint: disable=no-self-use
+    """ show the dialog showing About """
+    window_DialogError.print_error(message)
+    window_DialogError.show()
+
   def show_wait(self, info=' '): #pylint: disable=no-self-use
     """ show the dialog showing waiting info """
     window_DialogWait.setWindowTitle('Waiting ... ... :)  '+info)
@@ -706,6 +722,15 @@ class DialogError(QDialog):
     self.ui.textBrowser_Error.setText(error_message)
     self.ui.textBrowser_Suggestion.setText(suggestion)
 
+class DialogAbout(QDialog):
+  """ Graphical user interface of Dialog used to show About """
+  def __init__(self, parent = None):
+    super().__init__()
+    self.ui = Ui_DialogAbout()
+    self.ui.setupUi(self)
+  def print_about(self, message):
+    """ writing about message  """
+    self.ui.textBrowser_About.setText(message)
 
 class DialogSaveAs(QDialog):
   """ Graphical user interface of Dialog used to save file """
@@ -809,7 +834,7 @@ class DialogOpen(QDialog):
 ## Main function
 def main():
   """ Main method and entry point for commands """
-  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, window_DialogError, window_DialogWait #pylint: disable=global-variable-undefined
+  global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, window_DialogError, window_DialogWait, window_DialogAbout #pylint: disable=global-variable-undefined
   app = QApplication(sys.argv)
   window = MainWindow()
   window.setWindowTitle("indentationGUI")
@@ -834,6 +859,8 @@ def main():
   window_DialogError.setWindowIcon(logo_icon)
   window_DialogWait = DialogWait()
   window_DialogWait.setWindowIcon(logo_icon)
+  window_DialogAbout = DialogAbout()
+  window_DialogAbout.setWindowIcon(logo_icon)
   #open or create Txt-file of OpenRecent
   try:
     file_RecentFiles = open(f"{window.file_path}{window.slash}RecentFiles.txt", 'r', encoding="utf-8") #pylint: disable=consider-using-with

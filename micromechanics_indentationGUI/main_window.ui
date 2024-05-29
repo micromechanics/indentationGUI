@@ -577,7 +577,7 @@ Compliance
               <item row="1" column="0">
                <widget class="QTabWidget" name="tabWidget_3">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="tab_5">
                  <attribute name="title">
@@ -1652,7 +1652,7 @@ Compliance
                 </sizepolicy>
                </property>
                <property name="value">
-                <number>1</number>
+                <number>11</number>
                </property>
               </widget>
              </item>
@@ -1845,13 +1845,13 @@ Compliance
             </property>
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>230</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>200</width>
+              <width>230</width>
               <height>100</height>
              </size>
             </property>
@@ -1863,6 +1863,11 @@ Compliance
               <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabTAF">
                <property name="enabled">
                 <bool>true</bool>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                </font>
                </property>
                <property name="text">
                 <string>Use the collection during unloading</string>
@@ -1885,13 +1890,13 @@ Compliance
             </property>
             <property name="minimumSize">
              <size>
-              <width>224</width>
+              <width>230</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>224</width>
+              <width>230</width>
               <height>92</height>
              </size>
             </property>
@@ -2089,7 +2094,7 @@ Compliance
                 <double>0.010000000000000</double>
                </property>
                <property name="value">
-                <double>0.980000000000000</double>
+                <double>1.050000000000000</double>
                </property>
               </widget>
              </item>
@@ -2195,7 +2200,7 @@ Frame Compliance and TAF</string>
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tabTipRadius_FrameStiffness">
              <attribute name="title">
@@ -2273,7 +2278,7 @@ Frame Compliance and TAF</string>
                     </sizepolicy>
                    </property>
                    <property name="value">
-                    <number>1</number>
+                    <number>11</number>
                    </property>
                   </widget>
                  </item>
@@ -3331,7 +3336,7 @@ crosses</string>
                     <double>0.010000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.980000000000000</double>
+                    <double>1.050000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -4465,6 +4470,9 @@ Compliance
                    <property name="text">
                     <string>Use the collection during unloading</string>
                    </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -4627,7 +4635,7 @@ crosses</string>
                     <double>0.010000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.980000000000000</double>
+                    <double>1.050000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -5047,7 +5055,7 @@ Index</string>
                     <double>0.010000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.980000000000000</double>
+                    <double>1.050000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -5177,7 +5185,7 @@ Index</string>
                     </sizepolicy>
                    </property>
                    <property name="value">
-                    <number>1</number>
+                    <number>11</number>
                    </property>
                   </widget>
                  </item>
@@ -6089,7 +6097,7 @@ crosses</string>
                   <item row="0" column="0">
                    <widget class="QTabWidget" name="tabWidget_6">
                     <property name="currentIndex">
-                     <number>1</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_17">
                      <attribute name="title">
@@ -6332,7 +6340,7 @@ crosses</string>
                   <item row="0" column="0">
                    <widget class="QTabWidget" name="tabwidget">
                     <property name="currentIndex">
-                     <number>1</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_21">
                      <attribute name="title">
@@ -6615,7 +6623,7 @@ crosses</string>
                     <double>0.010000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.980000000000000</double>
+                    <double>1.050000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -7204,7 +7212,7 @@ crosses</string>
                     </sizepolicy>
                    </property>
                    <property name="value">
-                    <number>1</number>
+                    <number>11</number>
                    </property>
                   </widget>
                  </item>
@@ -7718,6 +7726,9 @@ crosses</string>
                    </property>
                    <property name="text">
                     <string>Use collection at end of unloading</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -8902,7 +8913,7 @@ Density (only for Plotting)</string>
                     </sizepolicy>
                    </property>
                    <property name="value">
-                    <number>1</number>
+                    <number>11</number>
                    </property>
                   </widget>
                  </item>
@@ -9124,7 +9135,7 @@ Density (only for Plotting)</string>
                     <double>0.010000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.980000000000000</double>
+                    <double>1.050000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -10208,6 +10219,9 @@ Compliance
                    <property name="text">
                     <string>Use the collection during unloading</string>
                    </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -10569,7 +10583,7 @@ Index</string>
                     <double>0.010000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.980000000000000</double>
+                    <double>1.050000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -10976,6 +10990,7 @@ Index</string>
      <string>Help</string>
     </property>
     <addaction name="actionDocument"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuData"/>
    <addaction name="menuDocument"/>
@@ -11045,6 +11060,11 @@ Index</string>
   <action name="actionDocument">
    <property name="text">
     <string>Document</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

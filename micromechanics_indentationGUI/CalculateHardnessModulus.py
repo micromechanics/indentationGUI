@@ -4,7 +4,6 @@ from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from micromechanics import indentation
 from micromechanics.indentation.definitions import Vendor
-from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 from .load_depth import pick, right_click_set_ContactSurface
 
@@ -47,7 +46,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
               'unloadPMax':unloaPMax,        # upper end of fitting domain of unloading stiffness: Vendor-specific change
               'unloadPMin':unloaPMin,         # lower end of fitting domain of unloading stiffness: Vendor-specific change
               'relForceRateNoise':relForceRateNoise, # threshold of dp/dt use to identify start of loading: Vendor-specific change
-              'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+              'maxSizeFluctuations': max_size_fluctuation, # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+              'driftRate': 0
               }
   def guiProgressBar(value, location):
     if location=='convert':
@@ -75,6 +75,15 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   #show Test method
   Method = i.method.value
   self.ui.comboBox_method_tabHE.setCurrentIndex(Method-1)
+  #setting to correct thermal drift
+  try:
+    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked()
+  except:
+    correctDrift = False
+  if correctDrift:
+    i.model['driftRate'] = True
+  else:
+    i.model['driftRate'] = 0
   #show Equipment
   try:
     Equipment = i.vendor.value
@@ -212,19 +221,18 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       if not i.testList:
         break
     i.nextTest()
-    if self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked():
-      correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
+
   ax_H_hc.axvline(min_hc4mean,color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
   ax_E_hc.axvline(min_hc4mean,color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
   if np.max(hc_collect[0])*1.1 > max_hc4mean:
     ax_H_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
     ax_E_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
-  # show error if the calculated hc of some test is not in the selected hc range for calculating the mean values of H and E
-  if True in np.isnan(Hmean_collect):
-    suggestion = 'There is Nan in H or E list. Please try to decrease min. (or max.) hc' #pylint: disable=anomalous-backslash-in-string
-    self.show_error(suggestion)
-  ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*2,np.mean(Hmean_collect)+np.mean(Hmean_collect)*2)
-  ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*2,np.mean(Emean_collect)+np.mean(Emean_collect)*2)
+  try:
+    ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*2,np.mean(Hmean_collect)+np.mean(Hmean_collect)*2)
+    ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*2,np.mean(Emean_collect)+np.mean(Emean_collect)*2)
+  except Exception as e: #pylint: disable=broad-except
+    suggestion = '1. Decrease "min. hc" \n 2. Increase "min. hc" \n ' #pylint: disable=anomalous-backslash-in-string
+    self.show_error(str(e),suggestion)
   if len(H_collect)<10:
     ax_H_hc.legend()
     ax_E_hc.legend()
@@ -262,6 +270,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       self.ui.tableWidget_tabHE.setItem(k,1,QTableWidgetItem("Yes"))
     else:
       self.ui.tableWidget_tabHE.setItem(k,1,QTableWidgetItem("No"))
+  i.model['driftRate'] = False   #reset
   #open waiting dialog
   self.show_wait('GUI is plotting results!')
   #plotting hardness-Indent's Nummber and young's modulus-Indent's Nummber
@@ -317,6 +326,6 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   #select the test 1 and run plot load-depth curve
   item = self.ui.tableWidget_tabHE.item(0, 0)
   self.ui.tableWidget_tabHE.setCurrentItem(item)
-  self.plot_load_depth(tabName='tabHE')
+  self.plot_load_depth(tabName='tabHE', SimplePlot=True)
   #close waiting dialog
   self.close_wait(info='Calculation of Hardness and Modulus is finished!')

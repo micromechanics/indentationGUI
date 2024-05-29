@@ -60,6 +60,8 @@ class Ui_MainWindow(object):
         self.actionAAA.setObjectName(u"actionAAA")
         self.actionDocument = QAction(MainWindow)
         self.actionDocument.setObjectName(u"actionDocument")
+        self.actionAbout = QAction(MainWindow)
+        self.actionAbout.setObjectName(u"actionAbout")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
@@ -880,7 +882,7 @@ class Ui_MainWindow(object):
         self.spinBox_max_size_fluctuation_tabTAF.setObjectName(u"spinBox_max_size_fluctuation_tabTAF")
         sizePolicy2.setHeightForWidth(self.spinBox_max_size_fluctuation_tabTAF.sizePolicy().hasHeightForWidth())
         self.spinBox_max_size_fluctuation_tabTAF.setSizePolicy(sizePolicy2)
-        self.spinBox_max_size_fluctuation_tabTAF.setValue(1)
+        self.spinBox_max_size_fluctuation_tabTAF.setValue(11)
 
         self.gridLayout_9.addWidget(self.spinBox_max_size_fluctuation_tabTAF, 1, 6, 1, 1)
 
@@ -968,13 +970,16 @@ class Ui_MainWindow(object):
         self.groupBox_48.setObjectName(u"groupBox_48")
         sizePolicy1.setHeightForWidth(self.groupBox_48.sizePolicy().hasHeightForWidth())
         self.groupBox_48.setSizePolicy(sizePolicy1)
-        self.groupBox_48.setMinimumSize(QSize(200, 0))
-        self.groupBox_48.setMaximumSize(QSize(200, 100))
+        self.groupBox_48.setMinimumSize(QSize(230, 0))
+        self.groupBox_48.setMaximumSize(QSize(230, 100))
         self.gridLayout_98 = QGridLayout(self.groupBox_48)
         self.gridLayout_98.setObjectName(u"gridLayout_98")
         self.checkBox_UsingDriftUnloading_tabTAF = QCheckBox(self.groupBox_48)
         self.checkBox_UsingDriftUnloading_tabTAF.setObjectName(u"checkBox_UsingDriftUnloading_tabTAF")
         self.checkBox_UsingDriftUnloading_tabTAF.setEnabled(True)
+        font2 = QFont()
+        font2.setPointSize(8)
+        self.checkBox_UsingDriftUnloading_tabTAF.setFont(font2)
         self.checkBox_UsingDriftUnloading_tabTAF.setChecked(True)
 
         self.gridLayout_98.addWidget(self.checkBox_UsingDriftUnloading_tabTAF, 0, 0, 1, 1)
@@ -986,8 +991,8 @@ class Ui_MainWindow(object):
         self.groupBox_6.setObjectName(u"groupBox_6")
         sizePolicy7.setHeightForWidth(self.groupBox_6.sizePolicy().hasHeightForWidth())
         self.groupBox_6.setSizePolicy(sizePolicy7)
-        self.groupBox_6.setMinimumSize(QSize(224, 0))
-        self.groupBox_6.setMaximumSize(QSize(224, 92))
+        self.groupBox_6.setMinimumSize(QSize(230, 0))
+        self.groupBox_6.setMaximumSize(QSize(230, 92))
         self.gridLayout_14 = QGridLayout(self.groupBox_6)
         self.gridLayout_14.setObjectName(u"gridLayout_14")
         self.label_12 = QLabel(self.groupBox_6)
@@ -1088,7 +1093,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabTAF.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabTAF.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabTAF.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabTAF.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabTAF.setValue(1.050000000000000)
 
         self.gridLayout_52.addWidget(self.doubleSpinBox_Start_Pmax_tabTAF, 0, 1, 1, 1)
 
@@ -1174,7 +1179,7 @@ class Ui_MainWindow(object):
         self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setObjectName(u"spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness")
         sizePolicy2.setHeightForWidth(self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy2)
-        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setValue(1)
+        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setValue(11)
 
         self.gridLayout_18.addWidget(self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness, 0, 6, 1, 1)
 
@@ -1680,7 +1685,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setValue(1.050000000000000)
 
         self.gridLayout_100.addWidget(self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
 
@@ -2234,6 +2239,7 @@ class Ui_MainWindow(object):
         self.gridLayout_96.setObjectName(u"gridLayout_96")
         self.checkBox_UsingDriftUnloading_tabTipRadius = QCheckBox(self.groupBox_46)
         self.checkBox_UsingDriftUnloading_tabTipRadius.setObjectName(u"checkBox_UsingDriftUnloading_tabTipRadius")
+        self.checkBox_UsingDriftUnloading_tabTipRadius.setChecked(True)
 
         self.gridLayout_96.addWidget(self.checkBox_UsingDriftUnloading_tabTipRadius, 0, 0, 1, 1)
 
@@ -2314,7 +2320,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabTipRadius.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabTipRadius.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabTipRadius.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabTipRadius.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabTipRadius.setValue(1.050000000000000)
 
         self.gridLayout_99.addWidget(self.doubleSpinBox_Start_Pmax_tabTipRadius, 0, 1, 1, 1)
 
@@ -2510,7 +2516,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabHE_FrameStiffness.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabHE_FrameStiffness.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabHE_FrameStiffness.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabHE_FrameStiffness.setValue(1.050000000000000)
 
         self.gridLayout_101.addWidget(self.doubleSpinBox_Start_Pmax_tabHE_FrameStiffness, 0, 1, 1, 1)
 
@@ -2577,7 +2583,7 @@ class Ui_MainWindow(object):
         self.spinBox_max_size_fluctuation_tabHE_FrameStiffness.setObjectName(u"spinBox_max_size_fluctuation_tabHE_FrameStiffness")
         sizePolicy2.setHeightForWidth(self.spinBox_max_size_fluctuation_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.spinBox_max_size_fluctuation_tabHE_FrameStiffness.setSizePolicy(sizePolicy2)
-        self.spinBox_max_size_fluctuation_tabHE_FrameStiffness.setValue(1)
+        self.spinBox_max_size_fluctuation_tabHE_FrameStiffness.setValue(11)
 
         self.gridLayout_35.addWidget(self.spinBox_max_size_fluctuation_tabHE_FrameStiffness, 1, 5, 1, 1)
 
@@ -3317,7 +3323,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabHE.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabHE.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabHE.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabHE.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabHE.setValue(1.050000000000000)
 
         self.gridLayout_102.addWidget(self.doubleSpinBox_Start_Pmax_tabHE, 0, 1, 1, 1)
 
@@ -3583,7 +3589,7 @@ class Ui_MainWindow(object):
         self.spinBox_max_size_fluctuation_tabHE.setObjectName(u"spinBox_max_size_fluctuation_tabHE")
         sizePolicy2.setHeightForWidth(self.spinBox_max_size_fluctuation_tabHE.sizePolicy().hasHeightForWidth())
         self.spinBox_max_size_fluctuation_tabHE.setSizePolicy(sizePolicy2)
-        self.spinBox_max_size_fluctuation_tabHE.setValue(1)
+        self.spinBox_max_size_fluctuation_tabHE.setValue(11)
 
         self.gridLayout_40.addWidget(self.spinBox_max_size_fluctuation_tabHE, 1, 6, 1, 1)
 
@@ -3818,6 +3824,7 @@ class Ui_MainWindow(object):
         self.checkBox_UsingDriftUnloading_tabHE = QCheckBox(self.groupBox_42)
         self.checkBox_UsingDriftUnloading_tabHE.setObjectName(u"checkBox_UsingDriftUnloading_tabHE")
         self.checkBox_UsingDriftUnloading_tabHE.setFont(font)
+        self.checkBox_UsingDriftUnloading_tabHE.setChecked(True)
 
         self.gridLayout_92.addWidget(self.checkBox_UsingDriftUnloading_tabHE, 0, 0, 1, 1)
 
@@ -4386,7 +4393,7 @@ class Ui_MainWindow(object):
         self.spinBox_max_size_fluctuation_tabPopIn_FrameStiffness.setObjectName(u"spinBox_max_size_fluctuation_tabPopIn_FrameStiffness")
         sizePolicy2.setHeightForWidth(self.spinBox_max_size_fluctuation_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.spinBox_max_size_fluctuation_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy2)
-        self.spinBox_max_size_fluctuation_tabPopIn_FrameStiffness.setValue(1)
+        self.spinBox_max_size_fluctuation_tabPopIn_FrameStiffness.setValue(11)
 
         self.gridLayout_72.addWidget(self.spinBox_max_size_fluctuation_tabPopIn_FrameStiffness, 1, 6, 1, 1)
 
@@ -4492,7 +4499,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabPopIn_FrameStiffness.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabPopIn_FrameStiffness.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabPopIn_FrameStiffness.setValue(1.050000000000000)
 
         self.gridLayout_103.addWidget(self.doubleSpinBox_Start_Pmax_tabPopIn_FrameStiffness, 0, 1, 1, 1)
 
@@ -5038,6 +5045,7 @@ class Ui_MainWindow(object):
         self.gridLayout_94.setObjectName(u"gridLayout_94")
         self.checkBox_UsingDriftUnloading_tabPopIn = QCheckBox(self.groupBox_44)
         self.checkBox_UsingDriftUnloading_tabPopIn.setObjectName(u"checkBox_UsingDriftUnloading_tabPopIn")
+        self.checkBox_UsingDriftUnloading_tabPopIn.setChecked(True)
 
         self.gridLayout_94.addWidget(self.checkBox_UsingDriftUnloading_tabPopIn, 0, 0, 1, 1)
 
@@ -5204,7 +5212,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabPopIn.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabPopIn.setSizePolicy(sizePolicy2)
         self.doubleSpinBox_Start_Pmax_tabPopIn.setSingleStep(0.010000000000000)
-        self.doubleSpinBox_Start_Pmax_tabPopIn.setValue(0.980000000000000)
+        self.doubleSpinBox_Start_Pmax_tabPopIn.setValue(1.050000000000000)
 
         self.gridLayout_104.addWidget(self.doubleSpinBox_Start_Pmax_tabPopIn, 0, 1, 1, 1)
 
@@ -5441,24 +5449,25 @@ class Ui_MainWindow(object):
         self.menuData.addAction(self.actionSaveAs)
         self.menuData.addAction(self.actionExport)
         self.menuDocument.addAction(self.actionDocument)
+        self.menuDocument.addAction(self.actionAbout)
 
         self.retranslateUi(MainWindow)
 
         self.tabAll.setCurrentIndex(2)
         self.graphicsView_tab_TipAreaFunction.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(1)
+        self.tabWidget_3.setCurrentIndex(0)
         self.comboBox_equipment_tabTAF.setCurrentIndex(0)
         self.comboBox_method_tabTAF.setCurrentIndex(0)
-        self.tabWidget_TipRadius.setCurrentIndex(1)
+        self.tabWidget_TipRadius.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_2.setCurrentIndex(0)
         self.tabWidget_4.setCurrentIndex(1)
         self.graphicsView_tab_TipAreaFunction_5.setCurrentIndex(0)
         self.tabWidget_9.setCurrentIndex(0)
         self.tabWidget_HE.setCurrentIndex(1)
         self.graphicsView_tab_TipAreaFunction_3.setCurrentIndex(0)
-        self.tabWidget_6.setCurrentIndex(1)
+        self.tabWidget_6.setCurrentIndex(0)
         self.graphicsView_HE_tabHE_2.setCurrentIndex(0)
-        self.tabwidget.setCurrentIndex(1)
+        self.tabwidget.setCurrentIndex(0)
         self.tabWidget_7.setCurrentIndex(0)
         self.tabWidget_8.setCurrentIndex(1)
         self.tabWidget_PopIn.setCurrentIndex(1)
@@ -5489,6 +5498,7 @@ class Ui_MainWindow(object):
         self.actionRecent1.setText(QCoreApplication.translate("MainWindow", u"Recent1", None))
         self.actionAAA.setText(QCoreApplication.translate("MainWindow", u"AAA", None))
         self.actionDocument.setText(QCoreApplication.translate("MainWindow", u"Document", None))
+        self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
         ___qtablewidgetitem = self.tableWidget_tabTAF.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
         ___qtablewidgetitem1 = self.tableWidget_tabTAF.horizontalHeaderItem(1)

@@ -70,7 +70,8 @@ class IndentationXXX(indentation.Indentation):
       if len(self.slope) == len(self.valid):                            #!!!!!!
         self.slope = 1./(1./self.slope[self.valid]-self.tip.compliance) #!!!!!!
       else:                                                             #!!!!!!
-        self.slope = 1./(1./self.slope-self.tip.compliance)             #!!!!!!
+        self.slope = 1./(1./self.slope[self.t[self.valid] < self.t[self.iLHU[0][1]-10]]-self.tip.compliance) #!!!!!!
+        self.valid = self.valid * (self.t < self.t[self.iLHU[0][1]-10])                                      #!!!!!!
     else:
       #for nonCSM #!!!!!!
       self.slope, self.valid, _, _ , _= self.stiffnessFromUnloading(self.p, self.h)
@@ -303,7 +304,7 @@ class IndentationXXX(indentation.Indentation):
     except:
       print("**ERROR: load-unload-segment not found")
       self.iLHU = [] #pylint:disable=attribute-defined-outside-init
-    if len(self.iLHU)>1:
+    if len(self.iLHU)>1 and self.method!=Method.CSM: #!!!!!!
       self.method=Method.MULTI #pylint:disable=attribute-defined-outside-init
     #drift segments: only add if it makes sense
     try:
@@ -416,7 +417,7 @@ class IndentationXXX(indentation.Indentation):
             else:
               if self.output['verbose']>2:
                 print(f" *** {cell:<30} NOT USED")
-            if "Harmonic" in cell or "Dyn. Frequency" in cell:
+            if "Harmonic" in cell or "Dyn. Frequency" in cell or "STIFFNESS" in cell: #!!!!!!
               self.method = Method.CSM # pylint: disable=attribute-defined-outside-init
           #reset to ensure default values are set
           if "p" not in self.indicies: self.indicies['p']=self.indicies['pRaw']

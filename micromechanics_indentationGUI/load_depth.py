@@ -28,12 +28,13 @@ def set_aspectRatio(event_ax=None,ax=None,ratio=0.618):
   ax.set_aspect(abs((x_right-x_left)/(y_low-y_high))*ratio)
 
 
-def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
+def plot_load_depth(self,tabName,SimplePlot=False,If_inclusive_frameStiffness='inclusive'):
   """
   Graphical user interface to plot the load-depth curves of the chosen tests
 
   Args:
     tabName (string): the name of Tab Widget
+    SimplePlot (bool): if true, this function will only plot the load-depht curve
     If_inclusive_frameStiffness (string): 'inclusive' or 'exclusive'
   """
   self.pars_plot_load_depth ={'plot_multiTest': False}
@@ -52,8 +53,14 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
   #read inputs from GUI
   selectedTests=eval(f"self.ui.tableWidget_{tabName}.selectedItems()") # pylint: disable = eval-used
   if If_inclusive_frameStiffness == 'inclusive':
-    showFindSurface = eval(f"self.ui.checkBox_showFindSurface_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used # showFindSurface verifies plotting dP/dh slope
-    show_iLHU=eval(f"self.ui.checkBox_iLHU_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used  #plot the load-depth curves of the seclected tests
+    if SimplePlot:
+      showDrift = False
+      showFindSurface = False
+      show_iLHU = False
+    else:
+      showDrift = eval(f"self.ui.checkBox_showThermalDrift_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used
+      showFindSurface = eval(f"self.ui.checkBox_showFindSurface_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used # showFindSurface verifies plotting dP/dh slope
+      show_iLHU=eval(f"self.ui.checkBox_iLHU_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used  #plot the load-depth curves of the seclected tests
   elif If_inclusive_frameStiffness == 'exclusive':
     showFindSurface = False
     show_iLHU = False
@@ -61,6 +68,8 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
   UsingRate2findSurface = eval(f"self.ui.checkBox_UsingRate2findSurface_{tabName}.isChecked()") # pylint: disable = eval-used
   Rate2findSurface = eval(f"self.ui.doubleSpinBox_Rate2findSurface_{tabName}.value()") # pylint: disable = eval-used
   DataFilterSize = eval(f"self.ui.spinBox_DataFilterSize_{tabName}.value()") # pylint: disable = eval-used
+  if DataFilterSize%2==0:
+    DataFilterSize+=1
   if UsingRate2findSurface:
     Surface = {"abs(dp/dh)": Rate2findSurface, "median filter": DataFilterSize}
     i.surface.update(Surface)
@@ -100,7 +109,6 @@ def plot_load_depth(self,tabName,If_inclusive_frameStiffness='inclusive'):
       except:
         correctDrift = False
       if correctDrift and (If_inclusive_frameStiffness == 'inclusive'):
-        showDrift = eval(f"self.ui.checkBox_showThermalDrift_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}.isChecked()") # pylint: disable = eval-used
         ax_thermalDrift = False
         if showDrift and not plot_multiTest:
           fig_thermalDrift, ax_thermalDrift = plt.subplots()

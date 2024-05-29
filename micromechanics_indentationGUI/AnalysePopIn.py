@@ -6,7 +6,6 @@ from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-modu
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from micromechanics import indentation
 from micromechanics.indentation.definitions import Vendor
-from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 
 #define the function of Hertzian contact
@@ -57,7 +56,8 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
             'unloadPMax':unloaPMax,        # upper end of fitting domain of unloading stiffness: Vendor-specific change
             'unloadPMin':unloaPMin,         # lower end of fitting domain of unloading stiffness: Vendor-specific change
             'relForceRateNoise':relForceRateNoise, # threshold of dp/dt use to identify start of loading: Vendor-specific change
-            'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+            'maxSizeFluctuations': max_size_fluctuation, # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+            'driftRate': 0
             }
   def guiProgressBar(value, location):
     if location=='convert':
@@ -83,6 +83,15 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   #show Test method
   Method=self.i_tabPopIn.method.value
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
+  #setting to correct thermal drift
+  try:
+    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked()
+  except:
+    correctDrift = False
+  if correctDrift:
+    i.model['driftRate'] = True
+  else:
+    i.model['driftRate'] = 0
   #show Equipment
   Equipment = self.i_tabPopIn.vendor.value
   self.ui.comboBox_equipment_tabHE.setCurrentIndex(Equipment-1)
@@ -180,8 +189,6 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
         if not i.testList:
           break
       i.nextTest()
-      if self.ui.checkBox_UsingDriftUnloading_tabPopIn.isChecked():
-        correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   #calculate Young's Modulus
   prefactor_collect = np.asarray(prefactor_collect)
   Er = prefactor_collect * 3/ (4 * TipRadius**0.5)
@@ -189,6 +196,7 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   #calculate the maxium shear stress
   fPopIn_collect = np.asarray(fPopIn_collect)
   max_shear_Stress = 0.31 * ( 6 * Er**2 * fPopIn_collect / (np.pi**3 * TipRadius**2) )**(1./3.)
+  i.model['driftRate'] = False   #reset
   #open waiting dialog
   self.show_wait('GUI is plotting results!')
   #plot Young's Modulus
@@ -259,6 +267,6 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
   #select the test 1 and run plot load-depth curve
   item = self.ui.tableWidget_tabPopIn.item(0, 0)
   self.ui.tableWidget_tabPopIn.setCurrentItem(item)
-  self.plot_load_depth(tabName='tabPopIn')
+  self.plot_load_depth(tabName='tabPopIn', SimplePlot=True)
   #close waiting dialog
   self.close_wait(info='analyse of pop-in is finished!')

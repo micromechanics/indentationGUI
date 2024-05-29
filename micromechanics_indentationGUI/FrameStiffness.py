@@ -166,7 +166,7 @@ def FrameStiffness(self,tabName):
   #select the test 1 and run plot load-depth curve
   item = tableWidget.item(0, 0)
   tableWidget.setCurrentItem(item)
-  self.plot_load_depth(tabName=tabName)
+  self.plot_load_depth(tabName=tabName, SimplePlot=True)
   #the End of frame stiffness calibration
   progressBar.setValue(100)
   #close waiting dialog

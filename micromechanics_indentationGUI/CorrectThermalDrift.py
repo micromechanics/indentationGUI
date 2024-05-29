@@ -1,18 +1,21 @@
 """ Module to calibrate the thermal drift """
+import copy
 import numpy as np
 from scipy import signal, ndimage
 from scipy.ndimage import gaussian_filter1d
 
-def identifyDrift(indentation):
+def identifyDrift(indentation0):
   """
   identify the segment of thermal drift collection before the complete unloading
 
   Args:
-    indentation (class): defined in micromechanics
+    indentation0 (class): defined in micromechanics
 
   Returns:
     bool: success of identifying the load-hold-unload
   """
+  #create a local variable for indentation0
+  indentation = copy.copy(indentation0)
   #identify point in time, which are too close (~0) to eachother
   gradTime = np.diff(indentation.t)
   maskTooClose = gradTime < np.percentile(gradTime,80)/1.e3

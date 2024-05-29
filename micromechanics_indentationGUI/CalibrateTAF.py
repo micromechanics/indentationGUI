@@ -195,7 +195,7 @@ def click_OK_calibration(self):
   #select the test 1 and run plot load-depth curve
   item = self.ui.tableWidget_tabTAF.item(0, 0)
   self.ui.tableWidget_tabTAF.setCurrentItem(item)
-  self.plot_load_depth(tabName='tabTAF')
+  self.plot_load_depth(tabName='tabTAF',SimplePlot=True)
   #close waiting dialog
   self.close_wait(info='Calculation of Tip Area Function is finished!')
 def plot_TAF(self,hc,Ac):

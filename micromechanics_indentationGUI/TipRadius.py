@@ -7,7 +7,6 @@ from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-modu
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from scipy.optimize import curve_fit
 from .AnalysePopIn import Hertzian_contact_funct
-from .CorrectThermalDrift import correctThermalDrift
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 
 def Calculate_TipRadius(self): #pylint: disable=too-many-locals
@@ -41,7 +40,8 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
             'unloadPMax':unloaPMax,        # upper end of fitting domain of unloading stiffness: Vendor-specific change
             'unloadPMin':unloaPMin,         # lower end of fitting domain of unloading stiffness: Vendor-specific change
             'relForceRateNoise':relForceRateNoise, # threshold of dp/dt use to identify start of loading: Vendor-specific change
-            'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+            'maxSizeFluctuations': max_size_fluctuation, # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
+            'driftRate': 0
             }
   def guiProgressBar(value, location):
     if location=='convert':
@@ -67,6 +67,15 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   #show Test method
   Method=i.method.value
   self.ui.comboBox_method_tabPopIn.setCurrentIndex(Method-1)
+  #setting to correct thermal drift
+  try:
+    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabTAF.isChecked()
+  except:
+    correctDrift = False
+  if correctDrift:
+    i.model['driftRate'] = True
+  else:
+    i.model['driftRate'] = 0
   #changing i.allTestList to calculate using the checked tests
   OriginalAlltest = list(i.allTestList)
   for k, theTest in enumerate(OriginalAlltest):
@@ -161,8 +170,6 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
           break
       test_Index+=1
       i.nextTest()
-      if self.ui.checkBox_UsingDriftUnloading_tabTipRadius.isChecked():
-        correctThermalDrift(indentation=i, reFindSurface=True) #calibrate the thermal drift using the collection during the unloading
   #calculate Tip Radius
   Er = i.ReducedModulus(modulus=E_Mat)
   self.ui.lineEdit_reducedModulus_tabTipRadius.setText(f"{Er:.10f}")
@@ -172,6 +179,7 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   ax2[0].set_xlabel('Depth [µm]')
   ax2[0].set_ylabel('Load [mN]')
   ax2[0].set_title('the fitted Hertzian Contact Function', fontsize=9)
+  i.model['driftRate'] = False   #reset
   #open waiting dialog
   self.show_wait('GUI is plotting results!')
   #plot the calculated Tip Radius
@@ -219,7 +227,7 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
   #select the test 1 and run plot load-depth curve
   item = self.ui.tableWidget_tabTipRadius.item(0, 0)
   self.ui.tableWidget_tabTipRadius.setCurrentItem(item)
-  self.plot_load_depth(tabName='tabTipRadius')
+  self.plot_load_depth(tabName='tabTipRadius', SimplePlot=True)
   #close waiting dialog
   self.close_wait(info='Calculation of Tip Radius is finished!')
 
