@@ -226,7 +226,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """ showing dialog window for About """
     if window_DialogAbout.isVisible():
       window_DialogAbout.close()
-    window_DialogAbout.print_about(f"Version is {__version__}")
+    window_DialogAbout.print_about(f"Version: {__version__}")
     window_DialogAbout.show()
 
   def openDocument(self): #pylint: disable=no-self-use

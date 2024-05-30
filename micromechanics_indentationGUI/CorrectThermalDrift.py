@@ -70,6 +70,8 @@ def identifyDrift(indentation0):
       indentation.iDrift = [unloadIdx[-1]-1,-1]
     else:
       indentation.iDrift = [-1,-1]
+  # pass the iDrift back to the global variable indentation0
+  indentation0.iDrift=indentation.iDrift
   return True
 
 def correctThermalDrift(indentation,ax=False,reFindSurface=False):
