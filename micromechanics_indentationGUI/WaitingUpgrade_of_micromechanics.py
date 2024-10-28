@@ -37,6 +37,7 @@ class IndentationXXX(indentation.Indentation):
 
   """
   from .calibration_iterativeMethod import calibrateStiffness_iterativeMethod, calibrateStiffness_OneIteration, calibrateTAF, oneIteration_TAF_frameCompliance, calibrate_TAF_and_FrameStiffness_iterativeMethod
+  from .DaoMethod import Dao
 
   def PileUpCorrection(self, AreaPileUp): #!!!!!!
     """
@@ -261,9 +262,10 @@ class IndentationXXX(indentation.Indentation):
     if len(unloadIdx) == len(loadIdx)+2 and np.all(unloadIdx[-4:]>loadIdx[-1]):
       #for drift: partial unload-hold-full unload
       unloadIdx = unloadIdx[:-2]
-    while len(unloadIdx) < len(loadIdx) and loadIdx[2]<unloadIdx[0]:
-      #clean loading front
-      loadIdx = loadIdx[2:]
+    if len(loadIdx)>3:
+      while len(unloadIdx) < len(loadIdx) and loadIdx[2]<unloadIdx[0]:
+        #clean loading front
+        loadIdx = loadIdx[2:]
 
     if plot or self.output['plotLoadHoldUnload']:     # verify visually
       ax[1].plot(self.p,'o')
@@ -304,6 +306,8 @@ class IndentationXXX(indentation.Indentation):
     except:
       print("**ERROR: load-unload-segment not found")
       self.iLHU = [] #pylint:disable=attribute-defined-outside-init
+      if self.method==Method.CSM: #!!!!!!
+        self.iLHU = [[0,-1,-1,-1]]
     if len(self.iLHU)>1 and self.method!=Method.CSM: #!!!!!!
       self.method=Method.MULTI #pylint:disable=attribute-defined-outside-init
     #drift segments: only add if it makes sense
@@ -379,9 +383,11 @@ class IndentationXXX(indentation.Indentation):
         self.output['verbose']>0:
       print("*WARNING*: Poisson Ratio different than in file.",self.nuMat,self.metaVendor['Poissons Ratio'])
     tagged = []
-    code = {"Load On Sample":"p", "Force On Surface":"p", "LOAD":"p", "Load":"p"\
-          ,"_Load":"pRaw", "Raw Load":"pRaw","Force":"pRaw"\
-          ,"Displacement Into Surface":"h", "DEPTH":"h", "Depth":"h"\
+    code = {
+          # "Load On Sample":"p", "Force On Surface":"p", "LOAD":"p"\ # !!!!!!
+          # , "Load":"p"\ # !!!!!!
+          "_Load":"pRaw", "Raw Load":"pRaw","Force":"pRaw"\
+          #,"Displacement Into Surface":"h", "DEPTH":"h", "Depth":"h"\ # !!!!!!
           ,"_Displacement":"hRaw", "Raw Displacement":"hRaw","Displacement":"hRaw"\
           ,"Time On Sample":"t", "Time in Contact":"t", "TIME":"t", "Time":"tTotal"\
           ,"Contact Area":"Ac", "Contact Depth":"hc"\
@@ -390,7 +396,7 @@ class IndentationXXX(indentation.Indentation):
           ,"_Frame": "Frame"\
           ,"Support Spring Stiffness":"slopeSupport", "Frame Stiffness": "frameStiffness"\
           ,"Harmonic Stiffness":"slopeInvalid"\
-          ,"Harmonic Contact Stiffness":"slope", "STIFFNESS":"slope","Stiffness":"slope" \
+          ,"Harmonic Contact Stiffness":"slope", "STIFFNESS":"slope","Stiffness":"slope","Static Stiffness":"slope" \
           ,"Stiffness Squared Over Load":"k2p","Dyn. Stiff.^2/Load":"k2p"\
           # ,"Hardness":"hardness", "H_IT Channel":"hardness","HARDNESS":"hardness"\ #!!!!!!
           # ,"Modulus": "modulus", "E_IT Channel": "modulus","MODULUS":"modulus","Reduced Modulus":"modulusRed"\ #!!!!!!
@@ -592,7 +598,8 @@ class IndentationXXX(indentation.Indentation):
     - m:  exponent       (no physical meaning)
     - hf: final depth = depth where force becomes 0
     """
-    value = (p/B)**(1./m) + hf
+    A0 =p/B
+    value = (A0)**(1./m) + hf
     return value
 
 

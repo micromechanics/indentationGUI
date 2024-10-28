@@ -27,10 +27,10 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
       numpy.arary: data as chosen by arguments
   """
   if eTarget:
-    modulusRedGoal = self.ReducedModulus(eTarget, self.nuMat)
-    def func_(x, Cf):
-      B = np.sqrt(np.pi) /(2*modulusRedGoal)
-      return Cf + B*x
+    modulusRedGoal = self.ReducedModulus(eTarget, self.nuMat) #pylint: disable=unused-variable
+    # def func_(x, Cf):
+    #   B = np.sqrt(np.pi) /(2*modulusRedGoal)
+    #   return Cf + B*x
 
   self.restartFile()
   testNameAll=[]
@@ -94,7 +94,7 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
     y = 1./sAll
     mask = hAll > critDepth
     mask = np.logical_and(mask, hAll < critMaxDepth)
-    mask = np.logical_and(mask, pAll>critForce)
+    mask = np.logical_and(mask, pAll > critForce)
     print("number of data-points:", len(x[mask]))
     if len(mask[mask])==0:
       print("ERROR too much filtering, no data left. Decrease critForce and critDepth")
@@ -105,10 +105,13 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
   # fig1.savefig('ERROR.png')
   # param, covM = np.polyfit(x[mask],y[mask],1, cov=True)
   if eTarget:
-    popt, _ = curve_fit(func_, x[mask], y[mask]) #pylint: disable=unbalanced-tuple-unpacking
-    print("fit f(x)=",round(np.sqrt(np.pi) /(2*modulusRedGoal),5),"*x+",round(popt[0],5))
-    frameStiff = 1./popt[0]
-    frameCompliance = popt[0]
+    # popt, _ = curve_fit(func_, x[mask], y[mask], maxfev=1000) #pylint: disable=unbalanced-tuple-unpacking
+    # print("fit f(x)=",round(np.sqrt(np.pi) /(2*modulusRedGoal),5),"*x+",round(popt[0],5))
+    # frameStiff = 1./popt[0]
+    # frameCompliance = popt[0]
+    param, covM = np.polyfit(x[mask],y[mask],1, cov=True) # pylint: disable=unused-variable
+    frameStiff = 1./param[1]
+    frameCompliance = param[1]
   else:
     param, covM = np.polyfit(x[mask],y[mask],1, cov=True) # pylint: disable=unused-variable
     frameStiff = 1./param[1]
@@ -136,8 +139,10 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
     # ax.plot(x[mask], y[mask],   'C0o', markersize=5, label='for fit')
     x_ = np.linspace(0, np.max(x)*1.1, 50)
     if eTarget:
-      y_ = func_(x_, frameCompliance)
-      y_fitted = func_(x[mask], frameCompliance)
+      # y_ = func_(x_, frameCompliance)
+      # y_fitted = func_(x[mask], frameCompliance)
+      y_ = np.polyval(param, x_)
+      y_fitted = np.polyval(param, x[mask])
     else:
       y_ = np.polyval(param, x_)
       y_fitted = np.polyval(param, x[mask])

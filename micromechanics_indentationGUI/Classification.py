@@ -406,7 +406,10 @@ def PlotMappingWithoutClustering(self, plotClustering=False): #pylint:disable=to
       cluster_collect=[]
       for i, _ in enumerate(X_Position):
         # plotCycle(ax=axs[2],x0=X_Position[i],y0=Y_Position[i],radius=hmax[i]*np.tan(65.3/180*np.pi)*2,stepsize=20) #pylint: disable=unnecessary-list-index-lookup
-        index = np.where( (np.absolute((X[:,1]/factor_y)-DimensionYvalue[i])<1.e-5) & (np.absolute(X[:,0]-DimensionXvalue[i])<1.e-5) )
+        index = np.where( (np.absolute((X[:,1]/factor_y)-DimensionYvalue[i])<1.e-5) & (np.absolute(X[:,0]-DimensionXvalue[i])<1.e-5) )[0][0]
+        # print('index', index)
+        # print('int(cluster.labels_[index])',int(cluster.labels_[index]))
+        # print('cluster.labels_[index]',cluster.labels_[index])
         cluster_collect.append(int(cluster.labels_[index])+1)
       #Cluster mapping
       try:
