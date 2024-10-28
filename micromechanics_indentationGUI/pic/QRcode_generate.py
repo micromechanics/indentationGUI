@@ -1,3 +1,5 @@
+""" Generatin QRcode """
+
 #Authors: Chatgpt and weiguang yang
 
 import qrcode
