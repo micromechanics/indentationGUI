@@ -3,6 +3,11 @@
 #pylint: disable=line-too-long, unsubscriptable-object, invalid-unary-operand-type, access-member-before-definition, attribute-defined-outside-init
 #pylint: disable=possibly-used-before-assignment, used-before-assignment
 
+# import warnings
+# from tables import NaturalNameWarning
+# # Suppress all NaturalNameWarning warnings
+# warnings.filterwarnings("ignore", category=NaturalNameWarning)
+
 import math, traceback, io
 from zipfile import ZipFile
 import pandas as pd
@@ -530,7 +535,7 @@ class IndentationXXX(indentation.Indentation):
     if not "k2p" in self.indicies and 'slope' in self.indicies: #pylint: disable=unneeded-not
       self.k2p = self.slope * self.slope / self.p[self.valid] # pylint: disable=attribute-defined-outside-init
     # if ('p' not in self.indicies) and ('pRaw' in self.indicies) and ('slopeSupport' in self.indicies) and ('hRaw' in self.indicies):
-    if ('p' not in self.indicies):
+    if 'p' not in self.indicies:
       Load = self.pRaw - self.slopeSupport * self.hRaw
       self.p = Load
       print('Load was calculated from Force using Spring Stiffness as the function of displacement!')
