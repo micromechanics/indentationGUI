@@ -390,7 +390,7 @@ class IndentationXXX(indentation.Indentation):
     tagged = []
     code = {
           # "Load On Sample":"p", "Force On Surface":"p", "LOAD":"p"\ # !!!!!!
-          "Load":"p"\
+          "Load":"p", "LOAD":"p"\
           ,"Raw Load":"pRaw","Force":"pRaw"\
           #,"Displacement Into Surface":"h", "DEPTH":"h", "Depth":"h"\ # !!!!!!
           ,"_Displacement":"hRaw", "Raw Displacement":"hRaw","Displacement":"hRaw"\
