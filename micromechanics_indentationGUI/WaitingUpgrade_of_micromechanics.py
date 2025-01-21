@@ -385,8 +385,8 @@ class IndentationXXX(indentation.Indentation):
     tagged = []
     code = {
           # "Load On Sample":"p", "Force On Surface":"p", "LOAD":"p"\ # !!!!!!
-          # , "Load":"p"\ # !!!!!!
-          "_Load":"pRaw", "Raw Load":"pRaw","Force":"pRaw"\
+          "Load":"p"\
+          ,"Raw Load":"pRaw","Force":"pRaw"\
           #,"Displacement Into Surface":"h", "DEPTH":"h", "Depth":"h"\ # !!!!!!
           ,"_Displacement":"hRaw", "Raw Displacement":"hRaw","Displacement":"hRaw"\
           ,"Time On Sample":"t", "Time in Contact":"t", "TIME":"t", "Time":"tTotal"\
@@ -394,7 +394,8 @@ class IndentationXXX(indentation.Indentation):
           ,"Harmonic Displacement":"hHarmonic", "Harmonic Load":"pHarmonic","Phase Angle":"phaseAngle"\
           ,"Load vs Disp Slope":"pVsHSlope","d(Force)/d(Disp)":"pVsHSlope", "_Column": "Column"\
           ,"_Frame": "Frame"\
-          ,"Support Spring Stiffness":"slopeSupport", "Frame Stiffness": "frameStiffness"\
+          ,"Support Spring Stiffness":"slopeSupport", "Spring Stiffness":"slopeSupport"\
+          , "Frame Stiffness": "frameStiffness"\
           ,"Harmonic Stiffness":"slopeInvalid"\
           ,"Harmonic Contact Stiffness":"slope", "STIFFNESS":"slope","Stiffness":"slope","Static Stiffness":"slope" \
           ,"Stiffness Squared Over Load":"k2p","Dyn. Stiff.^2/Load":"k2p"\
@@ -426,7 +427,7 @@ class IndentationXXX(indentation.Indentation):
             if "Harmonic" in cell or "Dyn. Frequency" in cell or "STIFFNESS" in cell: #!!!!!!
               self.method = Method.CSM # pylint: disable=attribute-defined-outside-init
           #reset to ensure default values are set
-          if "p" not in self.indicies: self.indicies['p']=self.indicies['pRaw']
+          # if "p" not in self.indicies: self.indicies['p']=self.indicies['pRaw'] #!!!!!! raw force should be calibrated to load using spring stiffness as the function of displacement
           if "h" not in self.indicies: self.indicies['h']=self.indicies['hRaw']
           if "t" not in self.indicies: self.indicies['t']=self.indicies['tTotal']
           #if self.output['verbose']: print("   Found column names: ",sorted(self.indicies))
@@ -435,6 +436,12 @@ class IndentationXXX(indentation.Indentation):
     if "t" not in self.indicies or "p" not in self.indicies or \
       "h" not in self.indicies:
       print("*WARNING*: INDENTATION: Some index is missing (t,p,h) should be there")
+      if "pRaw" in self.indicies: #!!!!!!
+        print ("*WARNING*: INDENTATION: pRaw is used instead of p!") #!!!!!!
+        if "slopeSupport" not in self.indicies: #!!!!!!
+          print ("*WARNING*: INDENTATION: slopeSupport, which is necessary to calculate load, cannot be found!") #!!!!!!
+        if "hRaw" not in self.indicies: #!!!!!!
+          print ("*WARNING*: INDENTATION: hRaw, which is necessary to calculate load, cannot be found!") #!!!!!!
     self.metaUser['measurementType'] = 'MTS, Agilent Indentation XLS'
     #rearrange the testList
     TestNumber_collect=[]
@@ -522,6 +529,11 @@ class IndentationXXX(indentation.Indentation):
     if 'hRaw' in self.indicies        : self.hRaw /= 1.e3  #from nm in um
     if not "k2p" in self.indicies and 'slope' in self.indicies: #pylint: disable=unneeded-not
       self.k2p = self.slope * self.slope / self.p[self.valid] # pylint: disable=attribute-defined-outside-init
+    # if ('p' not in self.indicies) and ('pRaw' in self.indicies) and ('slopeSupport' in self.indicies) and ('hRaw' in self.indicies):
+    if ('p' not in self.indicies):
+      Load = self.pRaw - self.slopeSupport * self.hRaw
+      self.p = Load
+      print('Load was calculated from Force using Spring Stiffness as the function of displacement!')
     return True
 
   def loadMicromaterials(self, fileName):

@@ -210,7 +210,7 @@ def export(self, win):
       for j, _ in enumerate(win.tabHE_testName_collect):
         All_testName_collect.append(win.tabHE_testName_collect[j])
         All_hc_collect.append(win.tabHE_hc_collect[j][-1])
-        All_hmax_collect.append(win.tabHE_hmax_collect[-1])
+        All_hmax_collect.append(win.tabHE_hmax_collect[j])
         All_Pmax_collect.append(win.tabHE_Pmax_collect[j][-1])
         All_Hmean_collect.append(win.tabHE_Hmean_collect[j])
         All_Hstd_collect.append(win.tabHE_Hstd_collect[j])
