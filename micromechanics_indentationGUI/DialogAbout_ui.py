@@ -22,7 +22,7 @@ class Ui_DialogAbout(object):
     def setupUi(self, DialogAbout):
         if not DialogAbout.objectName():
             DialogAbout.setObjectName(u"DialogAbout")
-        DialogAbout.resize(395, 242)
+        DialogAbout.resize(595, 288)
         DialogAbout.setLayoutDirection(Qt.LeftToRight)
         DialogAbout.setAutoFillBackground(False)
         DialogAbout.setInputMethodHints(Qt.ImhNone)

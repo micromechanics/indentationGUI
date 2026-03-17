@@ -432,7 +432,14 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """ showing dialog window for About """
     if window_DialogAbout.isVisible():
       window_DialogAbout.close()
-    window_DialogAbout.print_about(f"Version: {__version__}")
+    file_path = window.file_path
+    slash = window.slash
+    file_path_UpdateNote = fr"{file_path}{slash}UpdateNote.txt"
+    UpdateNote = open(file_path_UpdateNote, "r", encoding="utf-8").read()
+    message_in_about=f"Version: {__version__}\n\n"
+    message_in_about=message_in_about + "====================Update Note======================\n\n"
+    message_in_about=message_in_about + UpdateNote
+    window_DialogAbout.print_about(message_in_about)
     window_DialogAbout.show()
 
   def openDocument(self): #pylint: disable=no-self-use

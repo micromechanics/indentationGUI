@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1550, 927)
+        MainWindow.resize(1473, 927)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -187,7 +187,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon = QIcon.fromTheme(iconThemeName)
         else:
-            icon.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+            icon.addFile(u"../../../../../../../.designer/backup", QSize(), QIcon.Normal, QIcon.Off)
 
         self.pushButton_addFileWindow_tabTAF.setIcon(icon)
 
@@ -239,7 +239,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"../../../../../../../.designer/backup", QSize(), QIcon.Normal, QIcon.Off)
 
         self.pushButton_changeFile_tabTAF.setIcon(icon1)
 
@@ -265,7 +265,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon2 = QIcon.fromTheme(iconThemeName)
         else:
-            icon2.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+            icon2.addFile(u"../../../../../../../.designer/backup", QSize(), QIcon.Normal, QIcon.Off)
 
         self.pushButton_addFile_tabTAF.setIcon(icon2)
 
@@ -318,7 +318,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon3 = QIcon.fromTheme(iconThemeName)
         else:
-            icon3.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+            icon3.addFile(u"../../../../../../../.designer/backup", QSize(), QIcon.Normal, QIcon.Off)
 
         self.pushButton_deleteFile_tabTAF.setIcon(icon3)
 
@@ -1357,7 +1357,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF4_tabTipRadius_FrameStiffness")
         self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_109.addWidget(self.lineEdit_TAF4_tabTipRadius_FrameStiffness, 2, 7, 1, 1)
 
@@ -1381,7 +1381,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy8)
         self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_109.addWidget(self.lineEdit_TAF2_tabTipRadius_FrameStiffness, 2, 3, 1, 1)
 
@@ -1402,7 +1402,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_109.addWidget(self.lineEdit_TAF3_tabTipRadius_FrameStiffness, 2, 5, 1, 1)
 
@@ -1413,7 +1413,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_109.addWidget(self.lineEdit_TAF1_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
 
@@ -1421,7 +1421,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF5_tabTipRadius_FrameStiffness")
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_109.addWidget(self.lineEdit_TAF5_tabTipRadius_FrameStiffness, 2, 9, 1, 1)
 
@@ -6417,7 +6417,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF1_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF1_tabPopIn_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF1_tabPopIn_FrameStiffness.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.lineEdit_TAF1_tabPopIn_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF1_tabPopIn_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_110.addWidget(self.lineEdit_TAF1_tabPopIn_FrameStiffness, 2, 2, 1, 1)
 
@@ -6434,7 +6434,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF2_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy8)
         self.lineEdit_TAF2_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF2_tabPopIn_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF2_tabPopIn_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF2_tabPopIn_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_110.addWidget(self.lineEdit_TAF2_tabPopIn_FrameStiffness, 2, 4, 1, 1)
 
@@ -6466,7 +6466,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setMaximumSize(QSize(80, 16777215))
-        self.lineEdit_TAF3_tabPopIn_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF3_tabPopIn_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_110.addWidget(self.lineEdit_TAF3_tabPopIn_FrameStiffness, 2, 6, 1, 1)
 
@@ -6481,7 +6481,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF4_tabPopIn_FrameStiffness.setObjectName(u"lineEdit_TAF4_tabPopIn_FrameStiffness")
         self.lineEdit_TAF4_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF4_tabPopIn_FrameStiffness.setMaximumSize(QSize(80, 16777215))
-        self.lineEdit_TAF4_tabPopIn_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF4_tabPopIn_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_110.addWidget(self.lineEdit_TAF4_tabPopIn_FrameStiffness, 2, 8, 1, 1)
 
@@ -6496,7 +6496,7 @@ class Ui_MainWindow(object):
         self.lineEdit_TAF5_tabPopIn_FrameStiffness.setObjectName(u"lineEdit_TAF5_tabPopIn_FrameStiffness")
         self.lineEdit_TAF5_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF5_tabPopIn_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF5_tabPopIn_FrameStiffness.setReadOnly(False)
+        self.lineEdit_TAF5_tabPopIn_FrameStiffness.setReadOnly(True)
 
         self.gridLayout_110.addWidget(self.lineEdit_TAF5_tabPopIn_FrameStiffness, 2, 10, 1, 1)
 
@@ -7693,7 +7693,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 1550, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 1473, 22))
         self.menuData = QMenu(self.menuBar)
         self.menuData.setObjectName(u"menuData")
         self.menuOpenRecent = QMenu(self.menuData)
@@ -7732,7 +7732,7 @@ class Ui_MainWindow(object):
         self.tabwidget.setCurrentIndex(0)
         self.tabWidget_7.setCurrentIndex(1)
         self.tabWidget_8.setCurrentIndex(1)
-        self.tabWidget_Creep.setCurrentIndex(0)
+        self.tabWidget_Creep.setCurrentIndex(1)
         self.graphicsView_tab_TipAreaFunction_4.setCurrentIndex(0)
         self.tabWidget_10.setCurrentIndex(1)
         self.graphicsView_tabCreep.setCurrentIndex(1)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1550</width>
+    <width>1473</width>
     <height>927</height>
    </rect>
   </property>
@@ -268,7 +268,7 @@
                </property>
                <property name="icon">
                 <iconset theme="window-new">
-                 <normaloff>.</normaloff>.</iconset>
+                 <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                </property>
               </widget>
              </item>
@@ -378,7 +378,7 @@
                </property>
                <property name="icon">
                 <iconset theme="document-open">
-                 <normaloff>.</normaloff>.</iconset>
+                 <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                </property>
               </widget>
              </item>
@@ -417,7 +417,7 @@
                </property>
                <property name="icon">
                 <iconset theme="document-new">
-                 <normaloff>.</normaloff>.</iconset>
+                 <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                </property>
               </widget>
              </item>
@@ -519,7 +519,7 @@
                </property>
                <property name="icon">
                 <iconset theme="list-remove">
-                 <normaloff>.</normaloff>.</iconset>
+                 <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                </property>
               </widget>
              </item>
@@ -2662,7 +2662,7 @@ Frame Compliance and TAF</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -2716,7 +2716,7 @@ Frame Compliance and TAF</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -2760,7 +2760,7 @@ Frame Compliance and TAF</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -2791,7 +2791,7 @@ Frame Compliance and TAF</string>
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -2813,7 +2813,7 @@ Frame Compliance and TAF</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -5979,7 +5979,7 @@ Index</string>
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                    <property name="shortcut">
                     <string/>
@@ -6005,7 +6005,7 @@ Index</string>
                    </property>
                    <property name="icon">
                     <iconset theme="document-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -6028,7 +6028,7 @@ Index</string>
                    </property>
                    <property name="icon">
                     <iconset theme="document-open">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -6051,7 +6051,7 @@ Index</string>
                    </property>
                    <property name="icon">
                     <iconset theme="list-remove">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -6456,7 +6456,7 @@ Compliance
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -7750,7 +7750,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -7773,7 +7773,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="document-open">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -7796,7 +7796,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="document-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -7819,7 +7819,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="list-remove">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -8359,7 +8359,7 @@ Pile-up
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -8999,7 +8999,7 @@ Pile-up
           <item row="1" column="0">
            <widget class="QTabWidget" name="tabWidget_Creep">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tabHE_FrameStiffness_2">
              <attribute name="title">
@@ -9224,7 +9224,7 @@ Pile-up
                    </property>
                    <property name="icon">
                     <iconset theme="list-remove">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -9247,7 +9247,7 @@ Pile-up
                    </property>
                    <property name="icon">
                     <iconset theme="document-open">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -9270,7 +9270,7 @@ Pile-up
                    </property>
                    <property name="icon">
                     <iconset theme="document-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -9293,7 +9293,7 @@ Pile-up
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -9460,7 +9460,7 @@ Compliance
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -10972,7 +10972,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -11014,7 +11014,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="document-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -11040,7 +11040,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="list-remove">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -11063,7 +11063,7 @@ crosses</string>
                    </property>
                    <property name="icon">
                     <iconset theme="document-open">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -12044,7 +12044,7 @@ Pile-up
                    </property>
                    <property name="icon">
                     <iconset theme="window-new">
-                     <normaloff>.</normaloff>.</iconset>
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
                  </item>
@@ -13213,7 +13213,7 @@ crosses</string>
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -13254,7 +13254,7 @@ crosses</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -13327,7 +13327,7 @@ crosses</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -13362,7 +13362,7 @@ crosses</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -13397,7 +13397,7 @@ crosses</string>
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -15824,7 +15824,7 @@ Index</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1550</width>
+     <width>1473</width>
      <height>22</height>
     </rect>
    </property>
