@@ -9,6 +9,7 @@ def convertXLSXtoHDF5(XLSX_File,progressbar=None):
     XLSX_File (string): the full file path of the xlsx-file
     progressbar (def) : to describe the percent of progress
   """
+  print('XLSX_File!!!!!!!!!!!!!!!',XLSX_File)
   df = pd.ExcelFile(XLSX_File)
   store = pd.HDFStore(f"{XLSX_File[:-5]}.h5", mode='w', complevel=9, complib='zlib')
   print (df.sheet_names)

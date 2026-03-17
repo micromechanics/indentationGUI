@@ -2,17 +2,28 @@
 
 """ Graphical user interface to calibrate tip area function """
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import binned_statistic
 from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
+from .Tools4LoadingData import read_file_list, Convert2inGUI
 
-def click_OK_calibration(self):
+def click_OK_calibration(self): #pylint: disable=too-many-locals
   """ Graphical user interface to calibrate tip area function """
+  #close opened HDF5 file
+  try:
+    self.i_tabTAF.datafile.close()
+  except:
+    pass
+  #
+  errors=""
+  suggestions=""
   #set Progress Bar
   self.ui.progressBar_tabTAF.setValue(0)
-  #get Inputs
-  fileName = self.ui.lineEdit_path_tabTAF.text()
+  #Reading Inputs
+  fileNameList = read_file_list(self.ui.tableWidget_path_tabTAF)
   E_target = self.ui.doubleSpinBox_E_tabTAF.value()
   Poisson = self.ui.doubleSpinBox_Poisson_tabTAF.value()
   E_Tip = self.ui.doubleSpinBox_E_Tip_tabTAF.value()
@@ -66,6 +77,11 @@ def click_OK_calibration(self):
   #open waiting dialog
   self.show_wait('GUI is reading the file')
   #Reading Inputs
+  try:
+    print(fileNameList)
+    fileName = Convert2inGUI(fileNameList)
+  except:
+    pass
   self.i_tabTAF = IndentationXXX(fileName=fileName, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   i = self.i_tabTAF
   i.parameters_for_GUI()
@@ -80,19 +96,34 @@ def click_OK_calibration(self):
   self.ui.comboBox_method_tabTAF.setCurrentIndex(Method-1)
   #setting to correct thermal drift
   try:
-    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabTAF.isChecked()
+    correctDrift_Post = self.ui.checkBox_UsingDriftUnloading_tabTAF.isChecked()
   except:
-    correctDrift = False
-  if correctDrift:
-    i.model['driftRate'] = True
+    correctDrift_Post = False
+  try:
+    correctDrift_Pre = self.ui.checkBox_UsingDriftPre_tabTAF.isChecked()
+  except:
+    correctDrift_Pre = False
+  if correctDrift_Post and correctDrift_Pre:
+    correctDrift = 3
+  elif correctDrift_Post:
+    correctDrift = 1
+  elif correctDrift_Pre:
+    correctDrift = 2
   else:
-    i.model['driftRate'] = 0
+    correctDrift = 0
+  i.model['driftRate'] = correctDrift
+  Range_correctDrift_Post = self.ui.doubleSpinBox_UsingDriftUnloading_tabTAF.value()
+  Range_correctDrift_Pre = self.ui.doubleSpinBox_UsingDriftPre_tabTAF.value()
+  i.model['Range_PostDrift'] = Range_correctDrift_Post
+  i.model['Range_PreDrift'] = Range_correctDrift_Pre
   #changing i.allTestList to calculate using the checked tests
   try:
     OriginalAlltest = list(i.allTestList)
   except Exception as e: #pylint: disable=broad-except
     suggestion = 'Check if the Path is completed. \n A correct example: C:\G200X\\20230101\Example.xlsx' #pylint: disable=anomalous-backslash-in-string
-    self.show_error(str(e), suggestion)
+    errors=f"{errors}\n\n{e}"
+    suggestions=f"{suggestions}\n\n{suggestion}"
+    self.show_error(str(errors), suggestions)
   for k, theTest in enumerate(OriginalAlltest):
     try:
       IsCheck = self.ui.tableWidget_tabTAF.item(k,0).checkState()
@@ -129,8 +160,12 @@ def click_OK_calibration(self):
   i.output['ax'] = self.static_ax_FrameStiffness_tabTAF # ax to plot figure for calculating frame compliance
   i.output['ax'][0].cla()
   i.output['ax'][1].cla()
-  critDepthStiffness=self.ui.doubleSpinBox_critDepthStiffness_tabTAF.value()
-  critForceStiffness=self.ui.doubleSpinBox_critForceStiffness_tabTAF.value()
+  critMinDepthStiffness=self.ui.doubleSpinBox_critDepthStiffness_tabTAF.value()
+  critMaxDepthStiffness=self.ui.doubleSpinBox_critMaxDepthStiffness_tabTAF.value()
+  critDepthStiffness = (critMinDepthStiffness,critMaxDepthStiffness)
+  critMinForceStiffness=self.ui.doubleSpinBox_critForceStiffness_tabTAF.value()
+  critMaxForceStiffness=self.ui.doubleSpinBox_critMaxForceStiffness_tabTAF.value()
+  critForceStiffness = (critMinForceStiffness,critMaxForceStiffness)
   if Index_TipType==0:
     TipType='Berkovich'
   elif Index_TipType==1:
@@ -140,9 +175,22 @@ def click_OK_calibration(self):
   frameCompliance_collect = None
   if Index_CalculationMethod == 0: # assume constant Hardness and Modulus (Eq.(24), Oliver 2004)
     i.restartFile()
-    _, _, frameCompliance_collect = i.calibrateStiffness(critDepth=critDepthStiffness, critForce=critForceStiffness, plotStiffness=False, returnData=True)
-    frameCompliance = i.tip.compliance
-    hc, Ac = i.calibrateTAF(eTarget=E_target, frameCompliance = frameCompliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip, critMaxDepthTip=maxhc_Tip) #pylint: disable=line-too-long
+    try:
+      _, _, frameCompliance_collect = i.calibrateStiffness(critDepths=critDepthStiffness, critForces=critForceStiffness, plotStiffness=False, returnData=True)
+    except Exception as e: #pylint: disable=broad-except
+      suggestion = 'Remove poor-quality data' #pylint: disable=anomalous-backslash-in-string
+      errors=f"{errors}\n\n{e}"
+      suggestions=f"{suggestions}\n\n{suggestion}"
+      self.show_error(str(errors), suggestions)
+    else:
+      frameCompliance = i.tip.compliance
+    try:
+      hc, Ac = i.calibrateTAF(eTarget=E_target, frameCompliance = frameCompliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip, critMaxDepthTip=maxhc_Tip) #pylint: disable=line-too-long
+    except Exception as e: #pylint: disable=broad-except
+      suggestion = 'Remove poor-quality data' #pylint: disable=anomalous-backslash-in-string
+      errors=f"{errors}\n\n{e}"
+      suggestions=f"{suggestions}\n\n{suggestion}"
+      self.show_error(str(errors), suggestions)
   elif Index_CalculationMethod == 1: # assume constant Modulus but neglect Pile-up (Eq.(22), Oliver 2004)
     i.output['ax'] = [None, None]
     #open waiting dialog
@@ -151,7 +199,7 @@ def click_OK_calibration(self):
     #close waiting dialog
     self.close_wait()
     i.output['ax'] = self.static_ax_FrameStiffness_tabTAF
-    i.calibrateStiffness_OneIteration(eTarget=E_target, critDepth=critDepthStiffness, critMaxDepth=maxhc_Tip, critForce=critForceStiffness, plotStiffness=False)
+    i.calibrateStiffness_OneIteration(eTarget=E_target, critDepths=critDepthStiffness, critForces=critForceStiffness, plotStiffness=False)
     hc, Ac = i.calibrateTAF(eTarget=E_target, frameCompliance = i.tip.compliance, TipType=TipType, Radius_Sphere=Radius_Sphere, half_includedAngel_Cone = half_includedAngle_Cone, numPolynomial=number_of_TAFterms, plotTip=False, returnArea=True, critDepthTip=minhc_Tip, critMaxDepthTip=maxhc_Tip) # pylint: disable=line-too-long
   i.model['driftRate'] = False   #reset
   self.static_canvas_FrameStiffness_tabTAF.figure.set_tight_layout(True)
@@ -160,7 +208,13 @@ def click_OK_calibration(self):
   #open waiting dialog
   self.show_wait('GUI is plotting results!')
   #plot the calibrated tip area funcitonS
-  self.plot_TAF(hc,Ac)
+  try:
+    self.plot_TAF(hc,Ac)
+  except Exception as e: #pylint: disable=broad-except
+    suggestion = 'Cannot plot hc-Ac' #pylint: disable=anomalous-backslash-in-string
+    errors=f"{errors}\n\n{e}"
+    suggestions=f"{suggestions}\n\n{suggestion}"
+    self.show_error(str(errors), suggestions)
   #listing Test
   tableWidget=self.ui.tableWidget_tabTAF
   tableWidget.setRowCount(len(OriginalAlltest))
@@ -198,17 +252,25 @@ def click_OK_calibration(self):
   self.plot_load_depth(tabName='tabTAF',SimplePlot=True)
   #close waiting dialog
   self.close_wait(info='Calculation of Tip Area Function is finished!')
-def plot_TAF(self,hc,Ac):
+
+def plot_TAF(self,hc,Ac,UniformDepth=False):
   """
   to plot the calibrated tip area function
 
   Args:
     hc (float): contact depth [µm]
     Ac (float): contact area [µm2]
+    UniformDepth (bool): option to uniform data along the depth
   """
   ax = self.static_ax_TAF_tabTAF
   ax[0].cla()
   ax[1].cla()
+  if UniformDepth:
+    Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=30)
+    Ac_mean = Ac_mean[:-1]
+    bin_edges = bin_edges[:-1]
+    hc_bin_center = 0.5 * (bin_edges[:-1] + bin_edges[1:])
+    ax[0].scatter(hc_bin_center,Ac_mean,color='orange',label='data uniformed along hc')
   ax[0].scatter(hc,Ac,color='b',label='data')
   hc_new = np.arange(0,hc.max()*1.05,hc.max()/100)
   Ac_new = self.i_tabTAF.tip.areaFunction(hc_new)
@@ -231,6 +293,7 @@ def plot_TAF(self,hc,Ac):
   Ac_cal = self.i_tabTAF.tip.areaFunction(hc)
   error = (Ac_cal - Ac) / Ac *100
   ax[1].scatter(hc, error, color='grey',s=5)
+  ax[1].set_ylim((-15,15))
   ax[1].axhline(0, linestyle='dashdot', color='tab:orange')
   ax[1].set_ylabel(r"$\frac{{\rm fitted} A_{c}-{\rm meas.} A_{c}}{{\rm meas.} A_{c}}x100$ [%]")
   ax[1].set_xlabel(r"Contact Depth $h_{c}$ [µm]")

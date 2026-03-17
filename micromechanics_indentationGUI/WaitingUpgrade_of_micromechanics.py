@@ -8,6 +8,7 @@
 # # Suppress all NaturalNameWarning warnings
 # warnings.filterwarnings("ignore", category=NaturalNameWarning)
 
+
 import math, traceback, io
 from zipfile import ZipFile
 import pandas as pd
@@ -39,10 +40,20 @@ class IndentationXXX(indentation.Indentation):
 
   new Funtions:
     -parameters_for_GUI
+    -PileUpCorrection
+    -UpdateVendor
 
   """
   from .calibration_iterativeMethod import calibrateStiffness_iterativeMethod, calibrateStiffness_OneIteration, calibrateTAF, oneIteration_TAF_frameCompliance, calibrate_TAF_and_FrameStiffness_iterativeMethod
   from .DaoMethod import Dao
+  from .AnalyseCreep import CalculateCreepRate
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.Fullslope =[]
+    self.CreepRate = []
+    self.hardness_duringCreep = []
+    self.time_duringCreep = []
 
   def PileUpCorrection(self, AreaPileUp): #!!!!!!
     """
@@ -61,8 +72,15 @@ class IndentationXXX(indentation.Indentation):
     intinally define parameters for GUI
     """
     self.IfTermsGreaterThanZero = 0  #pylint: disable=attribute-defined-outside-init
+    self.iPreDrift = [0,0]  #pylint: disable=attribute-defined-outside-init
+    self.CreepRate = []
+    self.model['Range_PostDrift'] = 70
+    self.model['Range_PreDrift'] = 70
+    self.model['Plot_which_cycle'] = 'All'
+    self.model['Surface_index'] = None
+    self.model['modulusRedGoal'] = None
 
-  def analyse(self):
+  def analyse(self,remove_frameCompliance=True,calculate_HE=True,calculate_CreepRate=False):
     """
     update slopes/stiffness, Young's modulus and hardness after displacement correction by:
 
@@ -71,13 +89,19 @@ class IndentationXXX(indentation.Indentation):
     ONLY DO ONCE AFTER LOADING FILE: if this causes issues introduce flag analysed
       which is toggled during loading and analysing
     """
-    self.h -= self.tip.compliance*self.p
+    print(self.testName, 'in analyse')
+    if remove_frameCompliance:
+      self.h -= self.tip.compliance*self.p
+      if self.method == Method.CSM:
+        self.slope = 1./(1./self.slope - self.tip.compliance)
+        self.Fullslope = 1./(1./self.Fullslope - self.tip.compliance)
     if self.method == Method.CSM:
-      if len(self.slope) == len(self.valid):                            #!!!!!!
-        self.slope = 1./(1./self.slope[self.valid]-self.tip.compliance) #!!!!!!
-      else:                                                             #!!!!!!
-        self.slope = 1./(1./self.slope[self.t[self.valid] < self.t[self.iLHU[0][1]-10]]-self.tip.compliance) #!!!!!!
-        self.valid = self.valid * (self.t < self.t[self.iLHU[0][1]-10])                                      #!!!!!!
+      pass
+      # if len(self.slope) == len(self.valid):                            #!!!!!!
+      #   self.slope = 1./(1./self.slope[self.valid]-self.tip.compliance) #!!!!!!
+      # else:                                                             #!!!!!!
+      #   self.slope = 1./(1./self.slope[self.t[self.valid] < self.t[self.iLHU[0][1]-10]]-self.tip.compliance) #!!!!!!
+      #   self.valid = self.valid * (self.t < self.t[self.iLHU[0][1]-10])                                      #!!!!!!
     else:
       #for nonCSM #!!!!!!
       self.slope, self.valid, _, _ , _= self.stiffnessFromUnloading(self.p, self.h)
@@ -88,10 +112,16 @@ class IndentationXXX(indentation.Indentation):
         print('**WARNING SKIP ANALYSE') #!!!!!!
         print(traceback.format_exc()) #!!!!!!
         return #!!!!!!
-    #Calculate Young's modulus
-    self.calcYoungsModulus()
-    self.calcHardness()
-    self.saveToUserMeta()
+    if calculate_HE:
+      #Calculate Young's modulus and hardness
+      if self.method == Method.CSM:
+        self.valid = self.valid * (self.t < self.t[self.iLHU[0][1]-10])
+        self.slope = self.slope[self.valid]
+      self.calcYoungsModulus()
+      self.calcHardness()
+      self.saveToUserMeta()
+    if calculate_CreepRate:
+      self.CalculateCreepRate()
     return
 
   def nextTest(self, newTest=True, plotSurface=False):
@@ -105,6 +135,7 @@ class IndentationXXX(indentation.Indentation):
     Returns:
       bool: success of going to next sheet
     """
+    print(self.testName, 'in nextTest')
     if newTest:
       if self.vendor == Vendor.Agilent:
         success = self.nextAgilentTest(newTest)
@@ -173,9 +204,13 @@ class IndentationXXX(indentation.Indentation):
           valueB, valueA = signal.butter(*self.surface['butterfilter'])
           thresValues = signal.filtfilt(valueB, valueA, thresValues)
         if 'phase angle' in self.surface:
+          # 'phase angle' was not used !!!
           surface  = np.where(thresValues<thresValue)[0][0]  #pylint:disable=used-before-assignment
         else:
-          surface  = np.where(thresValues>thresValue)[0][0]
+          try:
+            surface  = np.where(thresValues>thresValue)[0][0]
+          except:
+            self.output['successTest'].append(f"-{self.testName}")
         if plotSurface or 'plot' in self.surface:
           _, ax1 = plt.subplots()
           ax1.plot(self.h,thresValues, 'C0o-')
@@ -188,15 +223,17 @@ class IndentationXXX(indentation.Indentation):
           plt.show()
         self.h -= self.h[surface]  #only change surface, not force
         self.p -= self.p[surface]  #!!!!!:Different from micromechanics: change load
-        h = self.h[self.valid] #!!!!!!
-        if self.method==Method.CSM: #!!!!!!
-          self.slope = self.slope[h>=0] #!!!!!!
+        self.model['Surface_index'] = surface # save the index
+        # h = self.h[self.valid] #!!!!!!
+        # if self.method==Method.CSM: #!!!!!!
+        #   self.slope = self.slope[h>=0] #!!!!!!
         self.valid = np.logical_and(self.valid, self.h>=0) #!!!!!
         self.identifyLoadHoldUnload() #!!!!!:Different from micromechanics: moved from nextAgilentTest
     #correct thermal drift !!!!!
     if self.model['driftRate']:
-      correctThermalDrift(indentation=self,reFindSurface=True)
-      self.model['driftRate'] = True
+      correctDrift = self.model['driftRate']
+      correctThermalDrift(indentation=self,reFindSurface=True,correctDrift=correctDrift)
+      self.model['driftRate'] = correctDrift
     return success
 
   def identifyLoadHoldUnload(self,plot=False):
@@ -204,10 +241,10 @@ class IndentationXXX(indentation.Indentation):
     internal method: identify ALL load - hold - unload segments in data
 
     Args:
-        plot (bool): verify by plotting
+      plot (bool): verify by plotting
 
     Returns:
-        bool: success of identifying the load-hold-unload
+      bool: success of identifying the load-hold-unload
     """
     # if self.method==Method.CSM: #!!!!!!
     #   success = self.identifyLoadHoldUnloadCSM() #!!!!!!
@@ -218,7 +255,11 @@ class IndentationXXX(indentation.Indentation):
     else:
       p = gaussian_filter1d(self.p, 5)
     rate = np.gradient(p, self.t)
-    rate /= np.max(rate)
+    # print("p",self.p)
+    # print("t",self.t)
+    # print("Rate",rate)
+    # rate /= np.max(rate)
+    # print("Rate",rate)
     loadMask  = np.logical_and(rate >  self.model['relForceRateNoise'], p>self.model['forceNoise'])
     unloadMask= np.logical_and(rate < -self.model['relForceRateNoise'], p>self.model['forceNoise'])
     if plot:     # verify visually
@@ -246,12 +287,12 @@ class IndentationXXX(indentation.Indentation):
     if plot or self.output['plotLoadHoldUnload']:
       if self.output['ax'] is None:
         fig, ax = plt.subplots(2,1, sharex=True, gridspec_kw={'hspace':0})
-      ax[0].plot(rate)
+      ax[0].plot(self.t, rate)
       ax[0].axhline(0, c='k')
-      x_ = np.arange(len(rate))[loadMask]
+      x_ = self.t[loadMask]
       y_ = np.zeros_like(rate)[loadMask]
       ax[0].plot(x_, y_, 'C1.', label='load mask')
-      x_ = np.arange(len(rate))[unloadMask]
+      x_ = self.t[unloadMask]
       y_ = np.zeros_like(rate)[unloadMask]
       ax[0].plot(x_, y_, 'C2.', label='unload mask')
       ax[0].axhline( self.model['relForceRateNoise'], c='k', linestyle='dashed')
@@ -273,17 +314,17 @@ class IndentationXXX(indentation.Indentation):
         loadIdx = loadIdx[2:]
 
     if plot or self.output['plotLoadHoldUnload']:     # verify visually
-      ax[1].plot(self.p,'o')
-      ax[1].plot(p, 's')
-      ax[1].plot(loadIdx[::2],  self.p[loadIdx[::2]],  'o',label='load',markersize=12)
-      ax[1].plot(loadIdx[1::2], self.p[loadIdx[1::2]], 'o',label='hold',markersize=10)
-      ax[1].plot(unloadIdx[::2],self.p[unloadIdx[::2]],'o',label='unload',markersize=8)
+      ax[1].plot(self.t, self.p,'o')
+      ax[1].plot(self.t, p, 's')
+      ax[1].plot(self.t[loadIdx[::2]],  self.p[loadIdx[::2]],  'o',label='load',markersize=12)
+      ax[1].plot(self.t[loadIdx[1::2]], self.p[loadIdx[1::2]], 'o',label='hold',markersize=10)
+      ax[1].plot(self.t[unloadIdx[::2]],self.p[unloadIdx[::2]],'o',label='unload',markersize=8)
       try:
-        ax[1].plot(unloadIdx[1::2],self.p[unloadIdx[1::2]],'o',label='unload-end',markersize=6)
+        ax[1].plot(self.t[unloadIdx[1::2]],self.p[unloadIdx[1::2]],'o',label='unload-end',markersize=6)
       except IndexError:
         pass
       ax[1].legend(loc=0)
-      ax[1].set_xlabel(r'time incr. []')
+      ax[1].set_xlabel(r'time [s]')
       ax[1].set_ylabel(r'force [$\mathrm{mN}$]')
       fig.tight_layout()
       if self.output['ax'] is None:
@@ -390,11 +431,11 @@ class IndentationXXX(indentation.Indentation):
     tagged = []
     code = {
           # "Load On Sample":"p", "Force On Surface":"p", "LOAD":"p"\ # !!!!!!
-          "Load":"p", "LOAD":"p"\
+          "Load":"p", "LOAD":"p", "Load on Sample":"p"\
           ,"Raw Load":"pRaw","Force":"pRaw"\
-          #,"Displacement Into Surface":"h", "DEPTH":"h", "Depth":"h"\ # !!!!!!
-          ,"_Displacement":"hRaw", "Raw Displacement":"hRaw","Displacement":"hRaw"\
-          ,"Time On Sample":"t", "Time in Contact":"t", "TIME":"t", "Time":"tTotal"\
+          ,"Displacement Into Surface":"h", "DEPTH":"h", "Depth":"h"\
+          ,"_Displacement":"hRaw", "Raw Displacement":"hRaw","Displacement":"hRaw", "Displacement into Surface":"hRaw"\
+          ,"Time On Sample":"t", "Time on Sample":"t", "Time in Contact":"t", "TIME":"t", "Time":"tTotal"\
           ,"Contact Area":"Ac", "Contact Depth":"hc"\
           ,"Harmonic Displacement":"hHarmonic", "Harmonic Load":"pHarmonic","Phase Angle":"phaseAngle"\
           ,"Load vs Disp Slope":"pVsHSlope","d(Force)/d(Disp)":"pVsHSlope", "_Column": "Column"\
@@ -402,7 +443,7 @@ class IndentationXXX(indentation.Indentation):
           ,"Support Spring Stiffness":"slopeSupport", "Spring Stiffness":"slopeSupport"\
           , "Frame Stiffness": "frameStiffness"\
           ,"Harmonic Stiffness":"slopeInvalid"\
-          ,"Harmonic Contact Stiffness":"slope", "STIFFNESS":"slope","Stiffness":"slope","Static Stiffness":"slope" \
+          ,"Harmonic Contact Stiffness":"slope", "STIFFNESS":"slope","Stiffness":"slope","Static Stiffness":"slope", "Dynamic Contact Stiffness":"slope" \
           ,"Stiffness Squared Over Load":"k2p","Dyn. Stiff.^2/Load":"k2p"\
           # ,"Hardness":"hardness", "H_IT Channel":"hardness","HARDNESS":"hardness"\ #!!!!!!
           # ,"Modulus": "modulus", "E_IT Channel": "modulus","MODULUS":"modulus","Reduced Modulus":"modulusRed"\ #!!!!!!
@@ -411,7 +452,7 @@ class IndentationXXX(indentation.Indentation):
           ,"Y Axis Position":"yCoarse"\
           ,"TotalLateralForce": "L", "X Force": "pX", "_XForce": "pX", "Y Force": "pY", "_YForce": "pY"\
           ,"_XDeflection": "Ux", "_YDeflection": "Uy" }
-    self.fullData = ['h','p','t','pVsHSlope','hRaw','pRaw','tTotal','slopeSupport'] # pylint: disable=attribute-defined-outside-init
+    self.fullData = ['h','p','t','slope','pVsHSlope','hRaw','pRaw','tTotal','slopeSupport'] # pylint: disable=attribute-defined-outside-init
     if self.output['verbose']>1:
       print("Open Agilent file: "+fileName)
     for _, dfName in enumerate(self.datafile.keys()):
@@ -429,7 +470,7 @@ class IndentationXXX(indentation.Indentation):
             else:
               if self.output['verbose']>2:
                 print(f" *** {cell:<30} NOT USED")
-            if "Harmonic" in cell or "Dyn. Frequency" in cell or "STIFFNESS" in cell: #!!!!!!
+            if "Harmonic" in cell or "Dyn. Frequency" in cell or "STIFFNESS" in cell or "Dynamic Contact Stiffness" in cell: #!!!!!!
               self.method = Method.CSM # pylint: disable=attribute-defined-outside-init
           #reset to ensure default values are set
           # if "p" not in self.indicies: self.indicies['p']=self.indicies['pRaw'] #!!!!!! raw force should be calibrated to load using spring stiffness as the function of displacement
@@ -458,9 +499,9 @@ class IndentationXXX(indentation.Indentation):
       self.testList.append(f"Test {theTest}")
     #define allTestList
     self.allTestList =  list(self.testList) # pylint: disable=attribute-defined-outside-init
+    print(self.allTestList)
     self.nextTest()
     return True
-
 
   def nextAgilentTest(self, newTest=True):
     """
@@ -527,13 +568,15 @@ class IndentationXXX(indentation.Indentation):
     #   self.slope = self.slope[iMin:np.sum(self.valid)+iMin]
     #correct data and evaluate missing
     self.h /= 1.e3 #from nm in um
-    if "Ac" in self.indicies         : self.Ac /= 1.e6  #from nm in um
-    if "slope" in self.indicies       : self.slope /= 1.e3 #from N/m in mN/um
+    if "Ac" in self.indicies: self.Ac /= 1.e6  #from nm in um
+    if "slope" in self.indicies:
+      self.slope /= 1.e3 #from N/m in mN/um
+      self.Fullslope = self.slope
     if "slopeSupport" in self.indicies: self.slopeSupport /= 1.e3 #from N/m in mN/um
-    if 'hc' in self.indicies         : self.hc /= 1.e3  #from nm in um
-    if 'hRaw' in self.indicies        : self.hRaw /= 1.e3  #from nm in um
+    if 'hc' in self.indicies: self.hc /= 1.e3  #from nm in um
+    if 'hRaw' in self.indicies: self.hRaw /= 1.e3  #from nm in um
     if not "k2p" in self.indicies and 'slope' in self.indicies: #pylint: disable=unneeded-not
-      self.k2p = self.slope * self.slope / self.p[self.valid] # pylint: disable=attribute-defined-outside-init
+      self.k2p = self.slope[self.valid] * self.slope[self.valid] / self.p[self.valid] # pylint: disable=attribute-defined-outside-init
     # if ('p' not in self.indicies) and ('pRaw' in self.indicies) and ('slopeSupport' in self.indicies) and ('hRaw' in self.indicies):
     if 'p' not in self.indicies:
       Load = self.pRaw - self.slopeSupport * self.hRaw
@@ -546,11 +589,19 @@ class IndentationXXX(indentation.Indentation):
     Load Micromaterials txt/zip file for processing, contains only one test
 
     Args:
-        fileName (str): file name or file-content
+      fileName (str): file name or file-content
 
     Returns:
-        bool: success
+      bool: success
     """
+    # slash='\\'
+    # if '/' in fileName:
+    #   slash ='/'
+    # index_path_end = [i for i,c in enumerate(fileName) if c==slash][-1]
+    # thePath = fileName[:index_path_end]
+    # index_file_end = [i for i,c in enumerate(fileName) if c=='.'][-1]
+    # theFile = fileName[index_path_end+1:index_file_end]
+
     if isinstance(fileName, io.TextIOWrapper) or fileName.endswith('.txt'):
       #if singe file or file in zip-archive
       try:            #file-content given
@@ -569,20 +620,132 @@ class IndentationXXX(indentation.Indentation):
       self.p = dataTest[index_move_to_sample[-1]:,2]         #!!!!!!
       self.valid = np.ones_like(self.t, dtype=bool)
       self.identifyLoadHoldUnload()
-    elif fileName.endswith('.zip'):
-      #if zip-archive of multilpe files: datafile has to remain open
-      #    next pylint statement for github actions
-      self.datafile = ZipFile(fileName)  # pylint: disable=consider-using-with
-      self.testList = self.datafile.namelist()
-      if len(np.nonzero([not i.endswith('txt') for i in self.datafile.namelist()])[0])>0:
-        print('Not a Micromaterials zip of txt-files')
-        return False
-      if self.output['verbose']>1:
-        print("Open Micromaterials zip of txt-files: "+fileName)
-      self.allTestList =  list(self.testList)
-      self.fileName = fileName
-      self.metaUser = {'measurementType': 'Micromaterials Indentation ZIP'}
-      self.nextTest()
+    # elif fileName.endswith('.zip'):
+    #   # 1. Read both the measurement and drift data from the ZIP archive
+    #   zip_path = fileName
+    #   txt_filenames = ["load_depth.txt","l.txt"]
+    #   drift_post_names = ["thermal_drift post indent drift data.txt","d post indent drift data.txt"]
+    #   drift_pre_names = ["thermal_drift pre indent data.txt","d pre indent data.txt"]
+    #   coordinates_names = ["coordinates.TXT","c.TXT"]  # file containing X/Y positions
+    #   output_excel_path = f"{thePath}{slash}{theFile}_inGUI.xlsx"
+    #   print(f"Excel file saved to: {output_excel_path}")
+    #   # Threshold to detect the in-test gap (seconds)
+    #   gap_threshold_s = 1.0 # [s]
+    #   # Read the text file from the ZIP archive
+    #   with ZipFile(zip_path, 'r') as z:
+    #     # Load into a DataFrame, tab-separated, no header in the original file
+    #     for name in txt_filenames:
+    #       if name in z.namelist():
+    #         with z.open(name) as f:
+    #           df = pd.read_csv(
+    #             f, sep="\t", header=None,
+    #             names = ["Test number", "Cycle number", "Time [s]", "Displacement [nm]", "Load [mN]"]
+    #             )
+    #         print(f"Opened {name}")
+    #         break
+    #     # Group by "Test number" and write each group to a separate sheet in Excel
+    #     df = df.drop(columns=["Cycle number"])
+    #     # Load post-indent drift data (used to measure the gap duration)
+    #     for name in drift_post_names:
+    #       if name in z.namelist():
+    #         try:
+    #           with z.open(name) as f:
+    #             drift_post_text = f.read().decode(errors="replace")
+    #         except:
+    #           test_to_drift_post_df = {}
+    #         else:
+    #           # 3. Split drift data into segments and compute durations
+    #           segments_drift_post = split_text_into_segments_by_blank_lines(drift_post_text)
+    #           drift_post_per_test = read_drift_segments(segments_drift_post)
+    #           # 4. Map each drift duration to the corresponding test number
+    #           test_ids = sorted(df["Test number"].dropna().unique())
+    #           if len(drift_post_per_test) != len(test_ids):
+    #             print(f"Warning: found {len(drift_post_per_test)} post drift segments for {len(test_ids)} tests. "
+    #                   f"Mapping in ascending order up to the shorter length.")
+    #           map_len = min(len(drift_post_per_test), len(test_ids))
+    #           test_to_drift_post_df = {test_ids[i]: drift_post_per_test[i] for i in range(map_len)}
+    #     # Load pre-indent drift data (used to measure the gap duration)
+    #     for name in drift_pre_names:
+    #       if name in z.namelist():
+    #         try:
+    #           with z.open(name) as f:
+    #             drift_pre_text = f.read().decode(errors="replace")
+    #         except:
+    #           test_to_drift_pre_df = {}
+    #         else:
+    #           # 3. Split drift data into segments and compute durations
+    #           segments_drift_pre = split_text_into_segments_by_blank_lines(drift_pre_text)
+    #           drift_pre_per_test = read_drift_segments(segments_drift_pre)
+    #           # 4. Map each drift duration to the corresponding test number
+    #           test_ids = sorted(df["Test number"].dropna().unique())
+    #           if len(drift_pre_per_test) != len(test_ids):
+    #             print(f"Warning: found {len(drift_pre_per_test)} pre drift segments for {len(test_ids)} tests. "
+    #                   f"Mapping in ascending order up to the shorter length.")
+    #           map_len = min(len(drift_pre_per_test), len(test_ids))
+    #           test_to_drift_pre_df = {test_ids[i]: drift_pre_per_test[i] for i in range(map_len)}
+    #     for name in coordinates_names:
+    #       if name in z.namelist():
+    #         with z.open(name) as f:
+    #           coords_df = pd.read_csv(f, sep="\t", header=None,
+    #                                   names=["Test", "X_Position", "Y_Position"])
+
+    #   # 5. Create an Excel file with one sheet per test, containing adjusted times
+    #   with pd.ExcelWriter(output_excel_path) as writer:
+    #     wb = writer.book
+    #     # First sheet: Results
+    #     ws_results = wb.add_worksheet("Results")
+    #     writer.sheets["Results"] = ws_results
+    #     # Header row 1: names
+    #     ws_results.write_row(0, 0, ["Test", "X_Position", "Y_Position"])
+    #     # Header row 2: units
+    #     ws_results.write_row(1, 0, ["-", "µm", "µm"])
+    #     for row_idx, row in enumerate(coords_df.itertuples(index=False), start=2):
+    #         ws_results.write_row(row_idx, 0, row)
+    #     # Other sheets: one per test
+    #     for test_num, group in df.groupby("Test number"):
+    #       drift_post_df = test_to_drift_post_df.get(test_num, None)
+    #       drift_pre_df = test_to_drift_pre_df.get(test_num, None)
+    #       defaultDrift = None
+    #       if drift_post_df is None:
+    #         drift_post = None
+    #       else:
+    #         drift_post = obtainDrift_Micormaterials_default(drift_post_df)
+    #         defaultDrift = drift_post
+    #       if drift_pre_df is None:
+    #         drift_pre = None
+    #       else:
+    #         drift_pre = obtainDrift_Micormaterials_default(drift_pre_df)
+    #         if defaultDrift is not None:
+    #           defaultDrift = (defaultDrift + drift_pre)/2.
+    #       print(drift_pre)
+    #       print(drift_post)
+    #       print(defaultDrift)
+    #       if defaultDrift is None:
+    #         defaultDrift = 0 #nm/s
+    #       group = group.sort_values("Time [s]")[["Test number", "Time [s]", "Displacement [nm]", "Load [mN]"]]
+    #       group["Displacement [nm]"] = group["Displacement [nm]"] + defaultDrift * group["Time [s]"] # Because the exported load depth was automatically corrected by the thermal drift, this step is to obtain the raw load depth
+    #       if drift_post_df is not None:
+    #         group = insert_drift_into_gap(group, drift_post_df, gap_threshold_s, gap_strategy='last')
+    #       if drift_pre_df is not None:
+    #         group = insert_drift_into_gap(group, drift_pre_df, gap_threshold_s, gap_strategy='first')
+    #       write_with_two_row_header(writer, group, sheet_name=f"Test {test_num}")
+    #       # self.vendor = Vendor.Agilent
+    #       # self.loadAgilent(fileName=output_excel_path)
+
+    # elif fileName.endswith('.zip'):
+    #   #if zip-archive of multilpe files: datafile has to remain open
+    #   #    next pylint statement for github actions
+    #   self.datafile = ZipFile(fileName)  # pylint: disable=consider-using-with
+    #   self.testList = self.datafile.namelist()
+    #   if len(np.nonzero([not i.endswith('txt') for i in self.datafile.namelist()])[0])>0:
+    #     print('Not a Micromaterials zip of txt-files')
+    #     return False
+    #   if self.output['verbose']>1:
+    #     print("Open Micromaterials zip of txt-files: "+fileName)
+    #   self.allTestList =  list(self.testList)
+    #   self.fileName = fileName
+    #   self.metaUser = {'measurementType': 'Micromaterials Indentation ZIP'}
+    #   self.nextTest()
     return True
 
   def nextMicromaterialsTest(self, newTest=True):
@@ -650,6 +813,7 @@ class IndentationXXX(indentation.Indentation):
         ax  = ax_[0]
         ax2 = ax_[1]
       ax.plot(h,p, '-ok', markersize=3, linewidth=1, label='data', picker=True) #!!!!!!
+    hf_previous = 0
     for cycleNum, cycle in enumerate(self.iLHU):
       if win: #!!!!!!
         try: #!!!!!!
@@ -661,6 +825,8 @@ class IndentationXXX(indentation.Indentation):
         loadStart, loadEnd, unloadStart, unloadEnd = cycle #!!!!!!
       if loadStart>loadEnd or loadEnd>unloadStart or unloadStart>unloadEnd:
         print('*ERROR* stiffnessFromUnloading: indicies not in order:',cycle)
+      # unloadStart = loadStart
+      # unloadEnd = loadEnd
       maskSegment = np.zeros_like(h, dtype=bool)
       maskSegment[unloadStart:unloadEnd+1] = True
       maskForce   = np.logical_and(p<p[loadEnd]*self.model['unloadPMax'], p>p[loadEnd]*self.model['unloadPMin'])
@@ -675,10 +841,11 @@ class IndentationXXX(indentation.Indentation):
         else:
           ax.plot(h[mask],p[mask],'ob') #!!!!!!
       #initial values of fitting
-      hf0    = h[mask][-1]/1.1
+      hf0    = h[mask][-1]/1.2
       m0     = 1.5
       B0     = max(abs(p[mask][0] / np.power(h[mask][0]-hf0,m0)), 0.001)  #prevent neg. or zero
-      bounds = [[0,0,0.8],[np.inf, max(np.min(h[mask]),hf0), 10]]
+      bounds = [[0,hf_previous,0.8],[np.inf, max(np.min(h[mask]),hf0), 2]]
+      # bounds = [[0,0,1.2],[np.inf, max(np.min(h[mask]),hf0), 1.5]]
       if self.output['verbose']>2:
         print("Initial fitting values B,hf,m", B0,hf0,m0)
         print("Bounds", bounds)
@@ -689,10 +856,12 @@ class IndentationXXX(indentation.Indentation):
       try:
         opt, _ = curve_fit(self.unloadingPowerFunc, h[mask],p[mask],      # pylint: disable=unbalanced-tuple-unpacking
                           p0=[B0,hf0,m0], bounds=bounds,
-                           maxfev=1000 )#set ftol to 1e-4 if accept more and fail less
+                           maxfev=100 )#set ftol to 1e-4 if accept more and fail less
+        print('B,hf,m',opt)
         if self.output['verbose']>2:
           print("Optimal values B,hf,m", opt)
         B,hf,m = opt
+        # hf_previous = hf
         if np.isnan(B):
           raise ValueError("NAN after fitting")
         powerlawFit.append(True)
@@ -751,20 +920,21 @@ class IndentationXXX(indentation.Indentation):
     return stiffness, validMask, mask, opt, powerlawFit
 
 
-  def calibrateStiffness(self,critDepth=0.5,critForce=0.0001,plotStiffness=True, returnData=False):
+  def calibrateStiffness(self,critDepths=(0.5,5),critForces=(0.0001,1000),plotStiffness=True, returnData=False):
     """
     Calibrate by first frame-stiffness from K^2/P of individual measurement
 
     Args:
-      critDepth (float): frame stiffness: what is the minimum depth of data used
-      critForce (float): frame stiffness: what is the minimum force used for fitting
+      critDepths (tuple[float, float]): (min_depth, max_depth) range of data to use.
+      critForces (tuple[float, float]): (min_force, max_force) range of data to use.
       plotStiffness (bool): plot stiffness graph with compliance
       returnData (bool): return data for external plotting
 
     Returns:
       numpy.arary: data as chosen by arguments
     """
-    print("Start compliance fitting")
+    min_depth, max_depth = critDepths
+    min_force, max_force = critForces
     ## output representative values
     testNameAll=[]
     if self.method==Method.CSM:
@@ -793,10 +963,11 @@ class IndentationXXX(indentation.Indentation):
           testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
           mask = np.hstack((mask, mask_single)) # the section after loading will be removed #!!!!!!
         #calculate compliance for each tets !!!!!!
-        mask_single = np.logical_and(mask_single, h_single>critDepth)
-        mask_single = np.logical_and(mask_single, x_single<1./np.sqrt(critForce))
+        mask_single &= (h_single > min_depth) & (h_single < max_depth)
+        mask_single &= (x_single<1./np.sqrt(min_force)) & (x_single>1./np.sqrt(max_force))
         try:
-          param, covM = np.polyfit(x_single[mask_single],y_single[mask_single],1, cov=True)
+          param, covM = np.polyfit(x_single[mask_single],y_single[mask_single],1,
+                                   w = 1/y_single[mask_single], cov=True)
         except:
           frameCompliance_collect.append(None)
         else:
@@ -805,8 +976,8 @@ class IndentationXXX(indentation.Indentation):
         if not self.testList:
           break
         self.nextTest()
-      mask = np.logical_and(mask, h>critDepth)
-      mask = np.logical_and(mask, x<1./np.sqrt(critForce))
+      mask &= (h > min_depth) & (h < max_depth)
+      mask &= (x<1./np.sqrt(min_force)) & (x>1./np.sqrt(max_force))
       if len(mask[mask])==0:
         print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
         mask = np.logical_and(h>np.max(h)*0.5, x<np.max(x)*0.5)
@@ -840,17 +1011,13 @@ class IndentationXXX(indentation.Indentation):
 
       #calculate compliance for each tets !!!!!!
       frameCompliance_collect=[]
-      p_collect = np.array(p_collect)
-      h_collect = np.array(h_collect)
-      s_collect = np.array(s_collect)
       for number_test,_ in enumerate(h_collect):
         ## determine compliance by intersection of 1/sqrt(p) -- compliance curve
-        x = 1./np.sqrt(p_collect[number_test])
-        y = 1./s_collect[number_test]
-        mask = h_collect[number_test] > critDepth # pylint: disable=unnecessary-list-index-lookup
-        mask = np.logical_and(mask, p_collect[number_test] > critForce)
+        x = 1./np.sqrt(np.array(p_collect[number_test]))
+        y = 1./np.array(s_collect[number_test])
+        mask = (np.array(h_collect[number_test]) > min_depth) & (np.array(h_collect[number_test]) < max_depth) & (np.array(p_collect[number_test]) > min_force) & (np.array(p_collect[number_test]) < max_force)
         try:
-          param = np.polyfit(x[mask],y[mask],1)
+          param = np.polyfit(x[mask],y[mask],1, w=1/y[mask])
         except:
           print('WARNING in def calibrateStiffness')
           print(y[mask])
@@ -866,14 +1033,13 @@ class IndentationXXX(indentation.Indentation):
       ## determine compliance by intersection of 1/sqrt(p) -- compliance curve
       x = 1./np.sqrt(pAll)
       y = 1./sAll
-      mask = hAll > critDepth
-      mask = np.logical_and(mask, pAll>critForce)
+      mask = (hAll > min_depth) & (hAll < max_depth) & (pAll > min_force) & (pAll < max_force)
       print("number of data-points:", len(x[mask]))
     if len(mask[mask])==0:
       print("ERROR too much filtering, no data left. Decrease critForce and critDepth")
       return None
 
-    param, covM = np.polyfit(x[mask],y[mask],1, cov=True)
+    param, covM = np.polyfit(x[mask],y[mask],1, w = 1/y[mask], cov=True)
     print("fit f(x)=",round(param[0],5),"*x+",round(param[1],5))
     frameStiff = 1./param[1]
     frameCompliance = param[1]

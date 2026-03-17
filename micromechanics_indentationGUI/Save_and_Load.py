@@ -31,7 +31,11 @@ class data4save:
                     'doubleSpinBox_Start_Pmax': None,          #Start_Pmax
                     'doubleSpinBox_End_Pmax': None,            #End_Pmax
                     'doubleSpinBox_critDepthStiffness': None,  #critDepthStiffness
+                    'doubleSpinBox_critMaxDepthStiffness':None,#critMaxDepthStiffness
                     'doubleSpinBox_critForceStiffness': None,  #critForceStiffness
+                    'doubleSpinBox_critMaxForceStiffness':None,#critMaxForceStiffness
+                    'doubleSpinBox_UsingDriftUnloading': None, #final percent of post data used for drfit correction
+                    'doubleSpinBox_UsingDriftPre': None, #final percent of pre data used for drfit correction
                     'progressBar': None,                       #progressBar
                     'lineEdit_FrameStiffness': None,           #FrameStiffness
                     'lineEdit_FrameCompliance': None,          #FrameCompliance
@@ -56,14 +60,21 @@ class data4save:
                     'checkBox_plotReferenceTAF':None,          #if plot the reference TAF nearby the calculated
                     'doubleSpinBox_minhc4mean': None,          #min. hc used for calculate the average hardness and Modulus
                     'doubleSpinBox_maxhc4mean': None,          #max. hc used for calculate the average hardness and Modulus
+                    'checkBox_Usinghc4mean': None,
+                    'doubleSpinBox_minh4mean': None,          #min. h used for calculate the average hardness and Modulus
+                    'doubleSpinBox_maxh4mean': None,          #max. h used for calculate the average hardness and Modulus
+                    'checkBox_Usingh4mean': None,
                     'lineEdit_TipRadius': None,                #Tip Radius
                     'doubleSpinBox_TipRadius': None,           #Tip Radius
                     'lineEdit_reducedModulus': None,           #reduced Modulus
                     'lineEdit_E': None,                        #Modulus
                     'lineEdit_E_errorBar': None,               #standard deviation of Modulus
                     'checkBox_UsingDriftUnloading':None,       #UsingDriftUnloading
+                    'checkBox_UsingDriftPre':None,             #UsingDriftPre
+                    'checkBox_UsingDriftFunc': None,           #Using the drift function
                     'comboBox_CalculationMethod': 0,           #choose the assumption for the calculation
                     'tableWidget': None,                       #the table listing the tests
+                    'tableWidget_path': None,                  #the table listing the paths
                     'comboBox_TipType': 0,                     #the tip type used by the iterative method cacluating TAF
                     'doubleSpinBox_idealRadiusSphere': None,   #the ideal radius of the spherical Tip 
                     'doubleSpinBox_half_includedAngle':None, # the half included angle of cone
@@ -85,6 +96,10 @@ class data4save:
                     'checkBox_UsingSurfaceIndex':False,
                     'plainTextEdit_SelectTypedTest':None,
                     'checkBox_UsingAreaPileUp': None,
+                    'checkBox_DataSegment4Smooth': None,
+                    'doubleSpinBox_DataSegment4Smooth': None,
+                    'checkBox_AssumingConstantE': None,
+                    'checkBox_DataSegment4Smooth_PlotOriginalData': None
                   }
     
     self.tabName_list = [
@@ -93,9 +108,11 @@ class data4save:
                           'tabTipRadius',
                           'tabHE_FrameStiffness',
                           'tabHE',
+                          'tabCreep_FrameStiffness',  
+                          'tabCreep',  
                           'tabPopIn_FrameStiffness',
                           'tabPopIn',
-                          'tabClassification'       
+                          'tabClassification'     
                         ]
 
     self.tabTAF = allWidgets.copy()
@@ -103,6 +120,8 @@ class data4save:
     self.tabTipRadius = allWidgets.copy()
     self.tabHE_FrameStiffness = allWidgets.copy()
     self.tabHE = allWidgets.copy()
+    self.tabCreep_FrameStiffness = allWidgets.copy()
+    self.tabCreep = allWidgets.copy()
     self.tabPopIn_FrameStiffness = allWidgets.copy()
     self.tabPopIn = allWidgets.copy()
     self.tabClassification = allWidgets.copy()
@@ -114,6 +133,8 @@ class data4save:
     self.i_tabTipRadius_FrameStiffness = None
     self.i_tabHE = None
     self.i_tabHE_FrameStiffness = None
+    self.i_tabCreep = None
+    self.i_tabCreep_FrameStiffness = None
     self.i_tabPopIn = None
     self.i_tabPopIn_FrameStiffness = None
 
@@ -158,15 +179,23 @@ def reload_data_in_one_Table(Widget, data_in_Table, tabName=' '):
     if 'tabClassification' in tabName:
       Widget.setColumnCount(7)
     elif 'FrameStiffness' in tabName or 'tabTAF' in tabName:
-      Widget.setColumnCount(4)
-    elif tabName == 'tabHE':
-      Widget.setColumnCount(4)
+      if 'path' in Widget.objectName():
+        Widget.setColumnCount(1)
+      else:
+        Widget.setColumnCount(4)
+    elif tabName in ['tabHE','tabCreep'] :
+      if 'path' in Widget.objectName():
+        Widget.setColumnCount(1)
+      else:
+        Widget.setColumnCount(4)
     elif tabName in ['tabTipRadius', 'tabPopIn']:
       Widget.setColumnCount(4)
     else:
       Widget.setColumnCount(columnCount-1)
     for j in range(columnCount):
       for i in range(rowCount):
+        if 'path' in Widget.objectName() and j==0:
+          Widget.setVerticalHeaderItem(i, QTableWidgetItem(f"Path{int(i+1)}"))
         try:
           theData = data_in_Table[j][i]
         except:
@@ -236,7 +265,7 @@ def read_data_in_one_Tab(win,Tab,tabName):
         print(f"**ERROR: {widget}_{tabName} is not defined in Save_and_Load")
 
 
-def reload_data_in_one_Tab(win,Tab, tabName):
+def reload_data_in_one_Tab(win, Tab, tabName):
   UI = win.ui
   widgets_list = list(Tab)
   for _, widget in enumerate(widgets_list):
@@ -256,7 +285,8 @@ def reload_data_in_one_Tab(win,Tab, tabName):
         else:
           Widget.setPlainText(Tab[widget])
       elif ('SpinBox' in widget) or ('spinBox' in widget):
-        Widget.setValue(Tab[widget])
+        if Tab[widget] is not None:
+          Widget.setValue(Tab[widget])
       elif 'comboBox' in widget:
         if Tab[widget] is not None:
           Widget.setCurrentIndex(Tab[widget])
@@ -271,6 +301,20 @@ def reload_data_in_one_Tab(win,Tab, tabName):
         reload_data_in_one_Table(Widget, data_in_Table=Tab[widget], tabName=tabName)
       else:
         print(f"**ERROR: {widget}_{tabName} is not defined in Save_and_Load")
+    # due to update
+    #V0.1.33 to V0.1.34
+    if 'lineEdit_path' in widget:
+      file = Tab[widget]
+      try:
+        theTableWidget = getattr(UI, f"tableWidget_path_{tabName}")
+      except:
+        pass
+      else:
+        qtablewidgetitem = QTableWidgetItem(file)
+        qtablewidgetitem.setCheckState(Qt.Checked)
+        theTableWidget.setVerticalHeaderItem(0, QTableWidgetItem(f"Path{int(1)}"))
+        theTableWidget.setItem(0, 0, qtablewidgetitem)
+
 
 
 def SAVE(self, win):

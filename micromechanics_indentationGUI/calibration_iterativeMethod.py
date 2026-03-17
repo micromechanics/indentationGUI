@@ -6,31 +6,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from micromechanics.indentation.definitions import Method
 from scipy.signal import savgol_filter # pylint: disable=ungrouped-imports
-from scipy.optimize import curve_fit # pylint: disable=ungrouped-imports
+from scipy.stats import binned_statistic
 from scipy import interpolate # pylint: disable=ungrouped-imports
 import lmfit
 
-
-def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, critForce,plotStiffness=False, returnData=False):
+def calibrateStiffness_OneIteration(self, eTarget, critDepths, critForces,plotStiffness=False, returnData=False):
   """
   Calibrate the frame-stiffness using the known Ac=f(hc) according to Eq.(22) in paper of Ovliver 2004
 
   Args:
     eTarget (float): the targert elastic modulus for the calibration
-    critDepth (float): frame stiffness: what is the minimum depth of data used
-    critMaxDepth (float): frame stiffness: what is the maximum depth of data used
-    critForce (float): frame stiffness: what is the minimum force used for fitting
+    critDepths (tuple[float, float]): (min_depth, max_depth) range of data to use.
+    critForces (tuple[float, float]): (min_force, max_force) range of data to use.
     plotStiffness (bool): plot stiffness graph with compliance
     returnData (bool): return data for external plotting
 
   Returns:
-      numpy.arary: data as chosen by arguments
+    numpy.arary: data as chosen by arguments
   """
+  min_depth, max_depth = critDepths
+  min_force, max_force = critForces
   if eTarget:
     modulusRedGoal = self.ReducedModulus(eTarget, self.nuMat) #pylint: disable=unused-variable
-    # def func_(x, Cf):
-    #   B = np.sqrt(np.pi) /(2*modulusRedGoal)
-    #   return Cf + B*x
 
   self.restartFile()
   testNameAll=[]
@@ -41,26 +38,28 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
         self.output['progressBar'](1-len(self.testList)/len(self.allTestList), 'calibrateStiffness') #pylint: disable=not-callable
       self.analyse()
       if x is None:
-        x = 1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) #add 1nm:prevent runtime error
+        x = 1./np.sqrt(self.Ac) #add 1nm:prevent runtime error
         y = 1./self.slope
         h = self.h[self.valid]
         t = self.t[self.valid]
         testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
         mask = (t < self.t[self.iLHU[0][1]]) #pylint: disable = superfluous-parens
       elif np.count_nonzero(self.valid)>0:
-        x = np.hstack((x,    1./np.sqrt(self.p[self.valid]-np.min(self.p[self.valid])+0.001) ))
-        y = np.hstack((y,    1./self.slope))
-        h = np.hstack((h, self.h[self.valid]))
+        x = np.hstack(( x, 1./np.sqrt(self.Ac) ))
+        y = np.hstack(( y, 1./self.slope ))
+        h = np.hstack(( h, self.h[self.valid] ))
         t = self.t[self.valid]
         testNameAll = np.append( testNameAll, [self.testName] * len(self.slope), axis=0 )
         mask = np.hstack((mask, (t < self.t[self.iLHU[0][1]]))) # the section after loading will be removed
       if not self.testList:
         break
       self.nextTest()
-    mask = np.logical_and(mask, h>critDepth)
-    mask = np.logical_and(mask, h<critMaxDepth)
-    mask = np.logical_and(mask, x<1./np.sqrt(critForce))
+    mask &= (h > min_depth) & (h < max_depth)
+    mask &= (x<1./np.sqrt(min_force)) & (x>1./np.sqrt(max_force))
     if len(mask[mask])==0:
+      e="WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth"
+      suggestion="adjust the range for calculating frame compliance"
+      self.show_error(str(e),suggestion)
       print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
       mask = np.logical_and(h>np.max(h)*0.5, x<np.max(x)*0.5)
   else:
@@ -92,23 +91,13 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
     ## determine compliance by intersection of 1/sqrt(Ac) -- compliance curve
     x = 1./np.sqrt(AcAll)
     y = 1./sAll
-    mask = hAll > critDepth
-    mask = np.logical_and(mask, hAll < critMaxDepth)
-    mask = np.logical_and(mask, pAll > critForce)
+    mask = (hAll > min_depth) & (hAll < max_depth) & (pAll > min_force) & (pAll < max_force)
     print("number of data-points:", len(x[mask]))
     if len(mask[mask])==0:
       print("ERROR too much filtering, no data left. Decrease critForce and critDepth")
       return None
 
-  # fig1,ax1 = plt.subplots() # pylint: disable=unused-variable
-  # ax1.scatter(x[mask],y[mask])
-  # fig1.savefig('ERROR.png')
-  # param, covM = np.polyfit(x[mask],y[mask],1, cov=True)
   if eTarget:
-    # popt, _ = curve_fit(func_, x[mask], y[mask], maxfev=1000) #pylint: disable=unbalanced-tuple-unpacking
-    # print("fit f(x)=",round(np.sqrt(np.pi) /(2*modulusRedGoal),5),"*x+",round(popt[0],5))
-    # frameStiff = 1./popt[0]
-    # frameCompliance = popt[0]
     param, covM = np.polyfit(x[mask],y[mask],1, cov=True) # pylint: disable=unused-variable
     frameStiff = 1./param[1]
     frameCompliance = param[1]
@@ -135,12 +124,8 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
       ax.plot(x[~mask][mask1], y[~mask][mask1], 'o', color='#165480', fillstyle='none', markersize=1, label=f"{testName}", picker=True)
       mask2 = np.where(testNameAll[mask]==testName)
       ax.plot(x[mask][mask2], y[mask][mask2],   'C0o', markersize=5, label=f"{testName}", picker=True)
-    # ax.plot(x[~mask], y[~mask], 'o', color='#165480', fillstyle='none', markersize=1, label='excluded')
-    # ax.plot(x[mask], y[mask],   'C0o', markersize=5, label='for fit')
     x_ = np.linspace(0, np.max(x)*1.1, 50)
     if eTarget:
-      # y_ = func_(x_, frameCompliance)
-      # y_fitted = func_(x[mask], frameCompliance)
       y_ = np.polyval(param, x_)
       y_fitted = np.polyval(param, x[mask])
     else:
@@ -150,7 +135,6 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
     ax.plot(x_,y_,'w-')
     ax.plot(x_,y_,'C0--')
     ax.set_ylabel(r"Contact Compliance, $C_{\rm cont}$[$\mathrm{\mu m/mN}$]")
-    # ax.legend(loc=4)
     ax.set_ylim([0,np.max(y[mask])*1.5])
     ax.set_xlim([0,np.max(x[mask])*1.5])
     ax1.scatter(x[mask], error, color='grey',s=5)
@@ -164,29 +148,30 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepth, critMaxDepth, crit
   return frameCompliance
 
 
-def calibrateStiffness_iterativeMethod(self, eTarget=False, critDepth=0.5, critMaxDepth=1000.0, critForce=0.0001, plotStiffness=False, returnData=False):
+def calibrateStiffness_iterativeMethod(self, eTarget=False, critDepths=(0.5,5), critForces=(0.0001,1000), plotStiffness=False, returnData=False):
   """
   iteratively Calibrate the frame-stiffness using the known Ac=f(hc) according to Eq.(22) in paper of Ovliver 2004
 
   Args:
     eTarget (float): the targert elastic modulus for the calibration
-    critDepth (float): frame stiffness: what is the minimum depth of data used
-    critMaxDepth (float): frame stiffness: what is the maximum depth of data used
-    critForce (float): frame stiffness: what is the minimum force used for fitting
+    critDepths (tuple[float, float]): (min_depth, max_depth) range of data to use.
+    critForces (tuple[float, float]): (min_force, max_force) range of data to use.
     plotStiffness (bool): plot stiffness graph with compliance
     returnData (bool): return data for external plotting
   """
   print('start calibrateStiffness_iterativeMethod')
   print(f"the tip.prefactors: {self.tip.prefactors}")
-  frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critMaxDepth=critMaxDepth,critForce=critForce, plotStiffness=False, returnData=False)
+  frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepths=critDepths, critForces=critForces, plotStiffness=False, returnData=False)
   iteration_numbers=0
   while np.abs(frameCompliance) > 1e-7 and iteration_numbers<21:
-    frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepth=critDepth, critMaxDepth=critMaxDepth, critForce=critForce, plotStiffness=False, returnData=False)
+    frameCompliance = self.calibrateStiffness_OneIteration(eTarget=eTarget, critDepths=critDepths, critForces=critForces, plotStiffness=False, returnData=False)
     iteration_numbers+=1
     print('iteration_numbers',iteration_numbers)
 
-
-def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includedAngel_Cone=30, Radius_Sphere=2, numPolynomial=3, critDepthTip=0.0, critMaxDepthTip=1000.0, plotTip=False, plot_Ac_hc=False, **kwargs): # pylint:disable=too-many-arguments
+def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:disable=too-many-arguments
+                 half_includedAngel_Cone=30, Radius_Sphere=2, numPolynomial=3, critDepthTip=0.0,
+                 critMaxDepthTip=1000.0, plotTip=False, plot_Ac_hc=False,
+                 UniformDepth=False,**kwargs):
   """
   Calibrate the area-function calibration using the known frame stiffness
 
@@ -201,6 +186,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
       critMaxDepthTip (float): area function what is the maximum depth of data used
       plotTip (bool): plot tip shape after fitting
       plot_Ac_hc (bool): plot the Ac-hc and the fitted function
+      UniformDepth (bool): make the Ac-hc data uniform along hc
       kwargs (dict): additional keyword arguments
         - constantTerm (bool): add constant term into area function
         - returnArea (bool): return contact depth and area
@@ -213,6 +199,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
   self.restartFile()
   self.tip.compliance = frameCompliance
   slope, h, p = np.array([], dtype=np.float64), np.array([],dtype=np.float64), np.array([],dtype=np.float64)
+  NumberOfTests = 0
   if self.method==Method.CSM:
     self.nextTest(newTest=False)  #rerun to ensure that onlyLoadingSegment used
     while True:
@@ -222,6 +209,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
       slope = np.hstack((slope, self.slope))
       h     = np.hstack((h,     self.h[self.valid]))
       p     = np.hstack((p,     self.p[self.valid]))
+      NumberOfTests += 1
       if not self.testList:
         break
       self.nextTest()
@@ -233,6 +221,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
       slope = np.hstack((slope, self.metaUser['S_mN/um']))
       h     = np.hstack((h,     self.metaUser['hMax_um']))
       p     = np.hstack((p,     self.metaUser['pMax_mN']))
+      NumberOfTests += 1
       if len(self.testList)==0:
         break
       self.nextTest()
@@ -248,6 +237,17 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
   modulusRedGoal = self.ReducedModulus(eTarget, self.nuMat)
   Ac = np.array( np.power( slope  / (2.0*modulusRedGoal/np.sqrt(np.pi))  ,2))  #Eq.(26) Oliver 2004
   hc = np.array( h - self.model['beta']*p/slope )
+  #
+  Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=30)
+  Ac_mean = Ac_mean[:-1]
+  bin_edges = bin_edges[:-1]
+  hc_bin_center = 0.5 * (bin_edges[:-1] + bin_edges[1:])
+  if UniformDepth:
+    Ac4fit = Ac_mean
+    hc4fit = hc_bin_center
+  else:
+    Ac4fit = Ac
+    hc4fit = hc
   #calculate shape function as interpolation of 30 points (log-spacing)
   #  first calculate the  savgol-average using a adaptive window-size
   if numPolynomial is None:
@@ -263,17 +263,21 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
     self.tip.setInterpolationFunction(interpolationFunct)
     del output, data
   else:
-    #It is possible to crop only interesting contact depth: hc>1nm
-    # Ac = Ac[hc>0.001]
-    # hc = hc[hc>0.001]
     if constantTerm:
       appendix = 'isoPlusConstant'
     else:
       appendix = 'iso'
-    def fitFunct(params):     #error function
+    def fitFunct(params,hc4fit, Ac4fit):     #error function
       self.tip.prefactors = [params[x].value for x in params]+[appendix]
-      tempArea = self.tip.areaFunction(hc)          #use all datapoints as critDepth is for compliance plot
-      residual     = np.abs(Ac-tempArea)/len(Ac)    #normalize by number of points
+      tempArea = self.tip.areaFunction(hc4fit)          #use all datapoints as critDepth is for compliance plot
+      # use inhomogenous weight
+      # w = 1
+      # w = 1.0 / np.sqrt(np.maximum(tempArea, 1e-30))
+      # center = 0.5
+      # sigma  = 0.08   # 0.08 µm
+      # w = 1.0 + 5.0 * np.exp(-0.5*((hc4fit-center)/sigma)**2)  # 0.5 near region has a higher weight
+      # residual = (Ac4fit-tempArea) * w  #normalize by number of points
+      residual =  np.log(np.maximum(Ac4fit,1e-30)) - np.log(np.maximum(tempArea,1e-30))
       return residual
     # Parameters, 'value' = initial condition, 'min' and 'max' = boundaries
     params = lmfit.Parameters()
@@ -282,9 +286,13 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
       for idx in range(1,numPolynomial):
         if idx >3:
           startVal = np.power(100,3)
+          params.add('m'+str(idx), value= startVal/100, min=-startVal*np.power(10,idx+1)*(1-self.IfTermsGreaterThanZero), max=startVal*np.power(10,idx+1))
+        elif idx>1:
+          startVal = np.power(100,idx)
+          params.add('m'+str(idx), value= startVal/100, min=-startVal*np.power(10,idx+1)*(1-self.IfTermsGreaterThanZero), max=startVal*np.power(10,idx+1))
         else:
           startVal = np.power(100,idx)
-        params.add('m'+str(idx), value= startVal/100, min=-startVal*500*(1-self.IfTermsGreaterThanZero), max=startVal*500)
+          params.add('m'+str(idx), value= startVal/100, min=-startVal*np.power(10,idx+1)*(1-self.IfTermsGreaterThanZero), max=startVal*np.power(10,idx+1))
     elif TipType in ('Cone', 'Sphere+Cone'):
       m0=np.tan(half_includedAngel_Cone/180*np.pi)**2 * np.pi
       params.add('m0', value= m0, min=0.9*m0, max=1.1*m0)
@@ -303,12 +311,13 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
     if constantTerm:
       params.add('c',  value= 20, min=0.5, max=300.0) ##all prefactors are in nm, this has to be too
     # do fit, here with leastsq model; args=(hc, Ac)
-    result = lmfit.minimize(fitFunct, params, max_nfev=10000000)
+    result = lmfit.minimize(fitFunct, params,
+                            args=(hc4fit, Ac4fit),
+                            method='least_squares',
+                            loss='huber',     # 'soft_l1' or 'huber' or 'cauchy'
+                            f_scale = 0.05,
+                            max_nfev=10000000)
     self.tip.prefactors = [result.params[x].value for x in result.params]+[appendix]
-    print("\nTip shape:")
-    print("  iterated prefactors",[round(i,1) for i in self.tip.prefactors[:-1]])
-    stderr = [result.params[x].stderr for x in result.params]
-    print("    standard error",['NaN' if x is None else round(x,2) for x in stderr])
 
   if plotTip:
     rNonPerfect = np.sqrt(Ac/np.pi)
@@ -325,17 +334,16 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', half_includ
     plt.show()
 
   if plot_Ac_hc:
-    fig,ax = plt.subplots() #pylint:disable=unused-variable
+    _,ax = plt.subplots() #pylint:disable=unused-variable
     ax.scatter(hc,Ac,color='b',label='data')
+    if UniformDepth:
+      ax.scatter(hc4fit,Ac4fit,color='orange',label='data uniformed along hc',zorder=2)
     hc_new = np.arange(0,hc.max()*1.05,hc.max()/100)
     Ac_new = self.tip.areaFunction(hc_new)
     ax.plot(hc_new,Ac_new,color='r',label='fitted Tip Area Function')
     ax.legend()
     ax.set_xlabel('Contact Depth hc [µm]')
     ax.set_ylabel('Contact Area Ac [µm$^2$]')
-    # fig.savefig(f"Ac_hc_Cf{self.tip.compliance}.png")
-    # plt.pause(0.001)
-    # input("Press [enter] to continue.")
   if kwargs.get('returnArea', False):
     return hc, Ac
   return True
@@ -354,8 +362,8 @@ def oneIteration_TAF_frameCompliance(self, eTarget, frameCompliance, TipType, ha
     critDepthTip (float): area function: what is the minimum depth of data used
     critMaxDepthTip (float): area function: what is the maximum depth of data used
     constantTerm (bool): wheater to use a constant term for TAF
-    critDepthStiffness (float): frame stiffness: what is the minimum depth of data used
-    critForceStiffness (float): frame stiffness: what is the minimum force of data used
+    critDepthStiffness (tuple[float, float]): (min_depth, max_depth) range of data to use.
+    critForceStiffness (tuple[float, float]): (min_force, max_force) range of data to use.
 
   Returns:
     float: difference of the frame compliance before and after this iteration
@@ -364,11 +372,10 @@ def oneIteration_TAF_frameCompliance(self, eTarget, frameCompliance, TipType, ha
   #using frameCompliance to calculate TAF
   hc, Ac = self.calibrateTAF(eTarget=eTarget, frameCompliance = frameCompliance, TipType=TipType, half_includedAngel_Cone=half_includedAngel_Cone,Radius_Sphere=Radius_Sphere, numPolynomial=numPolynomial, critDepthTip=critDepthTip, critMaxDepthTip=critMaxDepthTip, plotTip=False, constantTerm=constantTerm, plot_Ac_hc=False, returnArea=True) # pylint: disable=unused-variable
   #using TAF to calculate frameCompliance
-  self.calibrateStiffness_iterativeMethod(eTarget=eTarget, critDepth=critDepthStiffness, critMaxDepth=critMaxDepthTip, critForce=critForceStiffness, plotStiffness=False, returnData=False)
+  self.calibrateStiffness_iterativeMethod(eTarget=eTarget, critDepths=critDepthStiffness, critForces=critForceStiffness, plotStiffness=False, returnData=False)
   return (frameCompliance - self.tip.compliance) # pylint: disable=superfluous-parens
 
-
-def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Berkovich', half_includedAngel_Cone=30., Radius_Sphere=2, numPolynomial=3, critDepthStiffness=1.0, critForceStiffness=1.0, critDepthTip=0.0, critMaxDepthTip=1000.0, **kwargs): # pylint:disable=too-many-arguments
+def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Berkovich', half_includedAngel_Cone=30., Radius_Sphere=2, numPolynomial=3, critDepthStiffness=(0,5), critForceStiffness=(0,1000), critDepthTip=0.0, critMaxDepthTip=1000.0, **kwargs): # pylint:disable=too-many-arguments
   """
   iteratively Calibrate the area-function and frame compliance simutaneously according to Eq.(22) in the paper of Oliver 2004
 
@@ -378,8 +385,8 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
     half_includedAngel_Cone (float): the included half-angle of a conical tip
     Radius_Sphere (float): the radius of the Sphere, µm
     numPolynomial (int): number of area function polynomial; if None: return interpolation function
-    critDepthStiffness (float): frame stiffness: what is the minimum depth of data used
-    critForceStiffness (float): frame stiffness: what is the minimum force of data used
+    critDepthStiffness (tuple[float, float]): (min_depth, max_depth) range of data to use.
+    critForceStiffness (tuple[float, float]): (min_force, max_force) range of data to use.
     critDepthTip (float): area function: what is the minimum depth of data used
     critMaxDepthTip (float): area function: what is the maximum depth of data used
     kwargs (dict): additional keyword arguments
@@ -391,7 +398,7 @@ def calibrate_TAF_and_FrameStiffness_iterativeMethod(self, eTarget, TipType='Ber
   self.restartFile()
   constantTerm = kwargs.get('constantTerm', False)
   #calculate the initial frame compliance assuming the constant hardness and elastic modulus
-  self.calibrateStiffness(critDepth=critDepthStiffness, critForce=np.max(self.p)*0.45, plotStiffness=False, returnData=False)
+  self.calibrateStiffness(critDepths=critDepthStiffness, critForces=critForceStiffness, plotStiffness=False, returnData=False)
   #Using the assumed frame compliance to calculate the tip area function
   frameCompliance = self.tip.compliance
   Number_of_ChaningBetweenIncreaseDecrease = 0

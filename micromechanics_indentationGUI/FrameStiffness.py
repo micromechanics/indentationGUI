@@ -8,6 +8,7 @@ from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 from .load_depth import pick, right_click_set_ContactSurface
+from .Tools4LoadingData import read_file_list, merge_excels, Convert2inGUI
 
 def FrameStiffness(self,tabName):
   """
@@ -15,14 +16,20 @@ def FrameStiffness(self,tabName):
   Args:
     tabName (string): the name of Tab Widget
   """
+  #close opened HDF5 file
+  try:
+    i_FrameStiffness.datafile.close()
+  except:
+    pass
   #set Progress Bar
   progressBar = eval(f"self.ui.progressBar_{tabName}")    # pylint: disable = eval-used
   progressBar.setValue(0)
   #get inputs
-  fileName =eval(f"self.ui.lineEdit_path_{tabName}.text()") # pylint: disable = eval-used
-  unloaPMax = eval(f"self.ui.doubleSpinBox_Start_Pmax_{tabName}.value()") # pylint: disable = eval-used
-  unloaPMin = eval(f"self.ui.doubleSpinBox_End_Pmax_{tabName}.value()") # pylint: disable = eval-used
-  maxhc_Tip = self.ui.doubleSpinBox_maxhc_Tip_tabTAF.value()
+  # fileName =eval(f"self.ui.lineEdit_path_{tabName}.text()") # pylint: disable = eval-used
+  fileNameList = eval(f"read_file_list(self.ui.tableWidget_path_{tabName})") # pylint: disable = eval-used
+  unloadPMax = eval(f"self.ui.doubleSpinBox_Start_Pmax_{tabName}.value()") # pylint: disable = eval-used
+  unloadPMin = eval(f"self.ui.doubleSpinBox_End_Pmax_{tabName}.value()") # pylint: disable = eval-used
+  maxhc_Tip = self.ui.doubleSpinBox_maxhc_Tip_tabTAF.value() #pylint: disable=unused-variable
   relForceRateNoise = eval(f"self.ui.doubleSpinBox_relForceRateNoise_{tabName}.value()") # pylint: disable = eval-used
   max_size_fluctuation = eval(f"self.ui.spinBox_max_size_fluctuation_{tabName}.value()") # pylint: disable = eval-used
   UsingRate2findSurface = eval(f"self.ui.checkBox_UsingRate2findSurface_{tabName}.isChecked()") # pylint: disable = eval-used
@@ -40,8 +47,8 @@ def FrameStiffness(self,tabName):
   Tip = indentation.Tip(compliance= 0, shape=TAF_terms)
   #define Inputs (Model, Output, Surface)
   Model = {
-            'unloadPMax':unloaPMax,        # upper end of fitting domain of unloading stiffness: Vendor-specific change
-            'unloadPMin':unloaPMin,         # lower end of fitting domain of unloading stiffness: Vendor-specific change
+            'unloadPMax':unloadPMax,        # upper end of fitting domain of unloading stiffness: Vendor-specific change
+            'unloadPMin':unloadPMin,         # lower end of fitting domain of unloading stiffness: Vendor-specific change
             'relForceRateNoise':relForceRateNoise, # threshold of dp/dt use to identify start of loading: Vendor-specific change
             'maxSizeFluctuations': max_size_fluctuation # maximum size of small fluctuations that are removed in identifyLoadHoldUnload
             }
@@ -61,6 +68,7 @@ def FrameStiffness(self,tabName):
                 "abs(dp/dh)":Rate2findSurface, "median filter":DataFilterSize
                 }
   #Reading Inputs
+  fileName = Convert2inGUI(fileNameList)
   i_FrameStiffness = IndentationXXX(fileName=fileName, tip=Tip, surface=Surface, model=Model, output=Output)
   #initial surfaceIdx
   i_FrameStiffness.surface['surfaceIdx']={}
@@ -69,13 +77,26 @@ def FrameStiffness(self,tabName):
   exec(f"self.ui.comboBox_method_{tabName}.setCurrentIndex({Method-1})") # pylint: disable = exec-used
   #setting to correct thermal drift
   try:
-    correctDrift = eval(f"self.ui.checkBox_UsingDriftUnloading_{tabName}.isChecked()") #setting to correct thermal drift pylint: disable = eval-used
+    correctDrift_Post = self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked()
   except:
-    correctDrift = False
-  if correctDrift:
-    i_FrameStiffness.model['driftRate'] = True
+    correctDrift_Post = False
+  try:
+    correctDrift_Pre = self.ui.checkBox_UsingDriftPre_tabHE.isChecked()
+  except:
+    correctDrift_Pre = False
+  if correctDrift_Post and correctDrift_Pre:
+    correctDrift = 3
+  elif correctDrift_Post:
+    correctDrift = 1
+  elif correctDrift_Pre:
+    correctDrift = 2
   else:
-    i_FrameStiffness.model['driftRate'] = False
+    correctDrift = 0
+  i_FrameStiffness.model['driftRate'] = correctDrift
+  Range_correctDrift_Post = getattr(self.ui,f"doubleSpinBox_UsingDriftUnloading_{tabName}").value()
+  Range_correctDrift_Pre = getattr(self.ui,f"doubleSpinBox_UsingDriftPre_{tabName}").value()
+  i_FrameStiffness.model['Range_PostDrift'] = Range_correctDrift_Post
+  i_FrameStiffness.model['Range_PreDrift'] = Range_correctDrift_Pre
   #changing i.allTestList to calculate using the checked tests
   try:
     OriginalAlltest = list(i_FrameStiffness.allTestList)
@@ -118,19 +139,21 @@ def FrameStiffness(self,tabName):
   ax[0].cla()
   ax[1].cla()
   i_FrameStiffness.output['ax'] = ax
-  critDepth=eval(f"self.ui.doubleSpinBox_critDepthStiffness_{tabName}.value()") # pylint: disable = eval-used
-  critForce=eval(f"self.ui.doubleSpinBox_critForceStiffness_{tabName}.value()") # pylint: disable = eval-used
+  critDepth = getattr(self.ui, f"doubleSpinBox_critDepthStiffness_{tabName}").value()
+  critMaxDepth = getattr(self.ui, f"doubleSpinBox_critMaxDepthStiffness_{tabName}").value()
+  critForce = getattr(self.ui, f"doubleSpinBox_critForceStiffness_{tabName}").value()
+  critMaxForce = getattr(self.ui, f"doubleSpinBox_critMaxForceStiffness_{tabName}").value()
   Index_CalculationMethod = eval(f"self.ui.comboBox_CalculationMethod_{tabName}.currentIndex()") # pylint: disable = eval-used
   frameCompliance_collect = None
   if Index_CalculationMethod == 0:
     i_FrameStiffness.restartFile()
-    _, _, frameCompliance_collect = i_FrameStiffness.calibrateStiffness(critDepth=critDepth, critForce=critForce, plotStiffness=False, returnData=True)
+    _, _, frameCompliance_collect = i_FrameStiffness.calibrateStiffness(critDepths=(critDepth,critMaxDepth), critForces=(critForce,critMaxForce), plotStiffness=False, returnData=True)
     frameCompliance = i_FrameStiffness.tip.compliance
   elif Index_CalculationMethod == 1:
     i_FrameStiffness.output['ax'] = [None,None]
-    i_FrameStiffness.calibrateStiffness_iterativeMethod(critDepth=critDepth, critMaxDepth=maxhc_Tip, critForce=critForce, plotStiffness=False)
+    i_FrameStiffness.calibrateStiffness_iterativeMethod(critDepths=(critDepth,critMaxDepth), critForces=(critForce,critMaxForce), plotStiffness=False)
     i_FrameStiffness.output['ax'] = ax
-    i_FrameStiffness.calibrateStiffness_OneIteration(eTarget=False, critDepth=critDepth, critMaxDepth=maxhc_Tip, critForce=critForce, plotStiffness=False)
+    i_FrameStiffness.calibrateStiffness_OneIteration(eTarget=False, critDepths=(critDepth,critMaxDepth), critForces=(critForce,critMaxForce), plotStiffness=False)
     frameCompliance = i_FrameStiffness.tip.compliance
   #pick the label of datapoints
   ax[0].figure.canvas.mpl_connect("pick_event", pick)

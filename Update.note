@@ -1,0 +1,12 @@
+--------2026-03-12--------Weiguang
+1. Add function of calculating creep rate.
+2. The depth for calculating creep rate can be corrected using a constant modulus.
+3. The csv-file exported from SURFACE SMART 500 can be used by indentationGUI for calculating: 
+    (i) tip area function
+    (ii) hardness and modulus
+    (iii) creep rate.
+4. Frame compliance can be directly set (previously can only be copied).
+5. Tip area function can be directly given (previously can only be copied).
+6. Add pop-up windows for selecting path list and test list.
+7. Can plot hardness or modulus as a function of depth (previously only contact depth).
+8. Two options to calculate the mean vale of hardness and elastic modulus: (i) contact depth range (ii) depth

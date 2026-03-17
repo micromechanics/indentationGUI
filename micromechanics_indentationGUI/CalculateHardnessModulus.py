@@ -3,17 +3,23 @@ import numpy as np
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from micromechanics import indentation
-from micromechanics.indentation.definitions import Vendor
+from micromechanics.indentation.definitions import Vendor, Method
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 from .load_depth import pick, right_click_set_ContactSurface
+from .Tools4LoadingData import read_file_list, Convert2inGUI
 
-def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
+def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals, too-many-statements
   """ Graphical user interface to calculate hardness and young's modulus """
+  #close opened HDF5 file
+  try:
+    self.i_tabHE.datafile.close()
+  except:
+    pass
   #set Progress Bar
   progressBar = self.ui.progressBar_tabHE
   progressBar.setValue(0)
   #Reading Inputs
-  fileName = f"{self.ui.lineEdit_path_tabHE.text()}"
+  fileNameList = read_file_list(self.ui.tableWidget_path_tabHE)
   Poisson = self.ui.doubleSpinBox_Poisson_tabHE.value()
   E_Tip = self.ui.doubleSpinBox_E_Tip_tabHE.value()
   Poisson_Tip = self.ui.doubleSpinBox_Poisson_Tip_tabHE.value()
@@ -27,8 +33,12 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   Rate2findSurface = self.ui.doubleSpinBox_Rate2findSurface_tabHE.value()
   DataFilterSize = self.ui.spinBox_DataFilterSize_tabHE.value()
   DecreaseDataDensity = self.ui.spinBox_DecreaseDataDensity_tabHE.value()
+  Usinghc4mean = self.ui.checkBox_Usinghc4mean_tabHE.isChecked()
   min_hc4mean = self.ui.doubleSpinBox_minhc4mean_tabHE.value()
   max_hc4mean = self.ui.doubleSpinBox_maxhc4mean_tabHE.value()
+  # Usingh4mean = self.ui.checkBox_Usingh4mean_tabHE.isChecked()
+  min_h4mean = self.ui.doubleSpinBox_minh4mean_tabHE.value()
+  max_h4mean = self.ui.doubleSpinBox_maxh4mean_tabHE.value()
   if DataFilterSize%2==0:
     DataFilterSize+=1
   TAF_terms = []
@@ -64,6 +74,10 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   #open waiting dialog
   self.show_wait('GUI is reading the file')
   #Reading Inputs
+  try:
+    fileName = Convert2inGUI(fileNameList)
+  except:
+    pass
   self.i_tabHE = IndentationXXX(fileName=fileName, tip=Tip, nuMat= Poisson, surface=Surface, model=Model, output=Output)
   #initial surfaceIdx
   self.i_tabHE.surface['surfaceIdx']={}
@@ -73,23 +87,39 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   self.close_wait()
   i = self.i_tabHE
   #show Test method
-  Method = i.method.value
-  self.ui.comboBox_method_tabHE.setCurrentIndex(Method-1)
+  Method_value = i.method.value
+  self.ui.comboBox_method_tabHE.setCurrentIndex(Method_value-1)
   #setting to correct thermal drift
   try:
-    correctDrift = self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked()
+    correctDrift_Post = self.ui.checkBox_UsingDriftUnloading_tabHE.isChecked()
   except:
-    correctDrift = False
-  if correctDrift:
-    i.model['driftRate'] = True
+    correctDrift_Post = False
+  try:
+    correctDrift_Pre = self.ui.checkBox_UsingDriftPre_tabHE.isChecked()
+  except:
+    correctDrift_Pre = False
+  if correctDrift_Post and correctDrift_Pre:
+    correctDrift = 3
+  elif correctDrift_Post:
+    correctDrift = 1
+  elif correctDrift_Pre:
+    correctDrift = 2
   else:
-    i.model['driftRate'] = 0
+    correctDrift = 0
+  i.model['driftRate'] = correctDrift
+  Range_correctDrift_Post = self.ui.doubleSpinBox_UsingDriftUnloading_tabHE.value()
+  Range_correctDrift_Pre = self.ui.doubleSpinBox_UsingDriftPre_tabHE.value()
+  i.model['Range_PostDrift'] = Range_correctDrift_Post
+  i.model['Range_PreDrift'] = Range_correctDrift_Pre
   #show Equipment
   try:
     Equipment = i.vendor.value
   except Exception as e: #pylint: disable=broad-except
     suggestion = 'Check if the Path is completed. \n A correct example: C:\G200X\\20230101\Example.xlsx' #pylint: disable=anomalous-backslash-in-string
     self.show_error(str(e), suggestion)
+  #show Equipment
+  if 'zip' in fileNameList[0]:
+    Equipment = 2
   self.ui.comboBox_equipment_tabHE.setCurrentIndex(Equipment-1)
   #changing i.allTestList to calculate using the checked tests
   OriginalAlltest = list(self.i_tabHE.allTestList)
@@ -155,9 +185,13 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   X_Position_collect=[]
   Y_Position_collect=[]
   ax_H_hc = self.static_ax_H_hc_tabHE
+  ax_H_h = self.static_ax_H_h_tabHE
   ax_E_hc = self.static_ax_E_hc_tabHE
+  ax_E_h = self.static_ax_E_h_tabHE
   ax_H_hc.cla()
+  ax_H_h.cla()
   ax_E_hc.cla()
+  ax_E_h.cla()
   #plotting H/E**2 - hc
   ax_HE2_hc = self.static_ax_HE2_hc_tabHE
   ax_HE2_hc.cla()
@@ -192,7 +226,10 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
         # show error
         suggestion = 're-export raw data from the machince to add X- and Y-Position' #pylint: disable=anomalous-backslash-in-string
         self.show_error(str(e),suggestion)
-      marker4mean= np.where((i.hc>=min_hc4mean) & (i.hc<=max_hc4mean))
+      if Usinghc4mean:
+        marker4mean= np.where((i.hc>=min_hc4mean) & (i.hc<=max_hc4mean))
+      else:
+        marker4mean= np.where((i.h[i.valid]>=min_h4mean) & (i.h[i.valid]<=max_h4mean))
       Hmean_collect.append(np.mean(i.hardness[marker4mean]))
       H4mean_collect.append(i.hardness[marker4mean])
       Emean_collect.append(np.mean(i.modulus[marker4mean]))
@@ -214,32 +251,46 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
       else:
         test_number_collect.append(int(i.testName[4:]))
       #plotting hardness and young's modulus
-      ax_H_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'.-', linewidth=1, picker=True, label=i.testName)
-      ax_E_hc.plot(i.hc[::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '.-', linewidth=1, picker=True, label=i.testName)
+      if i.method==Method.CSM:
+        ax_H_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+        ax_H_h.plot(i.h[i.valid][::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+        ax_E_hc.plot(i.hc[::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+        ax_E_h.plot(i.h[i.valid][::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+      else:
+        ax_H_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'.-', linewidth=1, picker=True, label=i.testName)
+        ax_H_h.plot(i.h[i.valid][::DecreaseDataDensity],i.hardness[::DecreaseDataDensity],'.-', linewidth=1, picker=True, label=i.testName)
+        ax_E_hc.plot(i.hc[::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '.-', linewidth=1, picker=True, label=i.testName)
+        ax_E_h.plot(i.h[i.valid][::DecreaseDataDensity],i.modulus[::DecreaseDataDensity], '.-', linewidth=1, picker=True, label=i.testName)
       #plotting H/E**2 - hc
       ax_HE2_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity]/i.modulus[::DecreaseDataDensity]**2,'.-', linewidth=1, picker=True, label=i.testName)
-      if not i.testList:
-        break
+    if not i.testList:
+      break
     i.nextTest()
 
-  ax_H_hc.axvline(min_hc4mean,color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
-  ax_E_hc.axvline(min_hc4mean,color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
-  if np.max(hc_collect[0])*1.1 > max_hc4mean:
-    ax_H_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
-    ax_E_hc.axvline(max_hc4mean,color='gray',linestyle='dashed')
+  ax_H_hc.axvline(i.hc[marker4mean][0],color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
+  ax_E_hc.axvline(i.hc[marker4mean][0],color='gray',linestyle='dashed', label='min./max. hc for calculating mean values')
+  if np.max(hc_collect[0])*1.1 > i.hc[marker4mean][-1]:
+    ax_H_hc.axvline(i.hc[marker4mean][-1],color='gray',linestyle='dashed')
+    ax_E_hc.axvline(i.hc[marker4mean][-1],color='gray',linestyle='dashed')
   try:
-    ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.mean(Hmean_collect)*2,np.mean(Hmean_collect)+np.mean(Hmean_collect)*2)
-    ax_E_hc.set_ylim(np.mean(Emean_collect)-np.mean(Emean_collect)*2,np.mean(Emean_collect)+np.mean(Emean_collect)*2)
+    ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.std(Hmean_collect,ddof=1)*20,np.mean(Hmean_collect)+np.std(Hmean_collect,ddof=1)*20)
+    ax_H_h.set_ylim(np.mean(Hmean_collect)-np.std(Hmean_collect,ddof=1)*20,np.mean(Hmean_collect)+np.std(Hmean_collect,ddof=1)*20)
+    ax_E_hc.set_ylim(np.mean(Emean_collect)-np.std(Emean_collect,ddof=1)*20,np.mean(Emean_collect)+np.std(Emean_collect,ddof=1)*20)
+    ax_E_h.set_ylim(np.mean(Emean_collect)-np.std(Emean_collect,ddof=1)*20,np.mean(Emean_collect)+np.std(Emean_collect,ddof=1)*20)
   except Exception as e: #pylint: disable=broad-except
     suggestion = '1. Decrease "min. hc" \n 2. Increase "min. hc" \n ' #pylint: disable=anomalous-backslash-in-string
     self.show_error(str(e),suggestion)
   if len(H_collect)<10:
     ax_H_hc.legend()
+    ax_H_h.legend()
     ax_E_hc.legend()
+    ax_E_h.legend()
     ax_HE2_hc.legend()
   #pick the label of datapoints
   self.static_canvas_H_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
+  self.static_canvas_H_h_tabHE.figure.canvas.mpl_connect("pick_event", pick)
   self.static_canvas_E_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
+  self.static_canvas_E_h_tabHE.figure.canvas.mpl_connect("pick_event", pick)
   self.static_canvas_HE2_hc_tabHE.figure.canvas.mpl_connect("pick_event", pick)
   #prepare for export
   self.tabHE_hc_collect=hc_collect
@@ -288,12 +339,20 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   ax_E_Index.axhline(np.mean(E4mean_collect), color = 'tab:orange', label = f"average Young's Modulus: {np.mean(E4mean_collect)} GPa",zorder=3)
   ax_E_Index.axhline(np.mean(E4mean_collect)+np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed', label = f"standard Deviation: +- {np.std(E4mean_collect,ddof=1)} GPa",zorder=3)
   ax_E_Index.axhline(np.mean(E4mean_collect)-np.std(E4mean_collect,ddof=1), color = 'tab:orange', linestyle='dashed',zorder=3)
+  ax_H_hc.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
   ax_H_hc.set_xlabel('Contact depth [µm]')
   ax_H_hc.set_ylabel('Hardness [GPa]')
+  ax_H_h.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  ax_H_h.set_xlabel('Depth [µm]')
+  ax_H_h.set_ylabel('Hardness [GPa]')
   ax_H_Index.set_xlabel('Indents\'s Nummber')
   ax_H_Index.set_ylabel('Hardness [GPa]')
+  ax_E_hc.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
   ax_E_hc.set_xlabel('Contact depth [µm]')
   ax_E_hc.set_ylabel('Young\'s Modulus [GPa]')
+  ax_E_h.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  ax_E_h.set_xlabel('Depth [µm]')
+  ax_E_h.set_ylabel('Young\'s Modulus [GPa]')
   ax_HE2_hc.set_xlabel('Contact depth [µm]')
   ax_HE2_hc.set_ylabel('H/E² [-]')
   ax_E_Index.set_xlabel('Indents\'s Nummber')
@@ -301,16 +360,22 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals
   ax_H_Index.legend()
   ax_E_Index.legend()
   self.static_canvas_H_hc_tabHE.figure.set_tight_layout(True)
+  self.static_canvas_H_h_tabHE.figure.set_tight_layout(True)
   self.static_canvas_E_hc_tabHE.figure.set_tight_layout(True)
+  self.static_canvas_E_h_tabHE.figure.set_tight_layout(True)
   self.static_canvas_H_Index_tabHE.figure.set_tight_layout(True)
   self.static_canvas_E_Index_tabHE.figure.set_tight_layout(True)
   self.set_aspectRatio(ax=ax_H_hc)
+  self.set_aspectRatio(ax=ax_H_h)
   self.set_aspectRatio(ax=ax_E_hc)
+  self.set_aspectRatio(ax=ax_E_h)
   self.set_aspectRatio(ax=ax_HE2_hc)
   self.set_aspectRatio(ax=ax_H_Index)
   self.set_aspectRatio(ax=ax_E_Index)
   self.static_canvas_H_hc_tabHE.draw()
+  self.static_canvas_H_h_tabHE.draw()
   self.static_canvas_E_hc_tabHE.draw()
+  self.static_canvas_E_h_tabHE.draw()
   self.static_canvas_HE2_hc_tabHE.draw()
   self.static_canvas_H_Index_tabHE.draw()
   self.static_canvas_E_Index_tabHE.draw()
