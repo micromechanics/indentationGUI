@@ -1062,6 +1062,10 @@ class DialogOpen(QDialog):
 ## Main function
 def main():
   """ Main method and entry point for commands """
+  # Prevent system Qt plugins from interfering
+  os.environ.pop("QT_PLUGIN_PATH", None)
+  os.environ.pop("QML2_IMPORT_PATH", None)
+  os.environ.pop("LD_LIBRARY_PATH", None)
   #pylint: disable=global-variable-undefined
   global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, \
     window_DialogError, window_DialogWait, window_DialogAbout, \
