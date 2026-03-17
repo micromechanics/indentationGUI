@@ -5,7 +5,7 @@ micromechanics-indentationGUI
 </h2>
 <p align="center">
   <img
-  src="https://raw.githubusercontent.com/micromechanics/indentationGUI/main/micromechanics_indentationGUI/pic/logo.png" 
+  src="https://raw.githubusercontent.com/micromechanics/indentationGUI/main/micromechanics_indentationGUI/pic/logo/logo.png" 
   width="314"
   title="micromechanics-indentationGUI" >
 </p>
