@@ -209,8 +209,10 @@ def click_OK_calibration(self): #pylint: disable=too-many-locals
   #open waiting dialog
   self.show_wait('GUI is plotting results!')
   #plot the calibrated tip area funcitonS
+  DepthStep4UniformDepth = 0.01
+  if i.method!=indentation.definitions.Method.CSM: DepthStep4UniformDepth = 0
   try:
-    self.plot_TAF(hc,Ac)
+    self.plot_TAF(hc,Ac,DepthStep4UniformDepth=DepthStep4UniformDepth)
   except Exception as e: #pylint: disable=broad-except
     suggestion = 'Cannot plot hc-Ac' #pylint: disable=anomalous-backslash-in-string
     errors=f"{errors}\n\n{e}"
@@ -261,27 +263,26 @@ def click_OK_calibration(self): #pylint: disable=too-many-locals
   #close waiting dialog
   self.close_wait(info='Calculation of Tip Area Function is finished!')
 
-def plot_TAF(self,hc,Ac,UniformDepth=False):
+def plot_TAF(self,hc,Ac,DepthStep4UniformDepth = 0.01):
   """
   to plot the calibrated tip area function
 
   Args:
     hc (float): contact depth [µm]
     Ac (float): contact area [µm2]
-    UniformDepth (bool): option to uniform data along the depth
+    DepthStepUniformDepth (float): depth step size to make the Ac-hc data uniform along hc
   """
   ax = self.static_ax_TAF_tabTAF
   ax[0].cla()
   ax[1].cla()
   ax[0].scatter(hc,Ac,color='b',label='data',zorder=1)
-  if UniformDepth:
-    DepthStep4UniformDepth = 0.01
+  if DepthStep4UniformDepth>0:
     bins_ = int((np.max(hc)-np.min(hc))/DepthStep4UniformDepth)
     Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=bins_)
     Ac_mean = Ac_mean[:-1]
     bin_edges = bin_edges[:-1]
     hc_bin_center = 0.5 * (bin_edges[:-1] + bin_edges[1:])
-    ax[0].scatter(hc_bin_center,Ac_mean,color='orange',label='data averaged at intervals of 10 nm in hc',zorder=2)
+    ax[0].scatter(hc_bin_center,Ac_mean,color='orange',label=f"data averaged at intervals of {DepthStep4UniformDepth*1000} nm in hc",zorder=2)
   hc_new = np.arange(0,hc.max()*1.05,hc.max()/100)
   Ac_new = self.i_tabTAF.tip.areaFunction(hc_new)
   ax[0].plot(hc_new,Ac_new,color='r',label='the fitted Tip Area Function',zorder=3)
