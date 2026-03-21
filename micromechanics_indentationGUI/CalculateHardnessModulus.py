@@ -192,6 +192,8 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals, too-man
   ax_H_h.cla()
   ax_E_hc.cla()
   ax_E_h.cla()
+  H4ylim_collect=[]
+  E4ylim_collect=[]
   #plotting H/E**2 - hc
   ax_HE2_hc = self.static_ax_HE2_hc_tabHE
   ax_HE2_hc.cla()
@@ -211,6 +213,11 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals, too-man
       hmax_collect.append(i.h.max())
       H_collect.append(i.hardness)
       E_collect.append(i.modulus)
+      marker4ylim = np.where(i.hc > 0.05)[0]
+      if len(marker4ylim) == 0:
+        marker4ylim = np.arange(len(i.hc))
+      H4ylim_collect.append(i.hardness[marker4ylim])
+      E4ylim_collect.append(i.modulus[marker4ylim])
       Er_collect.append(i.modulusRed)
       try:
         X_Position_collect.append(i.X_Position)
@@ -273,10 +280,16 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals, too-man
     ax_H_hc.axvline(i.hc[marker4mean][-1],color='gray',linestyle='dashed')
     ax_E_hc.axvline(i.hc[marker4mean][-1],color='gray',linestyle='dashed')
   try:
-    ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.std(Hmean_collect,ddof=1)*20,np.mean(Hmean_collect)+np.std(Hmean_collect,ddof=1)*20)
-    ax_H_h.set_ylim(np.mean(Hmean_collect)-np.std(Hmean_collect,ddof=1)*20,np.mean(Hmean_collect)+np.std(Hmean_collect,ddof=1)*20)
-    ax_E_hc.set_ylim(np.mean(Emean_collect)-np.std(Emean_collect,ddof=1)*20,np.mean(Emean_collect)+np.std(Emean_collect,ddof=1)*20)
-    ax_E_h.set_ylim(np.mean(Emean_collect)-np.std(Emean_collect,ddof=1)*20,np.mean(Emean_collect)+np.std(Emean_collect,ddof=1)*20)
+    H4ylim_all = np.hstack(H4ylim_collect)
+    E4ylim_all = np.hstack(E4ylim_collect)
+    Hstd_limited = min(np.std(H4ylim_all,ddof=1), 1)
+    Estd_limited = min(np.std(E4ylim_all,ddof=1), 10)
+    Hmean_ylim = np.mean(H4ylim_all)
+    Emean_ylim = np.mean(E4ylim_all)
+    ax_H_hc.set_ylim(Hmean_ylim-Hstd_limited*20,Hmean_ylim+Hstd_limited*20)
+    ax_H_h.set_ylim(Hmean_ylim-Hstd_limited*20,Hmean_ylim+Hstd_limited*20)
+    ax_E_hc.set_ylim(Emean_ylim-Estd_limited*20,Emean_ylim+Estd_limited*20)
+    ax_E_h.set_ylim(Emean_ylim-Estd_limited*20,Emean_ylim+Estd_limited*20)
   except Exception as e: #pylint: disable=broad-except
     suggestion = '1. Decrease "min. hc" \n 2. Increase "min. hc" \n ' #pylint: disable=anomalous-backslash-in-string
     self.show_error(str(e),suggestion)
