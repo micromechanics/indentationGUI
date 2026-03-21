@@ -1768,6 +1768,74 @@ Compliance
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="tab_TAF_Hardness">
+             <attribute name="title">
+              <string>Hardness</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_tabTAF_Hardness">
+              <item row="0" column="0">
+               <widget class="QTabWidget" name="tabWidget_tabTAF_Hardness">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <widget class="QWidget" name="tab_TAF_H_hc">
+                 <attribute name="title">
+                  <string>Hardness-contact depth</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_tabTAF_H_hc">
+                  <item row="0" column="0">
+                   <widget class="QGraphicsView" name="graphicsView_H_hc_tabTAF"/>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="tab_TAF_H_h">
+                 <attribute name="title">
+                  <string>Hardness-depth</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_tabTAF_H_h">
+                  <item row="0" column="0">
+                   <widget class="QGraphicsView" name="graphicsView_H_h_tabTAF"/>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_TAF_Modulus">
+             <attribute name="title">
+              <string>Young's Modulus</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_tabTAF_Modulus">
+              <item row="0" column="0">
+               <widget class="QTabWidget" name="tabWidget_tabTAF_Modulus">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <widget class="QWidget" name="tab_TAF_E_hc">
+                 <attribute name="title">
+                  <string>Young's Modulus-contact depth</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_tabTAF_E_hc">
+                  <item row="0" column="0">
+                   <widget class="QGraphicsView" name="graphicsView_E_hc_tabTAF"/>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="tab_TAF_E_h">
+                 <attribute name="title">
+                  <string>Young's Modulus-depth</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_tabTAF_E_h">
+                  <item row="0" column="0">
+                   <widget class="QGraphicsView" name="graphicsView_E_h_tabTAF"/>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
           <item row="5" column="0">

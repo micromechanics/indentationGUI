@@ -30,7 +30,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   from .AnalysePopIn import Analyse_PopIn
   from .CalculateHardnessModulus import Calculate_Hardness_Modulus
   from .CalculateCreepRate import Calculate_CreepRate
-  from .CalibrateTAF import click_OK_calibration, plot_TAF
+  from .CalibrateTAF import click_OK_calibration, plot_TAF, plot_Hardness_Modulus_tabTAF
   from .Classification import Classification_HE, PlotMappingWithoutClustering, PlotMappingAfterClustering
   from .FrameStiffness import FrameStiffness
   from .load_depth import plot_load_depth, set_aspectRatio, setAsContactSurface, right_click_set_ContactSurface
@@ -271,6 +271,10 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
                           'load_depth_tab_exclusive_frame_stiffness_tabTAF',
                           'FrameStiffness_tabTAF',                                #Framestiffness_TabTAF
                           'TAF_tabTAF',
+                          'H_hc_tabTAF',
+                          'H_h_tabTAF',
+                          'E_hc_tabTAF',
+                          'E_h_tabTAF',
                           'load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness',
                           'load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness',
                           'tabTipRadius_FrameStiffness',

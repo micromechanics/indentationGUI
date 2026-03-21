@@ -9,6 +9,7 @@ from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 from .Tools4LoadingData import read_file_list, Convert2inGUI
+from .load_depth import pick
 
 def click_OK_calibration(self): #pylint: disable=too-many-locals
   """ Graphical user interface to calibrate tip area function """
@@ -215,6 +216,13 @@ def click_OK_calibration(self): #pylint: disable=too-many-locals
     errors=f"{errors}\n\n{e}"
     suggestions=f"{suggestions}\n\n{suggestion}"
     self.show_error(str(errors), suggestions)
+  try:
+    self.plot_Hardness_Modulus_tabTAF(min_hc=minhc_Tip, max_hc=maxhc_Tip)
+  except Exception as e: #pylint: disable=broad-except
+    suggestion = "Cannot plot hardness and Young's modulus"
+    errors=f"{errors}\n\n{e}"
+    suggestions=f"{suggestions}\n\n{suggestion}"
+    self.show_error(str(errors), suggestions)
   #listing Test
   tableWidget=self.ui.tableWidget_tabTAF
   tableWidget.setRowCount(len(OriginalAlltest))
@@ -265,16 +273,18 @@ def plot_TAF(self,hc,Ac,UniformDepth=False):
   ax = self.static_ax_TAF_tabTAF
   ax[0].cla()
   ax[1].cla()
+  ax[0].scatter(hc,Ac,color='b',label='data',zorder=1)
   if UniformDepth:
-    Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=30)
+    DepthStep4UniformDepth = 0.01
+    bins_ = int((np.max(hc)-np.min(hc))/DepthStep4UniformDepth)
+    Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=bins_)
     Ac_mean = Ac_mean[:-1]
     bin_edges = bin_edges[:-1]
     hc_bin_center = 0.5 * (bin_edges[:-1] + bin_edges[1:])
-    ax[0].scatter(hc_bin_center,Ac_mean,color='orange',label='data uniformed along hc')
-  ax[0].scatter(hc,Ac,color='b',label='data')
+    ax[0].scatter(hc_bin_center,Ac_mean,color='orange',label='data averaged at intervals of 10 nm in hc',zorder=2)
   hc_new = np.arange(0,hc.max()*1.05,hc.max()/100)
   Ac_new = self.i_tabTAF.tip.areaFunction(hc_new)
-  ax[0].plot(hc_new,Ac_new,color='r',label='the fitted Tip Area Function')
+  ax[0].plot(hc_new,Ac_new,color='r',label='the fitted Tip Area Function',zorder=3)
   ax[0].set_ylabel(r"Contact Area $A_{c}$ [µm$^2$]")
   if self.ui.checkBox_plotReferenceTAF_tabTAF.isChecked():
     Reference_TAF_terms =[]
@@ -288,7 +298,7 @@ def plot_TAF(self,hc,Ac,UniformDepth=False):
                     Reference_TAF_terms[6] * (hc_new*1000) ** (2/2**6) + Reference_TAF_terms[7] * (hc_new*1000) ** (2/2**7) +
                     Reference_TAF_terms[8] * (hc_new*1000) ** (2/2**8)
                     )/1.e6 # conversion of unit from nm^2 to um^2
-    ax[0].plot(hc_new,Ac_reference,color='gray',linestyle='dashed', label='teh reference Tip Area Function')
+    ax[0].plot(hc_new,Ac_reference,color='gray',linestyle='dashed', label='the reference Tip Area Function',zorder=3)
   ax[0].legend()
   Ac_cal = self.i_tabTAF.tip.areaFunction(hc)
   error = (Ac_cal - Ac) / Ac *100
@@ -299,3 +309,103 @@ def plot_TAF(self,hc,Ac,UniformDepth=False):
   ax[1].set_xlabel(r"Contact Depth $h_{c}$ [µm]")
   self.static_canvas_TAF_tabTAF.figure.set_tight_layout(True)
   self.static_canvas_TAF_tabTAF.draw()
+
+
+def plot_Hardness_Modulus_tabTAF(self, min_hc=None, max_hc=None):
+  """Plot hardness and modulus in tabTAF using tabHE-style plotting parameters."""
+  i = self.i_tabTAF
+  ax_H_hc = self.static_ax_H_hc_tabTAF
+  ax_H_h = self.static_ax_H_h_tabTAF
+  ax_E_hc = self.static_ax_E_hc_tabTAF
+  ax_E_h = self.static_ax_E_h_tabTAF
+  ax_H_hc.cla()
+  ax_H_h.cla()
+  ax_E_hc.cla()
+  ax_E_h.cla()
+  hc_collect = []
+  H_collect = []
+  Hmean_collect = []
+  Hstd_collect = []
+  H4mean_collect = []
+  Emean_collect = []
+  Estd_collect = []
+  E4mean_collect = []
+  marker4mean = np.array([], dtype=int)
+  decrease_data_density = 1
+  i.restartFile()
+  while True:
+    i.analyse()
+    hc_collect.append(i.hc)
+    H_collect.append(i.hardness)
+    if min_hc is None or max_hc is None or max_hc <= min_hc:
+      marker4mean = np.arange(len(i.hc))
+    else:
+      marker4mean = np.where((i.hc >= min_hc) & (i.hc <= max_hc))[0]
+      if len(marker4mean) == 0:
+        marker4mean = np.arange(len(i.hc))
+    Hmean_collect.append(np.mean(i.hardness[marker4mean]))
+    H4mean_collect.append(i.hardness[marker4mean])
+    Emean_collect.append(np.mean(i.modulus[marker4mean]))
+    E4mean_collect.append(i.modulus[marker4mean])
+    if len(i.hardness[marker4mean]) > 1:
+      Hstd_collect.append(np.std(i.hardness[marker4mean], ddof=1))
+      Estd_collect.append(np.std(i.modulus[marker4mean], ddof=1))
+    else:
+      Hstd_collect.append(0)
+      Estd_collect.append(0)
+    if i.method == indentation.definitions.Method.CSM:
+      ax_H_hc.plot(i.hc[::decrease_data_density], i.hardness[::decrease_data_density], '-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+      ax_H_h.plot(i.h[i.valid][::decrease_data_density], i.hardness[::decrease_data_density], '-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+      ax_E_hc.plot(i.hc[::decrease_data_density], i.modulus[::decrease_data_density], '-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+      ax_E_h.plot(i.h[i.valid][::decrease_data_density], i.modulus[::decrease_data_density], '-', linewidth=1, alpha=0.8, picker=True, label=i.testName)
+    else:
+      ax_H_hc.plot(i.hc[::decrease_data_density], i.hardness[::decrease_data_density], '.-', linewidth=1, picker=True, label=i.testName)
+      ax_H_h.plot(i.h[i.valid][::decrease_data_density], i.hardness[::decrease_data_density], '.-', linewidth=1, picker=True, label=i.testName)
+      ax_E_hc.plot(i.hc[::decrease_data_density], i.modulus[::decrease_data_density], '.-', linewidth=1, picker=True, label=i.testName)
+      ax_E_h.plot(i.h[i.valid][::decrease_data_density], i.modulus[::decrease_data_density], '.-', linewidth=1, picker=True, label=i.testName)
+    if not i.testList:
+      break
+    i.nextTest()
+  # if hc_collect and len(marker4mean) > 0:
+  #   ax_H_hc.axvline(i.hc[marker4mean][0], color='gray', linestyle='dashed', label='min./max. hc for calculating mean values')
+  #   ax_E_hc.axvline(i.hc[marker4mean][0], color='gray', linestyle='dashed', label='min./max. hc for calculating mean values')
+  #   if np.max(hc_collect[0])*1.1 > i.hc[marker4mean][-1]:
+  #     ax_H_hc.axvline(i.hc[marker4mean][-1], color='gray', linestyle='dashed')
+  #     ax_E_hc.axvline(i.hc[marker4mean][-1], color='gray', linestyle='dashed')
+  try:
+    ax_H_hc.set_ylim(np.mean(Hmean_collect)-np.std(Hmean_collect, ddof=1)*20, np.mean(Hmean_collect)+np.std(Hmean_collect, ddof=1)*20)
+    ax_H_h.set_ylim(np.mean(Hmean_collect)-np.std(Hmean_collect, ddof=1)*20, np.mean(Hmean_collect)+np.std(Hmean_collect, ddof=1)*20)
+    ax_E_hc.set_ylim(np.mean(Emean_collect)-np.std(Emean_collect, ddof=1)*20, np.mean(Emean_collect)+np.std(Emean_collect, ddof=1)*20)
+    ax_E_h.set_ylim(np.mean(Emean_collect)-np.std(Emean_collect, ddof=1)*20, np.mean(Emean_collect)+np.std(Emean_collect, ddof=1)*20)
+  except Exception:
+    pass
+  if len(H_collect) < 10:
+    ax_H_hc.legend()
+    ax_E_hc.legend()
+  self.static_canvas_H_hc_tabTAF.figure.canvas.mpl_connect("pick_event", pick)
+  self.static_canvas_E_hc_tabTAF.figure.canvas.mpl_connect("pick_event", pick)
+  ax_H_hc.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  ax_H_hc.set_xlabel('Contact depth [µm]')
+  ax_H_hc.set_ylabel('Hardness [GPa]')
+  ax_H_h.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  ax_H_h.set_xlabel('Depth [µm]')
+  ax_H_h.set_ylabel('Hardness [GPa]')
+  ax_E_hc.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  ax_E_hc.set_xlabel('Contact depth [µm]')
+  ax_E_hc.set_ylabel("Young's Modulus [GPa]")
+  ax_E_h.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  ax_E_h.set_xlabel('Depth [µm]')
+  ax_E_h.set_ylabel("Young's Modulus [GPa]")
+  self.static_canvas_H_hc_tabTAF.figure.set_tight_layout(True)
+  self.static_canvas_H_h_tabTAF.figure.set_tight_layout(True)
+  self.static_canvas_E_hc_tabTAF.figure.set_tight_layout(True)
+  self.static_canvas_E_h_tabTAF.figure.set_tight_layout(True)
+  self.set_aspectRatio(ax=ax_H_hc)
+  self.set_aspectRatio(ax=ax_H_h)
+  self.set_aspectRatio(ax=ax_E_hc)
+  self.set_aspectRatio(ax=ax_E_h)
+  self.static_canvas_H_hc_tabTAF.draw()
+  self.static_canvas_H_h_tabTAF.draw()
+  self.static_canvas_E_hc_tabTAF.draw()
+  self.static_canvas_E_h_tabTAF.draw()
+  i.restartFile()

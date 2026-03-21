@@ -939,6 +939,66 @@ class Ui_MainWindow(object):
         self.gridLayout_13.addWidget(self.pushButton_CopyAboveTAF, 3, 1, 1, 1)
 
         self.graphicsView_tab_TipAreaFunction.addTab(self.tab_2, "")
+        self.tab_TAF_Hardness = QWidget()
+        self.tab_TAF_Hardness.setObjectName(u"tab_TAF_Hardness")
+        self.gridLayout_tabTAF_Hardness = QGridLayout(self.tab_TAF_Hardness)
+        self.gridLayout_tabTAF_Hardness.setObjectName(u"gridLayout_tabTAF_Hardness")
+        self.tabWidget_tabTAF_Hardness = QTabWidget(self.tab_TAF_Hardness)
+        self.tabWidget_tabTAF_Hardness.setObjectName(u"tabWidget_tabTAF_Hardness")
+        self.tab_TAF_H_hc = QWidget()
+        self.tab_TAF_H_hc.setObjectName(u"tab_TAF_H_hc")
+        self.gridLayout_tabTAF_H_hc = QGridLayout(self.tab_TAF_H_hc)
+        self.gridLayout_tabTAF_H_hc.setObjectName(u"gridLayout_tabTAF_H_hc")
+        self.graphicsView_H_hc_tabTAF = QGraphicsView(self.tab_TAF_H_hc)
+        self.graphicsView_H_hc_tabTAF.setObjectName(u"graphicsView_H_hc_tabTAF")
+
+        self.gridLayout_tabTAF_H_hc.addWidget(self.graphicsView_H_hc_tabTAF, 0, 0, 1, 1)
+
+        self.tabWidget_tabTAF_Hardness.addTab(self.tab_TAF_H_hc, "")
+        self.tab_TAF_H_h = QWidget()
+        self.tab_TAF_H_h.setObjectName(u"tab_TAF_H_h")
+        self.gridLayout_tabTAF_H_h = QGridLayout(self.tab_TAF_H_h)
+        self.gridLayout_tabTAF_H_h.setObjectName(u"gridLayout_tabTAF_H_h")
+        self.graphicsView_H_h_tabTAF = QGraphicsView(self.tab_TAF_H_h)
+        self.graphicsView_H_h_tabTAF.setObjectName(u"graphicsView_H_h_tabTAF")
+
+        self.gridLayout_tabTAF_H_h.addWidget(self.graphicsView_H_h_tabTAF, 0, 0, 1, 1)
+
+        self.tabWidget_tabTAF_Hardness.addTab(self.tab_TAF_H_h, "")
+
+        self.gridLayout_tabTAF_Hardness.addWidget(self.tabWidget_tabTAF_Hardness, 0, 0, 1, 1)
+
+        self.graphicsView_tab_TipAreaFunction.addTab(self.tab_TAF_Hardness, "")
+        self.tab_TAF_Modulus = QWidget()
+        self.tab_TAF_Modulus.setObjectName(u"tab_TAF_Modulus")
+        self.gridLayout_tabTAF_Modulus = QGridLayout(self.tab_TAF_Modulus)
+        self.gridLayout_tabTAF_Modulus.setObjectName(u"gridLayout_tabTAF_Modulus")
+        self.tabWidget_tabTAF_Modulus = QTabWidget(self.tab_TAF_Modulus)
+        self.tabWidget_tabTAF_Modulus.setObjectName(u"tabWidget_tabTAF_Modulus")
+        self.tab_TAF_E_hc = QWidget()
+        self.tab_TAF_E_hc.setObjectName(u"tab_TAF_E_hc")
+        self.gridLayout_tabTAF_E_hc = QGridLayout(self.tab_TAF_E_hc)
+        self.gridLayout_tabTAF_E_hc.setObjectName(u"gridLayout_tabTAF_E_hc")
+        self.graphicsView_E_hc_tabTAF = QGraphicsView(self.tab_TAF_E_hc)
+        self.graphicsView_E_hc_tabTAF.setObjectName(u"graphicsView_E_hc_tabTAF")
+
+        self.gridLayout_tabTAF_E_hc.addWidget(self.graphicsView_E_hc_tabTAF, 0, 0, 1, 1)
+
+        self.tabWidget_tabTAF_Modulus.addTab(self.tab_TAF_E_hc, "")
+        self.tab_TAF_E_h = QWidget()
+        self.tab_TAF_E_h.setObjectName(u"tab_TAF_E_h")
+        self.gridLayout_tabTAF_E_h = QGridLayout(self.tab_TAF_E_h)
+        self.gridLayout_tabTAF_E_h.setObjectName(u"gridLayout_tabTAF_E_h")
+        self.graphicsView_E_h_tabTAF = QGraphicsView(self.tab_TAF_E_h)
+        self.graphicsView_E_h_tabTAF.setObjectName(u"graphicsView_E_h_tabTAF")
+
+        self.gridLayout_tabTAF_E_h.addWidget(self.graphicsView_E_h_tabTAF, 0, 0, 1, 1)
+
+        self.tabWidget_tabTAF_Modulus.addTab(self.tab_TAF_E_h, "")
+
+        self.gridLayout_tabTAF_Modulus.addWidget(self.tabWidget_tabTAF_Modulus, 0, 0, 1, 1)
+
+        self.graphicsView_tab_TipAreaFunction.addTab(self.tab_TAF_Modulus, "")
 
         self.gridLayout_2.addWidget(self.graphicsView_tab_TipAreaFunction, 0, 3, 15, 1)
 
@@ -7718,6 +7778,8 @@ class Ui_MainWindow(object):
         self.tabAll.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction.setCurrentIndex(2)
         self.tabWidget_3.setCurrentIndex(0)
+        self.tabWidget_tabTAF_Hardness.setCurrentIndex(0)
+        self.tabWidget_tabTAF_Modulus.setCurrentIndex(0)
         self.comboBox_equipment_tabTAF.setCurrentIndex(0)
         self.comboBox_method_tabTAF.setCurrentIndex(0)
         self.tabWidget_TipRadius.setCurrentIndex(0)
@@ -7875,6 +7937,12 @@ class Ui_MainWindow(object):
         self.label_31.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/8</span>+</p></body></html>", None))
         self.pushButton_CopyAboveTAF.setText(QCoreApplication.translate("MainWindow", u"Copy the above", None))
         self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Tip Area Function", None))
+        self.tabWidget_tabTAF_Hardness.setTabText(self.tabWidget_tabTAF_Hardness.indexOf(self.tab_TAF_H_hc), QCoreApplication.translate("MainWindow", u"Hardness-contact depth", None))
+        self.tabWidget_tabTAF_Hardness.setTabText(self.tabWidget_tabTAF_Hardness.indexOf(self.tab_TAF_H_h), QCoreApplication.translate("MainWindow", u"Hardness-depth", None))
+        self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_TAF_Hardness), QCoreApplication.translate("MainWindow", u"Hardness", None))
+        self.tabWidget_tabTAF_Modulus.setTabText(self.tabWidget_tabTAF_Modulus.indexOf(self.tab_TAF_E_hc), QCoreApplication.translate("MainWindow", u"Young's Modulus-contact depth", None))
+        self.tabWidget_tabTAF_Modulus.setTabText(self.tabWidget_tabTAF_Modulus.indexOf(self.tab_TAF_E_h), QCoreApplication.translate("MainWindow", u"Young's Modulus-depth", None))
+        self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_TAF_Modulus), QCoreApplication.translate("MainWindow", u"Young's Modulus", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Range for Frame Compliance", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"<Depth [\u00b5m]<", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"< Force [mN]<", None))

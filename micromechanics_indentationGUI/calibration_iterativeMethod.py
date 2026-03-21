@@ -193,6 +193,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
   Returns:
     bool: success
   """
+  UniformDepth = False
   if self.method==Method.CSM: UniformDepth = True
   constantTerm = kwargs.get('constantTerm', False)
   ## re-create data-frame of all files
