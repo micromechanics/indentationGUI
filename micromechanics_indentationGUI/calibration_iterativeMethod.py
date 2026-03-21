@@ -57,9 +57,8 @@ def calibrateStiffness_OneIteration(self, eTarget, critDepths, critForces,plotSt
     mask &= (h > min_depth) & (h < max_depth)
     mask &= (x<1./np.sqrt(min_force)) & (x>1./np.sqrt(max_force))
     if len(mask[mask])==0:
-      e="WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth"
-      suggestion="adjust the range for calculating frame compliance"
-      self.show_error(str(e),suggestion)
+      # e="WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth"
+      # suggestion="adjust the range for calculating frame compliance"
       print("WARNING too restrictive filtering, no data left. Use high penetration: 50% of force and depth")
       mask = np.logical_and(h>np.max(h)*0.5, x<np.max(x)*0.5)
   else:
@@ -171,7 +170,7 @@ def calibrateStiffness_iterativeMethod(self, eTarget=False, critDepths=(0.5,5), 
 def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:disable=too-many-arguments
                  half_includedAngel_Cone=30, Radius_Sphere=2, numPolynomial=3, critDepthTip=0.0,
                  critMaxDepthTip=1000.0, plotTip=False, plot_Ac_hc=False,
-                 UniformDepth=False,**kwargs):
+                 DepthStep4UniformDepth=0.01,**kwargs):
   """
   Calibrate the area-function calibration using the known frame stiffness
 
@@ -186,7 +185,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
       critMaxDepthTip (float): area function what is the maximum depth of data used
       plotTip (bool): plot tip shape after fitting
       plot_Ac_hc (bool): plot the Ac-hc and the fitted function
-      UniformDepth (bool): make the Ac-hc data uniform along hc
+      DepthStepUniformDepth (float): depth step size to make the Ac-hc data uniform along hc
       kwargs (dict): additional keyword arguments
         - constantTerm (bool): add constant term into area function
         - returnArea (bool): return contact depth and area
@@ -194,6 +193,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
   Returns:
     bool: success
   """
+  if self.method==Method.CSM: UniformDepth = True
   constantTerm = kwargs.get('constantTerm', False)
   ## re-create data-frame of all files
   self.restartFile()
@@ -238,7 +238,8 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
   Ac = np.array( np.power( slope  / (2.0*modulusRedGoal/np.sqrt(np.pi))  ,2))  #Eq.(26) Oliver 2004
   hc = np.array( h - self.model['beta']*p/slope )
   #
-  Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=30)
+  bins_ = int((np.max(hc)-np.min(hc))/DepthStep4UniformDepth)
+  Ac_mean, bin_edges, _ = binned_statistic(hc, Ac, statistic="mean", bins=bins_)
   Ac_mean = Ac_mean[:-1]
   bin_edges = bin_edges[:-1]
   hc_bin_center = 0.5 * (bin_edges[:-1] + bin_edges[1:])
@@ -267,17 +268,23 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
       appendix = 'isoPlusConstant'
     else:
       appendix = 'iso'
+    def area_from_params(params, hc_vals):
+      # Requires a pure function version for best speed.
+      # Fallback: temporarily assign to tip object if needed.
+      self.tip.prefactors = [params[x].value for x in params] + [appendix]
+      return self.tip.areaFunction(hc_vals)
     def fitFunct(params,hc4fit, Ac4fit):     #error function
-      self.tip.prefactors = [params[x].value for x in params]+[appendix]
-      tempArea = self.tip.areaFunction(hc4fit)          #use all datapoints as critDepth is for compliance plot
+      tempArea = area_from_params(params, hc4fit)
       # use inhomogenous weight
+      # w = 1/Ac4fit
       # w = 1
-      # w = 1.0 / np.sqrt(np.maximum(tempArea, 1e-30))
+      w = 1.0 / np.sqrt(np.maximum(Ac4fit, 1e-30))
       # center = 0.5
       # sigma  = 0.08   # 0.08 µm
       # w = 1.0 + 5.0 * np.exp(-0.5*((hc4fit-center)/sigma)**2)  # 0.5 near region has a higher weight
       # residual = (Ac4fit-tempArea) * w  #normalize by number of points
-      residual =  np.log(np.maximum(Ac4fit,1e-30)) - np.log(np.maximum(tempArea,1e-30))
+      # residual =  np.log(np.maximum(Ac4fit,1e-30)) - np.log(np.maximum(tempArea,1e-30))
+      residual =  (Ac4fit-tempArea) * w
       return residual
     # Parameters, 'value' = initial condition, 'min' and 'max' = boundaries
     params = lmfit.Parameters()
@@ -316,7 +323,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
                             method='least_squares',
                             loss='huber',     # 'soft_l1' or 'huber' or 'cauchy'
                             f_scale = 0.05,
-                            max_nfev=10000000)
+                            max_nfev=10000)
     self.tip.prefactors = [result.params[x].value for x in result.params]+[appendix]
 
   if plotTip:
