@@ -1768,6 +1768,16 @@ Compliance
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="tab_TAF_weight">
+             <attribute name="title">
+              <string>Weight w</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_tabTAF_weight">
+              <item row="0" column="0">
+               <widget class="QGraphicsView" name="graphicsView_w_tabTAF"/>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="tab_TAF_Hardness">
              <attribute name="title">
               <string>Hardness</string>

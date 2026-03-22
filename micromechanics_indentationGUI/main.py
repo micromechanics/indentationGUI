@@ -30,7 +30,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   from .AnalysePopIn import Analyse_PopIn
   from .CalculateHardnessModulus import Calculate_Hardness_Modulus
   from .CalculateCreepRate import Calculate_CreepRate
-  from .CalibrateTAF import click_OK_calibration, plot_TAF, plot_Hardness_Modulus_tabTAF
+  from .CalibrateTAF import click_OK_calibration, plot_TAF, plot_Hardness_Modulus_tabTAF, plot_weight_tabTAF
   from .Classification import Classification_HE, PlotMappingWithoutClustering, PlotMappingAfterClustering
   from .FrameStiffness import FrameStiffness
   from .load_depth import plot_load_depth, set_aspectRatio, setAsContactSurface, right_click_set_ContactSurface
@@ -271,6 +271,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
                           'load_depth_tab_exclusive_frame_stiffness_tabTAF',
                           'FrameStiffness_tabTAF',                                #Framestiffness_TabTAF
                           'TAF_tabTAF',
+                          'w_tabTAF',
                           'H_hc_tabTAF',
                           'H_h_tabTAF',
                           'E_hc_tabTAF',
@@ -464,7 +465,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """
     layout = eval(f"QVBoxLayout(self.ui.graphicsView_{graphicsView})") #pylint: disable=eval-used disable=unused-variable
     exec(f"self.static_canvas_{graphicsView} = FigureCanvas(Figure(figsize=(8, 6)))") #pylint: disable=exec-used
-    exec(f"layout.addWidget(NavigationToolbar(self.static_canvas_{graphicsView}, self))") #pylint: disable=exec-used
+    exec(f"self.static_toolbar_{graphicsView} = NavigationToolbar(self.static_canvas_{graphicsView}, self)") #pylint: disable=exec-used
+    exec(f"layout.addWidget(self.static_toolbar_{graphicsView})") #pylint: disable=exec-used
     exec(f"layout.addWidget(self.static_canvas_{graphicsView})") #pylint: disable=exec-used
     canvas = eval(f"self.static_canvas_{graphicsView}") #pylint: disable=eval-used
     if graphicsView in ('CalculatedTipRadius_tabTipRadius'):

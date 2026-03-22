@@ -285,6 +285,7 @@ def calibrateTAF(self,eTarget, frameCompliance, TipType='Berkovich', # pylint:di
       # w = 1.0 + 5.0 * np.exp(-0.5*((hc4fit-center)/sigma)**2)  # 0.5 near region has a higher weight
       # residual = (Ac4fit-tempArea) * w  #normalize by number of points
       # residual =  np.log(np.maximum(Ac4fit,1e-30)) - np.log(np.maximum(tempArea,1e-30))
+      self.taf_weight_data = {'hc': np.array(hc4fit, copy=True), 'w': np.array(w, copy=True)}
       residual =  (Ac4fit-tempArea) * w
       return residual
     # Parameters, 'value' = initial condition, 'min' and 'max' = boundaries

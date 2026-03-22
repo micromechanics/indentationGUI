@@ -10,6 +10,7 @@ from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-modu
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 from .Tools4LoadingData import read_file_list, Convert2inGUI
 from .load_depth import pick
+from .Tools_for_GUI.draggable_smooth_bars import DraggableSmoothBars
 
 def click_OK_calibration(self): #pylint: disable=too-many-locals
   """ Graphical user interface to calibrate tip area function """
@@ -225,6 +226,13 @@ def click_OK_calibration(self): #pylint: disable=too-many-locals
     errors=f"{errors}\n\n{e}"
     suggestions=f"{suggestions}\n\n{suggestion}"
     self.show_error(str(errors), suggestions)
+  try:
+    self.plot_weight_tabTAF()
+  except Exception as e: #pylint: disable=broad-except
+    suggestion = "Cannot plot TAF weight w"
+    errors=f"{errors}\n\n{e}"
+    suggestions=f"{suggestions}\n\n{suggestion}"
+    self.show_error(str(errors), suggestions)
   #listing Test
   tableWidget=self.ui.tableWidget_tabTAF
   tableWidget.setRowCount(len(OriginalAlltest))
@@ -425,3 +433,75 @@ def plot_Hardness_Modulus_tabTAF(self, min_hc=None, max_hc=None):
   self.static_canvas_E_hc_tabTAF.draw()
   self.static_canvas_E_h_tabTAF.draw()
   i.restartFile()
+
+
+def plot_weight_tabTAF(self):
+  """Plot the TAF fitting weight w in an interactive draggable view."""
+  i = self.i_tabTAF
+  ax = self.static_ax_w_tabTAF
+  ax.cla()
+  weight_data = getattr(i, 'taf_weight_data', None)
+  if not weight_data:
+    ax.text(0.5, 0.5, 'No TAF weight data available', ha='center', va='center', transform=ax.transAxes)
+    self.static_canvas_w_tabTAF.draw()
+    return
+  hc = np.asarray(weight_data.get('hc', []), dtype=float)
+  w = np.asarray(weight_data.get('w', []), dtype=float)
+  if len(hc) == 0 or len(w) == 0:
+    ax.text(0.5, 0.5, 'No TAF weight data available', ha='center', va='center', transform=ax.transAxes)
+    self.static_canvas_w_tabTAF.draw()
+    return
+  previous_editor = getattr(self, 'taf_weight_editor', None)
+  if previous_editor is not None:
+    previous_editor.disconnect()
+  self.taf_weight_editor = DraggableSmoothBars(
+    ax=ax,
+    x_values=hc,
+    heights=w,
+    influence_width=max((np.max(hc) - np.min(hc)) / 10.0, 1e-6),
+    title='TAF fitting weight w',
+    x_label='Contact depth for fit [µm]',
+    y_label='Weight w',
+  )
+  ax.grid(True, which="both", linestyle="--", linewidth=0.6, alpha=0.7)
+  self.static_canvas_w_tabTAF.figure.set_tight_layout(True)
+  self.set_aspectRatio(ax=ax)
+  self.static_canvas_w_tabTAF.draw()
+  self.taf_weight_editor.original_position = ax.get_position().frozen()
+  toolbar = getattr(self, 'static_toolbar_w_tabTAF', None)
+  if toolbar is not None:
+    toolbar._taf_weight_editor = self.taf_weight_editor
+    toolbar._taf_weight_canvas = self.static_canvas_w_tabTAF
+    if not getattr(toolbar, '_taf_weight_home_installed', False):
+      original_home = toolbar.home
+      def _taf_weight_home(*args, **kwargs):
+        editor = getattr(toolbar, '_taf_weight_editor', None)
+        canvas = getattr(toolbar, '_taf_weight_canvas', None)
+        if editor is None or canvas is None:
+          return original_home(*args, **kwargs)
+        callbacks = getattr(editor.ax, 'callbacks', None)
+        x_callbacks = None
+        y_callbacks = None
+        if callbacks is not None and hasattr(callbacks, 'callbacks'):
+          x_callbacks = list(callbacks.callbacks.get('xlim_changed', {}).items())
+          y_callbacks = list(callbacks.callbacks.get('ylim_changed', {}).items())
+          for cid, _ in x_callbacks:
+            editor.ax.callbacks.disconnect(cid)
+          for cid, _ in y_callbacks:
+            editor.ax.callbacks.disconnect(cid)
+        try:
+          editor.ax.set_aspect('auto')
+          editor.ax.set_position(editor.original_position, which='both')
+          editor.ax.set_xlim(editor.original_xlim)
+          editor.ax.set_ylim(editor.original_ylim)
+          editor.ax.set_aspect(abs((editor.original_xlim[1]-editor.original_xlim[0])/(editor.original_ylim[0]-editor.original_ylim[1]))*0.618)
+        finally:
+          if x_callbacks is not None:
+            for cid, func in x_callbacks:
+              editor.ax.callbacks.connect('xlim_changed', func)
+          if y_callbacks is not None:
+            for cid, func in y_callbacks:
+              editor.ax.callbacks.connect('ylim_changed', func)
+        canvas.draw_idle()
+      toolbar.home = _taf_weight_home
+      toolbar._taf_weight_home_installed = True

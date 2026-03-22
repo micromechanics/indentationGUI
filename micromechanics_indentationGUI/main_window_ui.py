@@ -939,6 +939,16 @@ class Ui_MainWindow(object):
         self.gridLayout_13.addWidget(self.pushButton_CopyAboveTAF, 3, 1, 1, 1)
 
         self.graphicsView_tab_TipAreaFunction.addTab(self.tab_2, "")
+        self.tab_TAF_weight = QWidget()
+        self.tab_TAF_weight.setObjectName(u"tab_TAF_weight")
+        self.gridLayout_tabTAF_weight = QGridLayout(self.tab_TAF_weight)
+        self.gridLayout_tabTAF_weight.setObjectName(u"gridLayout_tabTAF_weight")
+        self.graphicsView_w_tabTAF = QGraphicsView(self.tab_TAF_weight)
+        self.graphicsView_w_tabTAF.setObjectName(u"graphicsView_w_tabTAF")
+
+        self.gridLayout_tabTAF_weight.addWidget(self.graphicsView_w_tabTAF, 0, 0, 1, 1)
+
+        self.graphicsView_tab_TipAreaFunction.addTab(self.tab_TAF_weight, "")
         self.tab_TAF_Hardness = QWidget()
         self.tab_TAF_Hardness.setObjectName(u"tab_TAF_Hardness")
         self.gridLayout_tabTAF_Hardness = QGridLayout(self.tab_TAF_Hardness)
@@ -7937,6 +7947,7 @@ class Ui_MainWindow(object):
         self.label_31.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/8</span>+</p></body></html>", None))
         self.pushButton_CopyAboveTAF.setText(QCoreApplication.translate("MainWindow", u"Copy the above", None))
         self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Tip Area Function", None))
+        self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_TAF_weight), QCoreApplication.translate("MainWindow", u"Weight w", None))
         self.tabWidget_tabTAF_Hardness.setTabText(self.tabWidget_tabTAF_Hardness.indexOf(self.tab_TAF_H_hc), QCoreApplication.translate("MainWindow", u"Hardness-contact depth", None))
         self.tabWidget_tabTAF_Hardness.setTabText(self.tabWidget_tabTAF_Hardness.indexOf(self.tab_TAF_H_h), QCoreApplication.translate("MainWindow", u"Hardness-depth", None))
         self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_TAF_Hardness), QCoreApplication.translate("MainWindow", u"Hardness", None))
