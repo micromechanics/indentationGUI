@@ -1,12 +1,7 @@
 """ Module for tools for GUI """
-from io import StringIO
-from zipfile import ZipFile
-from pathlib import Path
-import pandas as pd
 import numpy as np
-from scipy.ndimage import gaussian_filter1d
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
-from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QFileDialog, QTableWidgetItem # pylint: disable=no-name-in-module
+from PySide6.QtWidgets import QFileDialog, QTableWidgetItem # pylint: disable=no-name-in-module
 
 def Select_TypedTest(self,tabName=None): #pylint: disable=no-self-use
   "select the tests for calculation in one tab"

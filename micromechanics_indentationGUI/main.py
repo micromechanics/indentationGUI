@@ -34,7 +34,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   from .Classification import Classification_HE, PlotMappingWithoutClustering, PlotMappingAfterClustering
   from .FrameStiffness import FrameStiffness
   from .load_depth import plot_load_depth, set_aspectRatio, setAsContactSurface, right_click_set_ContactSurface
-  from .Tools4GUI import addFile_tab, deleteFile_tab, changeFile_tab, click_pushButton_SelectAll, Select_TypedTest
+  from .Tools_for_GUI.gui_actions import addFile_tab, deleteFile_tab, changeFile_tab, click_pushButton_SelectAll, Select_TypedTest
   from .AnalyseCreep import plot_load_depth_time
 
   def __init__(self):
@@ -875,7 +875,7 @@ class RaiseAndFlash(QObject):
     QApplication.alert(self.dlg, 500)
 class DialogPathList(QDialog):
   """ Graphical user interface of Dialog used to show path list """
-  from .Tools4GUI import FilesToDialog_tab, FilesToMainWindow_tab, \
+  from .Tools_for_GUI.gui_actions import FilesToDialog_tab, FilesToMainWindow_tab, \
     addFile_tab, deleteFile_tab, changeFile_tab,\
     MoveFileUp_tab, MoveFileDown_tab
   def __init__(self, parent = None):
@@ -931,7 +931,7 @@ class DialogPathList(QDialog):
 
 class DialogTestList(QDialog):
   """ Graphical user interface of Dialog used to show path list """
-  from .Tools4GUI import FilesToDialog_tab, FilesToMainWindow_tab, \
+  from .Tools_for_GUI.gui_actions import FilesToDialog_tab, FilesToMainWindow_tab, \
     addFile_tab, deleteFile_tab, changeFile_tab,\
     MoveFileUp_tab, MoveFileDown_tab,\
     click_pushButton_SelectAll, Select_TypedTest, PlainTextToDialog_tab, PlainTextToMainWindow_tab
