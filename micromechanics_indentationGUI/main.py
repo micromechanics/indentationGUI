@@ -145,6 +145,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness.clicked.connect(lambda: self.plot_load_depth(tabName='tabTAF'))
     self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness.clicked.connect(lambda: self.plot_load_depth(tabName='tabTAF', If_inclusive_frameStiffness='exclusive'))
     self.ui.pushButton_SelectAll_tabTAF.clicked.connect(lambda: self.click_pushButton_SelectAll(tabName='tabTAF'))
+    self.ui.pushButton_CopyAboveTAF.clicked.connect(self.Copy_TAF_to_reference_tabTAF)
     #clicked.connect in tabTipRadius
     self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.click_pushButton_Calculate(tabName = 'tabTipRadius', what = 'FrameStiffness'))
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.plot_load_depth(tabName='tabTipRadius_FrameStiffness')) # pylint: disable=line-too-long
@@ -511,6 +512,13 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
       lineEdit = getattr(self.ui, f"lineEdit_TAF{j+1}_{tabName}")
       theLineEdit_tabTAF = getattr(self.ui, f"lineEdit_TAF{j+1}_tabTAF")
       lineEdit.setText(theLineEdit_tabTAF.text())
+
+  def Copy_TAF_to_reference_tabTAF(self):
+    """Copy the calibrated TAF values into the reference TAF fields in tabTAF."""
+    for j in range(9):
+      calibrated_line_edit = getattr(self.ui, f"lineEdit_TAF{j+1}_tabTAF")
+      reference_line_edit = getattr(self.ui, f"lineEdit_TAF{j+1}_2_tabTAF")
+      reference_line_edit.setText(calibrated_line_edit.text())
 
   def click_pushButton_Calculate(self,tabName='tabHE_FrameStiffness', what='FrameStiffness'):
     """ calculate the values """
