@@ -180,6 +180,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.pushButton_deleteFile_tabHE_FrameStiffness.clicked.connect(lambda: self.deleteFile_tab(tabName='tabHE_FrameStiffness'))
     self.ui.pushButton_changeFile_tabHE.clicked.connect(lambda: self.changeFile_tab(tabName='tabHE'))
     self.ui.pushButton_changeFile_tabHE_FrameStiffness.clicked.connect(lambda: self.changeFile_tab(tabName='tabHE_FrameStiffness'))
+    self._init_exclusive_mean_range_tabHE()
     #clicked.connect in tabCreep
     self.ui.pushButton_SelectTypedTest_tabCreep.clicked.connect(lambda: self.Select_TypedTest(tabName='tabCreep'))
     self.ui.pushButton_SelectTypedTest_tabCreep_FrameStiffness.clicked.connect(lambda: self.Select_TypedTest(tabName='tabCreep_FrameStiffness'))
@@ -498,6 +499,39 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     theLineEdit = getattr(self.ui, f"lineEdit_FrameCompliance_{tabName}")
     theLineEdit_FrameStiffness = getattr(self.ui, f"lineEdit_FrameCompliance_{tabName}_FrameStiffness")
     theLineEdit.setText(theLineEdit_FrameStiffness.text())
+
+  def _init_exclusive_mean_range_tabHE(self):
+    """Make the two mean-range options in tabHE mutually exclusive."""
+    hc_checkbox = self.ui.checkBox_Usinghc4mean_tabHE
+    h_checkbox = self.ui.checkBox_Usingh4mean_tabHE
+
+    def on_hc_toggled(checked):
+      if checked:
+        blocker = h_checkbox.blockSignals(True)
+        h_checkbox.setChecked(False)
+        h_checkbox.blockSignals(blocker)
+      elif not h_checkbox.isChecked():
+        blocker = hc_checkbox.blockSignals(True)
+        hc_checkbox.setChecked(True)
+        hc_checkbox.blockSignals(blocker)
+
+    def on_h_toggled(checked):
+      if checked:
+        blocker = hc_checkbox.blockSignals(True)
+        hc_checkbox.setChecked(False)
+        hc_checkbox.blockSignals(blocker)
+      elif not hc_checkbox.isChecked():
+        blocker = h_checkbox.blockSignals(True)
+        h_checkbox.setChecked(True)
+        h_checkbox.blockSignals(blocker)
+
+    hc_checkbox.toggled.connect(on_hc_toggled)
+    h_checkbox.toggled.connect(on_h_toggled)
+
+    if hc_checkbox.isChecked() and h_checkbox.isChecked():
+      h_checkbox.setChecked(False)
+    elif not hc_checkbox.isChecked() and not h_checkbox.isChecked():
+      hc_checkbox.setChecked(True)
 
   def Copy_TAF(self,tabName='tabHE', If_complete=True):
     """ get the calibrated tip are function from the tabTAF """
