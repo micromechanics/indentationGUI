@@ -1,3 +1,13 @@
+--------2026-03-27--------Weiguang
+1. TAF fitting was accelerated.
+2. Hardness and Young's modulus plots were added to the TAF tab.
+3. TAF plotting was improved.
+4. The y-axis limits of hardness and modulus plots now use data deeper than 50 nm, which gives more stable plot ranges.
+5. GUI helper code was reorganized into Tools_for_GUI/gui_actions.py.
+6. An interactive Weight w plot was added to the TAF tab, and the weight points can be adjusted by dragging.
+7. In the TAF tab, the button "Copy the above" now copies the calibrated TAF values to the reference TAF fields.
+8. In the HE tab, the two options for selecting the mean-value range are now mutually exclusive, so only one can be selected at a time.
+
 --------2026-03-12--------Weiguang
 1. Add function of calculating creep rate.
 2. The depth for calculating creep rate can be corrected using a constant modulus.
