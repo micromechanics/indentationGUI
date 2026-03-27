@@ -3,6 +3,53 @@
 """ Graphical user interface includes all widgets """
 import sys
 import os
+from pathlib import Path
+
+os.environ['PYGOBJECT_DISABLE_CAIRO'] = '1'
+
+
+def _configure_qt_runtime():
+  """Set Qt runtime paths in a platform-aware way before importing PySide6."""
+  if sys.platform.startswith("linux"):
+    os.environ.pop("QT_PLUGIN_PATH", None)
+    os.environ.pop("QML2_IMPORT_PATH", None)
+    os.environ.pop("LD_LIBRARY_PATH", None)
+    return
+
+  if sys.platform.startswith("win"):
+    os.environ.pop("QT_PLUGIN_PATH", None)
+    os.environ.pop("QML2_IMPORT_PATH", None)
+    try:
+      import PySide6  # pylint: disable=import-outside-toplevel
+      from PySide6.QtCore import QLibraryInfo  # pylint: disable=import-outside-toplevel
+    except Exception:
+      return
+    pyside6_dir = Path(PySide6.__file__).resolve().parent
+    qt_dll_dir = None
+    # QLibraryInfo is reliable for Qt resource paths like plugins and QML,
+    # but Windows DLL loading still needs a real filesystem directory.
+    if any(pyside6_dir.glob("*.dll")):
+      qt_dll_dir = pyside6_dir
+    else:
+      for candidate in (pyside6_dir / "bin", pyside6_dir / "Qt" / "bin", pyside6_dir / "Qt"):
+        if candidate.exists() and (candidate.is_dir()) and any(candidate.glob("*.dll")):
+          qt_dll_dir = candidate
+          break
+    qt_plugins = Path(QLibraryInfo.path(QLibraryInfo.LibraryPath.PluginsPath))
+    qt_qml = Path(QLibraryInfo.path(QLibraryInfo.LibraryPath.QmlImportsPath))
+    if qt_plugins.exists():
+      os.environ["QT_PLUGIN_PATH"] = str(qt_plugins)
+      platform_dir = qt_plugins / "platforms"
+      if platform_dir.exists():
+        os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = str(platform_dir)
+    if qt_qml.exists():
+      os.environ["QML2_IMPORT_PATH"] = str(qt_qml)
+    if qt_dll_dir is not None:
+      os.environ["PATH"] = str(qt_dll_dir) + os.pathsep + os.environ.get("PATH", "")
+
+
+_configure_qt_runtime()
+
 import numpy as np
 from PySide6.QtGui import QDesktopServices, QAction, QKeySequence, QShortcut, QIcon # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QFileDialog, QTableWidgetItem # pylint: disable=no-name-in-module
@@ -20,8 +67,6 @@ from .DialogTestList_ui import Ui_DialogTestList
 from .DialogWait_ui import Ui_DialogWait
 from .Tools4LoadingData import read_file_list
 from .__init__ import __version__
-
-os.environ['PYGOBJECT_DISABLE_CAIRO'] = '1'
 
 # Subclass QMainWindow to customize your application's main window
 class LegacyPathTableAdapter:
@@ -1147,10 +1192,6 @@ class DialogOpen(QDialog):
 ## Main function
 def main():
   """ Main method and entry point for commands """
-  # Prevent system Qt plugins from interfering
-  os.environ.pop("QT_PLUGIN_PATH", None)
-  os.environ.pop("QML2_IMPORT_PATH", None)
-  os.environ.pop("LD_LIBRARY_PATH", None)
   #pylint: disable=global-variable-undefined
   global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, \
     window_DialogError, window_DialogWait, window_DialogAbout, \
