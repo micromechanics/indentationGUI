@@ -58,9 +58,9 @@ def merge_excels(files_list):
   files_list = [Path(p) for p in files_list]
   out_path = files_list[0].parent / "merged_all_inGUI.xlsx"
 
-  def split_header_units_data(file, sheet):
-    """Read sheet -> (columns, units row, data rows)."""
-    df = pd.read_excel(file, sheet_name=sheet)   # header=row0
+  def split_header_units_data(xls, sheet):
+    """Read one sheet from an already-open ExcelFile."""
+    df = xls.parse(sheet_name=sheet)
     cols = list(df.columns)
     if len(df) > 0:
       units = df.iloc[0]   # row1 = units
@@ -74,7 +74,8 @@ def merge_excels(files_list):
     first_cols, first_units, parts = None, None, []
     for i, f in enumerate(files_list, 1):
       try:
-        cols, units, data = split_header_units_data(f, "Results")
+        xls = pd.ExcelFile(f)
+        cols, units, data = split_header_units_data(xls, "Results")
       except Exception: #pylint: disable=broad-except
         continue
       if first_cols is None:
@@ -101,7 +102,7 @@ def merge_excels(files_list):
         if s.strip().lower() == "results":
           continue
         try:
-          cols, units, data = split_header_units_data(f, s)
+          cols, units, data = split_header_units_data(xls, s)
         except Exception: #pylint: disable=broad-except
           continue
         if len(cols) == 0:
@@ -405,6 +406,7 @@ def DataTransformation_Surface_Smart_500(fileName):
   test_pattern = re.compile(r"_(\d+)\.csv$", re.IGNORECASE)
   results_csv = None
   test_csvs = {}
+
   with ZipFile(zip_path, "r") as z:
     csv_files = [f for f in z.namelist() if f.lower().endswith(".csv")]
     # Classify CSV files
