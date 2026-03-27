@@ -143,7 +143,7 @@ def export(self, win):
         df = DataFrame(
                         [
                           win.tabHE_hc_collect[j],
-                          win.tabHE_hmax_collect[j] * np.ones(len(win.tabHE_E_collect[j])),
+                          win.tabHE_hmax_collect[j],
                           win.tabHE_Pmax_collect[j],
                           win.tabHE_H_collect[j],
                           win.tabHE_E_collect[j],

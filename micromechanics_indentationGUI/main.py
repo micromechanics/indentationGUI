@@ -24,6 +24,37 @@ from .__init__ import __version__
 os.environ['PYGOBJECT_DISABLE_CAIRO'] = '1'
 
 # Subclass QMainWindow to customize your application's main window
+class LegacyPathTableAdapter:
+  """Backward-compatible lineEdit-style adapter for path tables."""
+
+  def __init__(self, table_widget):
+    self._table_widget = table_widget
+
+  def text(self):
+    try:
+      return '\n'.join(read_file_list(self._table_widget))
+    except Exception:
+      return ''
+
+  def setText(self, value):
+    values = []
+    if value is None:
+      values = []
+    elif isinstance(value, str):
+      values = [item.strip() for item in value.splitlines() if item.strip()]
+    else:
+      values = [str(value)]
+
+    row_count = max(1, len(values))
+    self._table_widget.setRowCount(row_count)
+    for i in range(row_count):
+      self._table_widget.setVerticalHeaderItem(i, QTableWidgetItem(f"Path{int(i+1)}"))
+      item_value = values[i] if i < len(values) else ''
+      qtablewidgetitem = QTableWidgetItem(item_value)
+      qtablewidgetitem.setCheckState(Qt.Checked)
+      self._table_widget.setItem(i, 0, qtablewidgetitem)
+
+
 class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   """ Graphical user interface of MainWindow """
   from .TipRadius import Calculate_TipRadius, plot_Hertzian_fitting
@@ -117,6 +148,11 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
       for button in buttons:
         self.set_icon(button, icon)
 
+  def _init_legacy_path_aliases(self):
+    """Provide old lineEdit_path_* aliases for tabs that now use path tables."""
+    self.ui.lineEdit_path_tabHE = LegacyPathTableAdapter(self.ui.tableWidget_path_tabHE)
+    self.ui.lineEdit_path_tabHE_FrameStiffness = LegacyPathTableAdapter(self.ui.tableWidget_path_tabHE_FrameStiffness)
+
   def get_current_tab_name(self):
     """ get the name of the current tabWidget """
     current_widget = self.ui.tabAll.currentWidget()
@@ -129,6 +165,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
   def new(self):
     """ initial settings """
     self.ui.setupUi(self)
+    self._init_legacy_path_aliases()
     #icons
     self._init_icons()
     #initial the Path for saving

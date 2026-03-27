@@ -210,7 +210,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals, too-man
         i.PileUpCorrection(i.AreaPileUp_collect[i.testName])
       Pmax_collect.append(i.Ac*i.hardness)
       hc_collect.append(i.hc)
-      hmax_collect.append(i.h.max())
+      hmax_collect.append(i.h[i.valid])
       H_collect.append(i.hardness)
       E_collect.append(i.modulus)
       marker4ylim = np.where(i.hc > 0.05)[0]
