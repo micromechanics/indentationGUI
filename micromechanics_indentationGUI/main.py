@@ -831,8 +831,11 @@ class DialogExport(QDialog):
       self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
       self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
     self.ui.comboBox_ExportTab.currentIndexChanged.connect(self.renewFilePath)
+    self.ui.comboBox_ExportFileType.currentIndexChanged.connect(self.renewFilePath)
+    self.ui.comboBox_ExportFileType.currentIndexChanged.connect(self.updateExportOptions)
     self.ui.pushButton_selectPath.clicked.connect(self.selectPath)
     self.ui.pushButton_OK.clicked.connect(self.go2export)
+    self.updateExportOptions()
 
   def renewFilePath(self):
     """renew the file path after selecting the tab"""
@@ -856,13 +859,22 @@ class DialogExport(QDialog):
       slash = '\\'
     elif '/' in tab_path:
       slash = '/'
+    file_extension = '.xlsx'
+    if self.ui.comboBox_ExportFileType.currentIndex() == 1:
+      file_extension = '.h5'
     if tabName == 'tabClassification':
-      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('_tab')] + "_tabKmeansClustering_output.xlsx"
+      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('_tab')] + f"_tabKmeansClustering_output{file_extension}"
     else:
-      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + f"_{tabName}_output.xlsx"
+      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + f"_{tabName}_output{file_extension}"
     Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
     self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
     self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
+
+  def updateExportOptions(self):
+    """Enable Excel layout options only for xlsx exports."""
+    is_excel = self.ui.comboBox_ExportFileType.currentIndex() == 0
+    self.ui.label_3.setEnabled(is_excel)
+    self.ui.comboBox_ExportFormat.setEnabled(is_excel)
 
   def selectPath(self):
     """ click "select" Button to select a path for exporting  """

@@ -1,6 +1,7 @@
 #pylint: disable=possibly-used-before-assignment, used-before-assignment
 
 """ Graphical user interface to export results """
+import h5py
 from pandas import ExcelWriter, DataFrame
 import numpy as np
 
@@ -13,17 +14,21 @@ def export(self, win):
   """
   Index_ExportTab = self.ui.comboBox_ExportTab.currentIndex()
   Index_ExportFormat = self.ui.comboBox_ExportFormat.currentIndex()
-  #create a writer
+  Index_ExportFileType = self.ui.comboBox_ExportFileType.currentIndex()
   slash = '\\'
   if '\\' in __file__:
     slash = '\\'
   elif '/' in __file__:
     slash = '/'
-  try:
-    writer = ExcelWriter(f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}", engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
-  except Exception as e: #pylint:disable=broad-except
-    suggestion = 'Close the opened Excel file.'
-    win.show_error(str(e), suggestion)
+  output_path = f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}"
+  writer = None
+  if Index_ExportFileType == 0:
+    try:
+      writer = ExcelWriter(output_path, engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
+    except Exception as e: #pylint:disable=broad-except
+      suggestion = 'Close the opened Excel file.'
+      win.show_error(str(e), suggestion)
+      return
   #define the data frame of experimental parameters
   if Index_ExportTab == 0:
     #define the data frame of experimental parameters of tabHE
@@ -123,6 +128,10 @@ def export(self, win):
                           'Flip mapping (0=None, 1=Left-Right, 2=Top-Bottom, 3=Both)',
                         ],
                     columns=[' '])
+
+  if Index_ExportFileType == 1:
+    _export_hdf5(output_path, Index_ExportTab, df, win)
+    return
 
   #write to excel
   df.to_excel(writer,sheet_name='Experimental Parameters')
@@ -318,3 +327,108 @@ def export(self, win):
   #save the writer and create the excel file (.xlsx)
   writer.close()
   return
+
+
+def _export_hdf5(output_path, index_export_tab, df_params, win):
+  """Export results to HDF5."""
+  with h5py.File(output_path, mode="w") as h5_file:
+    h5_file.attrs['export_format'] = 'plain_hdf5'.encode('utf-8')
+    _write_hdf_dataframe(h5_file.create_group("experimental_parameters"), df_params)
+    if index_export_tab == 0:
+      summary_df = DataFrame({
+        'Test Name': win.tabHE_testName_collect,
+        'max. hc [µm]': [values[-1] for values in win.tabHE_hc_collect],
+        'max. hmax [µm]': win.tabHE_hmax_collect,
+        'max. Pmax [mN]': [values[-1] for values in win.tabHE_Pmax_collect],
+        'mean of H [GPa]': win.tabHE_Hmean_collect,
+        'std of H [GPa]': win.tabHE_Hstd_collect,
+        'mean of E [GPa]': win.tabHE_Emean_collect,
+        'std of E [GPa]': win.tabHE_Estd_collect,
+        'mean of Er [GPa]': win.tabHE_Er_mean_collect,
+        'std of Er [GPa]': win.tabHE_Er_std_collect,
+        'X Position [µm]': win.tabHE_X_Position_collect,
+        'Y Position [µm]': win.tabHE_Y_Position_collect,
+      })
+      _write_hdf_dataframe(h5_file.create_group('results'), summary_df)
+      tests_group = h5_file.create_group('tests')
+      for j, test_name in enumerate(win.tabHE_testName_collect, start=1):
+        x_pos = win.tabHE_X_Position_collect[j-1] if win.tabHE_X_Position_collect[j-1] is not None else 0
+        y_pos = win.tabHE_Y_Position_collect[j-1] if win.tabHE_Y_Position_collect[j-1] is not None else 0
+        per_test_df = DataFrame({
+          'Test Name': [test_name] * len(win.tabHE_E_collect[j-1]),
+          'hc[µm]': win.tabHE_hc_collect[j-1],
+          'hmax[µm]': win.tabHE_hmax_collect[j-1] * np.ones(len(win.tabHE_E_collect[j-1])),
+          'Pmax[mN]': win.tabHE_Pmax_collect[j-1],
+          'H[GPa]': win.tabHE_H_collect[j-1],
+          'E[GPa]': win.tabHE_E_collect[j-1],
+          'Er[GPa]': win.tabHE_Er_collect[j-1],
+          'X Position [µm]': x_pos * np.ones(len(win.tabHE_E_collect[j-1])),
+          'Y Position [µm]': y_pos * np.ones(len(win.tabHE_E_collect[j-1])),
+        })
+        _write_hdf_dataframe(tests_group.create_group(f'test_{j}'), per_test_df)
+    elif index_export_tab == 1:
+      rows = []
+      for j, test_name in enumerate(win.tabPopIn_testName_collect):
+        try:
+          for k, _ in enumerate(win.tabPopIn_fPopIn_collect[j]):
+            rows.append({
+              'Test Name': test_name,
+              'Pop-in Load [mN]': win.tabPopIn_fPopIn_collect[j][k],
+              'fitted Hertzian prefactor[mN*µm^(-3/2)]': win.tabPopIn_prefactor_collect[j][k],
+              'calculated E [GPa]': win.tabPopIn_E_collect[j][k],
+              'calculated max. shear stress [GPa]': win.tabPopIn_maxShearStress_collect[j][k],
+            })
+        except Exception:
+          rows.append({
+            'Test Name': test_name,
+            'Pop-in Load [mN]': win.tabPopIn_fPopIn_collect[j],
+            'fitted Hertzian prefactor[mN*µm^(-3/2)]': win.tabPopIn_prefactor_collect[j],
+            'calculated E [GPa]': win.tabPopIn_E_collect[j],
+            'calculated max. shear stress [GPa]': win.tabPopIn_maxShearStress_collect[j],
+          })
+      _write_hdf_dataframe(h5_file.create_group('results'), DataFrame(rows))
+    elif index_export_tab == 2:
+      classification_df = DataFrame({
+        'File Number': win.tabClassification_FileNumber_collect,
+        'Test Name': win.tabClassification_TestName_collect,
+        'Cluster Number': win.tabClassification_ClusterLabels,
+        'mean of H [GPa]': win.tabClassification_H_collect,
+        'mean of E [GPa]': win.tabClassification_E_collect,
+        'mean of Er [GPa]': win.tabClassification_Er_collect,
+      })
+      _write_hdf_dataframe(h5_file.create_group('results'), classification_df)
+
+
+def _write_hdf_dataframe(group, df):
+  """Write a pandas DataFrame as a single compound dataset (table)."""
+  dtype_list = []
+  columns_data = {}
+  for col_name in df.columns:
+    values = df[col_name].tolist()
+    if _all_hdf_numeric_scalars(values):
+      arr = np.asarray([np.nan if v is None else v for v in values], dtype=np.float64)
+      dtype_list.append((col_name, np.float64))
+    else:
+      encoded = [str('' if v is None else v).encode('utf-8') for v in values]
+      max_len = max((len(b) for b in encoded), default=1)
+      arr = np.array(encoded, dtype=f'S{max_len}')
+      dtype_list.append((col_name, f'S{max_len}'))
+    columns_data[col_name] = arr
+  compound_dtype = np.dtype(dtype_list)
+  table = np.empty(len(df), dtype=compound_dtype)
+  for col_name in df.columns:
+    table[col_name] = columns_data[col_name]
+  group.create_dataset('data', data=table)
+
+
+def _all_hdf_numeric_scalars(values):
+  """Return True when all values are numeric scalars or None."""
+  for value in values:
+    if value is None:
+      continue
+    if isinstance(value, (str, bytes)):
+      return False
+    if np.isscalar(value):
+      continue
+    return False
+  return True
