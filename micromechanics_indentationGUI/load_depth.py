@@ -49,6 +49,11 @@ def plot_load_depth(self,tabName,SimplePlot=False,If_inclusive_frameStiffness='i
   static_canvas = getattr(self, f"static_canvas_load_depth_tab_{If_inclusive_frameStiffness}_frame_stiffness_{tabName}")
   #read inputs from GUI
   selectedTests = getattr(self.ui, f"tableWidget_{tabName}").selectedItems()
+  #read decimation factor for big data
+  try:
+    DecreaseDataDensity = getattr(self.ui, f"spinBox_DecreaseDataDensity_{tabName}").value()
+  except AttributeError:
+    DecreaseDataDensity = 1
   if If_inclusive_frameStiffness == 'inclusive':
     if SimplePlot:
       showDrift = False
@@ -161,7 +166,7 @@ def plot_load_depth(self,tabName,SimplePlot=False,If_inclusive_frameStiffness='i
         i.stiffnessFromUnloading(i.p, i.h, plot=True)
         exec(f"self.indentation_inLoadDepth_{tabName} = i") # pylint: disable = exec-used
       elif i.method== indentation.definitions.Method.CSM or plot_multiTest:
-        i.output['ax'][0].scatter(i.h, i.p, s=1, label=f"{i.testName}", picker=True)
+        i.output['ax'][0].scatter(i.h[::DecreaseDataDensity], i.p[::DecreaseDataDensity], s=1, label=f"{i.testName}", picker=True)
         if j==len(selectedTests)-1:
           i.output['ax'][0].axhline(0, linestyle='-.', color='tab:orange', label='zero Load or Depth') #!!!!!!
           i.output['ax'][0].axvline(0, linestyle='-.', color='tab:orange') #!!!!!!
