@@ -821,13 +821,9 @@ class DialogExport(QDialog):
         tab_path = read_file_list(window.ui.tableWidget_path_tabHE)[0]
       except:
         tab_path = ''
-      slash = '\\'
-      if '\\' in tab_path:
-        slash = '\\'
-      elif '/' in tab_path:
-        slash = '/'
-      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + '_tabHE_output.xlsx'
-      Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
+      base_name = os.path.basename(tab_path)
+      Default_File_Name = base_name[:base_name.rfind('.')] + '_tabHE_output.xlsx'
+      Default_Folder_Path = os.path.dirname(tab_path)
       self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
       self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
     self.ui.comboBox_ExportTab.currentIndexChanged.connect(self.renewFilePath)
@@ -853,21 +849,19 @@ class DialogExport(QDialog):
       tab_path = files_list[0]
     else:
       tab_path = eval(f"window.ui.lineEdit_path_{tabName}.text()") # pylint: disable=eval-used
-    slash = '\\'
-    if '\\' in tab_path:
-      slash = '\\'
-    elif '/' in tab_path:
-      slash = '/'
-    file_extension = '.xlsx'
-    if self.ui.comboBox_ExportFileType.currentIndex() == 1:
-      file_extension = '.h5'
+    file_extension = self._current_file_extension()
+    base_name = os.path.basename(tab_path)
     if tabName == 'tabClassification':
-      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('_tab')] + f"_tabKmeansClustering_output{file_extension}"
+      Default_File_Name = base_name[:base_name.rfind('_tab')] + f"_tabKmeansClustering_output{file_extension}"
     else:
-      Default_File_Name = tab_path[tab_path.rfind(slash)+1:tab_path.rfind('.')] + f"_{tabName}_output{file_extension}"
-    Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
+      Default_File_Name = base_name[:base_name.rfind('.')] + f"_{tabName}_output{file_extension}"
+    Default_Folder_Path = os.path.dirname(tab_path)
     self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
     self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
+
+  def _current_file_extension(self):
+    """Return the file extension for the currently selected export format."""
+    return '.h5' if self.ui.comboBox_ExportFileType.currentIndex() == 1 else '.xlsx'
 
   def _onFileTypeChanged(self):
     """Update file path and UI options when the file type selector changes."""

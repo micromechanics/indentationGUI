@@ -552,7 +552,7 @@ class IndentationXXX(indentation.Indentation):
         if self.indicies[index] in self.code_Results_mm: #!!!!!! convert mm to µm
           data = data * 1000.0 #!!!!!!
         setattr(self, index, data) #!!!!!!
-      elif index not in self.code_Results: #!!!!!!
+      else: #!!!!!!
         data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64) #!!!!!!
         if not index in self.fullData: #!!!!!!
           data = data[self.valid] #!!!!!!

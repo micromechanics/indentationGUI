@@ -1,7 +1,9 @@
 #pylint: disable=possibly-used-before-assignment, used-before-assignment
 
 """ Graphical user interface to export results """
+import os
 import h5py
+import pandas as pd
 from pandas import ExcelWriter, DataFrame
 import numpy as np
 
@@ -15,8 +17,7 @@ def export(self, win):
   Index_ExportTab = self.ui.comboBox_ExportTab.currentIndex()
   Index_ExportFormat = self.ui.comboBox_ExportFormat.currentIndex()
   Index_ExportFileType = self.ui.comboBox_ExportFileType.currentIndex()
-  slash = '/' if '/' in __file__ else '\\'
-  output_path = f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}"
+  output_path = os.path.join(self.ui.lineEdit_ExportFolder.text(), self.ui.lineEdit_ExportFileName.text())
   writer = None
   if Index_ExportFileType == 0:
     try:
@@ -268,7 +269,7 @@ def export(self, win):
             All_prefactor_collect.append(win.tabPopIn_prefactor_collect[j][k])
             All_E_collect.append(win.tabPopIn_E_collect[j][k])
             All_maxShearStress_collect.append(win.tabPopIn_maxShearStress_collect[j][k])
-        except:
+        except (TypeError, IndexError):
           All_testName_collect.append(win.tabPopIn_testName_collect[j])
           All_fPopIn_collect.append(win.tabPopIn_fPopIn_collect[j])
           All_prefactor_collect.append(win.tabPopIn_prefactor_collect[j])
@@ -401,12 +402,12 @@ def _write_hdf_dataframe(group, df):
   dtype_list = []
   columns_data = {}
   for col_name in df.columns:
-    values = df[col_name].tolist()
-    if _all_hdf_numeric_scalars(values):
-      arr = np.asarray([np.nan if v is None else v for v in values], dtype=np.float64)
+    series = df[col_name]
+    if pd.api.types.is_numeric_dtype(series):
+      arr = series.fillna(np.nan).to_numpy(dtype=np.float64)
       dtype_list.append((col_name, np.float64))
     else:
-      encoded = [str('' if v is None else v).encode('utf-8') for v in values]
+      encoded = [str('' if v is None else v).encode('utf-8') for v in series]
       max_len = max((len(b) for b in encoded), default=1)
       arr = np.array(encoded, dtype=f'S{max_len}')
       dtype_list.append((col_name, f'S{max_len}'))
@@ -416,16 +417,3 @@ def _write_hdf_dataframe(group, df):
   for col_name in df.columns:
     table[col_name] = columns_data[col_name]
   group.create_dataset('data', data=table)
-
-
-def _all_hdf_numeric_scalars(values):
-  """Return True when all values are numeric scalars or None."""
-  for value in values:
-    if value is None:
-      continue
-    if isinstance(value, (str, bytes)):
-      return False
-    if np.isscalar(value):
-      continue
-    return False
-  return True
