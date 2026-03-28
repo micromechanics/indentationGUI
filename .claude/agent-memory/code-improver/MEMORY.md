@@ -1,0 +1,1 @@
+- [Code display mode](feedback_code_display.md) — don't force dark mode, match VS Code theme
