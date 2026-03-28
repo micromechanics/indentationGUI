@@ -797,6 +797,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """ show the dialog showing waiting info """
     window_DialogWait.setWindowTitle('Waiting ... ... :)  '+info)
     window_DialogWait.show()
+    QApplication.processEvents()
 
   def close_wait(self, info=False): #pylint: disable=no-self-use
     """ clsoe the dialog showing waiting info """

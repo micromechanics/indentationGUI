@@ -1,7 +1,7 @@
 """ Graphical user interface to calculate hardness and young's modulus """
 import numpy as np
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
-from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from PySide6.QtWidgets import QApplication, QTableWidgetItem # pylint: disable=no-name-in-module
 from micromechanics import indentation
 from micromechanics.indentation.definitions import Vendor, Method
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
@@ -204,6 +204,7 @@ def Calculate_Hardness_Modulus(self): # pylint: disable=too-many-locals, too-man
     i.analyse()
     progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
     progressBar.setValue(progressBar_Value)
+    QApplication.processEvents()
     if i.testName not in Notlist:
       if UsingAreaPileUp and (i.testName in i.AreaPileUp_collect):
         # correct pile-up

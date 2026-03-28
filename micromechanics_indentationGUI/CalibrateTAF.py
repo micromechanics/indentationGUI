@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import binned_statistic
 from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
-from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from PySide6.QtWidgets import QApplication, QTableWidgetItem # pylint: disable=no-name-in-module
 from .WaitingUpgrade_of_micromechanics import IndentationXXX
 from .Tools4LoadingData import read_file_list, Convert2inGUI
 from .load_depth import pick
@@ -347,6 +347,7 @@ def plot_Hardness_Modulus_tabTAF(self, min_hc=None, max_hc=None):
   i.restartFile()
   while True:
     i.analyse()
+    QApplication.processEvents()
     hc_collect.append(i.hc)
     H_collect.append(i.hardness)
     E_collect.append(i.modulus)

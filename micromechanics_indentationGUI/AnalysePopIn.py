@@ -2,7 +2,7 @@
 """ Graphical user interface calculate tip radius """
 import numpy as np
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
-from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from PySide6.QtWidgets import QApplication, QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from micromechanics import indentation
 from micromechanics.indentation.definitions import Vendor
@@ -175,6 +175,7 @@ def Analyse_PopIn(self): #pylint: disable=too-many-locals
     else:
       progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
       progressBar.setValue(progressBar_Value)
+      QApplication.processEvents()
       if i.testName not in Notlist:
         if i.testName not in success_identified_PopIn:
           success_identified_PopIn.append(i.testName)

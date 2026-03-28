@@ -3,7 +3,7 @@
 import numpy as np
 from micromechanics import indentation
 from PySide6.QtCore import Qt # pylint: disable=no-name-in-module
-from PySide6.QtWidgets import QTableWidgetItem # pylint: disable=no-name-in-module
+from PySide6.QtWidgets import QApplication, QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtGui import QColor # pylint: disable=no-name-in-module
 from scipy.optimize import curve_fit
 from .AnalysePopIn import Hertzian_contact_funct
@@ -155,6 +155,7 @@ def Calculate_TipRadius(self): #pylint: disable=too-many-locals
     else:
       progressBar_Value=int((2*len(i.allTestList)-len(i.testList))/(2*len(i.allTestList))*100)
       progressBar.setValue(progressBar_Value)
+      QApplication.processEvents()
       if i.testName not in Notlist:
         if i.testName not in success_identified_PopIn:
           success_identified_PopIn.append(i.testName)
