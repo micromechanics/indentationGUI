@@ -411,7 +411,10 @@ class IndentationXXX(indentation.Indentation):
         pass #do nothing;
     #read sheet of 'Results' #!!!!!!
     self.code_Results = {"X_Position": "X_Position", "X": "X_Position",\
-                         "Y_Position": "Y_Position", "Y": "Y_Position"} #!!!!!! #pylint:disable=attribute-defined-outside-init
+                         "X under microscope": "X_Position",\
+                         "Y_Position": "Y_Position", "Y": "Y_Position",\
+                         "Y under microscope": "Y_Position"} #!!!!!! #pylint:disable=attribute-defined-outside-init
+    self.code_Results_mm = {"X under microscope", "Y under microscope"} #!!!!!! columns in mm that need conversion to µm #pylint:disable=attribute-defined-outside-init
     self.workbook_Results = None #!!!!!!#pylint:disable=attribute-defined-outside-init
     self.X_Position=None #!!!!!!#pylint:disable=attribute-defined-outside-init
     self.Y_Position=None #!!!!!!#pylint:disable=attribute-defined-outside-init
@@ -546,6 +549,8 @@ class IndentationXXX(indentation.Indentation):
       if index in self.code_Results: #!!!!!!
         testNumber = int(self.testName[5:]) #!!!!!!
         data = self.workbook_Results[self.indicies[index]][testNumber] #!!!!!!
+        if self.indicies[index] in self.code_Results_mm: #!!!!!! convert mm to µm
+          data = data * 1000.0 #!!!!!!
         setattr(self, index, data) #!!!!!!
       elif index not in self.code_Results: #!!!!!!
         data = np.array(df[self.indicies[index]][1:-1], dtype=np.float64) #!!!!!!

@@ -831,8 +831,7 @@ class DialogExport(QDialog):
       self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
       self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
     self.ui.comboBox_ExportTab.currentIndexChanged.connect(self.renewFilePath)
-    self.ui.comboBox_ExportFileType.currentIndexChanged.connect(self.renewFilePath)
-    self.ui.comboBox_ExportFileType.currentIndexChanged.connect(self.updateExportOptions)
+    self.ui.comboBox_ExportFileType.currentIndexChanged.connect(self._onFileTypeChanged)
     self.ui.pushButton_selectPath.clicked.connect(self.selectPath)
     self.ui.pushButton_OK.clicked.connect(self.go2export)
     self.updateExportOptions()
@@ -869,6 +868,11 @@ class DialogExport(QDialog):
     Default_Folder_Path = tab_path[:tab_path.rfind(slash)]
     self.ui.lineEdit_ExportFileName.setText(Default_File_Name)
     self.ui.lineEdit_ExportFolder.setText(Default_Folder_Path)
+
+  def _onFileTypeChanged(self):
+    """Update file path and UI options when the file type selector changes."""
+    self.renewFilePath()
+    self.updateExportOptions()
 
   def updateExportOptions(self):
     """Enable Excel layout options only for xlsx exports."""

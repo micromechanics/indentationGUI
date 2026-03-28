@@ -15,11 +15,7 @@ def export(self, win):
   Index_ExportTab = self.ui.comboBox_ExportTab.currentIndex()
   Index_ExportFormat = self.ui.comboBox_ExportFormat.currentIndex()
   Index_ExportFileType = self.ui.comboBox_ExportFileType.currentIndex()
-  slash = '\\'
-  if '\\' in __file__:
-    slash = '\\'
-  elif '/' in __file__:
-    slash = '/'
+  slash = '/' if '/' in __file__ else '\\'
   output_path = f"{self.ui.lineEdit_ExportFolder.text()}{slash}{self.ui.lineEdit_ExportFileName.text()}"
   writer = None
   if Index_ExportFileType == 0:
@@ -351,21 +347,22 @@ def _export_hdf5(output_path, index_export_tab, df_params, win):
       })
       _write_hdf_dataframe(h5_file.create_group('results'), summary_df)
       tests_group = h5_file.create_group('tests')
-      for j, test_name in enumerate(win.tabHE_testName_collect, start=1):
-        x_pos = win.tabHE_X_Position_collect[j-1] if win.tabHE_X_Position_collect[j-1] is not None else 0
-        y_pos = win.tabHE_Y_Position_collect[j-1] if win.tabHE_Y_Position_collect[j-1] is not None else 0
+      for i, test_name in enumerate(win.tabHE_testName_collect):
+        x_pos = win.tabHE_X_Position_collect[i] if win.tabHE_X_Position_collect[i] is not None else 0
+        y_pos = win.tabHE_Y_Position_collect[i] if win.tabHE_Y_Position_collect[i] is not None else 0
+        n = len(win.tabHE_E_collect[i])
         per_test_df = DataFrame({
-          'Test Name': [test_name] * len(win.tabHE_E_collect[j-1]),
-          'hc[µm]': win.tabHE_hc_collect[j-1],
-          'hmax[µm]': win.tabHE_hmax_collect[j-1] * np.ones(len(win.tabHE_E_collect[j-1])),
-          'Pmax[mN]': win.tabHE_Pmax_collect[j-1],
-          'H[GPa]': win.tabHE_H_collect[j-1],
-          'E[GPa]': win.tabHE_E_collect[j-1],
-          'Er[GPa]': win.tabHE_Er_collect[j-1],
-          'X Position [µm]': x_pos * np.ones(len(win.tabHE_E_collect[j-1])),
-          'Y Position [µm]': y_pos * np.ones(len(win.tabHE_E_collect[j-1])),
+          'Test Name': [test_name] * n,
+          'hc[µm]': win.tabHE_hc_collect[i],
+          'hmax[µm]': win.tabHE_hmax_collect[i] * np.ones(n),
+          'Pmax[mN]': win.tabHE_Pmax_collect[i],
+          'H[GPa]': win.tabHE_H_collect[i],
+          'E[GPa]': win.tabHE_E_collect[i],
+          'Er[GPa]': win.tabHE_Er_collect[i],
+          'X Position [µm]': x_pos * np.ones(n),
+          'Y Position [µm]': y_pos * np.ones(n),
         })
-        _write_hdf_dataframe(tests_group.create_group(f'test_{j}'), per_test_df)
+        _write_hdf_dataframe(tests_group.create_group(f'test_{i+1}'), per_test_df)
     elif index_export_tab == 1:
       rows = []
       for j, test_name in enumerate(win.tabPopIn_testName_collect):
@@ -378,7 +375,7 @@ def _export_hdf5(output_path, index_export_tab, df_params, win):
               'calculated E [GPa]': win.tabPopIn_E_collect[j][k],
               'calculated max. shear stress [GPa]': win.tabPopIn_maxShearStress_collect[j][k],
             })
-        except Exception:
+        except (TypeError, IndexError):
           rows.append({
             'Test Name': test_name,
             'Pop-in Load [mN]': win.tabPopIn_fPopIn_collect[j],
