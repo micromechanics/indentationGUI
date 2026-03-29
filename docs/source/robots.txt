@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://micromechanics.github.io/indentationGUI/sitemap.xml
