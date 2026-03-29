@@ -1,4 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11563149.svg)](https://doi.org/10.5281/zenodo.11563149)
+[![Homepage](https://img.shields.io/badge/Homepage-docs-0F5BA3)](https://micromechanics.github.io/indentationGUI/)
+[![GitHub repository](https://img.shields.io/badge/GitHub-repository-181717?logo=github)](https://github.com/micromechanics/indentationGUI)
+[![PyPI package](https://img.shields.io/badge/PyPI-package-3775A9?logo=pypi&logoColor=white)](https://pypi.org/project/micromechanics-indentationGUI/)
 
 <h2 align = "center">
 micromechanics-indentationGUI
