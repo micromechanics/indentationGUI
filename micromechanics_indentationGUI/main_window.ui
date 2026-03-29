@@ -64,7 +64,7 @@
          </font>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tabTAF">
          <property name="sizePolicy">
@@ -3000,19 +3000,19 @@ Frame Compliance and TAF</string>
                 <property name="title">
                  <string>Test file path list</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_205">
-                 <item row="0" column="0" rowspan="5">
+                <layout class="QGridLayout" name="gridLayout_18">
+                 <item row="0" column="0" rowspan="4">
                   <widget class="QTableWidget" name="tableWidget_path_tabTipRadius_FrameStiffness">
                    <property name="minimumSize">
                     <size>
                      <width>350</width>
-                     <height>100</height>
+                     <height>128</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>170</height>
+                     <height>128</height>
                     </size>
                    </property>
                    <attribute name="horizontalHeaderVisible">
@@ -3147,19 +3147,6 @@ Frame Compliance and TAF</string>
                      <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <spacer name="verticalSpacer_263">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -3822,7 +3809,7 @@ Compliance
                     </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>&lt;Depth [µm]&lt;</string>
+                    <string>&lt; Depth [µm]&lt;</string>
                    </property>
                   </widget>
                  </item>
@@ -6001,19 +5988,19 @@ Index</string>
                 <property name="title">
                  <string>Test file path list</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_28">
-                 <item row="0" column="0" rowspan="5">
+                <layout class="QGridLayout" name="gridLayout_17">
+                 <item row="0" column="0" rowspan="4">
                   <widget class="QTableWidget" name="tableWidget_path_tabHE_FrameStiffness">
                    <property name="minimumSize">
                     <size>
                      <width>350</width>
-                     <height>100</height>
+                     <height>128</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>170</height>
+                     <height>128</height>
                     </size>
                    </property>
                    <attribute name="horizontalHeaderVisible">
@@ -6148,19 +6135,6 @@ Index</string>
                      <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
                    </property>
                   </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <spacer name="verticalSpacer_9">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -6823,7 +6797,7 @@ Compliance
                     </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>&lt;Depth [µm]&lt;</string>
+                    <string>&lt; Depth [µm]&lt;</string>
                    </property>
                   </widget>
                  </item>
@@ -9326,7 +9300,7 @@ crosses</string>
           <item row="1" column="0">
            <widget class="QTabWidget" name="tabWidget_Creep">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tabHE_FrameStiffness_2">
              <attribute name="title">
@@ -9497,13 +9471,13 @@ crosses</string>
                    <property name="minimumSize">
                     <size>
                      <width>350</width>
-                     <height>100</height>
+                     <height>128</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>170</height>
+                     <height>128</height>
                     </size>
                    </property>
                    <attribute name="horizontalHeaderVisible">
@@ -9951,7 +9925,7 @@ Compliance
                   <item row="0" column="0">
                    <widget class="QTabWidget" name="tabWidget_10">
                     <property name="currentIndex">
-                     <number>1</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_40">
                      <attribute name="title">

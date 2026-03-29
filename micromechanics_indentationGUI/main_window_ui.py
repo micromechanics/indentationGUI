@@ -1552,8 +1552,8 @@ class Ui_MainWindow(object):
         self.groupBox_216.setSizePolicy(sizePolicy7)
         self.groupBox_216.setMinimumSize(QSize(460, 172))
         self.groupBox_216.setMaximumSize(QSize(460, 172))
-        self.gridLayout_205 = QGridLayout(self.groupBox_216)
-        self.gridLayout_205.setObjectName(u"gridLayout_205")
+        self.gridLayout_18 = QGridLayout(self.groupBox_216)
+        self.gridLayout_18.setObjectName(u"gridLayout_18")
         self.tableWidget_path_tabTipRadius_FrameStiffness = QTableWidget(self.groupBox_216)
         if (self.tableWidget_path_tabTipRadius_FrameStiffness.columnCount() < 1):
             self.tableWidget_path_tabTipRadius_FrameStiffness.setColumnCount(1)
@@ -1567,13 +1567,13 @@ class Ui_MainWindow(object):
         __qtablewidgetitem9.setCheckState(Qt.Unchecked);
         self.tableWidget_path_tabTipRadius_FrameStiffness.setItem(0, 0, __qtablewidgetitem9)
         self.tableWidget_path_tabTipRadius_FrameStiffness.setObjectName(u"tableWidget_path_tabTipRadius_FrameStiffness")
-        self.tableWidget_path_tabTipRadius_FrameStiffness.setMinimumSize(QSize(350, 100))
-        self.tableWidget_path_tabTipRadius_FrameStiffness.setMaximumSize(QSize(16777215, 170))
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setMinimumSize(QSize(350, 128))
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setMaximumSize(QSize(16777215, 128))
         self.tableWidget_path_tabTipRadius_FrameStiffness.horizontalHeader().setVisible(False)
         self.tableWidget_path_tabTipRadius_FrameStiffness.horizontalHeader().setDefaultSectionSize(330)
         self.tableWidget_path_tabTipRadius_FrameStiffness.horizontalHeader().setStretchLastSection(True)
 
-        self.gridLayout_205.addWidget(self.tableWidget_path_tabTipRadius_FrameStiffness, 0, 0, 5, 1)
+        self.gridLayout_18.addWidget(self.tableWidget_path_tabTipRadius_FrameStiffness, 0, 0, 4, 1)
 
         self.pushButton_addFileWindow_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
         self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_addFileWindow_tabTipRadius_FrameStiffness")
@@ -1582,7 +1582,7 @@ class Ui_MainWindow(object):
         self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setInputMethodHints(Qt.ImhNone)
         self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setIcon(icon)
 
-        self.gridLayout_205.addWidget(self.pushButton_addFileWindow_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
+        self.gridLayout_18.addWidget(self.pushButton_addFileWindow_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
 
         self.pushButton_addFile_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
         self.pushButton_addFile_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_addFile_tabTipRadius_FrameStiffness")
@@ -1590,7 +1590,7 @@ class Ui_MainWindow(object):
         self.pushButton_addFile_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 16777215))
         self.pushButton_addFile_tabTipRadius_FrameStiffness.setIcon(icon2)
 
-        self.gridLayout_205.addWidget(self.pushButton_addFile_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
+        self.gridLayout_18.addWidget(self.pushButton_addFile_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
 
         self.pushButton_changeFile_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
         self.pushButton_changeFile_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_changeFile_tabTipRadius_FrameStiffness")
@@ -1598,7 +1598,7 @@ class Ui_MainWindow(object):
         self.pushButton_changeFile_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 26))
         self.pushButton_changeFile_tabTipRadius_FrameStiffness.setIcon(icon1)
 
-        self.gridLayout_205.addWidget(self.pushButton_changeFile_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
+        self.gridLayout_18.addWidget(self.pushButton_changeFile_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
 
         self.pushButton_deleteFile_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
         self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_deleteFile_tabTipRadius_FrameStiffness")
@@ -1606,11 +1606,7 @@ class Ui_MainWindow(object):
         self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 26))
         self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setIcon(icon3)
 
-        self.gridLayout_205.addWidget(self.pushButton_deleteFile_tabTipRadius_FrameStiffness, 3, 1, 1, 1)
-
-        self.verticalSpacer_263 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_205.addItem(self.verticalSpacer_263, 4, 1, 1, 1)
+        self.gridLayout_18.addWidget(self.pushButton_deleteFile_tabTipRadius_FrameStiffness, 3, 1, 1, 1)
 
 
         self.gridLayout_212.addWidget(self.groupBox_216, 0, 0, 1, 2)
@@ -2965,8 +2961,8 @@ class Ui_MainWindow(object):
         self.groupBox_13.setSizePolicy(sizePolicy7)
         self.groupBox_13.setMinimumSize(QSize(460, 172))
         self.groupBox_13.setMaximumSize(QSize(460, 172))
-        self.gridLayout_28 = QGridLayout(self.groupBox_13)
-        self.gridLayout_28.setObjectName(u"gridLayout_28")
+        self.gridLayout_17 = QGridLayout(self.groupBox_13)
+        self.gridLayout_17.setObjectName(u"gridLayout_17")
         self.tableWidget_path_tabHE_FrameStiffness = QTableWidget(self.groupBox_13)
         if (self.tableWidget_path_tabHE_FrameStiffness.columnCount() < 1):
             self.tableWidget_path_tabHE_FrameStiffness.setColumnCount(1)
@@ -2980,13 +2976,13 @@ class Ui_MainWindow(object):
         __qtablewidgetitem20.setCheckState(Qt.Unchecked);
         self.tableWidget_path_tabHE_FrameStiffness.setItem(0, 0, __qtablewidgetitem20)
         self.tableWidget_path_tabHE_FrameStiffness.setObjectName(u"tableWidget_path_tabHE_FrameStiffness")
-        self.tableWidget_path_tabHE_FrameStiffness.setMinimumSize(QSize(350, 100))
-        self.tableWidget_path_tabHE_FrameStiffness.setMaximumSize(QSize(16777215, 170))
+        self.tableWidget_path_tabHE_FrameStiffness.setMinimumSize(QSize(350, 128))
+        self.tableWidget_path_tabHE_FrameStiffness.setMaximumSize(QSize(16777215, 128))
         self.tableWidget_path_tabHE_FrameStiffness.horizontalHeader().setVisible(False)
         self.tableWidget_path_tabHE_FrameStiffness.horizontalHeader().setDefaultSectionSize(330)
         self.tableWidget_path_tabHE_FrameStiffness.horizontalHeader().setStretchLastSection(True)
 
-        self.gridLayout_28.addWidget(self.tableWidget_path_tabHE_FrameStiffness, 0, 0, 5, 1)
+        self.gridLayout_17.addWidget(self.tableWidget_path_tabHE_FrameStiffness, 0, 0, 4, 1)
 
         self.pushButton_addFileWindow_tabHE_FrameStiffness = QPushButton(self.groupBox_13)
         self.pushButton_addFileWindow_tabHE_FrameStiffness.setObjectName(u"pushButton_addFileWindow_tabHE_FrameStiffness")
@@ -2995,7 +2991,7 @@ class Ui_MainWindow(object):
         self.pushButton_addFileWindow_tabHE_FrameStiffness.setInputMethodHints(Qt.ImhNone)
         self.pushButton_addFileWindow_tabHE_FrameStiffness.setIcon(icon)
 
-        self.gridLayout_28.addWidget(self.pushButton_addFileWindow_tabHE_FrameStiffness, 0, 1, 1, 1)
+        self.gridLayout_17.addWidget(self.pushButton_addFileWindow_tabHE_FrameStiffness, 0, 1, 1, 1)
 
         self.pushButton_addFile_tabHE_FrameStiffness = QPushButton(self.groupBox_13)
         self.pushButton_addFile_tabHE_FrameStiffness.setObjectName(u"pushButton_addFile_tabHE_FrameStiffness")
@@ -3003,7 +2999,7 @@ class Ui_MainWindow(object):
         self.pushButton_addFile_tabHE_FrameStiffness.setMaximumSize(QSize(36, 16777215))
         self.pushButton_addFile_tabHE_FrameStiffness.setIcon(icon2)
 
-        self.gridLayout_28.addWidget(self.pushButton_addFile_tabHE_FrameStiffness, 1, 1, 1, 1)
+        self.gridLayout_17.addWidget(self.pushButton_addFile_tabHE_FrameStiffness, 1, 1, 1, 1)
 
         self.pushButton_changeFile_tabHE_FrameStiffness = QPushButton(self.groupBox_13)
         self.pushButton_changeFile_tabHE_FrameStiffness.setObjectName(u"pushButton_changeFile_tabHE_FrameStiffness")
@@ -3011,7 +3007,7 @@ class Ui_MainWindow(object):
         self.pushButton_changeFile_tabHE_FrameStiffness.setMaximumSize(QSize(36, 26))
         self.pushButton_changeFile_tabHE_FrameStiffness.setIcon(icon1)
 
-        self.gridLayout_28.addWidget(self.pushButton_changeFile_tabHE_FrameStiffness, 2, 1, 1, 1)
+        self.gridLayout_17.addWidget(self.pushButton_changeFile_tabHE_FrameStiffness, 2, 1, 1, 1)
 
         self.pushButton_deleteFile_tabHE_FrameStiffness = QPushButton(self.groupBox_13)
         self.pushButton_deleteFile_tabHE_FrameStiffness.setObjectName(u"pushButton_deleteFile_tabHE_FrameStiffness")
@@ -3019,11 +3015,7 @@ class Ui_MainWindow(object):
         self.pushButton_deleteFile_tabHE_FrameStiffness.setMaximumSize(QSize(36, 26))
         self.pushButton_deleteFile_tabHE_FrameStiffness.setIcon(icon3)
 
-        self.gridLayout_28.addWidget(self.pushButton_deleteFile_tabHE_FrameStiffness, 3, 1, 1, 1)
-
-        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_28.addItem(self.verticalSpacer_9, 4, 1, 1, 1)
+        self.gridLayout_17.addWidget(self.pushButton_deleteFile_tabHE_FrameStiffness, 3, 1, 1, 1)
 
 
         self.gridLayout_37.addWidget(self.groupBox_13, 0, 0, 1, 2)
@@ -4630,8 +4622,8 @@ class Ui_MainWindow(object):
         __qtablewidgetitem34.setCheckState(Qt.Unchecked);
         self.tableWidget_path_tabCreep_FrameStiffness.setItem(0, 0, __qtablewidgetitem34)
         self.tableWidget_path_tabCreep_FrameStiffness.setObjectName(u"tableWidget_path_tabCreep_FrameStiffness")
-        self.tableWidget_path_tabCreep_FrameStiffness.setMinimumSize(QSize(350, 100))
-        self.tableWidget_path_tabCreep_FrameStiffness.setMaximumSize(QSize(16777215, 170))
+        self.tableWidget_path_tabCreep_FrameStiffness.setMinimumSize(QSize(350, 128))
+        self.tableWidget_path_tabCreep_FrameStiffness.setMaximumSize(QSize(16777215, 128))
         self.tableWidget_path_tabCreep_FrameStiffness.horizontalHeader().setVisible(False)
         self.tableWidget_path_tabCreep_FrameStiffness.horizontalHeader().setDefaultSectionSize(330)
         self.tableWidget_path_tabCreep_FrameStiffness.horizontalHeader().setStretchLastSection(True)
@@ -7876,7 +7868,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabAll.setCurrentIndex(0)
+        self.tabAll.setCurrentIndex(1)
         self.comboBox_equipment_tabTAF.setCurrentIndex(0)
         self.comboBox_method_tabTAF.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction.setCurrentIndex(0)
@@ -7895,9 +7887,9 @@ class Ui_MainWindow(object):
         self.tabwidget.setCurrentIndex(0)
         self.tabWidget_7.setCurrentIndex(0)
         self.tabWidget_8.setCurrentIndex(1)
-        self.tabWidget_Creep.setCurrentIndex(1)
+        self.tabWidget_Creep.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction_4.setCurrentIndex(0)
-        self.tabWidget_10.setCurrentIndex(1)
+        self.tabWidget_10.setCurrentIndex(0)
         self.graphicsView_tabCreep.setCurrentIndex(0)
         self.tabwidget_2.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(1)
@@ -8183,7 +8175,7 @@ class Ui_MainWindow(object):
         self.label_249.setText(QCoreApplication.translate("MainWindow", u"At dP/dt [mN/s] crossing", None))
         self.groupBox_220.setTitle(QCoreApplication.translate("MainWindow", u"Range for Frame Compliance", None))
         self.label_254.setText(QCoreApplication.translate("MainWindow", u"< Force [mN]<", None))
-        self.label_253.setText(QCoreApplication.translate("MainWindow", u"<Depth [\u00b5m]<", None))
+        self.label_253.setText(QCoreApplication.translate("MainWindow", u"< Depth [\u00b5m]<", None))
         self.pushButton_Calculate_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Calculate Frame Compliance", None))
         self.groupBox_219.setTitle(QCoreApplication.translate("MainWindow", u"Find Surface", None))
         self.label_255.setText(QCoreApplication.translate("MainWindow", u"Size of data filter:", None))
@@ -8378,7 +8370,7 @@ class Ui_MainWindow(object):
         self.label_43.setText(QCoreApplication.translate("MainWindow", u"At dP/dt [mN/s] crossing", None))
         self.groupBox_26.setTitle(QCoreApplication.translate("MainWindow", u"Range for Frame Compliance", None))
         self.label_69.setText(QCoreApplication.translate("MainWindow", u"< Force [mN]<", None))
-        self.label_68.setText(QCoreApplication.translate("MainWindow", u"<Depth [\u00b5m]<", None))
+        self.label_68.setText(QCoreApplication.translate("MainWindow", u"< Depth [\u00b5m]<", None))
         self.pushButton_Calculate_tabHE_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Calculate Frame Compliance", None))
         self.groupBox_25.setTitle(QCoreApplication.translate("MainWindow", u"Find Surface", None))
         self.label_89.setText(QCoreApplication.translate("MainWindow", u"Size of data filter:", None))
