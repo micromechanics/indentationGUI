@@ -25,8 +25,16 @@
 }
 
 .wy-side-nav-search .version {
+  display: block;
+  margin-top: 0.45rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
   color: #ffffff !important;
   opacity: 1 !important;
+  text-shadow: 0 1px 2px rgba(8, 48, 107, 0.35);
 }
 
 .wy-side-nav-search > a img.logo,
@@ -34,6 +42,7 @@
   width: 160px;
   max-width: 160px;
   height: auto;
+  margin-bottom: 0.15rem;
 }
 
 .wy-side-nav-search input[type="text"] {
