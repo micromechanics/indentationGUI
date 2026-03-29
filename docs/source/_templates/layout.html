@@ -1,5 +1,12 @@
 {% extends "!layout.html" %}
 
+{% block sidebartitle %}
+  {{ super() }}
+  {% if version %}
+    <div class="version">{{ version }}</div>
+  {% endif %}
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
   {% if pagename == 'index' %}

@@ -37,6 +37,11 @@
   text-shadow: 0 1px 2px rgba(8, 48, 107, 0.35);
 }
 
+/* Hide duplicate version div when theme already renders one */
+.wy-side-nav-search .version ~ .version {
+  display: none;
+}
+
 .wy-side-nav-search > a img.logo,
 .wy-side-nav-search .wy-dropdown > a img.logo {
   width: 160px;
