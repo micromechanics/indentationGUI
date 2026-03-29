@@ -160,6 +160,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
         self.ui.pushButton_addFileWindow_tabTAF,
         self.ui.pushButton_addFileWindow_tabHE_FrameStiffness,
         self.ui.pushButton_tableWidgetWindow_tabHE_FrameStiffness,
+        self.ui.pushButton_addFileWindow_tabTipRadius_FrameStiffness,
+        self.ui.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness,
         self.ui.pushButton_addFileWindow_tabHE,
         self.ui.pushButton_tableWidgetWindow_tabHE,
         self.ui.pushButton_addFileWindow_tabCreep,
@@ -170,6 +172,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
       "add_24x24.png": [
         self.ui.pushButton_addFile_tabTAF,
         self.ui.pushButton_addFile_tabHE_FrameStiffness,
+        self.ui.pushButton_addFile_tabTipRadius_FrameStiffness,
         self.ui.pushButton_addFile_tabHE,
         self.ui.pushButton_addFile_tabCreep,
         self.ui.pushButton_addFile_tabCreep_FrameStiffness,
@@ -177,6 +180,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
       "edit_24x24.png": [
         self.ui.pushButton_changeFile_tabTAF,
         self.ui.pushButton_changeFile_tabHE_FrameStiffness,
+        self.ui.pushButton_changeFile_tabTipRadius_FrameStiffness,
         self.ui.pushButton_changeFile_tabHE,
         self.ui.pushButton_changeFile_tabCreep,
         self.ui.pushButton_changeFile_tabCreep_FrameStiffness,
@@ -184,6 +188,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
       "delete_24x24.png": [
         self.ui.pushButton_deleteFile_tabTAF,
         self.ui.pushButton_deleteFile_tabHE_FrameStiffness,
+        self.ui.pushButton_deleteFile_tabTipRadius_FrameStiffness,
         self.ui.pushButton_deleteFile_tabHE,
         self.ui.pushButton_deleteFile_tabCreep,
         self.ui.pushButton_deleteFile_tabCreep_FrameStiffness,
@@ -197,6 +202,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     """Provide old lineEdit_path_* aliases for tabs that now use path tables."""
     self.ui.lineEdit_path_tabHE = LegacyPathTableAdapter(self.ui.tableWidget_path_tabHE)
     self.ui.lineEdit_path_tabHE_FrameStiffness = LegacyPathTableAdapter(self.ui.tableWidget_path_tabHE_FrameStiffness)
+    self.ui.lineEdit_path_tabTipRadius_FrameStiffness = LegacyPathTableAdapter(self.ui.tableWidget_path_tabTipRadius_FrameStiffness)
 
   def get_current_tab_name(self):
     """ get the name of the current tabWidget """
@@ -229,7 +235,8 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.pushButton_SelectAll_tabTAF.clicked.connect(lambda: self.click_pushButton_SelectAll(tabName='tabTAF'))
     self.ui.pushButton_CopyAboveTAF.clicked.connect(self.Copy_TAF_to_reference_tabTAF)
     #clicked.connect in tabTipRadius
-    self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.click_pushButton_Calculate(tabName = 'tabTipRadius', what = 'FrameStiffness'))
+    self.ui.pushButton_SelectTypedTest_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.Select_TypedTest(tabName='tabTipRadius_FrameStiffness'))
+    self.ui.pushButton_Calculate_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.click_pushButton_Calculate(tabName = 'tabTipRadius_FrameStiffness', what = 'FrameStiffness'))
     self.ui.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.plot_load_depth(tabName='tabTipRadius_FrameStiffness')) # pylint: disable=line-too-long
     self.ui.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.plot_load_depth(tabName='tabTipRadius_FrameStiffness', If_inclusive_frameStiffness='exclusive')) # pylint: disable=line-too-long
     self.ui.Copy_FrameCompliance_tabTipRadius.clicked.connect(lambda: self.Copy_FrameCompliance(tabName='tabTipRadius'))
@@ -241,7 +248,11 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.ui.pushButton_SelectAll_tabTipRadius.clicked.connect(lambda: self.click_pushButton_SelectAll(tabName='tabTipRadius'))
     self.ui.pushButton_SelectAll_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.click_pushButton_SelectAll(tabName='tabTipRadius_FrameStiffness'))
     self.ui.pushButton_select_tabTipRadius.clicked.connect(self.selectFile_tabTipRadius)
-    self.ui.pushButton_select_tabTipRadius_FrameStiffness.clicked.connect(self.selectFile_tabTipRadius_FrameStiffness)
+    self.ui.pushButton_addFile_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.addFile_tab(tabName='tabTipRadius_FrameStiffness'))
+    self.ui.pushButton_deleteFile_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.deleteFile_tab(tabName='tabTipRadius_FrameStiffness'))
+    self.ui.pushButton_changeFile_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.changeFile_tab(tabName='tabTipRadius_FrameStiffness'))
+    self.ui.pushButton_addFileWindow_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.show_DialogPathList(tabName='tabTipRadius_FrameStiffness'))
+    self.ui.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness.clicked.connect(lambda: self.show_DialogTestList(tabName='tabTipRadius_FrameStiffness'))
     #clicked.connect in tabHE
     self.ui.pushButton_SelectTypedTest_tabHE.clicked.connect(lambda: self.Select_TypedTest(tabName = 'tabHE'))
     self.ui.pushButton_SelectTypedTest_tabHE_FrameStiffness.clicked.connect(lambda: self.Select_TypedTest(tabName = 'tabHE_FrameStiffness'))

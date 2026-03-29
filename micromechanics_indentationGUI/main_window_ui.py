@@ -1351,87 +1351,17 @@ class Ui_MainWindow(object):
         self.tabWidget_TipRadius.setSizePolicy(sizePolicy)
         self.tabTipRadius_FrameStiffness = QWidget()
         self.tabTipRadius_FrameStiffness.setObjectName(u"tabTipRadius_FrameStiffness")
-        self.gridLayout_19 = QGridLayout(self.tabTipRadius_FrameStiffness)
-        self.gridLayout_19.setObjectName(u"gridLayout_19")
-        self.groupBox_9 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_9.setObjectName(u"groupBox_9")
-        sizePolicy3.setHeightForWidth(self.groupBox_9.sizePolicy().hasHeightForWidth())
-        self.groupBox_9.setSizePolicy(sizePolicy3)
-        self.groupBox_9.setMinimumSize(QSize(460, 0))
-        self.groupBox_9.setMaximumSize(QSize(460, 16777215))
-        self.gridLayout_17 = QGridLayout(self.groupBox_9)
-        self.gridLayout_17.setObjectName(u"gridLayout_17")
-        self.lineEdit_path_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_9)
-        self.lineEdit_path_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_path_tabTipRadius_FrameStiffness")
-        sizePolicy4.setHeightForWidth(self.lineEdit_path_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_path_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
-
-        self.gridLayout_17.addWidget(self.lineEdit_path_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
-
-        self.label_77 = QLabel(self.groupBox_9)
-        self.label_77.setObjectName(u"label_77")
-        sizePolicy7.setHeightForWidth(self.label_77.sizePolicy().hasHeightForWidth())
-        self.label_77.setSizePolicy(sizePolicy7)
-
-        self.gridLayout_17.addWidget(self.label_77, 0, 0, 1, 1)
-
-        self.pushButton_select_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_9)
-        self.pushButton_select_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_select_tabTipRadius_FrameStiffness")
-        sizePolicy9.setHeightForWidth(self.pushButton_select_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.pushButton_select_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
-        self.pushButton_select_tabTipRadius_FrameStiffness.setMaximumSize(QSize(62, 16777215))
-
-        self.gridLayout_17.addWidget(self.pushButton_select_tabTipRadius_FrameStiffness, 0, 2, 1, 1)
-
-
-        self.gridLayout_19.addWidget(self.groupBox_9, 0, 0, 1, 2)
-
-        self.tableWidget_tabTipRadius_FrameStiffness = QTableWidget(self.tabTipRadius_FrameStiffness)
-        if (self.tableWidget_tabTipRadius_FrameStiffness.columnCount() < 4):
-            self.tableWidget_tabTipRadius_FrameStiffness.setColumnCount(4)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        __qtablewidgetitem7.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        __qtablewidgetitem8.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem8.setFont(font3);
-        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem8)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        __qtablewidgetitem9.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        __qtablewidgetitem10.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem10.setFont(font);
-        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem10)
-        if (self.tableWidget_tabTipRadius_FrameStiffness.rowCount() < 1):
-            self.tableWidget_tabTipRadius_FrameStiffness.setRowCount(1)
-        self.tableWidget_tabTipRadius_FrameStiffness.setObjectName(u"tableWidget_tabTipRadius_FrameStiffness")
-        sizePolicy11 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-        sizePolicy11.setHorizontalStretch(0)
-        sizePolicy11.setVerticalStretch(0)
-        sizePolicy11.setHeightForWidth(self.tableWidget_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy11)
-        self.tableWidget_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 0))
-        self.tableWidget_tabTipRadius_FrameStiffness.setMaximumSize(QSize(200, 16777215))
-        self.tableWidget_tabTipRadius_FrameStiffness.setAutoScroll(True)
-        self.tableWidget_tabTipRadius_FrameStiffness.setRowCount(1)
-        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setVisible(True)
-        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setMinimumSectionSize(65)
-        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setDefaultSectionSize(65)
-        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setHighlightSections(True)
-        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setProperty("showSortIndicator", True)
-
-        self.gridLayout_19.addWidget(self.tableWidget_tabTipRadius_FrameStiffness, 0, 2, 7, 1)
-
-        self.groupBox_57 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_57.setObjectName(u"groupBox_57")
-        sizePolicy3.setHeightForWidth(self.groupBox_57.sizePolicy().hasHeightForWidth())
-        self.groupBox_57.setSizePolicy(sizePolicy3)
-        self.groupBox_57.setMinimumSize(QSize(460, 0))
-        self.groupBox_57.setMaximumSize(QSize(460, 16777215))
-        self.gridLayout_106 = QGridLayout(self.groupBox_57)
-        self.gridLayout_106.setObjectName(u"gridLayout_106")
-        self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness = QComboBox(self.groupBox_57)
+        self.gridLayout_212 = QGridLayout(self.tabTipRadius_FrameStiffness)
+        self.gridLayout_212.setObjectName(u"gridLayout_212")
+        self.groupBox_223 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_223.setObjectName(u"groupBox_223")
+        sizePolicy3.setHeightForWidth(self.groupBox_223.sizePolicy().hasHeightForWidth())
+        self.groupBox_223.setSizePolicy(sizePolicy3)
+        self.groupBox_223.setMinimumSize(QSize(460, 0))
+        self.groupBox_223.setMaximumSize(QSize(4600, 16777215))
+        self.gridLayout_202 = QGridLayout(self.groupBox_223)
+        self.gridLayout_202.setObjectName(u"gridLayout_202")
+        self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness = QComboBox(self.groupBox_223)
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.addItem("")
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.addItem("")
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.setObjectName(u"comboBox_CalculationMethod_tabTipRadius_FrameStiffness")
@@ -1439,263 +1369,314 @@ class Ui_MainWindow(object):
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.setEditable(False)
 
-        self.gridLayout_106.addWidget(self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness, 1, 0, 1, 1)
+        self.gridLayout_202.addWidget(self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
 
-        self.groupBox_61 = QGroupBox(self.groupBox_57)
-        self.groupBox_61.setObjectName(u"groupBox_61")
-        sizePolicy2.setHeightForWidth(self.groupBox_61.sizePolicy().hasHeightForWidth())
-        self.groupBox_61.setSizePolicy(sizePolicy2)
-        self.groupBox_61.setMinimumSize(QSize(0, 0))
-        self.groupBox_61.setMaximumSize(QSize(44000, 16777215))
-        self.gridLayout_109 = QGridLayout(self.groupBox_61)
-        self.gridLayout_109.setObjectName(u"gridLayout_109")
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF4_tabTipRadius_FrameStiffness")
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setReadOnly(True)
+        self.groupBox_224 = QGroupBox(self.groupBox_223)
+        self.groupBox_224.setObjectName(u"groupBox_224")
+        sizePolicy2.setHeightForWidth(self.groupBox_224.sizePolicy().hasHeightForWidth())
+        self.groupBox_224.setSizePolicy(sizePolicy2)
+        self.groupBox_224.setMinimumSize(QSize(0, 0))
+        self.groupBox_224.setMaximumSize(QSize(44000, 16777215))
+        self.gridLayout_203 = QGridLayout(self.groupBox_224)
+        self.gridLayout_203.setObjectName(u"gridLayout_203")
+        self.label_233 = QLabel(self.groupBox_224)
+        self.label_233.setObjectName(u"label_233")
+        sizePolicy7.setHeightForWidth(self.label_233.sizePolicy().hasHeightForWidth())
+        self.label_233.setSizePolicy(sizePolicy7)
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF4_tabTipRadius_FrameStiffness, 2, 7, 1, 1)
+        self.gridLayout_203.addWidget(self.label_233, 2, 3, 1, 1)
 
-        self.label_128 = QLabel(self.groupBox_61)
-        self.label_128.setObjectName(u"label_128")
-        sizePolicy7.setHeightForWidth(self.label_128.sizePolicy().hasHeightForWidth())
-        self.label_128.setSizePolicy(sizePolicy7)
-
-        self.gridLayout_109.addWidget(self.label_128, 2, 2, 1, 1)
-
-        self.label_126 = QLabel(self.groupBox_61)
-        self.label_126.setObjectName(u"label_126")
-        sizePolicy7.setHeightForWidth(self.label_126.sizePolicy().hasHeightForWidth())
-        self.label_126.setSizePolicy(sizePolicy7)
-
-        self.gridLayout_109.addWidget(self.label_126, 2, 6, 1, 1)
-
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF2_tabTipRadius_FrameStiffness")
-        sizePolicy9.setHeightForWidth(self.lineEdit_TAF2_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setReadOnly(True)
-
-        self.gridLayout_109.addWidget(self.lineEdit_TAF2_tabTipRadius_FrameStiffness, 2, 3, 1, 1)
-
-        self.label_84 = QLabel(self.groupBox_61)
-        self.label_84.setObjectName(u"label_84")
-        sizePolicy7.setHeightForWidth(self.label_84.sizePolicy().hasHeightForWidth())
-        self.label_84.setSizePolicy(sizePolicy7)
-        self.label_84.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_109.addWidget(self.label_84, 2, 0, 1, 1)
-
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabTipRadius_FrameStiffness")
-        sizePolicy12 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy12.setHorizontalStretch(0)
-        sizePolicy12.setVerticalStretch(0)
-        sizePolicy12.setHeightForWidth(self.lineEdit_TAF3_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy12)
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setReadOnly(True)
-
-        self.gridLayout_109.addWidget(self.lineEdit_TAF3_tabTipRadius_FrameStiffness, 2, 5, 1, 1)
-
-        self.lineEdit_TAF1_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
+        self.lineEdit_TAF1_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF1_tabTipRadius_FrameStiffness")
         sizePolicy9.setHeightForWidth(self.lineEdit_TAF1_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setReadOnly(True)
+        self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setReadOnly(False)
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF1_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF1_tabTipRadius_FrameStiffness, 2, 2, 1, 1)
 
-        self.lineEdit_TAF5_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
+        self.label_251 = QLabel(self.groupBox_224)
+        self.label_251.setObjectName(u"label_251")
+        sizePolicy5.setHeightForWidth(self.label_251.sizePolicy().hasHeightForWidth())
+        self.label_251.setSizePolicy(sizePolicy5)
+        self.label_251.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_203.addWidget(self.label_251, 0, 0, 1, 3)
+
+        self.lineEdit_TAF5_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF5_tabTipRadius_FrameStiffness")
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
-        self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setReadOnly(True)
+        self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setReadOnly(False)
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF5_tabTipRadius_FrameStiffness, 2, 9, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF5_tabTipRadius_FrameStiffness, 2, 10, 1, 1)
 
-        self.label_129 = QLabel(self.groupBox_61)
-        self.label_129.setObjectName(u"label_129")
-        sizePolicy5.setHeightForWidth(self.label_129.sizePolicy().hasHeightForWidth())
-        self.label_129.setSizePolicy(sizePolicy5)
-        self.label_129.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label_236 = QLabel(self.groupBox_224)
+        self.label_236.setObjectName(u"label_236")
+        sizePolicy7.setHeightForWidth(self.label_236.sizePolicy().hasHeightForWidth())
+        self.label_236.setSizePolicy(sizePolicy7)
+        self.label_236.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_109.addWidget(self.label_129, 0, 0, 1, 2)
+        self.gridLayout_203.addWidget(self.label_236, 2, 5, 1, 1)
 
-        self.label_124 = QLabel(self.groupBox_61)
-        self.label_124.setObjectName(u"label_124")
-        sizePolicy7.setHeightForWidth(self.label_124.sizePolicy().hasHeightForWidth())
-        self.label_124.setSizePolicy(sizePolicy7)
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabTipRadius_FrameStiffness")
+        sizePolicy11 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy11.setHorizontalStretch(0)
+        sizePolicy11.setVerticalStretch(0)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy11)
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setReadOnly(False)
 
-        self.gridLayout_109.addWidget(self.label_124, 2, 8, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF3_tabTipRadius_FrameStiffness, 2, 6, 1, 1)
 
-        self.label_127 = QLabel(self.groupBox_61)
-        self.label_127.setObjectName(u"label_127")
-        sizePolicy7.setHeightForWidth(self.label_127.sizePolicy().hasHeightForWidth())
-        self.label_127.setSizePolicy(sizePolicy7)
-        self.label_127.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF2_tabTipRadius_FrameStiffness")
+        sizePolicy9.setHeightForWidth(self.lineEdit_TAF2_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setReadOnly(False)
 
-        self.gridLayout_109.addWidget(self.label_127, 2, 4, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF2_tabTipRadius_FrameStiffness, 2, 4, 1, 1)
 
-        self.label_125 = QLabel(self.groupBox_61)
-        self.label_125.setObjectName(u"label_125")
-        sizePolicy7.setHeightForWidth(self.label_125.sizePolicy().hasHeightForWidth())
-        self.label_125.setSizePolicy(sizePolicy7)
+        self.label_237 = QLabel(self.groupBox_224)
+        self.label_237.setObjectName(u"label_237")
+        sizePolicy7.setHeightForWidth(self.label_237.sizePolicy().hasHeightForWidth())
+        self.label_237.setSizePolicy(sizePolicy7)
 
-        self.gridLayout_109.addWidget(self.label_125, 2, 10, 1, 1)
+        self.gridLayout_203.addWidget(self.label_237, 2, 7, 1, 1)
 
-        self.lineEdit_TAF9_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
-        self.lineEdit_TAF9_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF9_tabTipRadius_FrameStiffness")
-        self.lineEdit_TAF9_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF4_tabTipRadius_FrameStiffness")
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setMaximumSize(QSize(40, 16777215))
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setReadOnly(False)
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF9_tabTipRadius_FrameStiffness, 3, 9, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF4_tabTipRadius_FrameStiffness, 2, 8, 1, 1)
 
-        self.lineEdit_TAF8_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
-        self.lineEdit_TAF8_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF8_tabTipRadius_FrameStiffness")
-        self.lineEdit_TAF8_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+        self.label_256 = QLabel(self.groupBox_224)
+        self.label_256.setObjectName(u"label_256")
+        sizePolicy7.setHeightForWidth(self.label_256.sizePolicy().hasHeightForWidth())
+        self.label_256.setSizePolicy(sizePolicy7)
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF8_tabTipRadius_FrameStiffness, 3, 7, 1, 1)
+        self.gridLayout_203.addWidget(self.label_256, 2, 9, 1, 1)
 
-        self.lineEdit_TAF7_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
+        self.label_235 = QLabel(self.groupBox_224)
+        self.label_235.setObjectName(u"label_235")
+        sizePolicy7.setHeightForWidth(self.label_235.sizePolicy().hasHeightForWidth())
+        self.label_235.setSizePolicy(sizePolicy7)
+
+        self.gridLayout_203.addWidget(self.label_235, 2, 11, 1, 1)
+
+        self.lineEdit_TAF6_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
+        self.lineEdit_TAF6_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF6_tabTipRadius_FrameStiffness")
+        self.lineEdit_TAF6_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+
+        self.gridLayout_203.addWidget(self.lineEdit_TAF6_tabTipRadius_FrameStiffness, 3, 4, 1, 1)
+
+        self.lineEdit_TAF7_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
         self.lineEdit_TAF7_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF7_tabTipRadius_FrameStiffness")
         self.lineEdit_TAF7_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF7_tabTipRadius_FrameStiffness, 3, 5, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF7_tabTipRadius_FrameStiffness, 3, 6, 1, 1)
 
-        self.lineEdit_TAF6_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
-        self.lineEdit_TAF6_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF6_tabTipRadius_FrameStiffness")
-        sizePolicy9.setHeightForWidth(self.lineEdit_TAF6_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF6_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
-        self.lineEdit_TAF6_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
+        self.lineEdit_TAF8_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
+        self.lineEdit_TAF8_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF8_tabTipRadius_FrameStiffness")
+        self.lineEdit_TAF8_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
 
-        self.gridLayout_109.addWidget(self.lineEdit_TAF6_tabTipRadius_FrameStiffness, 3, 3, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF8_tabTipRadius_FrameStiffness, 3, 8, 1, 1)
 
-        self.label_143 = QLabel(self.groupBox_61)
-        self.label_143.setObjectName(u"label_143")
+        self.lineEdit_TAF9_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
+        self.lineEdit_TAF9_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TAF9_tabTipRadius_FrameStiffness")
+        self.lineEdit_TAF9_tabTipRadius_FrameStiffness.setMinimumSize(QSize(40, 0))
 
-        self.gridLayout_109.addWidget(self.label_143, 3, 4, 1, 1)
+        self.gridLayout_203.addWidget(self.lineEdit_TAF9_tabTipRadius_FrameStiffness, 3, 10, 1, 1)
 
-        self.label_144 = QLabel(self.groupBox_61)
-        self.label_144.setObjectName(u"label_144")
+        self.label_238 = QLabel(self.groupBox_224)
+        self.label_238.setObjectName(u"label_238")
 
-        self.gridLayout_109.addWidget(self.label_144, 3, 6, 1, 1)
+        self.gridLayout_203.addWidget(self.label_238, 3, 5, 1, 1)
 
-        self.label_145 = QLabel(self.groupBox_61)
-        self.label_145.setObjectName(u"label_145")
+        self.label_239 = QLabel(self.groupBox_224)
+        self.label_239.setObjectName(u"label_239")
 
-        self.gridLayout_109.addWidget(self.label_145, 3, 8, 1, 1)
+        self.gridLayout_203.addWidget(self.label_239, 3, 7, 1, 1)
 
-        self.label_146 = QLabel(self.groupBox_61)
-        self.label_146.setObjectName(u"label_146")
+        self.label_240 = QLabel(self.groupBox_224)
+        self.label_240.setObjectName(u"label_240")
 
-        self.gridLayout_109.addWidget(self.label_146, 3, 10, 1, 1)
+        self.gridLayout_203.addWidget(self.label_240, 3, 9, 1, 1)
 
-        self.Copy_TAF_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_61)
+        self.label_241 = QLabel(self.groupBox_224)
+        self.label_241.setObjectName(u"label_241")
+
+        self.gridLayout_203.addWidget(self.label_241, 3, 11, 1, 1)
+
+        self.label_252 = QLabel(self.groupBox_224)
+        self.label_252.setObjectName(u"label_252")
+        sizePolicy7.setHeightForWidth(self.label_252.sizePolicy().hasHeightForWidth())
+        self.label_252.setSizePolicy(sizePolicy7)
+        self.label_252.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_203.addWidget(self.label_252, 2, 0, 1, 2)
+
+        self.Copy_TAF_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_224)
         self.Copy_TAF_tabTipRadius_FrameStiffness.setObjectName(u"Copy_TAF_tabTipRadius_FrameStiffness")
         sizePolicy8.setHeightForWidth(self.Copy_TAF_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.Copy_TAF_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy8)
         self.Copy_TAF_tabTipRadius_FrameStiffness.setMinimumSize(QSize(110, 0))
 
-        self.gridLayout_109.addWidget(self.Copy_TAF_tabTipRadius_FrameStiffness, 6, 0, 1, 11)
+        self.gridLayout_203.addWidget(self.Copy_TAF_tabTipRadius_FrameStiffness, 6, 0, 1, 12)
 
-        self.lineEdit_TipName_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_61)
+        self.lineEdit_TipName_tabTipRadius_FrameStiffness = QLineEdit(self.groupBox_224)
         self.lineEdit_TipName_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_TipName_tabTipRadius_FrameStiffness")
         sizePolicy4.setHeightForWidth(self.lineEdit_TipName_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.lineEdit_TipName_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
 
-        self.gridLayout_109.addWidget(self.lineEdit_TipName_tabTipRadius_FrameStiffness, 0, 2, 1, 9)
+        self.gridLayout_203.addWidget(self.lineEdit_TipName_tabTipRadius_FrameStiffness, 0, 3, 1, 9)
 
 
-        self.gridLayout_106.addWidget(self.groupBox_61, 2, 0, 1, 1)
+        self.gridLayout_202.addWidget(self.groupBox_224, 1, 0, 1, 1)
 
 
-        self.gridLayout_19.addWidget(self.groupBox_57, 1, 0, 1, 2)
+        self.gridLayout_212.addWidget(self.groupBox_223, 1, 0, 1, 2)
 
-        self.groupBox_10 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_10.setObjectName(u"groupBox_10")
-        sizePolicy3.setHeightForWidth(self.groupBox_10.sizePolicy().hasHeightForWidth())
-        self.groupBox_10.setSizePolicy(sizePolicy3)
-        self.groupBox_10.setMinimumSize(QSize(460, 0))
-        self.groupBox_10.setMaximumSize(QSize(460, 16777215))
-        self.gridLayout_18 = QGridLayout(self.groupBox_10)
-        self.gridLayout_18.setObjectName(u"gridLayout_18")
-        self.label_18 = QLabel(self.groupBox_10)
-        self.label_18.setObjectName(u"label_18")
-        sizePolicy3.setHeightForWidth(self.label_18.sizePolicy().hasHeightForWidth())
-        self.label_18.setSizePolicy(sizePolicy3)
-        self.label_18.setMinimumSize(QSize(0, 0))
+        self.groupBox_216 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_216.setObjectName(u"groupBox_216")
+        sizePolicy7.setHeightForWidth(self.groupBox_216.sizePolicy().hasHeightForWidth())
+        self.groupBox_216.setSizePolicy(sizePolicy7)
+        self.groupBox_216.setMinimumSize(QSize(460, 172))
+        self.groupBox_216.setMaximumSize(QSize(460, 172))
+        self.gridLayout_205 = QGridLayout(self.groupBox_216)
+        self.gridLayout_205.setObjectName(u"gridLayout_205")
+        self.tableWidget_path_tabTipRadius_FrameStiffness = QTableWidget(self.groupBox_216)
+        if (self.tableWidget_path_tabTipRadius_FrameStiffness.columnCount() < 1):
+            self.tableWidget_path_tabTipRadius_FrameStiffness.setColumnCount(1)
+        __qtablewidgetitem7 = QTableWidgetItem()
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem7)
+        if (self.tableWidget_path_tabTipRadius_FrameStiffness.rowCount() < 1):
+            self.tableWidget_path_tabTipRadius_FrameStiffness.setRowCount(1)
+        __qtablewidgetitem8 = QTableWidgetItem()
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setVerticalHeaderItem(0, __qtablewidgetitem8)
+        __qtablewidgetitem9 = QTableWidgetItem()
+        __qtablewidgetitem9.setCheckState(Qt.Unchecked);
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setItem(0, 0, __qtablewidgetitem9)
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setObjectName(u"tableWidget_path_tabTipRadius_FrameStiffness")
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setMinimumSize(QSize(350, 100))
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setMaximumSize(QSize(16777215, 170))
+        self.tableWidget_path_tabTipRadius_FrameStiffness.horizontalHeader().setVisible(False)
+        self.tableWidget_path_tabTipRadius_FrameStiffness.horizontalHeader().setDefaultSectionSize(330)
+        self.tableWidget_path_tabTipRadius_FrameStiffness.horizontalHeader().setStretchLastSection(True)
 
-        self.gridLayout_18.addWidget(self.label_18, 0, 5, 1, 1)
+        self.gridLayout_205.addWidget(self.tableWidget_path_tabTipRadius_FrameStiffness, 0, 0, 5, 1)
 
-        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_10)
-        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness")
-        sizePolicy4.setHeightForWidth(self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
-        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setDecimals(4)
-        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setSingleStep(0.000100000000000)
-        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setValue(0.010000000000000)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_addFileWindow_tabTipRadius_FrameStiffness")
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setMinimumSize(QSize(0, 26))
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 16777215))
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setInputMethodHints(Qt.ImhNone)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setIcon(icon)
 
-        self.gridLayout_18.addWidget(self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness, 0, 4, 1, 1)
+        self.gridLayout_205.addWidget(self.pushButton_addFileWindow_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
 
-        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness = QSpinBox(self.groupBox_10)
-        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setObjectName(u"spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness")
-        sizePolicy4.setHeightForWidth(self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
-        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setValue(11)
+        self.pushButton_addFile_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
+        self.pushButton_addFile_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_addFile_tabTipRadius_FrameStiffness")
+        self.pushButton_addFile_tabTipRadius_FrameStiffness.setMinimumSize(QSize(36, 26))
+        self.pushButton_addFile_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 16777215))
+        self.pushButton_addFile_tabTipRadius_FrameStiffness.setIcon(icon2)
 
-        self.gridLayout_18.addWidget(self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness, 0, 6, 1, 1)
+        self.gridLayout_205.addWidget(self.pushButton_addFile_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
 
-        self.label_17 = QLabel(self.groupBox_10)
-        self.label_17.setObjectName(u"label_17")
-        sizePolicy3.setHeightForWidth(self.label_17.sizePolicy().hasHeightForWidth())
-        self.label_17.setSizePolicy(sizePolicy3)
+        self.pushButton_changeFile_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
+        self.pushButton_changeFile_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_changeFile_tabTipRadius_FrameStiffness")
+        self.pushButton_changeFile_tabTipRadius_FrameStiffness.setMinimumSize(QSize(36, 26))
+        self.pushButton_changeFile_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 26))
+        self.pushButton_changeFile_tabTipRadius_FrameStiffness.setIcon(icon1)
 
-        self.gridLayout_18.addWidget(self.label_17, 0, 0, 1, 1)
+        self.gridLayout_205.addWidget(self.pushButton_changeFile_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
+
+        self.pushButton_deleteFile_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_216)
+        self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_deleteFile_tabTipRadius_FrameStiffness")
+        self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setMinimumSize(QSize(36, 26))
+        self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setMaximumSize(QSize(36, 26))
+        self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setIcon(icon3)
+
+        self.gridLayout_205.addWidget(self.pushButton_deleteFile_tabTipRadius_FrameStiffness, 3, 1, 1, 1)
+
+        self.verticalSpacer_263 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_205.addItem(self.verticalSpacer_263, 4, 1, 1, 1)
 
 
-        self.gridLayout_19.addWidget(self.groupBox_10, 2, 0, 1, 2)
+        self.gridLayout_212.addWidget(self.groupBox_216, 0, 0, 1, 2)
 
-        self.groupBox_11 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_11.setObjectName(u"groupBox_11")
-        sizePolicy3.setHeightForWidth(self.groupBox_11.sizePolicy().hasHeightForWidth())
-        self.groupBox_11.setSizePolicy(sizePolicy3)
-        self.groupBox_11.setMinimumSize(QSize(230, 0))
-        self.groupBox_11.setMaximumSize(QSize(230, 16777215))
-        self.gridLayout_25 = QGridLayout(self.groupBox_11)
-        self.gridLayout_25.setObjectName(u"gridLayout_25")
-        self.label_23 = QLabel(self.groupBox_11)
-        self.label_23.setObjectName(u"label_23")
-        sizePolicy5.setHeightForWidth(self.label_23.sizePolicy().hasHeightForWidth())
-        self.label_23.setSizePolicy(sizePolicy5)
-        self.label_23.setMaximumSize(QSize(16777215, 16777215))
-        self.label_23.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.groupBox_221 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_221.setObjectName(u"groupBox_221")
+        sizePolicy3.setHeightForWidth(self.groupBox_221.sizePolicy().hasHeightForWidth())
+        self.groupBox_221.setSizePolicy(sizePolicy3)
+        self.groupBox_221.setMinimumSize(QSize(0, 0))
+        self.groupBox_221.setMaximumSize(QSize(224, 16777215))
+        self.gridLayout_215 = QGridLayout(self.groupBox_221)
+        self.gridLayout_215.setObjectName(u"gridLayout_215")
+        self.doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_221)
+        self.doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness")
+        self.doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setDecimals(0)
+        self.doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setValue(60.000000000000000)
 
-        self.gridLayout_25.addWidget(self.label_23, 1, 1, 1, 1)
+        self.gridLayout_215.addWidget(self.doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
 
-        self.label_22 = QLabel(self.groupBox_11)
-        self.label_22.setObjectName(u"label_22")
-        sizePolicy3.setHeightForWidth(self.label_22.sizePolicy().hasHeightForWidth())
-        self.label_22.setSizePolicy(sizePolicy3)
+        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_221)
+        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness")
+        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setEnabled(True)
+        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setChecked(True)
 
-        self.gridLayout_25.addWidget(self.label_22, 2, 1, 1, 1)
+        self.gridLayout_215.addWidget(self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
 
-        self.comboBox_equipment_tabTipRadius_FrameStiffness = QComboBox(self.groupBox_11)
-        self.comboBox_equipment_tabTipRadius_FrameStiffness.addItem("")
-        self.comboBox_equipment_tabTipRadius_FrameStiffness.setObjectName(u"comboBox_equipment_tabTipRadius_FrameStiffness")
-        self.comboBox_equipment_tabTipRadius_FrameStiffness.setEnabled(False)
-        sizePolicy4.setHeightForWidth(self.comboBox_equipment_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.comboBox_equipment_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
+        self.checkBox_UsingDriftPre_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_221)
+        self.checkBox_UsingDriftPre_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingDriftPre_tabTipRadius_FrameStiffness")
 
-        self.gridLayout_25.addWidget(self.comboBox_equipment_tabTipRadius_FrameStiffness, 2, 2, 1, 1)
+        self.gridLayout_215.addWidget(self.checkBox_UsingDriftPre_tabTipRadius_FrameStiffness, 0, 2, 1, 1)
 
-        self.comboBox_method_tabTipRadius_FrameStiffness = QComboBox(self.groupBox_11)
+        self.doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_221)
+        self.doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness")
+        self.doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness.setDecimals(0)
+        self.doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness.setValue(60.000000000000000)
+
+        self.gridLayout_215.addWidget(self.doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness, 0, 3, 1, 1)
+
+
+        self.gridLayout_212.addWidget(self.groupBox_221, 6, 1, 1, 1)
+
+        self.groupBox_217 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_217.setObjectName(u"groupBox_217")
+        sizePolicy3.setHeightForWidth(self.groupBox_217.sizePolicy().hasHeightForWidth())
+        self.groupBox_217.setSizePolicy(sizePolicy3)
+        self.groupBox_217.setMinimumSize(QSize(230, 0))
+        self.groupBox_217.setMaximumSize(QSize(230, 16777215))
+        self.gridLayout_206 = QGridLayout(self.groupBox_217)
+        self.gridLayout_206.setObjectName(u"gridLayout_206")
+        self.label_244 = QLabel(self.groupBox_217)
+        self.label_244.setObjectName(u"label_244")
+        sizePolicy5.setHeightForWidth(self.label_244.sizePolicy().hasHeightForWidth())
+        self.label_244.setSizePolicy(sizePolicy5)
+        self.label_244.setMaximumSize(QSize(16777215, 16777215))
+        self.label_244.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_206.addWidget(self.label_244, 1, 1, 1, 1)
+
+        self.label_243 = QLabel(self.groupBox_217)
+        self.label_243.setObjectName(u"label_243")
+        sizePolicy3.setHeightForWidth(self.label_243.sizePolicy().hasHeightForWidth())
+        self.label_243.setSizePolicy(sizePolicy3)
+
+        self.gridLayout_206.addWidget(self.label_243, 2, 1, 1, 1)
+
+        self.comboBox_method_tabTipRadius_FrameStiffness = QComboBox(self.groupBox_217)
         self.comboBox_method_tabTipRadius_FrameStiffness.addItem("")
         self.comboBox_method_tabTipRadius_FrameStiffness.addItem("")
         self.comboBox_method_tabTipRadius_FrameStiffness.addItem("")
@@ -1706,323 +1687,418 @@ class Ui_MainWindow(object):
         self.comboBox_method_tabTipRadius_FrameStiffness.setMinimumSize(QSize(120, 0))
         self.comboBox_method_tabTipRadius_FrameStiffness.setEditable(False)
 
-        self.gridLayout_25.addWidget(self.comboBox_method_tabTipRadius_FrameStiffness, 1, 2, 1, 1)
+        self.gridLayout_206.addWidget(self.comboBox_method_tabTipRadius_FrameStiffness, 1, 2, 1, 1)
+
+        self.comboBox_equipment_tabTipRadius_FrameStiffness = QComboBox(self.groupBox_217)
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.addItem("")
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.addItem("")
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.setObjectName(u"comboBox_equipment_tabTipRadius_FrameStiffness")
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.setEnabled(False)
+        sizePolicy4.setHeightForWidth(self.comboBox_equipment_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
+
+        self.gridLayout_206.addWidget(self.comboBox_equipment_tabTipRadius_FrameStiffness, 2, 2, 1, 1)
 
 
-        self.gridLayout_19.addWidget(self.groupBox_11, 3, 0, 1, 1)
+        self.gridLayout_212.addWidget(self.groupBox_217, 2, 0, 1, 1)
 
-        self.groupBox_8 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_8.setObjectName(u"groupBox_8")
-        sizePolicy7.setHeightForWidth(self.groupBox_8.sizePolicy().hasHeightForWidth())
-        self.groupBox_8.setSizePolicy(sizePolicy7)
-        self.groupBox_8.setMinimumSize(QSize(224, 100))
-        self.groupBox_8.setMaximumSize(QSize(224, 16777215))
-        self.gridLayout_24 = QGridLayout(self.groupBox_8)
-        self.gridLayout_24.setObjectName(u"gridLayout_24")
-        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness = QSpinBox(self.groupBox_8)
-        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.setObjectName(u"spinBox_DataFilterSize_tabTipRadius_FrameStiffness")
-        sizePolicy4.setHeightForWidth(self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
-        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.setValue(5)
+        self.groupBox_225 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_225.setObjectName(u"groupBox_225")
+        self.gridLayout_204 = QGridLayout(self.groupBox_225)
+        self.gridLayout_204.setObjectName(u"gridLayout_204")
+        self.pushButton_SelectTypedTest_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_225)
+        self.pushButton_SelectTypedTest_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_SelectTypedTest_tabTipRadius_FrameStiffness")
 
-        self.gridLayout_24.addWidget(self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
+        self.gridLayout_204.addWidget(self.pushButton_SelectTypedTest_tabTipRadius_FrameStiffness, 3, 0, 1, 1)
 
-        self.label_86 = QLabel(self.groupBox_8)
-        self.label_86.setObjectName(u"label_86")
-        sizePolicy5.setHeightForWidth(self.label_86.sizePolicy().hasHeightForWidth())
-        self.label_86.setSizePolicy(sizePolicy5)
-        self.label_86.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.pushButton_SelectAll_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_225)
+        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_SelectAll_tabTipRadius_FrameStiffness")
+        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 0))
+        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setMaximumSize(QSize(200, 22))
 
-        self.gridLayout_24.addWidget(self.label_86, 1, 0, 1, 1)
+        self.gridLayout_204.addWidget(self.pushButton_SelectAll_tabTipRadius_FrameStiffness, 4, 0, 1, 1)
 
-        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_8)
-        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness")
-        sizePolicy4.setHeightForWidth(self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
-        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setDecimals(1)
-        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setValue(1.000000000000000)
+        self.tableWidget_tabTipRadius_FrameStiffness = QTableWidget(self.groupBox_225)
+        if (self.tableWidget_tabTipRadius_FrameStiffness.columnCount() < 4):
+            self.tableWidget_tabTipRadius_FrameStiffness.setColumnCount(4)
+        __qtablewidgetitem10 = QTableWidgetItem()
+        __qtablewidgetitem10.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem10)
+        __qtablewidgetitem11 = QTableWidgetItem()
+        __qtablewidgetitem11.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem11.setFont(font3);
+        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem11)
+        __qtablewidgetitem12 = QTableWidgetItem()
+        __qtablewidgetitem12.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem12)
+        __qtablewidgetitem13 = QTableWidgetItem()
+        __qtablewidgetitem13.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem13.setFont(font);
+        self.tableWidget_tabTipRadius_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem13)
+        if (self.tableWidget_tabTipRadius_FrameStiffness.rowCount() < 1):
+            self.tableWidget_tabTipRadius_FrameStiffness.setRowCount(1)
+        self.tableWidget_tabTipRadius_FrameStiffness.setObjectName(u"tableWidget_tabTipRadius_FrameStiffness")
+        sizePolicy7.setHeightForWidth(self.tableWidget_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy7)
+        self.tableWidget_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 0))
+        self.tableWidget_tabTipRadius_FrameStiffness.setMaximumSize(QSize(200, 16777215))
+        font4 = QFont()
+        font4.setFamilies([u"Ubuntu"])
+        font4.setPointSize(9)
+        self.tableWidget_tabTipRadius_FrameStiffness.setFont(font4)
+        self.tableWidget_tabTipRadius_FrameStiffness.viewport().setProperty("cursor", QCursor(Qt.ArrowCursor))
+        self.tableWidget_tabTipRadius_FrameStiffness.setMouseTracking(False)
+        self.tableWidget_tabTipRadius_FrameStiffness.setTabletTracking(False)
+        self.tableWidget_tabTipRadius_FrameStiffness.setInputMethodHints(Qt.ImhNone)
+        self.tableWidget_tabTipRadius_FrameStiffness.setFrameShape(QFrame.StyledPanel)
+        self.tableWidget_tabTipRadius_FrameStiffness.setAutoScroll(True)
+        self.tableWidget_tabTipRadius_FrameStiffness.setSortingEnabled(False)
+        self.tableWidget_tabTipRadius_FrameStiffness.setRowCount(1)
+        self.tableWidget_tabTipRadius_FrameStiffness.setColumnCount(4)
+        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setVisible(True)
+        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setMinimumSectionSize(68)
+        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setDefaultSectionSize(68)
+        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setHighlightSections(True)
+        self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeader().setProperty("showSortIndicator", False)
 
-        self.gridLayout_24.addWidget(self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
+        self.gridLayout_204.addWidget(self.tableWidget_tabTipRadius_FrameStiffness, 1, 0, 1, 1)
 
-        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_8)
-        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness")
-        sizePolicy3.setHeightForWidth(self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
-        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setMinimumSize(QSize(0, 0))
-        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setMaximumSize(QSize(16777215, 16777215))
-        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setChecked(True)
+        self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness = QPlainTextEdit(self.groupBox_225)
+        self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness.setObjectName(u"plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness")
+        sizePolicy3.setHeightForWidth(self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
+        self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 100))
+        self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness.setMaximumSize(QSize(200, 100))
 
-        self.gridLayout_24.addWidget(self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
+        self.gridLayout_204.addWidget(self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness, 2, 0, 1, 1)
 
-        self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_8)
-        self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness")
+        self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness = QPushButton(self.groupBox_225)
+        self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness")
+        self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness.setSizeIncrement(QSize(10, 0))
+        self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness.setIcon(icon)
 
-        self.gridLayout_24.addWidget(self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness, 2, 0, 1, 2)
-
-
-        self.gridLayout_19.addWidget(self.groupBox_8, 3, 1, 2, 1)
-
-        self.groupBox_45 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_45.setObjectName(u"groupBox_45")
-        sizePolicy3.setHeightForWidth(self.groupBox_45.sizePolicy().hasHeightForWidth())
-        self.groupBox_45.setSizePolicy(sizePolicy3)
-        self.groupBox_45.setMinimumSize(QSize(230, 0))
-        self.groupBox_45.setMaximumSize(QSize(230, 16777215))
-        self.gridLayout_95 = QGridLayout(self.groupBox_45)
-        self.gridLayout_95.setObjectName(u"gridLayout_95")
-        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_45)
-        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness")
-        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setEnabled(True)
-        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setChecked(True)
-
-        self.gridLayout_95.addWidget(self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
+        self.gridLayout_204.addWidget(self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
 
 
-        self.gridLayout_19.addWidget(self.groupBox_45, 4, 0, 1, 1)
+        self.gridLayout_212.addWidget(self.groupBox_225, 0, 2, 6, 1)
 
-        self.groupBox_50 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_50.setObjectName(u"groupBox_50")
-        sizePolicy3.setHeightForWidth(self.groupBox_50.sizePolicy().hasHeightForWidth())
-        self.groupBox_50.setSizePolicy(sizePolicy3)
-        self.groupBox_50.setMinimumSize(QSize(230, 0))
-        self.groupBox_50.setMaximumSize(QSize(230, 16777215))
-        self.gridLayout_100 = QGridLayout(self.groupBox_50)
-        self.gridLayout_100.setObjectName(u"gridLayout_100")
-        self.label_16 = QLabel(self.groupBox_50)
-        self.label_16.setObjectName(u"label_16")
-        sizePolicy3.setHeightForWidth(self.label_16.sizePolicy().hasHeightForWidth())
-        self.label_16.setSizePolicy(sizePolicy3)
-        self.label_16.setMinimumSize(QSize(110, 0))
+        self.progressBar_tabTipRadius_FrameStiffness = QProgressBar(self.tabTipRadius_FrameStiffness)
+        self.progressBar_tabTipRadius_FrameStiffness.setObjectName(u"progressBar_tabTipRadius_FrameStiffness")
+        sizePolicy1.setHeightForWidth(self.progressBar_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.progressBar_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy1)
+        self.progressBar_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 43))
+        self.progressBar_tabTipRadius_FrameStiffness.setMaximumSize(QSize(224, 430))
+        self.progressBar_tabTipRadius_FrameStiffness.setValue(0)
 
-        self.gridLayout_100.addWidget(self.label_16, 0, 0, 1, 1)
+        self.gridLayout_212.addWidget(self.progressBar_tabTipRadius_FrameStiffness, 6, 2, 1, 1)
 
-        self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_50)
+        self.verticalSpacer_262 = QSpacerItem(20, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_212.addItem(self.verticalSpacer_262, 9, 2, 1, 1)
+
+        self.groupBox_222 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_222.setObjectName(u"groupBox_222")
+        sizePolicy1.setHeightForWidth(self.groupBox_222.sizePolicy().hasHeightForWidth())
+        self.groupBox_222.setSizePolicy(sizePolicy1)
+        self.groupBox_222.setMinimumSize(QSize(0, 0))
+        self.groupBox_222.setMaximumSize(QSize(224, 16777215))
+        self.gridLayout_201 = QGridLayout(self.groupBox_222)
+        self.gridLayout_201.setObjectName(u"gridLayout_201")
+        self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_222)
         self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness")
         sizePolicy4.setHeightForWidth(self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
         self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setSingleStep(0.010000000000000)
         self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness.setValue(1.050000000000000)
 
-        self.gridLayout_100.addWidget(self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
+        self.gridLayout_201.addWidget(self.doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
 
-        self.label_15 = QLabel(self.groupBox_50)
-        self.label_15.setObjectName(u"label_15")
-        sizePolicy5.setHeightForWidth(self.label_15.sizePolicy().hasHeightForWidth())
-        self.label_15.setSizePolicy(sizePolicy5)
-        self.label_15.setMinimumSize(QSize(0, 0))
-        self.label_15.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label_247 = QLabel(self.groupBox_222)
+        self.label_247.setObjectName(u"label_247")
+        sizePolicy3.setHeightForWidth(self.label_247.sizePolicy().hasHeightForWidth())
+        self.label_247.setSizePolicy(sizePolicy3)
 
-        self.gridLayout_100.addWidget(self.label_15, 1, 0, 1, 1)
+        self.gridLayout_201.addWidget(self.label_247, 0, 0, 1, 1)
 
-        self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_50)
+        self.label_250 = QLabel(self.groupBox_222)
+        self.label_250.setObjectName(u"label_250")
+        sizePolicy5.setHeightForWidth(self.label_250.sizePolicy().hasHeightForWidth())
+        self.label_250.setSizePolicy(sizePolicy5)
+        self.label_250.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_201.addWidget(self.label_250, 1, 0, 1, 1)
+
+        self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_222)
         self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness")
         sizePolicy4.setHeightForWidth(self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
         self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness.setSingleStep(0.010000000000000)
         self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness.setValue(0.500000000000000)
 
-        self.gridLayout_100.addWidget(self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
+        self.gridLayout_201.addWidget(self.doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
 
 
-        self.gridLayout_19.addWidget(self.groupBox_50, 5, 0, 1, 1)
+        self.gridLayout_212.addWidget(self.groupBox_222, 3, 1, 3, 1)
 
-        self.groupBox_12 = QGroupBox(self.tabTipRadius_FrameStiffness)
-        self.groupBox_12.setObjectName(u"groupBox_12")
-        sizePolicy3.setHeightForWidth(self.groupBox_12.sizePolicy().hasHeightForWidth())
-        self.groupBox_12.setSizePolicy(sizePolicy3)
-        self.groupBox_12.setMinimumSize(QSize(224, 0))
-        self.groupBox_12.setMaximumSize(QSize(224, 16777215))
-        self.gridLayout_26 = QGridLayout(self.groupBox_12)
-        self.gridLayout_26.setObjectName(u"gridLayout_26")
-        self.label_24 = QLabel(self.groupBox_12)
-        self.label_24.setObjectName(u"label_24")
-        sizePolicy7.setHeightForWidth(self.label_24.sizePolicy().hasHeightForWidth())
-        self.label_24.setSizePolicy(sizePolicy7)
+        self.groupBox_218 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_218.setObjectName(u"groupBox_218")
+        sizePolicy3.setHeightForWidth(self.groupBox_218.sizePolicy().hasHeightForWidth())
+        self.groupBox_218.setSizePolicy(sizePolicy3)
+        self.groupBox_218.setMinimumSize(QSize(0, 0))
+        self.groupBox_218.setMaximumSize(QSize(230, 16777215))
+        self.gridLayout_211 = QGridLayout(self.groupBox_218)
+        self.gridLayout_211.setObjectName(u"gridLayout_211")
+        self.label_248 = QLabel(self.groupBox_218)
+        self.label_248.setObjectName(u"label_248")
+        sizePolicy3.setHeightForWidth(self.label_248.sizePolicy().hasHeightForWidth())
+        self.label_248.setSizePolicy(sizePolicy3)
 
-        self.gridLayout_26.addWidget(self.label_24, 0, 1, 1, 1)
+        self.gridLayout_211.addWidget(self.label_248, 2, 0, 1, 1)
 
-        self.label_25 = QLabel(self.groupBox_12)
-        self.label_25.setObjectName(u"label_25")
-        sizePolicy5.setHeightForWidth(self.label_25.sizePolicy().hasHeightForWidth())
-        self.label_25.setSizePolicy(sizePolicy5)
-        self.label_25.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label_249 = QLabel(self.groupBox_218)
+        self.label_249.setObjectName(u"label_249")
+        sizePolicy3.setHeightForWidth(self.label_249.sizePolicy().hasHeightForWidth())
+        self.label_249.setSizePolicy(sizePolicy3)
 
-        self.gridLayout_26.addWidget(self.label_25, 1, 1, 1, 1)
+        self.gridLayout_211.addWidget(self.label_249, 0, 0, 2, 1)
 
-        self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_12)
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_218)
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness")
+        sizePolicy4.setHeightForWidth(self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setMaximumSize(QSize(65, 16777215))
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setDecimals(4)
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setSingleStep(0.000100000000000)
+        self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness.setValue(0.010000000000000)
+
+        self.gridLayout_211.addWidget(self.doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness, 0, 1, 2, 5)
+
+        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness = QSpinBox(self.groupBox_218)
+        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setObjectName(u"spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness")
+        sizePolicy4.setHeightForWidth(self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
+        self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness.setValue(11)
+
+        self.gridLayout_211.addWidget(self.spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness, 2, 1, 1, 5)
+
+
+        self.gridLayout_212.addWidget(self.groupBox_218, 3, 0, 3, 1)
+
+        self.groupBox_220 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_220.setObjectName(u"groupBox_220")
+        sizePolicy1.setHeightForWidth(self.groupBox_220.sizePolicy().hasHeightForWidth())
+        self.groupBox_220.setSizePolicy(sizePolicy1)
+        self.groupBox_220.setMinimumSize(QSize(0, 0))
+        self.groupBox_220.setMaximumSize(QSize(224, 16777215))
+        self.gridLayout_214 = QGridLayout(self.groupBox_220)
+        self.gridLayout_214.setObjectName(u"gridLayout_214")
+        self.label_254 = QLabel(self.groupBox_220)
+        self.label_254.setObjectName(u"label_254")
+        sizePolicy5.setHeightForWidth(self.label_254.sizePolicy().hasHeightForWidth())
+        self.label_254.setSizePolicy(sizePolicy5)
+        self.label_254.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_214.addWidget(self.label_254, 1, 1, 1, 1)
+
+        self.label_253 = QLabel(self.groupBox_220)
+        self.label_253.setObjectName(u"label_253")
+        sizePolicy7.setHeightForWidth(self.label_253.sizePolicy().hasHeightForWidth())
+        self.label_253.setSizePolicy(sizePolicy7)
+
+        self.gridLayout_214.addWidget(self.label_253, 0, 1, 1, 1)
+
+        self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_220)
         self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness")
         sizePolicy6.setHeightForWidth(self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy6)
         self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.setMaximumSize(QSize(50, 16777215))
-        self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.setSingleStep(0.010000000000000)
+        self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.setSingleStep(0.100000000000000)
         self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness.setValue(0.100000000000000)
 
-        self.gridLayout_26.addWidget(self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
+        self.gridLayout_214.addWidget(self.doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
 
-        self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_12)
+        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_220)
+        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness")
+        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setMaximumSize(QSize(50, 16777215))
+        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setDecimals(2)
+        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setValue(5.000000000000000)
+
+        self.gridLayout_214.addWidget(self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness, 0, 2, 1, 1)
+
+        self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_220)
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness")
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setMaximumSize(QSize(50, 16777215))
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setDecimals(0)
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setMaximum(999.000000000000000)
-        self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setSingleStep(0.010000000000000)
         self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness.setValue(15.000000000000000)
 
-        self.gridLayout_26.addWidget(self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness, 1, 0, 1, 1)
+        self.gridLayout_214.addWidget(self.doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness, 1, 0, 1, 1)
 
-        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_12)
-        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness")
-        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setMaximumSize(QSize(50, 16777215))
-        self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness.setValue(5.000000000000000)
-
-        self.gridLayout_26.addWidget(self.doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness, 0, 2, 1, 1)
-
-        self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_12)
+        self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_220)
         self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness")
         self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness.setMaximumSize(QSize(50, 16777215))
         self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness.setDecimals(0)
         self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness.setMaximum(1000.000000000000000)
         self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness.setValue(1000.000000000000000)
 
-        self.gridLayout_26.addWidget(self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness, 1, 2, 1, 1)
+        self.gridLayout_214.addWidget(self.doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness, 1, 2, 1, 1)
 
 
-        self.gridLayout_19.addWidget(self.groupBox_12, 5, 1, 1, 1)
-
-        self.progressBar_tabTipRadius_FrameStiffness = QProgressBar(self.tabTipRadius_FrameStiffness)
-        self.progressBar_tabTipRadius_FrameStiffness.setObjectName(u"progressBar_tabTipRadius_FrameStiffness")
-        sizePolicy3.setHeightForWidth(self.progressBar_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.progressBar_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
-        self.progressBar_tabTipRadius_FrameStiffness.setMinimumSize(QSize(224, 0))
-        self.progressBar_tabTipRadius_FrameStiffness.setMaximumSize(QSize(224, 16777215))
-        self.progressBar_tabTipRadius_FrameStiffness.setValue(0)
-
-        self.gridLayout_19.addWidget(self.progressBar_tabTipRadius_FrameStiffness, 6, 1, 1, 1)
+        self.gridLayout_212.addWidget(self.groupBox_220, 2, 1, 1, 1)
 
         self.pushButton_Calculate_tabTipRadius_FrameStiffness = QPushButton(self.tabTipRadius_FrameStiffness)
         self.pushButton_Calculate_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_Calculate_tabTipRadius_FrameStiffness")
-        sizePolicy3.setHeightForWidth(self.pushButton_Calculate_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
-        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setMinimumSize(QSize(224, 0))
-        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setMaximumSize(QSize(224, 16777215))
+        sizePolicy7.setHeightForWidth(self.pushButton_Calculate_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy7)
+        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setMinimumSize(QSize(200, 43))
+        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setMaximumSize(QSize(224, 430))
+        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setLayoutDirection(Qt.LeftToRight)
 
-        self.gridLayout_19.addWidget(self.pushButton_Calculate_tabTipRadius_FrameStiffness, 7, 1, 1, 1)
+        self.gridLayout_212.addWidget(self.pushButton_Calculate_tabTipRadius_FrameStiffness, 7, 2, 1, 1)
 
-        self.pushButton_SelectAll_tabTipRadius_FrameStiffness = QPushButton(self.tabTipRadius_FrameStiffness)
-        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_SelectAll_tabTipRadius_FrameStiffness")
-        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setMaximumSize(QSize(200, 16777215))
+        self.groupBox_219 = QGroupBox(self.tabTipRadius_FrameStiffness)
+        self.groupBox_219.setObjectName(u"groupBox_219")
+        sizePolicy7.setHeightForWidth(self.groupBox_219.sizePolicy().hasHeightForWidth())
+        self.groupBox_219.setSizePolicy(sizePolicy7)
+        self.groupBox_219.setMinimumSize(QSize(224, 0))
+        self.groupBox_219.setMaximumSize(QSize(230, 156))
+        self.gridLayout_213 = QGridLayout(self.groupBox_219)
+        self.gridLayout_213.setObjectName(u"gridLayout_213")
+        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness = QSpinBox(self.groupBox_219)
+        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.setObjectName(u"spinBox_DataFilterSize_tabTipRadius_FrameStiffness")
+        sizePolicy4.setHeightForWidth(self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
+        self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness.setValue(5)
 
-        self.gridLayout_19.addWidget(self.pushButton_SelectAll_tabTipRadius_FrameStiffness, 7, 2, 1, 1)
+        self.gridLayout_213.addWidget(self.spinBox_DataFilterSize_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
 
-        self.verticalSpacer_11 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness = QDoubleSpinBox(self.groupBox_219)
+        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setObjectName(u"doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness")
+        sizePolicy4.setHeightForWidth(self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy4)
+        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setDecimals(1)
+        self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness.setValue(1.000000000000000)
 
-        self.gridLayout_19.addItem(self.verticalSpacer_11, 8, 2, 1, 1)
+        self.gridLayout_213.addWidget(self.doubleSpinBox_Rate2findSurface_tabTipRadius_FrameStiffness, 0, 1, 1, 1)
 
-        self.graphicsView_tab_TipAreaFunction_2 = QTabWidget(self.tabTipRadius_FrameStiffness)
-        self.graphicsView_tab_TipAreaFunction_2.setObjectName(u"graphicsView_tab_TipAreaFunction_2")
-        sizePolicy.setHeightForWidth(self.graphicsView_tab_TipAreaFunction_2.sizePolicy().hasHeightForWidth())
-        self.graphicsView_tab_TipAreaFunction_2.setSizePolicy(sizePolicy)
-        self.graphicsView_tab_TipAreaFunction_2.setMaximumSize(QSize(16777215, 16777215))
-        self.graphicsView_tab_TipAreaFunction_2.setUsesScrollButtons(True)
-        self.tab_9 = QWidget()
-        self.tab_9.setObjectName(u"tab_9")
-        self.gridLayout_20 = QGridLayout(self.tab_9)
-        self.gridLayout_20.setObjectName(u"gridLayout_20")
-        self.tabWidget_4 = QTabWidget(self.tab_9)
-        self.tabWidget_4.setObjectName(u"tabWidget_4")
-        self.tab_10 = QWidget()
-        self.tab_10.setObjectName(u"tab_10")
-        self.gridLayout_21 = QGridLayout(self.tab_10)
-        self.gridLayout_21.setObjectName(u"gridLayout_21")
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QGraphicsView(self.tab_10)
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
-        sizePolicy.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy)
+        self.label_255 = QLabel(self.groupBox_219)
+        self.label_255.setObjectName(u"label_255")
+        sizePolicy5.setHeightForWidth(self.label_255.sizePolicy().hasHeightForWidth())
+        self.label_255.setSizePolicy(sizePolicy5)
+        self.label_255.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_21.addWidget(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 1, 0, 1, 5)
+        self.gridLayout_213.addWidget(self.label_255, 1, 0, 1, 1)
 
-        self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QCheckBox(self.tab_10)
+        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_219)
+        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness")
+        sizePolicy9.setHeightForWidth(self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
+        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setMinimumSize(QSize(0, 0))
+        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setMaximumSize(QSize(16777215, 16777215))
+        self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setChecked(True)
+
+        self.gridLayout_213.addWidget(self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
+
+        self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness = QCheckBox(self.groupBox_219)
+        self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness")
+
+        self.gridLayout_213.addWidget(self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness, 2, 0, 1, 2)
+
+
+        self.gridLayout_212.addWidget(self.groupBox_219, 6, 0, 2, 1)
+
+        self.graphicsView_tab_TipAreaFunction_200 = QTabWidget(self.tabTipRadius_FrameStiffness)
+        self.graphicsView_tab_TipAreaFunction_200.setObjectName(u"graphicsView_tab_TipAreaFunction_200")
+        self.graphicsView_tab_TipAreaFunction_200.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.graphicsView_tab_TipAreaFunction_200.sizePolicy().hasHeightForWidth())
+        self.graphicsView_tab_TipAreaFunction_200.setSizePolicy(sizePolicy)
+        self.graphicsView_tab_TipAreaFunction_200.setMaximumSize(QSize(16777215, 16777215))
+        self.graphicsView_tab_TipAreaFunction_200.setUsesScrollButtons(True)
+        self.tab_258 = QWidget()
+        self.tab_258.setObjectName(u"tab_258")
+        self.gridLayout_207 = QGridLayout(self.tab_258)
+        self.gridLayout_207.setObjectName(u"gridLayout_207")
+        self.tabWidget_257 = QTabWidget(self.tab_258)
+        self.tabWidget_257.setObjectName(u"tabWidget_257")
+        self.tab_259 = QWidget()
+        self.tab_259.setObjectName(u"tab_259")
+        self.gridLayout_208 = QGridLayout(self.tab_259)
+        self.gridLayout_208.setObjectName(u"gridLayout_208")
+        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QCheckBox(self.tab_259)
+        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
+
+        self.gridLayout_208.addWidget(self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 2, 1, 1)
+
+        self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QCheckBox(self.tab_259)
         self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
         sizePolicy9.setHeightForWidth(self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
 
-        self.gridLayout_21.addWidget(self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 0, 1, 1)
+        self.gridLayout_208.addWidget(self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 0, 1, 1)
 
-        self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QPushButton(self.tab_10)
+        self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QPushButton(self.tab_259)
         self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
         sizePolicy3.setHeightForWidth(self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
 
-        self.gridLayout_21.addWidget(self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 4, 0, 1, 4)
+        self.gridLayout_208.addWidget(self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 3, 0, 1, 3)
 
-        self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QCheckBox(self.tab_10)
+        self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QCheckBox(self.tab_259)
         self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
-        sizePolicy9.setHeightForWidth(self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
 
-        self.gridLayout_21.addWidget(self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
+        self.gridLayout_208.addWidget(self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 1, 1, 1)
 
-        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QCheckBox(self.tab_10)
-        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
-        sizePolicy3.setHeightForWidth(self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness = QGraphicsView(self.tab_259)
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness")
+        sizePolicy12 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy12.setHorizontalStretch(100)
+        sizePolicy12.setVerticalStretch(100)
+        sizePolicy12.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy12)
 
-        self.gridLayout_21.addWidget(self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 2, 1, 1)
+        self.gridLayout_208.addWidget(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness, 1, 0, 1, 5)
 
-        self.tabWidget_4.addTab(self.tab_10, "")
-        self.tab_11 = QWidget()
-        self.tab_11.setObjectName(u"tab_11")
-        self.gridLayout_22 = QGridLayout(self.tab_11)
-        self.gridLayout_22.setObjectName(u"gridLayout_22")
-        self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness = QGraphicsView(self.tab_11)
-        self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness")
-        sizePolicy.setHeightForWidth(self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy)
-
-        self.gridLayout_22.addWidget(self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
-
-        self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness = QPushButton(self.tab_11)
+        self.tabWidget_257.addTab(self.tab_259, "")
+        self.tab_260 = QWidget()
+        self.tab_260.setObjectName(u"tab_260")
+        self.gridLayout_209 = QGridLayout(self.tab_260)
+        self.gridLayout_209.setObjectName(u"gridLayout_209")
+        self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness = QPushButton(self.tab_260)
         self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness")
         sizePolicy3.setHeightForWidth(self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
         self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy3)
 
-        self.gridLayout_22.addWidget(self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 0, 1, 1)
+        self.gridLayout_209.addWidget(self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness, 2, 0, 1, 1)
 
-        self.label_180 = QLabel(self.tab_11)
-        self.label_180.setObjectName(u"label_180")
-        self.label_180.setMinimumSize(QSize(0, 20))
-        self.label_180.setMaximumSize(QSize(16777215, 20))
+        self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness = QGraphicsView(self.tab_260)
+        self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness")
+        sizePolicy.setHeightForWidth(self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy)
 
-        self.gridLayout_22.addWidget(self.label_180, 1, 0, 1, 1)
+        self.gridLayout_209.addWidget(self.graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness, 0, 0, 1, 1)
 
-        self.tabWidget_4.addTab(self.tab_11, "")
+        self.label_242 = QLabel(self.tab_260)
+        self.label_242.setObjectName(u"label_242")
+        self.label_242.setMinimumSize(QSize(0, 20))
+        self.label_242.setMaximumSize(QSize(16777215, 20))
 
-        self.gridLayout_20.addWidget(self.tabWidget_4, 1, 0, 1, 1)
+        self.gridLayout_209.addWidget(self.label_242, 1, 0, 1, 1)
 
-        self.graphicsView_tab_TipAreaFunction_2.addTab(self.tab_9, "")
-        self.tab_12 = QWidget()
-        self.tab_12.setObjectName(u"tab_12")
-        self.gridLayout_23 = QGridLayout(self.tab_12)
-        self.gridLayout_23.setObjectName(u"gridLayout_23")
-        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness = QLineEdit(self.tab_12)
-        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_FrameCompliance_tabTipRadius_FrameStiffness")
-        sizePolicy9.setHeightForWidth(self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
-        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.setReadOnly(True)
+        self.tabWidget_257.addTab(self.tab_260, "")
 
-        self.gridLayout_23.addWidget(self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness, 1, 3, 1, 1)
+        self.gridLayout_207.addWidget(self.tabWidget_257, 0, 0, 1, 1)
 
-        self.label_20 = QLabel(self.tab_12)
-        self.label_20.setObjectName(u"label_20")
+        self.graphicsView_tab_TipAreaFunction_200.addTab(self.tab_258, "")
+        self.tab_261 = QWidget()
+        self.tab_261.setObjectName(u"tab_261")
+        self.gridLayout_210 = QGridLayout(self.tab_261)
+        self.gridLayout_210.setObjectName(u"gridLayout_210")
+        self.label_246 = QLabel(self.tab_261)
+        self.label_246.setObjectName(u"label_246")
 
-        self.gridLayout_23.addWidget(self.label_20, 1, 0, 1, 1)
+        self.gridLayout_210.addWidget(self.label_246, 1, 0, 1, 1)
 
-        self.graphicsView_tabTipRadius_FrameStiffness = QGraphicsView(self.tab_12)
-        self.graphicsView_tabTipRadius_FrameStiffness.setObjectName(u"graphicsView_tabTipRadius_FrameStiffness")
-        self.graphicsView_tabTipRadius_FrameStiffness.setCacheMode(QGraphicsView.CacheNone)
-
-        self.gridLayout_23.addWidget(self.graphicsView_tabTipRadius_FrameStiffness, 3, 0, 1, 6)
-
-        self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness = QLineEdit(self.tab_12)
+        self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness = QLineEdit(self.tab_261)
         self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_FrameStiffness_tabTipRadius_FrameStiffness")
         self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness.setEnabled(True)
         sizePolicy9.setHeightForWidth(self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
@@ -2032,16 +2108,30 @@ class Ui_MainWindow(object):
         self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness.setReadOnly(True)
         self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness.setClearButtonEnabled(False)
 
-        self.gridLayout_23.addWidget(self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
+        self.gridLayout_210.addWidget(self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness, 1, 1, 1, 1)
 
-        self.label_19 = QLabel(self.tab_12)
-        self.label_19.setObjectName(u"label_19")
+        self.label_245 = QLabel(self.tab_261)
+        self.label_245.setObjectName(u"label_245")
 
-        self.gridLayout_23.addWidget(self.label_19, 1, 2, 1, 1)
+        self.gridLayout_210.addWidget(self.label_245, 1, 2, 1, 1)
 
-        self.graphicsView_tab_TipAreaFunction_2.addTab(self.tab_12, "")
+        self.graphicsView_tabTipRadius_FrameStiffness = QGraphicsView(self.tab_261)
+        self.graphicsView_tabTipRadius_FrameStiffness.setObjectName(u"graphicsView_tabTipRadius_FrameStiffness")
+        self.graphicsView_tabTipRadius_FrameStiffness.setCacheMode(QGraphicsView.CacheNone)
 
-        self.gridLayout_19.addWidget(self.graphicsView_tab_TipAreaFunction_2, 0, 3, 9, 1)
+        self.gridLayout_210.addWidget(self.graphicsView_tabTipRadius_FrameStiffness, 3, 0, 1, 7)
+
+        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness = QLineEdit(self.tab_261)
+        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.setObjectName(u"lineEdit_FrameCompliance_tabTipRadius_FrameStiffness")
+        sizePolicy9.setHeightForWidth(self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.setSizePolicy(sizePolicy9)
+        self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness.setReadOnly(True)
+
+        self.gridLayout_210.addWidget(self.lineEdit_FrameCompliance_tabTipRadius_FrameStiffness, 1, 3, 1, 1)
+
+        self.graphicsView_tab_TipAreaFunction_200.addTab(self.tab_261, "")
+
+        self.gridLayout_212.addWidget(self.graphicsView_tab_TipAreaFunction_200, 0, 3, 10, 1)
 
         self.tabWidget_TipRadius.addTab(self.tabTipRadius_FrameStiffness, "")
         self.tabTipRadius = QWidget()
@@ -2630,19 +2720,19 @@ class Ui_MainWindow(object):
         self.tableWidget_tabTipRadius = QTableWidget(self.tabTipRadius)
         if (self.tableWidget_tabTipRadius.columnCount() < 4):
             self.tableWidget_tabTipRadius.setColumnCount(4)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        __qtablewidgetitem11.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(0, __qtablewidgetitem11)
-        __qtablewidgetitem12 = QTableWidgetItem()
-        __qtablewidgetitem12.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem12.setFont(font3);
-        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(1, __qtablewidgetitem12)
-        __qtablewidgetitem13 = QTableWidgetItem()
-        __qtablewidgetitem13.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(2, __qtablewidgetitem13)
         __qtablewidgetitem14 = QTableWidgetItem()
         __qtablewidgetitem14.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(3, __qtablewidgetitem14)
+        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(0, __qtablewidgetitem14)
+        __qtablewidgetitem15 = QTableWidgetItem()
+        __qtablewidgetitem15.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem15.setFont(font3);
+        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(1, __qtablewidgetitem15)
+        __qtablewidgetitem16 = QTableWidgetItem()
+        __qtablewidgetitem16.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(2, __qtablewidgetitem16)
+        __qtablewidgetitem17 = QTableWidgetItem()
+        __qtablewidgetitem17.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabTipRadius.setHorizontalHeaderItem(3, __qtablewidgetitem17)
         if (self.tableWidget_tabTipRadius.rowCount() < 1):
             self.tableWidget_tabTipRadius.setRowCount(1)
         self.tableWidget_tabTipRadius.setObjectName(u"tableWidget_tabTipRadius")
@@ -2749,8 +2839,8 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF3_tabHE_FrameStiffness = QLineEdit(self.groupBox_60)
         self.lineEdit_TAF3_tabHE_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabHE_FrameStiffness")
-        sizePolicy12.setHeightForWidth(self.lineEdit_TAF3_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabHE_FrameStiffness.setSizePolicy(sizePolicy12)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabHE_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabHE_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabHE_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF3_tabHE_FrameStiffness.setReadOnly(False)
@@ -2880,15 +2970,15 @@ class Ui_MainWindow(object):
         self.tableWidget_path_tabHE_FrameStiffness = QTableWidget(self.groupBox_13)
         if (self.tableWidget_path_tabHE_FrameStiffness.columnCount() < 1):
             self.tableWidget_path_tabHE_FrameStiffness.setColumnCount(1)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        self.tableWidget_path_tabHE_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem15)
+        __qtablewidgetitem18 = QTableWidgetItem()
+        self.tableWidget_path_tabHE_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem18)
         if (self.tableWidget_path_tabHE_FrameStiffness.rowCount() < 1):
             self.tableWidget_path_tabHE_FrameStiffness.setRowCount(1)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        self.tableWidget_path_tabHE_FrameStiffness.setVerticalHeaderItem(0, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        __qtablewidgetitem17.setCheckState(Qt.Unchecked);
-        self.tableWidget_path_tabHE_FrameStiffness.setItem(0, 0, __qtablewidgetitem17)
+        __qtablewidgetitem19 = QTableWidgetItem()
+        self.tableWidget_path_tabHE_FrameStiffness.setVerticalHeaderItem(0, __qtablewidgetitem19)
+        __qtablewidgetitem20 = QTableWidgetItem()
+        __qtablewidgetitem20.setCheckState(Qt.Unchecked);
+        self.tableWidget_path_tabHE_FrameStiffness.setItem(0, 0, __qtablewidgetitem20)
         self.tableWidget_path_tabHE_FrameStiffness.setObjectName(u"tableWidget_path_tabHE_FrameStiffness")
         self.tableWidget_path_tabHE_FrameStiffness.setMinimumSize(QSize(350, 100))
         self.tableWidget_path_tabHE_FrameStiffness.setMaximumSize(QSize(16777215, 170))
@@ -3044,20 +3134,20 @@ class Ui_MainWindow(object):
         self.tableWidget_tabHE_FrameStiffness = QTableWidget(self.groupBox_88)
         if (self.tableWidget_tabHE_FrameStiffness.columnCount() < 4):
             self.tableWidget_tabHE_FrameStiffness.setColumnCount(4)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        __qtablewidgetitem18.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem18)
-        __qtablewidgetitem19 = QTableWidgetItem()
-        __qtablewidgetitem19.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem19.setFont(font3);
-        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem19)
-        __qtablewidgetitem20 = QTableWidgetItem()
-        __qtablewidgetitem20.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem20)
         __qtablewidgetitem21 = QTableWidgetItem()
         __qtablewidgetitem21.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem21.setFont(font);
-        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem21)
+        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem21)
+        __qtablewidgetitem22 = QTableWidgetItem()
+        __qtablewidgetitem22.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem22.setFont(font3);
+        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem22)
+        __qtablewidgetitem23 = QTableWidgetItem()
+        __qtablewidgetitem23.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem23)
+        __qtablewidgetitem24 = QTableWidgetItem()
+        __qtablewidgetitem24.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem24.setFont(font);
+        self.tableWidget_tabHE_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem24)
         if (self.tableWidget_tabHE_FrameStiffness.rowCount() < 1):
             self.tableWidget_tabHE_FrameStiffness.setRowCount(1)
         self.tableWidget_tabHE_FrameStiffness.setObjectName(u"tableWidget_tabHE_FrameStiffness")
@@ -3065,9 +3155,6 @@ class Ui_MainWindow(object):
         self.tableWidget_tabHE_FrameStiffness.setSizePolicy(sizePolicy7)
         self.tableWidget_tabHE_FrameStiffness.setMinimumSize(QSize(200, 0))
         self.tableWidget_tabHE_FrameStiffness.setMaximumSize(QSize(200, 16777215))
-        font4 = QFont()
-        font4.setFamilies([u"Ubuntu"])
-        font4.setPointSize(9)
         self.tableWidget_tabHE_FrameStiffness.setFont(font4)
         self.tableWidget_tabHE_FrameStiffness.viewport().setProperty("cursor", QCursor(Qt.ArrowCursor))
         self.tableWidget_tabHE_FrameStiffness.setMouseTracking(False)
@@ -3373,11 +3460,8 @@ class Ui_MainWindow(object):
 
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness = QGraphicsView(self.tab_17)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness")
-        sizePolicy19 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy19.setHorizontalStretch(100)
-        sizePolicy19.setVerticalStretch(100)
-        sizePolicy19.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.setSizePolicy(sizePolicy19)
+        sizePolicy12.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness.setSizePolicy(sizePolicy12)
 
         self.gridLayout_32.addWidget(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabHE_FrameStiffness, 1, 0, 1, 5)
 
@@ -3563,19 +3647,19 @@ class Ui_MainWindow(object):
         self.tableWidget_tabHE = QTableWidget(self.groupBox_89)
         if (self.tableWidget_tabHE.columnCount() < 4):
             self.tableWidget_tabHE.setColumnCount(4)
-        __qtablewidgetitem22 = QTableWidgetItem()
-        __qtablewidgetitem22.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabHE.setHorizontalHeaderItem(0, __qtablewidgetitem22)
-        __qtablewidgetitem23 = QTableWidgetItem()
-        __qtablewidgetitem23.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem23.setFont(font3);
-        self.tableWidget_tabHE.setHorizontalHeaderItem(1, __qtablewidgetitem23)
-        __qtablewidgetitem24 = QTableWidgetItem()
-        __qtablewidgetitem24.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabHE.setHorizontalHeaderItem(2, __qtablewidgetitem24)
         __qtablewidgetitem25 = QTableWidgetItem()
         __qtablewidgetitem25.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabHE.setHorizontalHeaderItem(3, __qtablewidgetitem25)
+        self.tableWidget_tabHE.setHorizontalHeaderItem(0, __qtablewidgetitem25)
+        __qtablewidgetitem26 = QTableWidgetItem()
+        __qtablewidgetitem26.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem26.setFont(font3);
+        self.tableWidget_tabHE.setHorizontalHeaderItem(1, __qtablewidgetitem26)
+        __qtablewidgetitem27 = QTableWidgetItem()
+        __qtablewidgetitem27.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabHE.setHorizontalHeaderItem(2, __qtablewidgetitem27)
+        __qtablewidgetitem28 = QTableWidgetItem()
+        __qtablewidgetitem28.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabHE.setHorizontalHeaderItem(3, __qtablewidgetitem28)
         if (self.tableWidget_tabHE.rowCount() < 1):
             self.tableWidget_tabHE.setRowCount(1)
         self.tableWidget_tabHE.setObjectName(u"tableWidget_tabHE")
@@ -3596,11 +3680,11 @@ class Ui_MainWindow(object):
 
         self.plainTextEdit_SelectTypedTest_tabHE = QPlainTextEdit(self.groupBox_89)
         self.plainTextEdit_SelectTypedTest_tabHE.setObjectName(u"plainTextEdit_SelectTypedTest_tabHE")
-        sizePolicy20 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy20.setHorizontalStretch(0)
-        sizePolicy20.setVerticalStretch(0)
-        sizePolicy20.setHeightForWidth(self.plainTextEdit_SelectTypedTest_tabHE.sizePolicy().hasHeightForWidth())
-        self.plainTextEdit_SelectTypedTest_tabHE.setSizePolicy(sizePolicy20)
+        sizePolicy19 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy19.setHorizontalStretch(0)
+        sizePolicy19.setVerticalStretch(0)
+        sizePolicy19.setHeightForWidth(self.plainTextEdit_SelectTypedTest_tabHE.sizePolicy().hasHeightForWidth())
+        self.plainTextEdit_SelectTypedTest_tabHE.setSizePolicy(sizePolicy19)
         self.plainTextEdit_SelectTypedTest_tabHE.setMinimumSize(QSize(0, 0))
         self.plainTextEdit_SelectTypedTest_tabHE.setMaximumSize(QSize(200, 100))
 
@@ -3705,17 +3789,17 @@ class Ui_MainWindow(object):
         self.tableWidget_path_tabHE = QTableWidget(self.groupBox_18)
         if (self.tableWidget_path_tabHE.columnCount() < 1):
             self.tableWidget_path_tabHE.setColumnCount(1)
-        __qtablewidgetitem26 = QTableWidgetItem()
-        __qtablewidgetitem26.setFont(font1);
-        self.tableWidget_path_tabHE.setHorizontalHeaderItem(0, __qtablewidgetitem26)
+        __qtablewidgetitem29 = QTableWidgetItem()
+        __qtablewidgetitem29.setFont(font1);
+        self.tableWidget_path_tabHE.setHorizontalHeaderItem(0, __qtablewidgetitem29)
         if (self.tableWidget_path_tabHE.rowCount() < 1):
             self.tableWidget_path_tabHE.setRowCount(1)
-        __qtablewidgetitem27 = QTableWidgetItem()
-        self.tableWidget_path_tabHE.setVerticalHeaderItem(0, __qtablewidgetitem27)
-        __qtablewidgetitem28 = QTableWidgetItem()
-        __qtablewidgetitem28.setCheckState(Qt.Unchecked);
-        __qtablewidgetitem28.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEditable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled|Qt.ItemIsAutoTristate);
-        self.tableWidget_path_tabHE.setItem(0, 0, __qtablewidgetitem28)
+        __qtablewidgetitem30 = QTableWidgetItem()
+        self.tableWidget_path_tabHE.setVerticalHeaderItem(0, __qtablewidgetitem30)
+        __qtablewidgetitem31 = QTableWidgetItem()
+        __qtablewidgetitem31.setCheckState(Qt.Unchecked);
+        __qtablewidgetitem31.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEditable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled|Qt.ItemIsAutoTristate);
+        self.tableWidget_path_tabHE.setItem(0, 0, __qtablewidgetitem31)
         self.tableWidget_path_tabHE.setObjectName(u"tableWidget_path_tabHE")
         self.tableWidget_path_tabHE.setMinimumSize(QSize(0, 110))
         self.tableWidget_path_tabHE.setMaximumSize(QSize(16777215, 110))
@@ -3948,8 +4032,8 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF3_tabHE = QLineEdit(self.groupBox_23)
         self.lineEdit_TAF3_tabHE.setObjectName(u"lineEdit_TAF3_tabHE")
-        sizePolicy12.setHeightForWidth(self.lineEdit_TAF3_tabHE.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabHE.setSizePolicy(sizePolicy12)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabHE.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabHE.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabHE.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabHE.setMaximumSize(QSize(60, 16777215))
         self.lineEdit_TAF3_tabHE.setReadOnly(False)
@@ -4536,15 +4620,15 @@ class Ui_MainWindow(object):
         self.tableWidget_path_tabCreep_FrameStiffness = QTableWidget(self.groupBox_71)
         if (self.tableWidget_path_tabCreep_FrameStiffness.columnCount() < 1):
             self.tableWidget_path_tabCreep_FrameStiffness.setColumnCount(1)
-        __qtablewidgetitem29 = QTableWidgetItem()
-        self.tableWidget_path_tabCreep_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem29)
+        __qtablewidgetitem32 = QTableWidgetItem()
+        self.tableWidget_path_tabCreep_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem32)
         if (self.tableWidget_path_tabCreep_FrameStiffness.rowCount() < 1):
             self.tableWidget_path_tabCreep_FrameStiffness.setRowCount(1)
-        __qtablewidgetitem30 = QTableWidgetItem()
-        self.tableWidget_path_tabCreep_FrameStiffness.setVerticalHeaderItem(0, __qtablewidgetitem30)
-        __qtablewidgetitem31 = QTableWidgetItem()
-        __qtablewidgetitem31.setCheckState(Qt.Unchecked);
-        self.tableWidget_path_tabCreep_FrameStiffness.setItem(0, 0, __qtablewidgetitem31)
+        __qtablewidgetitem33 = QTableWidgetItem()
+        self.tableWidget_path_tabCreep_FrameStiffness.setVerticalHeaderItem(0, __qtablewidgetitem33)
+        __qtablewidgetitem34 = QTableWidgetItem()
+        __qtablewidgetitem34.setCheckState(Qt.Unchecked);
+        self.tableWidget_path_tabCreep_FrameStiffness.setItem(0, 0, __qtablewidgetitem34)
         self.tableWidget_path_tabCreep_FrameStiffness.setObjectName(u"tableWidget_path_tabCreep_FrameStiffness")
         self.tableWidget_path_tabCreep_FrameStiffness.setMinimumSize(QSize(350, 100))
         self.tableWidget_path_tabCreep_FrameStiffness.setMaximumSize(QSize(16777215, 170))
@@ -4605,20 +4689,20 @@ class Ui_MainWindow(object):
         self.tableWidget_tabCreep_FrameStiffness = QTableWidget(self.groupBox_91)
         if (self.tableWidget_tabCreep_FrameStiffness.columnCount() < 4):
             self.tableWidget_tabCreep_FrameStiffness.setColumnCount(4)
-        __qtablewidgetitem32 = QTableWidgetItem()
-        __qtablewidgetitem32.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem32)
-        __qtablewidgetitem33 = QTableWidgetItem()
-        __qtablewidgetitem33.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem33.setFont(font3);
-        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem33)
-        __qtablewidgetitem34 = QTableWidgetItem()
-        __qtablewidgetitem34.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem34)
         __qtablewidgetitem35 = QTableWidgetItem()
         __qtablewidgetitem35.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem35.setFont(font);
-        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem35)
+        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem35)
+        __qtablewidgetitem36 = QTableWidgetItem()
+        __qtablewidgetitem36.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem36.setFont(font3);
+        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem36)
+        __qtablewidgetitem37 = QTableWidgetItem()
+        __qtablewidgetitem37.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem37)
+        __qtablewidgetitem38 = QTableWidgetItem()
+        __qtablewidgetitem38.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem38.setFont(font);
+        self.tableWidget_tabCreep_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem38)
         if (self.tableWidget_tabCreep_FrameStiffness.rowCount() < 1):
             self.tableWidget_tabCreep_FrameStiffness.setRowCount(1)
         self.tableWidget_tabCreep_FrameStiffness.setObjectName(u"tableWidget_tabCreep_FrameStiffness")
@@ -4761,8 +4845,8 @@ class Ui_MainWindow(object):
 
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness = QGraphicsView(self.tab_40)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness")
-        sizePolicy19.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness.setSizePolicy(sizePolicy19)
+        sizePolicy12.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness.setSizePolicy(sizePolicy12)
 
         self.gridLayout_131.addWidget(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabCreep_FrameStiffness, 1, 0, 1, 5)
 
@@ -4965,8 +5049,8 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF3_tabCreep_FrameStiffness = QLineEdit(self.groupBox_70)
         self.lineEdit_TAF3_tabCreep_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabCreep_FrameStiffness")
-        sizePolicy12.setHeightForWidth(self.lineEdit_TAF3_tabCreep_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabCreep_FrameStiffness.setSizePolicy(sizePolicy12)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabCreep_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabCreep_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabCreep_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabCreep_FrameStiffness.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF3_tabCreep_FrameStiffness.setReadOnly(False)
@@ -5294,17 +5378,17 @@ class Ui_MainWindow(object):
         self.tableWidget_path_tabCreep = QTableWidget(self.groupBox_82)
         if (self.tableWidget_path_tabCreep.columnCount() < 1):
             self.tableWidget_path_tabCreep.setColumnCount(1)
-        __qtablewidgetitem36 = QTableWidgetItem()
-        __qtablewidgetitem36.setFont(font1);
-        self.tableWidget_path_tabCreep.setHorizontalHeaderItem(0, __qtablewidgetitem36)
+        __qtablewidgetitem39 = QTableWidgetItem()
+        __qtablewidgetitem39.setFont(font1);
+        self.tableWidget_path_tabCreep.setHorizontalHeaderItem(0, __qtablewidgetitem39)
         if (self.tableWidget_path_tabCreep.rowCount() < 1):
             self.tableWidget_path_tabCreep.setRowCount(1)
-        __qtablewidgetitem37 = QTableWidgetItem()
-        self.tableWidget_path_tabCreep.setVerticalHeaderItem(0, __qtablewidgetitem37)
-        __qtablewidgetitem38 = QTableWidgetItem()
-        __qtablewidgetitem38.setCheckState(Qt.Unchecked);
-        __qtablewidgetitem38.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEditable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled|Qt.ItemIsAutoTristate);
-        self.tableWidget_path_tabCreep.setItem(0, 0, __qtablewidgetitem38)
+        __qtablewidgetitem40 = QTableWidgetItem()
+        self.tableWidget_path_tabCreep.setVerticalHeaderItem(0, __qtablewidgetitem40)
+        __qtablewidgetitem41 = QTableWidgetItem()
+        __qtablewidgetitem41.setCheckState(Qt.Unchecked);
+        __qtablewidgetitem41.setFlags(Qt.ItemIsSelectable|Qt.ItemIsEditable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled|Qt.ItemIsAutoTristate);
+        self.tableWidget_path_tabCreep.setItem(0, 0, __qtablewidgetitem41)
         self.tableWidget_path_tabCreep.setObjectName(u"tableWidget_path_tabCreep")
         self.tableWidget_path_tabCreep.setMinimumSize(QSize(0, 90))
         self.tableWidget_path_tabCreep.setMaximumSize(QSize(16777215, 90))
@@ -5841,19 +5925,19 @@ class Ui_MainWindow(object):
         self.tableWidget_tabCreep = QTableWidget(self.groupBox_90)
         if (self.tableWidget_tabCreep.columnCount() < 4):
             self.tableWidget_tabCreep.setColumnCount(4)
-        __qtablewidgetitem39 = QTableWidgetItem()
-        __qtablewidgetitem39.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabCreep.setHorizontalHeaderItem(0, __qtablewidgetitem39)
-        __qtablewidgetitem40 = QTableWidgetItem()
-        __qtablewidgetitem40.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem40.setFont(font3);
-        self.tableWidget_tabCreep.setHorizontalHeaderItem(1, __qtablewidgetitem40)
-        __qtablewidgetitem41 = QTableWidgetItem()
-        __qtablewidgetitem41.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabCreep.setHorizontalHeaderItem(2, __qtablewidgetitem41)
         __qtablewidgetitem42 = QTableWidgetItem()
         __qtablewidgetitem42.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabCreep.setHorizontalHeaderItem(3, __qtablewidgetitem42)
+        self.tableWidget_tabCreep.setHorizontalHeaderItem(0, __qtablewidgetitem42)
+        __qtablewidgetitem43 = QTableWidgetItem()
+        __qtablewidgetitem43.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem43.setFont(font3);
+        self.tableWidget_tabCreep.setHorizontalHeaderItem(1, __qtablewidgetitem43)
+        __qtablewidgetitem44 = QTableWidgetItem()
+        __qtablewidgetitem44.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabCreep.setHorizontalHeaderItem(2, __qtablewidgetitem44)
+        __qtablewidgetitem45 = QTableWidgetItem()
+        __qtablewidgetitem45.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabCreep.setHorizontalHeaderItem(3, __qtablewidgetitem45)
         if (self.tableWidget_tabCreep.rowCount() < 1):
             self.tableWidget_tabCreep.setRowCount(1)
         self.tableWidget_tabCreep.setObjectName(u"tableWidget_tabCreep")
@@ -6095,8 +6179,8 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF3_tabCreep = QLineEdit(self.groupBox_79)
         self.lineEdit_TAF3_tabCreep.setObjectName(u"lineEdit_TAF3_tabCreep")
-        sizePolicy12.setHeightForWidth(self.lineEdit_TAF3_tabCreep.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabCreep.setSizePolicy(sizePolicy12)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabCreep.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabCreep.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabCreep.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabCreep.setMaximumSize(QSize(40, 16777215))
         self.lineEdit_TAF3_tabCreep.setReadOnly(False)
@@ -6532,8 +6616,8 @@ class Ui_MainWindow(object):
 
         self.lineEdit_TAF3_tabPopIn_FrameStiffness = QLineEdit(self.groupBox_62)
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setObjectName(u"lineEdit_TAF3_tabPopIn_FrameStiffness")
-        sizePolicy12.setHeightForWidth(self.lineEdit_TAF3_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.lineEdit_TAF3_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy12)
+        sizePolicy11.setHeightForWidth(self.lineEdit_TAF3_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.lineEdit_TAF3_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy11)
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setMinimumSize(QSize(40, 0))
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setMaximumSize(QSize(80, 16777215))
         self.lineEdit_TAF3_tabPopIn_FrameStiffness.setReadOnly(True)
@@ -6914,24 +6998,27 @@ class Ui_MainWindow(object):
         self.tableWidget_tabPopIn_FrameStiffness = QTableWidget(self.tabPopIn_FrameStiffness)
         if (self.tableWidget_tabPopIn_FrameStiffness.columnCount() < 4):
             self.tableWidget_tabPopIn_FrameStiffness.setColumnCount(4)
-        __qtablewidgetitem43 = QTableWidgetItem()
-        __qtablewidgetitem43.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem43)
-        __qtablewidgetitem44 = QTableWidgetItem()
-        __qtablewidgetitem44.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem44.setFont(font3);
-        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem44)
-        __qtablewidgetitem45 = QTableWidgetItem()
-        __qtablewidgetitem45.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem45)
         __qtablewidgetitem46 = QTableWidgetItem()
         __qtablewidgetitem46.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem46)
+        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(0, __qtablewidgetitem46)
+        __qtablewidgetitem47 = QTableWidgetItem()
+        __qtablewidgetitem47.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem47.setFont(font3);
+        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(1, __qtablewidgetitem47)
+        __qtablewidgetitem48 = QTableWidgetItem()
+        __qtablewidgetitem48.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(2, __qtablewidgetitem48)
+        __qtablewidgetitem49 = QTableWidgetItem()
+        __qtablewidgetitem49.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabPopIn_FrameStiffness.setHorizontalHeaderItem(3, __qtablewidgetitem49)
         if (self.tableWidget_tabPopIn_FrameStiffness.rowCount() < 1):
             self.tableWidget_tabPopIn_FrameStiffness.setRowCount(1)
         self.tableWidget_tabPopIn_FrameStiffness.setObjectName(u"tableWidget_tabPopIn_FrameStiffness")
-        sizePolicy11.setHeightForWidth(self.tableWidget_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy11)
+        sizePolicy20 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+        sizePolicy20.setHorizontalStretch(0)
+        sizePolicy20.setVerticalStretch(0)
+        sizePolicy20.setHeightForWidth(self.tableWidget_tabPopIn_FrameStiffness.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabPopIn_FrameStiffness.setSizePolicy(sizePolicy20)
         self.tableWidget_tabPopIn_FrameStiffness.setMinimumSize(QSize(200, 0))
         self.tableWidget_tabPopIn_FrameStiffness.setMaximumSize(QSize(200, 16777215))
         self.tableWidget_tabPopIn_FrameStiffness.setAutoScroll(True)
@@ -7221,24 +7308,24 @@ class Ui_MainWindow(object):
         self.tableWidget_tabPopIn = QTableWidget(self.tabPopIn)
         if (self.tableWidget_tabPopIn.columnCount() < 4):
             self.tableWidget_tabPopIn.setColumnCount(4)
-        __qtablewidgetitem47 = QTableWidgetItem()
-        __qtablewidgetitem47.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabPopIn.setHorizontalHeaderItem(0, __qtablewidgetitem47)
-        __qtablewidgetitem48 = QTableWidgetItem()
-        __qtablewidgetitem48.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        __qtablewidgetitem48.setFont(font3);
-        self.tableWidget_tabPopIn.setHorizontalHeaderItem(1, __qtablewidgetitem48)
-        __qtablewidgetitem49 = QTableWidgetItem()
-        __qtablewidgetitem49.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabPopIn.setHorizontalHeaderItem(2, __qtablewidgetitem49)
         __qtablewidgetitem50 = QTableWidgetItem()
         __qtablewidgetitem50.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
-        self.tableWidget_tabPopIn.setHorizontalHeaderItem(3, __qtablewidgetitem50)
+        self.tableWidget_tabPopIn.setHorizontalHeaderItem(0, __qtablewidgetitem50)
+        __qtablewidgetitem51 = QTableWidgetItem()
+        __qtablewidgetitem51.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem51.setFont(font3);
+        self.tableWidget_tabPopIn.setHorizontalHeaderItem(1, __qtablewidgetitem51)
+        __qtablewidgetitem52 = QTableWidgetItem()
+        __qtablewidgetitem52.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabPopIn.setHorizontalHeaderItem(2, __qtablewidgetitem52)
+        __qtablewidgetitem53 = QTableWidgetItem()
+        __qtablewidgetitem53.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        self.tableWidget_tabPopIn.setHorizontalHeaderItem(3, __qtablewidgetitem53)
         if (self.tableWidget_tabPopIn.rowCount() < 1):
             self.tableWidget_tabPopIn.setRowCount(1)
         self.tableWidget_tabPopIn.setObjectName(u"tableWidget_tabPopIn")
-        sizePolicy11.setHeightForWidth(self.tableWidget_tabPopIn.sizePolicy().hasHeightForWidth())
-        self.tableWidget_tabPopIn.setSizePolicy(sizePolicy11)
+        sizePolicy20.setHeightForWidth(self.tableWidget_tabPopIn.sizePolicy().hasHeightForWidth())
+        self.tableWidget_tabPopIn.setSizePolicy(sizePolicy20)
         self.tableWidget_tabPopIn.setMinimumSize(QSize(205, 0))
         self.tableWidget_tabPopIn.setMaximumSize(QSize(200, 16777215))
         self.tableWidget_tabPopIn.setAutoScroll(True)
@@ -7281,8 +7368,8 @@ class Ui_MainWindow(object):
         self.gridLayout_81.setObjectName(u"gridLayout_81")
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn = QGraphicsView(self.tab_42)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setObjectName(u"graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn")
-        sizePolicy20.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.sizePolicy().hasHeightForWidth())
-        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setSizePolicy(sizePolicy20)
+        sizePolicy19.setHeightForWidth(self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.sizePolicy().hasHeightForWidth())
+        self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setSizePolicy(sizePolicy19)
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setMinimumSize(QSize(0, 0))
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setMaximumSize(QSize(16777215, 16777215))
         self.graphicsView_load_depth_tab_inclusive_frame_stiffness_tabPopIn.setSizeIncrement(QSize(0, 0))
@@ -7736,20 +7823,20 @@ class Ui_MainWindow(object):
         self.tableWidget_tabClassification = QTableWidget(self.tabClassification)
         if (self.tableWidget_tabClassification.columnCount() < 7):
             self.tableWidget_tabClassification.setColumnCount(7)
-        __qtablewidgetitem51 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(0, __qtablewidgetitem51)
-        __qtablewidgetitem52 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(1, __qtablewidgetitem52)
-        __qtablewidgetitem53 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(2, __qtablewidgetitem53)
         __qtablewidgetitem54 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(3, __qtablewidgetitem54)
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(0, __qtablewidgetitem54)
         __qtablewidgetitem55 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(4, __qtablewidgetitem55)
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(1, __qtablewidgetitem55)
         __qtablewidgetitem56 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(5, __qtablewidgetitem56)
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(2, __qtablewidgetitem56)
         __qtablewidgetitem57 = QTableWidgetItem()
-        self.tableWidget_tabClassification.setHorizontalHeaderItem(6, __qtablewidgetitem57)
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(3, __qtablewidgetitem57)
+        __qtablewidgetitem58 = QTableWidgetItem()
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(4, __qtablewidgetitem58)
+        __qtablewidgetitem59 = QTableWidgetItem()
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(5, __qtablewidgetitem59)
+        __qtablewidgetitem60 = QTableWidgetItem()
+        self.tableWidget_tabClassification.setHorizontalHeaderItem(6, __qtablewidgetitem60)
         self.tableWidget_tabClassification.setObjectName(u"tableWidget_tabClassification")
         sizePolicy.setHeightForWidth(self.tableWidget_tabClassification.sizePolicy().hasHeightForWidth())
         self.tableWidget_tabClassification.setSizePolicy(sizePolicy)
@@ -7797,8 +7884,8 @@ class Ui_MainWindow(object):
         self.tabWidget_tabTAF_Hardness.setCurrentIndex(0)
         self.tabWidget_tabTAF_Modulus.setCurrentIndex(0)
         self.tabWidget_TipRadius.setCurrentIndex(0)
-        self.graphicsView_tab_TipAreaFunction_2.setCurrentIndex(0)
-        self.tabWidget_4.setCurrentIndex(0)
+        self.graphicsView_tab_TipAreaFunction_200.setCurrentIndex(0)
+        self.tabWidget_257.setCurrentIndex(1)
         self.graphicsView_tab_TipAreaFunction_5.setCurrentIndex(0)
         self.tabWidget_9.setCurrentIndex(1)
         self.tabWidget_HE.setCurrentIndex(0)
@@ -7999,94 +8086,129 @@ class Ui_MainWindow(object):
         self.tabWidget_tabTAF_Modulus.setTabText(self.tabWidget_tabTAF_Modulus.indexOf(self.tab_TAF_E_h), QCoreApplication.translate("MainWindow", u"Young's Modulus-depth", None))
         self.graphicsView_tab_TipAreaFunction.setTabText(self.graphicsView_tab_TipAreaFunction.indexOf(self.tab_TAF_Modulus), QCoreApplication.translate("MainWindow", u"Young's Modulus", None))
         self.tabAll.setTabText(self.tabAll.indexOf(self.tabTAF), QCoreApplication.translate("MainWindow", u"Tip Area Function", None))
-        self.groupBox_9.setTitle(QCoreApplication.translate("MainWindow", u"Test for Calculating Frame Compliance", None))
-        self.lineEdit_path_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Examples\\Example2\\Tungsten_FrameStiffness.xlsx", None))
-        self.label_77.setText(QCoreApplication.translate("MainWindow", u"Path:", None))
-        self.pushButton_select_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"select", None))
-        ___qtablewidgetitem6 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(0)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem7 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(1)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
-"analysed?", None));
-        ___qtablewidgetitem8 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(2)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
-"Index", None));
-        ___qtablewidgetitem9 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(3)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Frame \n"
-"Compliance\n"
-"[\u00b5m/mN]", None));
-        self.groupBox_57.setTitle(QCoreApplication.translate("MainWindow", u"Calculation Method", None))
+        self.groupBox_223.setTitle(QCoreApplication.translate("MainWindow", u"Calculation Method", None))
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.setItemText(0, QCoreApplication.translate("MainWindow", u"1. Assume constant H/E\u00b2 ( Eq. (24), Oliver 2004)", None))
         self.comboBox_CalculationMethod_tabTipRadius_FrameStiffness.setItemText(1, QCoreApplication.translate("MainWindow", u"2. Assume constant Modulus and neglect Pile-up (Eq. (22), Oliver 2004 )", None))
 
-        self.groupBox_61.setTitle(QCoreApplication.translate("MainWindow", u"Tip Area Function used by method 2.", None))
-        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_128.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">2</span>+</p></body></html>", None))
-        self.label_126.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/2</span>+</p></body></html>", None))
-        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_84.setText(QCoreApplication.translate("MainWindow", u"Ac=", None))
-        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.groupBox_224.setTitle(QCoreApplication.translate("MainWindow", u"Tip Area Function used by method 2.", None))
+        self.label_233.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">2</span>+</p></body></html>", None))
         self.lineEdit_TAF1_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"24.5", None))
+        self.label_251.setText(QCoreApplication.translate("MainWindow", u"Tip Name:", None))
         self.lineEdit_TAF5_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_129.setText(QCoreApplication.translate("MainWindow", u"Tip Name:", None))
-        self.label_124.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/4</span>+</p></body></html>", None))
-        self.label_127.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span>+</p></body></html>", None))
-        self.label_125.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/8</span>+</p></body></html>", None))
-        self.lineEdit_TAF9_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.lineEdit_TAF8_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.lineEdit_TAF7_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_236.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span>+</p></body></html>", None))
+        self.lineEdit_TAF3_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.lineEdit_TAF2_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_237.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/2</span>+</p></body></html>", None))
+        self.lineEdit_TAF4_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_256.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/4</span>+</p></body></html>", None))
+        self.label_235.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/8</span>+</p></body></html>", None))
         self.lineEdit_TAF6_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_143.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/16</span>+</p></body></html>", None))
-        self.label_144.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/32</span>+</p></body></html>", None))
-        self.label_145.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/64</span>+</p></body></html>", None))
-        self.label_146.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/128</span></p></body></html>", None))
+        self.lineEdit_TAF7_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.lineEdit_TAF8_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.lineEdit_TAF9_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_238.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/16</span>+</p></body></html>", None))
+        self.label_239.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/32</span>+</p></body></html>", None))
+        self.label_240.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/64</span>+</p></body></html>", None))
+        self.label_241.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>h<span style=\" vertical-align:sub;\">c</span><span style=\" vertical-align:super;\">1/128</span></p></body></html>", None))
+        self.label_252.setText(QCoreApplication.translate("MainWindow", u"Ac=", None))
         self.Copy_TAF_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Copy from \"Tip Area Function\"", None))
-        self.groupBox_10.setTitle(QCoreApplication.translate("MainWindow", u"Identify Loading-Holding-UnloadingStart-UnloadingEnd", None))
-        self.label_18.setText(QCoreApplication.translate("MainWindow", u"max. Size of fluctuation:", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"when (dP/dt) [mN/s] crosses", None))
-        self.groupBox_11.setTitle(QCoreApplication.translate("MainWindow", u"Test Parameters", None))
-        self.label_23.setText(QCoreApplication.translate("MainWindow", u"Method:", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"Equipment:", None))
-        self.comboBox_equipment_tabTipRadius_FrameStiffness.setItemText(0, QCoreApplication.translate("MainWindow", u"G200X", None))
+        self.groupBox_216.setTitle(QCoreApplication.translate("MainWindow", u"Test file path list", None))
+        ___qtablewidgetitem6 = self.tableWidget_path_tabTipRadius_FrameStiffness.verticalHeaderItem(0)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
 
+        __sortingEnabled1 = self.tableWidget_path_tabTipRadius_FrameStiffness.isSortingEnabled()
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setSortingEnabled(False)
+        self.tableWidget_path_tabTipRadius_FrameStiffness.setSortingEnabled(__sortingEnabled1)
+
+#if QT_CONFIG(tooltip)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setToolTip(QCoreApplication.translate("MainWindow", u"Open in its separate window", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+#if QT_CONFIG(accessibility)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setAccessibleDescription("")
+#endif // QT_CONFIG(accessibility)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setText("")
+#if QT_CONFIG(shortcut)
+        self.pushButton_addFileWindow_tabTipRadius_FrameStiffness.setShortcut("")
+#endif // QT_CONFIG(shortcut)
+        self.pushButton_addFile_tabTipRadius_FrameStiffness.setText("")
+        self.pushButton_changeFile_tabTipRadius_FrameStiffness.setText("")
+        self.pushButton_deleteFile_tabTipRadius_FrameStiffness.setText("")
+        self.groupBox_221.setTitle(QCoreApplication.translate("MainWindow", u"Drift Correction (using final x% data)", None))
+        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Post", None))
+        self.checkBox_UsingDriftPre_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Pre", None))
+        self.groupBox_217.setTitle(QCoreApplication.translate("MainWindow", u"Test Parameters", None))
+        self.label_244.setText(QCoreApplication.translate("MainWindow", u"Method:", None))
+        self.label_243.setText(QCoreApplication.translate("MainWindow", u"Equipment:", None))
         self.comboBox_method_tabTipRadius_FrameStiffness.setItemText(0, QCoreApplication.translate("MainWindow", u"Single Unloading", None))
         self.comboBox_method_tabTipRadius_FrameStiffness.setItemText(1, QCoreApplication.translate("MainWindow", u"Multi Unloadings", None))
         self.comboBox_method_tabTipRadius_FrameStiffness.setItemText(2, QCoreApplication.translate("MainWindow", u"CSM", None))
 
-        self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Find Surface", None))
-        self.label_86.setText(QCoreApplication.translate("MainWindow", u"Size of data filter:", None))
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.setItemText(0, QCoreApplication.translate("MainWindow", u"G200X", None))
+        self.comboBox_equipment_tabTipRadius_FrameStiffness.setItemText(1, QCoreApplication.translate("MainWindow", u"MicroMaterials", None))
+
+        self.groupBox_225.setTitle(QCoreApplication.translate("MainWindow", u"Test list", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_SelectTypedTest_tabTipRadius_FrameStiffness.setToolTip(QCoreApplication.translate("MainWindow", u"How to select test(s)? see Q3 in Document from Help", None))
+#endif // QT_CONFIG(tooltip)
+        self.pushButton_SelectTypedTest_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select the typed test(s)", None))
+        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all", None))
+        ___qtablewidgetitem7 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(0)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem8 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(1)
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+"analysed?", None));
+        ___qtablewidgetitem9 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(2)
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+"Index", None));
+        ___qtablewidgetitem10 = self.tableWidget_tabTipRadius_FrameStiffness.horizontalHeaderItem(3)
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
+"Compliance\n"
+"[\u00b5m/mN]", None));
+#if QT_CONFIG(statustip)
+        self.tableWidget_tabTipRadius_FrameStiffness.setStatusTip("")
+#endif // QT_CONFIG(statustip)
+        self.plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness.setPlaceholderText(QCoreApplication.translate("MainWindow", u"e.g. 1-10, 12,15  ", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness.setToolTip(QCoreApplication.translate("MainWindow", u"Open in its separate window", None))
+#endif // QT_CONFIG(tooltip)
+        self.pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness.setText("")
+        self.groupBox_222.setTitle(QCoreApplication.translate("MainWindow", u"Unloading Range for Stiffness", None))
+        self.label_247.setText(QCoreApplication.translate("MainWindow", u"Start [100% of Pmax]:", None))
+        self.label_250.setText(QCoreApplication.translate("MainWindow", u"End [100% of Pmax]:", None))
+        self.groupBox_218.setTitle(QCoreApplication.translate("MainWindow", u"Identify Load\u2013Hold\u2013Unload Range", None))
+        self.label_248.setText(QCoreApplication.translate("MainWindow", u"max. Size of fluctuation:", None))
+        self.label_249.setText(QCoreApplication.translate("MainWindow", u"At dP/dt [mN/s] crossing", None))
+        self.groupBox_220.setTitle(QCoreApplication.translate("MainWindow", u"Range for Frame Compliance", None))
+        self.label_254.setText(QCoreApplication.translate("MainWindow", u"< Force [mN]<", None))
+        self.label_253.setText(QCoreApplication.translate("MainWindow", u"<Depth [\u00b5m]<", None))
+        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Calculate Frame Compliance", None))
+        self.groupBox_219.setTitle(QCoreApplication.translate("MainWindow", u"Find Surface", None))
+        self.label_255.setText(QCoreApplication.translate("MainWindow", u"Size of data filter:", None))
         self.checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"when dP/dh [mN/\u00b5m]\n"
 "crosses", None))
         self.checkBox_UsingSurfaceIndex_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Use Surface Index first", None))
-        self.groupBox_45.setTitle(QCoreApplication.translate("MainWindow", u"Correct Thermal Drift", None))
-        self.checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Use the collection during unloading", None))
-        self.groupBox_50.setTitle(QCoreApplication.translate("MainWindow", u"Unloading Range to Calculate Stiffness ", None))
-        self.label_16.setText(QCoreApplication.translate("MainWindow", u"Start [100% of Pmax]:", None))
-        self.label_15.setText(QCoreApplication.translate("MainWindow", u"End [100% of Pmax]:", None))
-        self.groupBox_12.setTitle(QCoreApplication.translate("MainWindow", u"Range to Calculate Frame Compliance", None))
-        self.label_24.setText(QCoreApplication.translate("MainWindow", u"<Depth [\u00b5m]<", None))
-        self.label_25.setText(QCoreApplication.translate("MainWindow", u"<Force [mN]<", None))
-        self.pushButton_Calculate_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Calculate Frame Compliance", None))
-        self.pushButton_SelectAll_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all", None))
+        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"show thermal drift", None))
         self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"show find surface", None))
 #if QT_CONFIG(tooltip)
         self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setToolTip(QCoreApplication.translate("MainWindow", u"How to highlight test(s)? see Q1 in Document from Help", None))
 #endif // QT_CONFIG(tooltip)
         self.pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Plot the highlighted test(s)", None))
         self.checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"show the Indentification of Loading-Holding-UnladingStart-UnladingEnd", None))
-        self.checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"show thermal drift", None))
-        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_10), QCoreApplication.translate("MainWindow", u"inclusive of frame compliance", None))
+        self.tabWidget_257.setTabText(self.tabWidget_257.indexOf(self.tab_259), QCoreApplication.translate("MainWindow", u"inclusive of frame compliance", None))
 #if QT_CONFIG(tooltip)
         self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setToolTip(QCoreApplication.translate("MainWindow", u"How to highlight test(s)? see Q1 in Document from Help", None))
 #endif // QT_CONFIG(tooltip)
         self.pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Plot the highlighted test(s)", None))
-        self.label_180.setText("")
-        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_11), QCoreApplication.translate("MainWindow", u"exclusive of frame compliance", None))
-        self.graphicsView_tab_TipAreaFunction_2.setTabText(self.graphicsView_tab_TipAreaFunction_2.indexOf(self.tab_9), QCoreApplication.translate("MainWindow", u"Load Depth Curve", None))
-        self.label_20.setText(QCoreApplication.translate("MainWindow", u"Frame Stiffness [mN/\u00b5m]", None))
+        self.label_242.setText("")
+        self.tabWidget_257.setTabText(self.tabWidget_257.indexOf(self.tab_260), QCoreApplication.translate("MainWindow", u"exclusive of frame compliance", None))
+        self.graphicsView_tab_TipAreaFunction_200.setTabText(self.graphicsView_tab_TipAreaFunction_200.indexOf(self.tab_258), QCoreApplication.translate("MainWindow", u"Load Depth Curve", None))
+        self.label_246.setText(QCoreApplication.translate("MainWindow", u"Frame Stiffness [mN/\u00b5m]", None))
         self.lineEdit_FrameStiffness_tabTipRadius_FrameStiffness.setText("")
-        self.label_19.setText(QCoreApplication.translate("MainWindow", u"Frame Compliance [\u00b5m/mN]", None))
-        self.graphicsView_tab_TipAreaFunction_2.setTabText(self.graphicsView_tab_TipAreaFunction_2.indexOf(self.tab_12), QCoreApplication.translate("MainWindow", u"Frame Compliance", None))
+        self.label_245.setText(QCoreApplication.translate("MainWindow", u"Frame Compliance [\u00b5m/mN]", None))
+        self.graphicsView_tab_TipAreaFunction_200.setTabText(self.graphicsView_tab_TipAreaFunction_200.indexOf(self.tab_261), QCoreApplication.translate("MainWindow", u"Frame Compliance", None))
         self.tabWidget_TipRadius.setTabText(self.tabWidget_TipRadius.indexOf(self.tabTipRadius_FrameStiffness), QCoreApplication.translate("MainWindow", u"Calculate Frame Compliance", None))
         self.groupBox_29.setTitle(QCoreApplication.translate("MainWindow", u"Tested Material", None))
         self.pushButton_select_tabTipRadius.setText(QCoreApplication.translate("MainWindow", u"select", None))
@@ -8147,15 +8269,15 @@ class Ui_MainWindow(object):
         self.Copy_FrameCompliance_tabTipRadius.setText(QCoreApplication.translate("MainWindow", u"Copy the calculated value", None))
         self.pushButton_Calculate_tabTipRadius.setText(QCoreApplication.translate("MainWindow", u"Calculate Tip Radius", None))
         self.pushButton_SelectAll_tabTipRadius.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all", None))
-        ___qtablewidgetitem10 = self.tableWidget_tabTipRadius.horizontalHeaderItem(0)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem11 = self.tableWidget_tabTipRadius.horizontalHeaderItem(1)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem11 = self.tableWidget_tabTipRadius.horizontalHeaderItem(0)
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem12 = self.tableWidget_tabTipRadius.horizontalHeaderItem(1)
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem12 = self.tableWidget_tabTipRadius.horizontalHeaderItem(2)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"Pop-in?", None));
-        ___qtablewidgetitem13 = self.tableWidget_tabTipRadius.horizontalHeaderItem(3)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem13 = self.tableWidget_tabTipRadius.horizontalHeaderItem(2)
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Pop-in?", None));
+        ___qtablewidgetitem14 = self.tableWidget_tabTipRadius.horizontalHeaderItem(3)
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
         self.tabWidget_TipRadius.setTabText(self.tabWidget_TipRadius.indexOf(self.tabTipRadius), QCoreApplication.translate("MainWindow", u"Calculate Tip Radius", None))
         self.tabAll.setTabText(self.tabAll.indexOf(self.tabTipRadius_0), QCoreApplication.translate("MainWindow", u"Tip Radius", None))
@@ -8186,12 +8308,12 @@ class Ui_MainWindow(object):
         self.label_60.setText(QCoreApplication.translate("MainWindow", u"Ac=", None))
         self.Copy_TAF_tabHE_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Copy from \"Tip Area Function\"", None))
         self.groupBox_13.setTitle(QCoreApplication.translate("MainWindow", u"Test file path list", None))
-        ___qtablewidgetitem14 = self.tableWidget_path_tabHE_FrameStiffness.verticalHeaderItem(0)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
+        ___qtablewidgetitem15 = self.tableWidget_path_tabHE_FrameStiffness.verticalHeaderItem(0)
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
 
-        __sortingEnabled1 = self.tableWidget_path_tabHE_FrameStiffness.isSortingEnabled()
+        __sortingEnabled2 = self.tableWidget_path_tabHE_FrameStiffness.isSortingEnabled()
         self.tableWidget_path_tabHE_FrameStiffness.setSortingEnabled(False)
-        self.tableWidget_path_tabHE_FrameStiffness.setSortingEnabled(__sortingEnabled1)
+        self.tableWidget_path_tabHE_FrameStiffness.setSortingEnabled(__sortingEnabled2)
 
 #if QT_CONFIG(tooltip)
         self.pushButton_addFileWindow_tabHE_FrameStiffness.setToolTip(QCoreApplication.translate("MainWindow", u"Open in its separate window", None))
@@ -8228,16 +8350,16 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.pushButton_SelectTypedTest_tabHE_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select the typed test(s)", None))
         self.pushButton_SelectAll_tabHE_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all", None))
-        ___qtablewidgetitem15 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(0)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem16 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(1)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem16 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(0)
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem17 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(1)
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem17 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(2)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem18 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(2)
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
-        ___qtablewidgetitem18 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(3)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
+        ___qtablewidgetitem19 = self.tableWidget_tabHE_FrameStiffness.horizontalHeaderItem(3)
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
 "Compliance\n"
 "[\u00b5m/mN]", None));
 #if QT_CONFIG(statustip)
@@ -8295,16 +8417,16 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.pushButton_SelectTypedTest_tabHE.setText(QCoreApplication.translate("MainWindow", u"Select the typed test(s)", None))
         self.pushButton_SelectAll_tabHE.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all ", None))
-        ___qtablewidgetitem19 = self.tableWidget_tabHE.horizontalHeaderItem(0)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem20 = self.tableWidget_tabHE.horizontalHeaderItem(1)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem20 = self.tableWidget_tabHE.horizontalHeaderItem(0)
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem21 = self.tableWidget_tabHE.horizontalHeaderItem(1)
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem21 = self.tableWidget_tabHE.horizontalHeaderItem(2)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem22 = self.tableWidget_tabHE.horizontalHeaderItem(2)
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
-        ___qtablewidgetitem22 = self.tableWidget_tabHE.horizontalHeaderItem(3)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("MainWindow", u"Area of \n"
+        ___qtablewidgetitem23 = self.tableWidget_tabHE.horizontalHeaderItem(3)
+        ___qtablewidgetitem23.setText(QCoreApplication.translate("MainWindow", u"Area of \n"
 "Pile-up\n"
 "[\u00b5m2]", None));
         self.plainTextEdit_SelectTypedTest_tabHE.setPlaceholderText(QCoreApplication.translate("MainWindow", u"e.g. 1-10, 12,15  ", None))
@@ -8319,12 +8441,12 @@ class Ui_MainWindow(object):
         self.pushButton_addFile_tabHE.setText("")
         self.pushButton_deleteFile_tabHE.setText("")
         self.label_66.setText(QCoreApplication.translate("MainWindow", u"Material's Name:", None))
-        ___qtablewidgetitem23 = self.tableWidget_path_tabHE.verticalHeaderItem(0)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
+        ___qtablewidgetitem24 = self.tableWidget_path_tabHE.verticalHeaderItem(0)
+        ___qtablewidgetitem24.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
 
-        __sortingEnabled2 = self.tableWidget_path_tabHE.isSortingEnabled()
+        __sortingEnabled3 = self.tableWidget_path_tabHE.isSortingEnabled()
         self.tableWidget_path_tabHE.setSortingEnabled(False)
-        self.tableWidget_path_tabHE.setSortingEnabled(__sortingEnabled2)
+        self.tableWidget_path_tabHE.setSortingEnabled(__sortingEnabled3)
 
         self.groupBox_21.setTitle(QCoreApplication.translate("MainWindow", u"Find Surface", None))
         self.checkBox_UsingRate2findSurface_tabHE.setText(QCoreApplication.translate("MainWindow", u"when dP/dh [mN/\u00b5m]\n"
@@ -8418,12 +8540,12 @@ class Ui_MainWindow(object):
         self.comboBox_equipment_tabCreep_FrameStiffness.setItemText(1, QCoreApplication.translate("MainWindow", u"MicroMaterials", None))
 
         self.groupBox_71.setTitle(QCoreApplication.translate("MainWindow", u"Test file path list", None))
-        ___qtablewidgetitem24 = self.tableWidget_path_tabCreep_FrameStiffness.verticalHeaderItem(0)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
+        ___qtablewidgetitem25 = self.tableWidget_path_tabCreep_FrameStiffness.verticalHeaderItem(0)
+        ___qtablewidgetitem25.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
 
-        __sortingEnabled3 = self.tableWidget_path_tabCreep_FrameStiffness.isSortingEnabled()
+        __sortingEnabled4 = self.tableWidget_path_tabCreep_FrameStiffness.isSortingEnabled()
         self.tableWidget_path_tabCreep_FrameStiffness.setSortingEnabled(False)
-        self.tableWidget_path_tabCreep_FrameStiffness.setSortingEnabled(__sortingEnabled3)
+        self.tableWidget_path_tabCreep_FrameStiffness.setSortingEnabled(__sortingEnabled4)
 
         self.pushButton_deleteFile_tabCreep_FrameStiffness.setText("")
         self.pushButton_changeFile_tabCreep_FrameStiffness.setText("")
@@ -8431,16 +8553,16 @@ class Ui_MainWindow(object):
         self.pushButton_addFileWindow_tabCreep_FrameStiffness.setText("")
         self.groupBox_91.setTitle(QCoreApplication.translate("MainWindow", u"Test list", None))
         self.plainTextEdit_SelectTypedTest_tabCreep_FrameStiffness.setPlaceholderText(QCoreApplication.translate("MainWindow", u"e.g. 1-10, 12,15  ", None))
-        ___qtablewidgetitem25 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(0)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem26 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(1)
-        ___qtablewidgetitem26.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem26 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(0)
+        ___qtablewidgetitem26.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem27 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(1)
+        ___qtablewidgetitem27.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem27 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(2)
-        ___qtablewidgetitem27.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem28 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(2)
+        ___qtablewidgetitem28.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
-        ___qtablewidgetitem28 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(3)
-        ___qtablewidgetitem28.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
+        ___qtablewidgetitem29 = self.tableWidget_tabCreep_FrameStiffness.horizontalHeaderItem(3)
+        ___qtablewidgetitem29.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
 "Compliance\n"
 "[\u00b5m/mN]", None));
 #if QT_CONFIG(tooltip)
@@ -8524,12 +8646,12 @@ class Ui_MainWindow(object):
 
         self.label_229.setText(QCoreApplication.translate("MainWindow", u"Method:", None))
         self.groupBox_82.setTitle(QCoreApplication.translate("MainWindow", u"Information of tested material and test file path list", None))
-        ___qtablewidgetitem29 = self.tableWidget_path_tabCreep.verticalHeaderItem(0)
-        ___qtablewidgetitem29.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
+        ___qtablewidgetitem30 = self.tableWidget_path_tabCreep.verticalHeaderItem(0)
+        ___qtablewidgetitem30.setText(QCoreApplication.translate("MainWindow", u"Path1", None));
 
-        __sortingEnabled4 = self.tableWidget_path_tabCreep.isSortingEnabled()
+        __sortingEnabled5 = self.tableWidget_path_tabCreep.isSortingEnabled()
         self.tableWidget_path_tabCreep.setSortingEnabled(False)
-        self.tableWidget_path_tabCreep.setSortingEnabled(__sortingEnabled4)
+        self.tableWidget_path_tabCreep.setSortingEnabled(__sortingEnabled5)
 
         self.label_224.setText(QCoreApplication.translate("MainWindow", u"Material's Name:", None))
         self.label_225.setText(QCoreApplication.translate("MainWindow", u"Poisson's ratio:", None))
@@ -8588,16 +8710,16 @@ class Ui_MainWindow(object):
         self.pushButton_SelectTypedTest_tabCreep.setText(QCoreApplication.translate("MainWindow", u"Select the typed test(s)", None))
         self.pushButton_SelectAll_tabCreep.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all ", None))
         self.plainTextEdit_SelectTypedTest_tabCreep.setPlaceholderText(QCoreApplication.translate("MainWindow", u"e.g. 1-10, 12,15  ", None))
-        ___qtablewidgetitem30 = self.tableWidget_tabCreep.horizontalHeaderItem(0)
-        ___qtablewidgetitem30.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem31 = self.tableWidget_tabCreep.horizontalHeaderItem(1)
-        ___qtablewidgetitem31.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem31 = self.tableWidget_tabCreep.horizontalHeaderItem(0)
+        ___qtablewidgetitem31.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem32 = self.tableWidget_tabCreep.horizontalHeaderItem(1)
+        ___qtablewidgetitem32.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem32 = self.tableWidget_tabCreep.horizontalHeaderItem(2)
-        ___qtablewidgetitem32.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem33 = self.tableWidget_tabCreep.horizontalHeaderItem(2)
+        ___qtablewidgetitem33.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
-        ___qtablewidgetitem33 = self.tableWidget_tabCreep.horizontalHeaderItem(3)
-        ___qtablewidgetitem33.setText(QCoreApplication.translate("MainWindow", u"Area of \n"
+        ___qtablewidgetitem34 = self.tableWidget_tabCreep.horizontalHeaderItem(3)
+        ___qtablewidgetitem34.setText(QCoreApplication.translate("MainWindow", u"Area of \n"
 "Pile-up\n"
 "[\u00b5m2]", None));
         self.pushButton_tableWidgetWindow_tabCreep.setText("")
@@ -8715,16 +8837,16 @@ class Ui_MainWindow(object):
         self.label_99.setText(QCoreApplication.translate("MainWindow", u"< Depth [\u00b5m]<", None))
         self.label_100.setText(QCoreApplication.translate("MainWindow", u"< Force [mN]<", None))
         self.pushButton_SelectAll_tabPopIn_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Select/ Unselect all", None))
-        ___qtablewidgetitem34 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(0)
-        ___qtablewidgetitem34.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem35 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(1)
-        ___qtablewidgetitem35.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem35 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(0)
+        ___qtablewidgetitem35.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem36 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(1)
+        ___qtablewidgetitem36.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem36 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(2)
-        ___qtablewidgetitem36.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem37 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(2)
+        ___qtablewidgetitem37.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
-        ___qtablewidgetitem37 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(3)
-        ___qtablewidgetitem37.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
+        ___qtablewidgetitem38 = self.tableWidget_tabPopIn_FrameStiffness.horizontalHeaderItem(3)
+        ___qtablewidgetitem38.setText(QCoreApplication.translate("MainWindow", u"Frame\n"
 "Compliance\n"
 "[\u00b5m/mN]", None));
         self.pushButton_Calculate_tabPopIn_FrameStiffness.setText(QCoreApplication.translate("MainWindow", u"Calculate Frame Compliance", None))
@@ -8758,15 +8880,15 @@ class Ui_MainWindow(object):
         self.label_106.setText(QCoreApplication.translate("MainWindow", u"Size of data filter:", None))
         self.checkBox_UsingRate2findSurface_tabPopIn.setText(QCoreApplication.translate("MainWindow", u"when dP/dh [mN/\u00b5m] >", None))
         self.checkBox_UsingSurfaceIndex_tabPopIn.setText(QCoreApplication.translate("MainWindow", u"Use Surface Index first", None))
-        ___qtablewidgetitem38 = self.tableWidget_tabPopIn.horizontalHeaderItem(0)
-        ___qtablewidgetitem38.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
-        ___qtablewidgetitem39 = self.tableWidget_tabPopIn.horizontalHeaderItem(1)
-        ___qtablewidgetitem39.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
+        ___qtablewidgetitem39 = self.tableWidget_tabPopIn.horizontalHeaderItem(0)
+        ___qtablewidgetitem39.setText(QCoreApplication.translate("MainWindow", u"(use?) Test", None));
+        ___qtablewidgetitem40 = self.tableWidget_tabPopIn.horizontalHeaderItem(1)
+        ___qtablewidgetitem40.setText(QCoreApplication.translate("MainWindow", u"successfully\n"
 "analysed?", None));
-        ___qtablewidgetitem40 = self.tableWidget_tabPopIn.horizontalHeaderItem(2)
-        ___qtablewidgetitem40.setText(QCoreApplication.translate("MainWindow", u"Pop-in?", None));
-        ___qtablewidgetitem41 = self.tableWidget_tabPopIn.horizontalHeaderItem(3)
-        ___qtablewidgetitem41.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
+        ___qtablewidgetitem41 = self.tableWidget_tabPopIn.horizontalHeaderItem(2)
+        ___qtablewidgetitem41.setText(QCoreApplication.translate("MainWindow", u"Pop-in?", None));
+        ___qtablewidgetitem42 = self.tableWidget_tabPopIn.horizontalHeaderItem(3)
+        ___qtablewidgetitem42.setText(QCoreApplication.translate("MainWindow", u"Surface\n"
 "Index", None));
         self.pushButton_Analyse_tabPopIn.setText(QCoreApplication.translate("MainWindow", u"Analyse Pop-in Effect", None))
         self.checkBox_showFindSurface_tab_inclusive_frame_stiffness_tabPopIn.setText(QCoreApplication.translate("MainWindow", u"show find surface", None))
@@ -8831,20 +8953,20 @@ class Ui_MainWindow(object):
         self.comboBox_FlipMapping_tabClassification.setItemText(3, QCoreApplication.translate("MainWindow", u"Both", None))
 
         self.label_167.setText(QCoreApplication.translate("MainWindow", u"Dimension y:", None))
-        ___qtablewidgetitem42 = self.tableWidget_tabClassification.horizontalHeaderItem(0)
-        ___qtablewidgetitem42.setText(QCoreApplication.translate("MainWindow", u"#Cluster ", None));
-        ___qtablewidgetitem43 = self.tableWidget_tabClassification.horizontalHeaderItem(1)
-        ___qtablewidgetitem43.setText(QCoreApplication.translate("MainWindow", u"Color", None));
-        ___qtablewidgetitem44 = self.tableWidget_tabClassification.horizontalHeaderItem(2)
-        ___qtablewidgetitem44.setText(QCoreApplication.translate("MainWindow", u"Number of data", None));
-        ___qtablewidgetitem45 = self.tableWidget_tabClassification.horizontalHeaderItem(3)
-        ___qtablewidgetitem45.setText(QCoreApplication.translate("MainWindow", u"mean of x", None));
-        ___qtablewidgetitem46 = self.tableWidget_tabClassification.horizontalHeaderItem(4)
-        ___qtablewidgetitem46.setText(QCoreApplication.translate("MainWindow", u"std of x", None));
-        ___qtablewidgetitem47 = self.tableWidget_tabClassification.horizontalHeaderItem(5)
-        ___qtablewidgetitem47.setText(QCoreApplication.translate("MainWindow", u"mean of y", None));
-        ___qtablewidgetitem48 = self.tableWidget_tabClassification.horizontalHeaderItem(6)
-        ___qtablewidgetitem48.setText(QCoreApplication.translate("MainWindow", u"std of y", None));
+        ___qtablewidgetitem43 = self.tableWidget_tabClassification.horizontalHeaderItem(0)
+        ___qtablewidgetitem43.setText(QCoreApplication.translate("MainWindow", u"#Cluster ", None));
+        ___qtablewidgetitem44 = self.tableWidget_tabClassification.horizontalHeaderItem(1)
+        ___qtablewidgetitem44.setText(QCoreApplication.translate("MainWindow", u"Color", None));
+        ___qtablewidgetitem45 = self.tableWidget_tabClassification.horizontalHeaderItem(2)
+        ___qtablewidgetitem45.setText(QCoreApplication.translate("MainWindow", u"Number of data", None));
+        ___qtablewidgetitem46 = self.tableWidget_tabClassification.horizontalHeaderItem(3)
+        ___qtablewidgetitem46.setText(QCoreApplication.translate("MainWindow", u"mean of x", None));
+        ___qtablewidgetitem47 = self.tableWidget_tabClassification.horizontalHeaderItem(4)
+        ___qtablewidgetitem47.setText(QCoreApplication.translate("MainWindow", u"std of x", None));
+        ___qtablewidgetitem48 = self.tableWidget_tabClassification.horizontalHeaderItem(5)
+        ___qtablewidgetitem48.setText(QCoreApplication.translate("MainWindow", u"mean of y", None));
+        ___qtablewidgetitem49 = self.tableWidget_tabClassification.horizontalHeaderItem(6)
+        ___qtablewidgetitem49.setText(QCoreApplication.translate("MainWindow", u"std of y", None));
         self.tabAll.setTabText(self.tabAll.indexOf(self.tabClassification), QCoreApplication.translate("MainWindow", u"K-means Clustering", None))
         self.menuData.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuOpenRecent.setTitle(QCoreApplication.translate("MainWindow", u"Open Recent", None))

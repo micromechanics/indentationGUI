@@ -2559,171 +2559,9 @@ Frame Compliance and TAF</string>
              <attribute name="title">
               <string>Calculate Frame Compliance</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_19">
-              <item row="0" column="0" colspan="2">
-               <widget class="QGroupBox" name="groupBox_9">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>460</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>460</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>Test for Calculating Frame Compliance</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_17">
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="lineEdit_path_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Examples\Example2\Tungsten_FrameStiffness.xlsx</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_77">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Path:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QPushButton" name="pushButton_select_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>62</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>select</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="0" column="2" rowspan="7">
-               <widget class="QTableWidget" name="tableWidget_tabTipRadius_FrameStiffness">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="autoScroll">
-                 <bool>true</bool>
-                </property>
-                <property name="rowCount">
-                 <number>1</number>
-                </property>
-                <attribute name="horizontalHeaderVisible">
-                 <bool>true</bool>
-                </attribute>
-                <attribute name="horizontalHeaderMinimumSectionSize">
-                 <number>65</number>
-                </attribute>
-                <attribute name="horizontalHeaderDefaultSectionSize">
-                 <number>65</number>
-                </attribute>
-                <attribute name="horizontalHeaderHighlightSections">
-                 <bool>true</bool>
-                </attribute>
-                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                 <bool>true</bool>
-                </attribute>
-                <row/>
-                <column>
-                 <property name="text">
-                  <string>(use?) Test</string>
-                 </property>
-                 <property name="textAlignment">
-                  <set>AlignLeading|AlignVCenter</set>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>successfully
-analysed?</string>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="textAlignment">
-                  <set>AlignLeading|AlignVCenter</set>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Surface
-Index</string>
-                 </property>
-                 <property name="textAlignment">
-                  <set>AlignLeading|AlignVCenter</set>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Frame 
-Compliance
-[µm/mN]</string>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="textAlignment">
-                  <set>AlignLeading|AlignVCenter</set>
-                 </property>
-                </column>
-               </widget>
-              </item>
+             <layout class="QGridLayout" name="gridLayout_212">
               <item row="1" column="0" colspan="2">
-               <widget class="QGroupBox" name="groupBox_57">
+               <widget class="QGroupBox" name="groupBox_223">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                   <horstretch>0</horstretch>
@@ -2738,15 +2576,15 @@ Compliance
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>460</width>
+                  <width>4600</width>
                   <height>16777215</height>
                  </size>
                 </property>
                 <property name="title">
                  <string>Calculation Method</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_106">
-                 <item row="1" column="0">
+                <layout class="QGridLayout" name="gridLayout_202">
+                 <item row="0" column="0">
                   <widget class="QComboBox" name="comboBox_CalculationMethod_tabTipRadius_FrameStiffness">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
@@ -2769,8 +2607,8 @@ Compliance
                    </item>
                   </widget>
                  </item>
-                 <item row="2" column="0">
-                  <widget class="QGroupBox" name="groupBox_61">
+                 <item row="1" column="0">
+                  <widget class="QGroupBox" name="groupBox_224">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
                      <horstretch>0</horstretch>
@@ -2792,31 +2630,9 @@ Compliance
                    <property name="title">
                     <string>Tip Area Function used by method 2.</string>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_109">
-                    <item row="2" column="7">
-                     <widget class="QLineEdit" name="lineEdit_TAF4_tabTipRadius_FrameStiffness">
-                      <property name="minimumSize">
-                       <size>
-                        <width>40</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>40</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>0</string>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="2">
-                     <widget class="QLabel" name="label_128">
+                   <layout class="QGridLayout" name="gridLayout_203">
+                    <item row="2" column="3">
+                     <widget class="QLabel" name="label_233">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                         <horstretch>0</horstretch>
@@ -2828,92 +2644,7 @@ Compliance
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="6">
-                     <widget class="QLabel" name="label_126">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/2&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="3">
-                     <widget class="QLineEdit" name="lineEdit_TAF2_tabTipRadius_FrameStiffness">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>40</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>40</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>0</string>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="label_84">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>Ac=</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="5">
-                     <widget class="QLineEdit" name="lineEdit_TAF3_tabTipRadius_FrameStiffness">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>40</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>40</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>0</string>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
+                    <item row="2" column="2">
                      <widget class="QLineEdit" name="lineEdit_TAF1_tabTipRadius_FrameStiffness">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -2940,11 +2671,27 @@ Compliance
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
                       <property name="readOnly">
-                       <bool>true</bool>
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="9">
+                    <item row="0" column="0" colspan="3">
+                     <widget class="QLabel" name="label_251">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Tip Name:</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="10">
                      <widget class="QLineEdit" name="lineEdit_TAF5_tabTipRadius_FrameStiffness">
                       <property name="minimumSize">
                        <size>
@@ -2962,41 +2709,12 @@ Compliance
                        <string>0</string>
                       </property>
                       <property name="readOnly">
-                       <bool>true</bool>
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="0" colspan="2">
-                     <widget class="QLabel" name="label_129">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>Tip Name:</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="8">
-                     <widget class="QLabel" name="label_124">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/4&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="4">
-                     <widget class="QLabel" name="label_127">
+                    <item row="2" column="5">
+                     <widget class="QLabel" name="label_236">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                         <horstretch>0</horstretch>
@@ -3011,60 +2729,36 @@ Compliance
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="10">
-                     <widget class="QLabel" name="label_125">
+                    <item row="2" column="6">
+                     <widget class="QLineEdit" name="lineEdit_TAF3_tabTipRadius_FrameStiffness">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/8&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="9">
-                     <widget class="QLineEdit" name="lineEdit_TAF9_tabTipRadius_FrameStiffness">
                       <property name="minimumSize">
                        <size>
                         <width>40</width>
                         <height>0</height>
                        </size>
                       </property>
-                      <property name="text">
-                       <string>0</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="7">
-                     <widget class="QLineEdit" name="lineEdit_TAF8_tabTipRadius_FrameStiffness">
-                      <property name="minimumSize">
+                      <property name="maximumSize">
                        <size>
                         <width>40</width>
-                        <height>0</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="text">
                        <string>0</string>
                       </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="5">
-                     <widget class="QLineEdit" name="lineEdit_TAF7_tabTipRadius_FrameStiffness">
-                      <property name="minimumSize">
-                       <size>
-                        <width>40</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>0</string>
+                      <property name="readOnly">
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="3">
-                     <widget class="QLineEdit" name="lineEdit_TAF6_tabTipRadius_FrameStiffness">
+                    <item row="2" column="4">
+                     <widget class="QLineEdit" name="lineEdit_TAF2_tabTipRadius_FrameStiffness">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -3077,40 +2771,178 @@ Compliance
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>40</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                      <property name="readOnly">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="7">
+                     <widget class="QLabel" name="label_237">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/2&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="8">
+                     <widget class="QLineEdit" name="lineEdit_TAF4_tabTipRadius_FrameStiffness">
+                      <property name="minimumSize">
+                       <size>
+                        <width>40</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>40</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                      <property name="readOnly">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="9">
+                     <widget class="QLabel" name="label_256">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/4&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="11">
+                     <widget class="QLabel" name="label_235">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/8&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="4">
+                     <widget class="QLineEdit" name="lineEdit_TAF6_tabTipRadius_FrameStiffness">
+                      <property name="minimumSize">
+                       <size>
+                        <width>40</width>
+                        <height>0</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>0</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="4">
-                     <widget class="QLabel" name="label_143">
+                    <item row="3" column="6">
+                     <widget class="QLineEdit" name="lineEdit_TAF7_tabTipRadius_FrameStiffness">
+                      <property name="minimumSize">
+                       <size>
+                        <width>40</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="8">
+                     <widget class="QLineEdit" name="lineEdit_TAF8_tabTipRadius_FrameStiffness">
+                      <property name="minimumSize">
+                       <size>
+                        <width>40</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="10">
+                     <widget class="QLineEdit" name="lineEdit_TAF9_tabTipRadius_FrameStiffness">
+                      <property name="minimumSize">
+                       <size>
+                        <width>40</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="5">
+                     <widget class="QLabel" name="label_238">
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/16&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="6">
-                     <widget class="QLabel" name="label_144">
+                    <item row="3" column="7">
+                     <widget class="QLabel" name="label_239">
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/32&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="8">
-                     <widget class="QLabel" name="label_145">
+                    <item row="3" column="9">
+                     <widget class="QLabel" name="label_240">
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/64&lt;/span&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="10">
-                     <widget class="QLabel" name="label_146">
+                    <item row="3" column="11">
+                     <widget class="QLabel" name="label_241">
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;h&lt;span style=&quot; vertical-align:sub;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;1/128&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="6" column="0" colspan="11">
+                    <item row="2" column="0" colspan="2">
+                     <widget class="QLabel" name="label_252">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Ac=</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0" colspan="12">
                      <widget class="QPushButton" name="Copy_TAF_tabTipRadius_FrameStiffness">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3129,7 +2961,7 @@ Compliance
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="2" colspan="9">
+                    <item row="0" column="3" colspan="9">
                      <widget class="QLineEdit" name="lineEdit_TipName_tabTipRadius_FrameStiffness">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
@@ -3145,8 +2977,195 @@ Compliance
                 </layout>
                </widget>
               </item>
-              <item row="2" column="0" colspan="2">
-               <widget class="QGroupBox" name="groupBox_10">
+              <item row="0" column="0" colspan="2">
+               <widget class="QGroupBox" name="groupBox_216">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>460</width>
+                  <height>172</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>460</width>
+                  <height>172</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Test file path list</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_205">
+                 <item row="0" column="0" rowspan="5">
+                  <widget class="QTableWidget" name="tableWidget_path_tabTipRadius_FrameStiffness">
+                   <property name="minimumSize">
+                    <size>
+                     <width>350</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>170</height>
+                    </size>
+                   </property>
+                   <attribute name="horizontalHeaderVisible">
+                    <bool>false</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>330</number>
+                   </attribute>
+                   <attribute name="horizontalHeaderStretchLastSection">
+                    <bool>true</bool>
+                   </attribute>
+                   <row>
+                    <property name="text">
+                     <string>Path1</string>
+                    </property>
+                   </row>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <item row="0" column="0">
+                    <property name="checkState">
+                     <enum>Unchecked</enum>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="pushButton_addFileWindow_tabTipRadius_FrameStiffness">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>36</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Open in its separate window</string>
+                   </property>
+                   <property name="whatsThis">
+                    <string/>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string/>
+                   </property>
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhNone</set>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="window-new">
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
+                   </property>
+                   <property name="shortcut">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="pushButton_addFile_tabTipRadius_FrameStiffness">
+                   <property name="minimumSize">
+                    <size>
+                     <width>36</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>36</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="document-new">
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QPushButton" name="pushButton_changeFile_tabTipRadius_FrameStiffness">
+                   <property name="minimumSize">
+                    <size>
+                     <width>36</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>36</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="document-open">
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QPushButton" name="pushButton_deleteFile_tabTipRadius_FrameStiffness">
+                   <property name="minimumSize">
+                    <size>
+                     <width>36</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>36</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="list-remove">
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <spacer name="verticalSpacer_263">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QGroupBox" name="groupBox_221">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                   <horstretch>0</horstretch>
@@ -3155,89 +3174,65 @@ Compliance
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>460</width>
+                  <width>0</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>460</width>
+                  <width>224</width>
                   <height>16777215</height>
                  </size>
                 </property>
                 <property name="title">
-                 <string>Identify Loading-Holding-UnloadingStart-UnloadingEnd</string>
+                 <string>Drift Correction (using final x% data)</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_18">
-                 <item row="0" column="5">
-                  <widget class="QLabel" name="label_18">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>max. Size of fluctuation:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="4">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
+                <layout class="QGridLayout" name="gridLayout_215">
+                 <item row="0" column="1">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_UsingDriftUnloading_tabTipRadius_FrameStiffness">
                    <property name="decimals">
-                    <number>4</number>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.000100000000000</double>
+                    <number>0</number>
                    </property>
                    <property name="value">
-                    <double>0.010000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="6">
-                  <widget class="QSpinBox" name="spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="value">
-                    <number>11</number>
+                    <double>60.000000000000000</double>
                    </property>
                   </widget>
                  </item>
                  <item row="0" column="0">
-                  <widget class="QLabel" name="label_17">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                  <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness">
+                   <property name="enabled">
+                    <bool>true</bool>
                    </property>
                    <property name="text">
-                    <string>when (dP/dt) [mN/s] crosses</string>
+                    <string>Post</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QCheckBox" name="checkBox_UsingDriftPre_tabTipRadius_FrameStiffness">
+                   <property name="text">
+                    <string>Pre</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_UsingDriftPre_tabTipRadius_FrameStiffness">
+                   <property name="decimals">
+                    <number>0</number>
+                   </property>
+                   <property name="value">
+                    <double>60.000000000000000</double>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </widget>
               </item>
-              <item row="3" column="0">
-               <widget class="QGroupBox" name="groupBox_11">
+              <item row="2" column="0">
+               <widget class="QGroupBox" name="groupBox_217">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                   <horstretch>0</horstretch>
@@ -3259,9 +3254,9 @@ Compliance
                 <property name="title">
                  <string>Test Parameters</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_25">
+                <layout class="QGridLayout" name="gridLayout_206">
                  <item row="1" column="1">
-                  <widget class="QLabel" name="label_23">
+                  <widget class="QLabel" name="label_244">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                      <horstretch>0</horstretch>
@@ -3283,7 +3278,7 @@ Compliance
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QLabel" name="label_22">
+                  <widget class="QLabel" name="label_243">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                      <horstretch>0</horstretch>
@@ -3293,24 +3288,6 @@ Compliance
                    <property name="text">
                     <string>Equipment:</string>
                    </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QComboBox" name="comboBox_equipment_tabTipRadius_FrameStiffness">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>G200X</string>
-                    </property>
-                   </item>
                   </widget>
                  </item>
                  <item row="1" column="2">
@@ -3350,21 +3327,285 @@ Compliance
                    </item>
                   </widget>
                  </item>
+                 <item row="2" column="2">
+                  <widget class="QComboBox" name="comboBox_equipment_tabTipRadius_FrameStiffness">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>G200X</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MicroMaterials</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
-              <item row="3" column="1" rowspan="2">
-               <widget class="QGroupBox" name="groupBox_8">
+              <item row="0" column="2" rowspan="6">
+               <widget class="QGroupBox" name="groupBox_225">
+                <property name="title">
+                 <string>Test list</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_204">
+                 <item row="3" column="0">
+                  <widget class="QPushButton" name="pushButton_SelectTypedTest_tabTipRadius_FrameStiffness">
+                   <property name="toolTip">
+                    <string>How to select test(s)? see Q3 in Document from Help</string>
+                   </property>
+                   <property name="text">
+                    <string>Select the typed test(s)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QPushButton" name="pushButton_SelectAll_tabTipRadius_FrameStiffness">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>22</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Select/ Unselect all</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QTableWidget" name="tableWidget_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Ubuntu</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="cursor" stdset="0">
+                    <cursorShape>ArrowCursor</cursorShape>
+                   </property>
+                   <property name="mouseTracking">
+                    <bool>false</bool>
+                   </property>
+                   <property name="tabletTracking">
+                    <bool>false</bool>
+                   </property>
+                   <property name="statusTip">
+                    <string/>
+                   </property>
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhNone</set>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="autoScroll">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sortingEnabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="rowCount">
+                    <number>1</number>
+                   </property>
+                   <property name="columnCount">
+                    <number>4</number>
+                   </property>
+                   <attribute name="horizontalHeaderVisible">
+                    <bool>true</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderMinimumSectionSize">
+                    <number>68</number>
+                   </attribute>
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>68</number>
+                   </attribute>
+                   <attribute name="horizontalHeaderHighlightSections">
+                    <bool>true</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                    <bool>false</bool>
+                   </attribute>
+                   <row/>
+                   <column>
+                    <property name="text">
+                     <string>(use?) Test</string>
+                    </property>
+                    <property name="textAlignment">
+                     <set>AlignLeading|AlignVCenter</set>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>successfully
+analysed?</string>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="textAlignment">
+                     <set>AlignLeading|AlignVCenter</set>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Surface
+Index</string>
+                    </property>
+                    <property name="textAlignment">
+                     <set>AlignLeading|AlignVCenter</set>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Frame
+Compliance
+[µm/mN]</string>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="textAlignment">
+                     <set>AlignLeading|AlignVCenter</set>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QPlainTextEdit" name="plainTextEdit_SelectTypedTest_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="placeholderText">
+                    <string>e.g. 1-10, 12,15  </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="pushButton_tableWidgetWindow_tabTipRadius_FrameStiffness">
+                   <property name="sizeIncrement">
+                    <size>
+                     <width>10</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Open in its separate window</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="window-new">
+                     <normaloff>../../../../../../../.designer/backup</normaloff>../../../../../../../.designer/backup</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="6" column="2">
+               <widget class="QProgressBar" name="progressBar_tabTipRadius_FrameStiffness">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
                 <property name="minimumSize">
                  <size>
+                  <width>200</width>
+                  <height>43</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
                   <width>224</width>
-                  <height>100</height>
+                  <height>430</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="2">
+               <spacer name="verticalSpacer_262">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="3" column="1" rowspan="3">
+               <widget class="QGroupBox" name="groupBox_222">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -3374,9 +3615,348 @@ Compliance
                  </size>
                 </property>
                 <property name="title">
+                 <string>Unloading Range for Stiffness</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_201">
+                 <item row="0" column="1">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>1.050000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_247">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Start [100% of Pmax]:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_250">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>End [100% of Pmax]:</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.500000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="3" column="0" rowspan="3">
+               <widget class="QGroupBox" name="groupBox_218">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Identify Load–Hold–Unload Range</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_211">
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_248">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>max. Size of fluctuation:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0" rowspan="2">
+                  <widget class="QLabel" name="label_249">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>At dP/dt [mN/s] crossing</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1" rowspan="2" colspan="5">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_relForceRateNoise_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>65</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="decimals">
+                    <number>4</number>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.000100000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.010000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1" colspan="5">
+                  <widget class="QSpinBox" name="spinBox_max_size_fluctuation_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="value">
+                    <number>11</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QGroupBox" name="groupBox_220">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>224</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Range for Frame Compliance</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_214">
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="label_254">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>&lt; Force [mN]&lt;</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="label_253">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>&lt;Depth [µm]&lt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.100000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="decimals">
+                    <number>2</number>
+                   </property>
+                   <property name="value">
+                    <double>5.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="decimals">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <double>999.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>15.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="decimals">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <double>1000.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>1000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="7" column="2">
+               <widget class="QPushButton" name="pushButton_Calculate_tabTipRadius_FrameStiffness">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>43</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>224</width>
+                  <height>430</height>
+                 </size>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string>Calculate Frame Compliance</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0" rowspan="2">
+               <widget class="QGroupBox" name="groupBox_219">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>224</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>156</height>
+                 </size>
+                </property>
+                <property name="title">
                  <string>Find Surface</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_24">
+                <layout class="QGridLayout" name="gridLayout_213">
                  <item row="1" column="1">
                   <widget class="QSpinBox" name="spinBox_DataFilterSize_tabTipRadius_FrameStiffness">
                    <property name="sizePolicy">
@@ -3387,22 +3967,6 @@ Compliance
                    </property>
                    <property name="value">
                     <number>5</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_86">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Size of data filter:</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
                  </item>
@@ -3422,10 +3986,26 @@ Compliance
                    </property>
                   </widget>
                  </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_255">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Size of data filter:</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="0">
                   <widget class="QCheckBox" name="checkBox_UsingRate2findSurface_tabTipRadius_FrameStiffness">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3461,356 +4041,11 @@ crosses</string>
                 </layout>
                </widget>
               </item>
-              <item row="4" column="0">
-               <widget class="QGroupBox" name="groupBox_45">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
+              <item row="0" column="3" rowspan="10">
+               <widget class="QTabWidget" name="graphicsView_tab_TipAreaFunction_200">
+                <property name="enabled">
+                 <bool>true</bool>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>Correct Thermal Drift</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_95">
-                 <item row="0" column="0">
-                  <widget class="QCheckBox" name="checkBox_UsingDriftUnloading_tabTipRadius_FrameStiffness">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="text">
-                    <string>Use the collection during unloading</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QGroupBox" name="groupBox_50">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>Unloading Range to Calculate Stiffness </string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_100">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_16">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>110</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Start [100% of Pmax]:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_Start_Pmax_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>1.050000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_15">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>End [100% of Pmax]:</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_End_Pmax_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>0.500000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="5" column="1">
-               <widget class="QGroupBox" name="groupBox_12">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>224</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>224</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>Range to Calculate Frame Compliance</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_26">
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="label_24">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>&lt;Depth [µm]&lt;</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="label_25">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>&lt;Force [mN]&lt;</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critDepthStiffness_tabTipRadius_FrameStiffness">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>0.100000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critForceStiffness_tabTipRadius_FrameStiffness">
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="decimals">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <double>999.000000000000000</double>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>15.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critMaxDepthStiffness_tabTipRadius_FrameStiffness">
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="value">
-                    <double>5.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_critMaxForceStiffness_tabTipRadius_FrameStiffness">
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="decimals">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <double>1000.000000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>1000.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QProgressBar" name="progressBar_tabTipRadius_FrameStiffness">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>224</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>224</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QPushButton" name="pushButton_Calculate_tabTipRadius_FrameStiffness">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>224</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>224</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Calculate Frame Compliance</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="2">
-               <widget class="QPushButton" name="pushButton_SelectAll_tabTipRadius_FrameStiffness">
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Select/ Unselect all</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="2">
-               <spacer name="verticalSpacer_11">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="3" rowspan="9">
-               <widget class="QTabWidget" name="graphicsView_tab_TipAreaFunction_2">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -3829,28 +4064,25 @@ crosses</string>
                 <property name="usesScrollButtons">
                  <bool>true</bool>
                 </property>
-                <widget class="QWidget" name="tab_9">
+                <widget class="QWidget" name="tab_258">
                  <attribute name="title">
                   <string>Load Depth Curve</string>
                  </attribute>
-                 <layout class="QGridLayout" name="gridLayout_20">
-                  <item row="1" column="0">
-                   <widget class="QTabWidget" name="tabWidget_4">
+                 <layout class="QGridLayout" name="gridLayout_207">
+                  <item row="0" column="0">
+                   <widget class="QTabWidget" name="tabWidget_257">
                     <property name="currentIndex">
-                     <number>0</number>
+                     <number>1</number>
                     </property>
-                    <widget class="QWidget" name="tab_10">
+                    <widget class="QWidget" name="tab_259">
                      <attribute name="title">
                       <string>inclusive of frame compliance</string>
                      </attribute>
-                     <layout class="QGridLayout" name="gridLayout_21">
-                      <item row="1" column="0" colspan="5">
-                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
+                     <layout class="QGridLayout" name="gridLayout_208">
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
+                        <property name="text">
+                         <string>show thermal drift</string>
                         </property>
                        </widget>
                       </item>
@@ -3867,7 +4099,7 @@ crosses</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="4" column="0" colspan="4">
+                      <item row="3" column="0" colspan="3">
                        <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -3885,47 +4117,28 @@ crosses</string>
                       </item>
                       <item row="2" column="1">
                        <widget class="QCheckBox" name="checkBox_iLHU_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
                         <property name="text">
                          <string>show the Indentification of Loading-Holding-UnladingStart-UnladingEnd</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="2" column="2">
-                       <widget class="QCheckBox" name="checkBox_showThermalDrift_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
+                      <item row="1" column="0" colspan="5">
+                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_inclusive_frame_stiffness_tabTipRadius_FrameStiffness">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
+                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>100</horstretch>
+                          <verstretch>100</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="text">
-                         <string>show thermal drift</string>
                         </property>
                        </widget>
                       </item>
                      </layout>
                     </widget>
-                    <widget class="QWidget" name="tab_11">
+                    <widget class="QWidget" name="tab_260">
                      <attribute name="title">
                       <string>exclusive of frame compliance</string>
                      </attribute>
-                     <layout class="QGridLayout" name="gridLayout_22">
-                      <item row="0" column="0">
-                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                       </widget>
-                      </item>
+                     <layout class="QGridLayout" name="gridLayout_209">
                       <item row="2" column="0">
                        <widget class="QPushButton" name="pushButton_plot_chosen_test_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness">
                         <property name="sizePolicy">
@@ -3942,8 +4155,18 @@ crosses</string>
                         </property>
                        </widget>
                       </item>
+                      <item row="0" column="0">
+                       <widget class="QGraphicsView" name="graphicsView_load_depth_tab_exclusive_frame_stiffness_tabTipRadius_FrameStiffness">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                       </widget>
+                      </item>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="label_180">
+                       <widget class="QLabel" name="label_242">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -3967,35 +4190,15 @@ crosses</string>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="tab_12">
+                <widget class="QWidget" name="tab_261">
                  <attribute name="title">
                   <string>Frame Compliance</string>
                  </attribute>
-                 <layout class="QGridLayout" name="gridLayout_23">
-                  <item row="1" column="3">
-                   <widget class="QLineEdit" name="lineEdit_FrameCompliance_tabTipRadius_FrameStiffness">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="readOnly">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
+                 <layout class="QGridLayout" name="gridLayout_210">
                   <item row="1" column="0">
-                   <widget class="QLabel" name="label_20">
+                   <widget class="QLabel" name="label_246">
                     <property name="text">
                      <string>Frame Stiffness [mN/µm]</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0" colspan="6">
-                   <widget class="QGraphicsView" name="graphicsView_tabTipRadius_FrameStiffness">
-                    <property name="cacheMode">
-                     <set>QGraphicsView::CacheNone</set>
                     </property>
                    </widget>
                   </item>
@@ -4028,9 +4231,29 @@ crosses</string>
                    </widget>
                   </item>
                   <item row="1" column="2">
-                   <widget class="QLabel" name="label_19">
+                   <widget class="QLabel" name="label_245">
                     <property name="text">
                      <string>Frame Compliance [µm/mN]</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="7">
+                   <widget class="QGraphicsView" name="graphicsView_tabTipRadius_FrameStiffness">
+                    <property name="cacheMode">
+                     <set>QGraphicsView::CacheNone</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="3">
+                   <widget class="QLineEdit" name="lineEdit_FrameCompliance_tabTipRadius_FrameStiffness">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
