@@ -1,4 +1,4 @@
 # docs/requirements.txt
 sphinx>=8,<10
-sphinx_rtd_theme>=2
+sphinx_rtd_theme>=2,<3
 myst-parser>=4,<5
