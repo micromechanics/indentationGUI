@@ -1,3 +1,15 @@
+--------2026-03-29--------Weiguang
+1. Add HDF5 export.
+2. Improve HDF5 export and SMART500 position reading.
+3. Speed up Excel loading.
+4. Keep the GUI responsive during calculations.
+5. Connect the data-density control to load-depth plotting.
+6. Redesign the TAF tab.
+7. Update the tip-radius frame-stiffness workflow and frame-stiffness tab UI.
+8. Make TAF the default start tab.
+9. Refresh the logo assets.
+10. Reorganize the documentation and add screenshots for the analysis tabs.
+
 --------2026-03-27--------Weiguang
 1. TAF fitting was accelerated.
 2. Hardness and Young's modulus plots were added to the TAF tab.
