@@ -46,8 +46,11 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_title = 'micromechanics-indentationGUI documentation'
+html_short_title = project
 html_logo = 'img/logo_white.png'
 html_favicon = 'img/logo_32x32.png'
+html_baseurl = 'https://micromechanics.github.io/indentationGUI/'
 html_context = {
     "display_github": True,
     "github_user": "micromechanics",
@@ -60,5 +63,15 @@ html_context = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['img']
+html_extra_path = ['robots.txt', 'sitemap.xml']
 html_css_files = ['custom.css']
 html_js_files = ['copy-code.js']
+
+
+def _set_homepage_pageurl(app, pagename, templatename, context, doctree):
+    if pagename == 'index':
+        context['pageurl'] = html_baseurl
+
+
+def setup(app):
+    app.connect('html-page-context', _set_homepage_pageurl)

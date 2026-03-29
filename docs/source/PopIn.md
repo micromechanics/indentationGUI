@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Analyse pop-in events in micromechanics-indentationGUI using calibrated tip radius and frame compliance.
+---
+
 # Pop-in
 
 Use the `Analyse Pop-in Effect` tab for pop-in related calculations.

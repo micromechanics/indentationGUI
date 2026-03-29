@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Run hardness and Young's modulus analysis in micromechanics-indentationGUI after tip area function and frame compliance calibration.
+---
+
 # Hardness and Young's Modulus
 
 Use the `Hardness and Young's Modulus` tab after TAF and frame compliance are

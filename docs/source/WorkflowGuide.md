@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Recommended analysis order for micromechanics-indentationGUI, including how the TAF, frame compliance, hardness, creep, tip radius, pop-in, and classification tabs relate to each other.
+---
+
 # Workflow Guide
 
 This page is the roadmap for the whole GUI. It shows the usual analysis order

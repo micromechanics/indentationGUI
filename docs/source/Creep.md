@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Evaluate creep rate in micromechanics-indentationGUI using calibrated tip area function, frame compliance, and a material Young's modulus input.
+---
+
 # Creep
 
 Use the `Creep` tab for creep-rate evaluation.

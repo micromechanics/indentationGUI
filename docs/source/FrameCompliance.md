@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Calibrate frame compliance in micromechanics-indentationGUI for workflows that require stiffness correction before later analysis.
+---
+
 # Frame Compliance
 
 Several workflows in the GUI require frame compliance correction. This step is

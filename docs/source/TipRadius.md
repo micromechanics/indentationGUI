@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Calibrate indenter tip radius in micromechanics-indentationGUI with Hertzian fitting and inspect the resulting fit quality.
+---
+
 # Tip Radius
 
 Use the `Tip Radius` tab to calibrate the indenter tip radius by Hertzian

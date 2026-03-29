@@ -1,0 +1,19 @@
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% if pagename == 'index' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "micromechanics-indentationGUI",
+    "url": "https://micromechanics.github.io/indentationGUI/",
+    "codeRepository": "https://github.com/micromechanics/indentationGUI",
+    "downloadUrl": "https://pypi.org/project/micromechanics-indentationGUI/",
+    "applicationCategory": "ScientificApplication",
+    "description": "GUI for nanoindentation data analysis, including tip area function calibration, frame compliance, hardness and Young's modulus, creep, tip radius, pop-in, classification, and export."
+  }
+  </script>
+  {% endif %}
+{% endblock %}

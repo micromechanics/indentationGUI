@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Frequently asked questions for micromechanics-indentationGUI, including test selection, load-depth plotting, and manual contact-surface selection.
+---
+
 # Frequently Asked Questions
 
 ## How can I highlight the test(s) to plot their load-depth curves?

@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Calibrate the tip area function in micromechanics-indentationGUI and inspect the TAF, frame stiffness, hardness, modulus, and weight plots.
+---
+
 # Tip Area Function
 
 Use the `Tip Area Function` tab when you want to calibrate the tip area

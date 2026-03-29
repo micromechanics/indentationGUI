@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Install micromechanics-indentationGUI, launch the GUI, load indentation data, generate test lists, and learn the first analysis steps.
+---
+
 # Getting Started
 
 Use this page to launch the GUI, load data, and learn the basic test-selection actions.

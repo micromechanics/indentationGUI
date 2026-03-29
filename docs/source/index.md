@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: micromechanics-indentationGUI documentation for nanoindentation workflows, including tip area function calibration, frame compliance, hardness and Young's modulus, creep, tip radius, pop-in, classification, and export.
+---
+
 # micromechanics-indentationGUI documentation
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11563149.svg)](https://doi.org/10.5281/zenodo.11563149)

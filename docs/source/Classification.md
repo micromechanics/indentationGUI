@@ -1,3 +1,9 @@
+---
+myst:
+  html_meta:
+    description: Cluster and map indentation results in micromechanics-indentationGUI with the K-means Classification tab.
+---
+
 # Classification
 
 Use the `K-means Clustering` tab to cluster and map hardness/modulus data.
