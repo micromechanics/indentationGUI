@@ -11,7 +11,7 @@ micromechanics-indentationGUI
 </p>
 
 # Install
-- Create a new environment (python >= 3.8) using **anaconda-navigator** (https://www.anaconda.com/). In Anaconda's documentation (https://docs.anaconda.com/free/navigator/) you will learn:
+- Create a new environment with **Python >= 3.10** using **anaconda-navigator** (https://www.anaconda.com/). In Anaconda's documentation (https://docs.anaconda.com/free/navigator/) you will learn:
   - how to **install** anaconda-navigator in the section of "*Anaconda Navigator* => *Installation*" (reading takes ~5 min), 
   - how to **create and activate** a new environment in the section of "*Anaconda Navigator* => *Tutorials* => *How to create a Python 3.5 environment from Anaconda2 or Anaconda3*" (reading takes ~5 min).
 

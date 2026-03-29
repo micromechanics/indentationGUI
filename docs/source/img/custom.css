@@ -1,0 +1,178 @@
+.wy-nav-side {
+  background: #ffffff;
+}
+
+.wy-side-nav-search,
+.wy-nav-top {
+  background: #0f5ba3;
+}
+
+.wy-side-nav-search {
+  border-bottom: 1px solid #0f5ba3;
+}
+
+.wy-side-nav-search > a,
+.wy-side-nav-search .wy-dropdown > a,
+.wy-nav-top a {
+  color: #ffffff;
+}
+
+.wy-side-nav-search .wy-dropdown > a .title,
+.wy-side-nav-search > a .title,
+.wy-side-nav-search .wy-dropdown > a,
+.wy-side-nav-search > a {
+  color: #ffffff;
+}
+
+.wy-side-nav-search .version {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.wy-side-nav-search > a img.logo,
+.wy-side-nav-search .wy-dropdown > a img.logo {
+  width: 160px;
+  max-width: 160px;
+  height: auto;
+}
+
+.wy-side-nav-search input[type="text"] {
+  border: 1px solid #d2e3f3;
+  color: #08306b;
+  background: #ffffff;
+}
+
+.wy-menu-vertical,
+.wy-menu-vertical a {
+  color: #1f2a36;
+}
+
+.wy-menu-vertical a.reference.external[href*="github.com/micromechanics/indentationGUI"]::before,
+.wy-menu-vertical a.reference.external[href*="pypi.org/project/micromechanics-indentationGUI"]::before {
+  font-family: FontAwesome;
+  display: inline-block;
+  width: 1.15em;
+  margin-right: 0.45em;
+}
+
+.wy-menu-vertical a.reference.external[href*="github.com/micromechanics/indentationGUI"]::before {
+  content: "\f09b";
+}
+
+.wy-menu-vertical a.reference.external[href*="pypi.org/project/micromechanics-indentationGUI"]::before {
+  content: "\f1b3";
+}
+
+.wy-menu-vertical a:hover,
+.wy-menu-vertical a:focus {
+  background: #f3f8fc;
+}
+
+.wy-menu-vertical li.current {
+  background: #f8fbfe;
+}
+
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.toctree-l1.current > a {
+  background: #eaf3fa;
+  color: #08306b;
+  border-left: 3px solid #3787c0;
+}
+
+a {
+  color: #0f5ba3;
+}
+
+a:hover,
+a:focus {
+  color: #08306b;
+}
+
+.landing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin: 1.2rem 0 1.8rem;
+}
+
+.landing-card {
+  display: block;
+  background: #ffffff;
+  border: 1px solid #d9e7f3;
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 6px 18px rgba(8, 48, 107, 0.06);
+  text-decoration: none !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.landing-card:hover,
+.landing-card:focus {
+  transform: translateY(-2px);
+  border-color: #6aadd5;
+  box-shadow: 0 10px 24px rgba(15, 91, 163, 0.14);
+  text-decoration: none !important;
+}
+
+.landing-card h3 {
+  margin: 0 0 8px;
+  color: #08306b;
+  font-size: 1.02rem;
+}
+
+.landing-card p {
+  margin: 0;
+  color: #395066;
+  line-height: 1.55;
+}
+
+.landing-card-kicker {
+  margin-bottom: 8px;
+  color: #0f5ba3;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.landing-card-primary {
+  background: linear-gradient(180deg, #f7fbff 0%, #eef5fb 100%);
+}
+
+#micromechanics-indentationgui-documentation > .toctree-wrapper.compound {
+  display: none;
+}
+
+div.highlight {
+  position: relative;
+}
+
+.copy-code-button {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 2;
+  border: 1px solid #bfd5e8;
+  border-radius: 8px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #0f5ba3;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 4px 10px rgba(8, 48, 107, 0.08);
+  cursor: pointer;
+}
+
+.copy-code-button:hover,
+.copy-code-button:focus {
+  color: #08306b;
+  border-color: #6aadd5;
+  background: #ffffff;
+}
+
+.copy-code-button.is-copied {
+  color: #ffffff;
+  background: #0f5ba3;
+  border-color: #0f5ba3;
+}
