@@ -7868,7 +7868,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabAll.setCurrentIndex(1)
+        self.tabAll.setCurrentIndex(0)
         self.comboBox_equipment_tabTAF.setCurrentIndex(0)
         self.comboBox_method_tabTAF.setCurrentIndex(0)
         self.graphicsView_tab_TipAreaFunction.setCurrentIndex(0)
