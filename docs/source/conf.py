@@ -46,7 +46,7 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-html_title = 'micromechanics-indentationGUI documentation'
+html_title = 'indentationGUI docs'
 html_short_title = project
 html_logo = 'img/logo_white.png'
 html_favicon = 'img/logo_32x32.png'
