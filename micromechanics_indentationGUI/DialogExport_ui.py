@@ -58,6 +58,7 @@ class Ui_DialogExport(object):
         self.comboBox_ExportTab.addItem("")
         self.comboBox_ExportTab.addItem("")
         self.comboBox_ExportTab.addItem("")
+        self.comboBox_ExportTab.addItem("")
         self.comboBox_ExportTab.setObjectName(u"comboBox_ExportTab")
         sizePolicy1.setHeightForWidth(self.comboBox_ExportTab.sizePolicy().hasHeightForWidth())
         self.comboBox_ExportTab.setSizePolicy(sizePolicy1)
@@ -142,6 +143,7 @@ class Ui_DialogExport(object):
         self.comboBox_ExportTab.setItemText(0, QCoreApplication.translate("DialogExport", u"Hardness and Young's Modulus", None))
         self.comboBox_ExportTab.setItemText(1, QCoreApplication.translate("DialogExport", u"Analyse Pop-in Effect", None))
         self.comboBox_ExportTab.setItemText(2, QCoreApplication.translate("DialogExport", u"K-means Clustering", None))
+        self.comboBox_ExportTab.setItemText(3, QCoreApplication.translate("DialogExport", u"Creep Rate", None))
 
         self.label_3.setText(QCoreApplication.translate("DialogExport", u"XLSX Layout:", None))
         self.lineEdit_ExportFileName.setText(QCoreApplication.translate("DialogExport", u"Ouput.xlsx", None))

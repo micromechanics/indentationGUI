@@ -69,6 +69,10 @@ After checking the results and plots, the GUI supports:
 - exporting results to `xlsx`
 - exporting results to `hdf5`
 
+The exported `hdf5` result files use pandas/PyTables format, which can be
+opened by tools such as ViTables. Creep-rate exports include the per-test
+columns `time[s]`, `equiv stress[GPa]`, and `creep rate[s-1]`.
+
 ## Save sessions
 
 If you want to continue the work later, the GUI supports:

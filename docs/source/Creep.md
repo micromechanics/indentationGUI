@@ -41,6 +41,22 @@ The most important plots are the creep-rate plots and any related depth or
 time-dependent curves used in the calculation. These help you judge whether the
 reported creep values come from a stable region.
 
+## Exported results
+
+Creep-rate results can be exported to `xlsx` or `hdf5`.
+
+For each exported test, the creep-rate output includes:
+
+- `time[s]`
+- `equiv stress[GPa]`
+- `creep rate[s-1]`
+
+For `hdf5` export, the file is written in pandas/PyTables format so it can be
+opened by tools such as ViTables. The summary table is stored under `results`,
+and per-test creep-rate tables are stored under `tests/<Test Name>`, for
+example `tests/Test 4`. The HDF5 folder name therefore matches the `Test Name`
+column inside the exported table.
+
 ## Common problems
 
 Typical issues include:

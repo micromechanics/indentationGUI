@@ -2,10 +2,12 @@
 
 """ Graphical user interface to export results """
 import os
-import h5py
+import warnings
 import pandas as pd
 from pandas import ExcelWriter, DataFrame
 import numpy as np
+from tables import NaturalNameWarning
+from .Tools4LoadingData import read_file_list
 
 def export(self, win):
   """
@@ -125,6 +127,26 @@ def export(self, win):
                           'Flip mapping (0=None, 1=Left-Right, 2=Top-Bottom, 3=Both)',
                         ],
                     columns=[' '])
+  elif Index_ExportTab == 3:
+    #define the data frame of experimental parameters of tabCreep
+    file_list = read_file_list(win.ui.tableWidget_path_tabCreep)
+    df = DataFrame([
+                    [file_list[0] if file_list else ''],
+                    [win.ui.doubleSpinBox_Poisson_tabCreep.value()],
+                    [win.ui.doubleSpinBox_E_Tip_tabCreep.value()],
+                    [win.ui.doubleSpinBox_Poisson_Tip_tabCreep.value()],
+                    [win.ui.lineEdit_FrameCompliance_tabCreep.text()],
+                    [win.ui.doubleSpinBox_DataSegment4Smooth_tabCreep.value()],
+                  ],
+                  index=[
+                          'Path',
+                          'Poisson\'s Ratio',
+                          'Young\'s Modulus of Tip [GPa]',
+                          'Poisson\'s Ratio of Tip',
+                          'Frame Compliance [µm/mN]',
+                          'Data Segment for Smoothing [s]',
+                        ],
+                    columns=[' '])
 
   if Index_ExportFileType == 1:
     _export_hdf5(output_path, Index_ExportTab, df, win)
@@ -190,6 +212,30 @@ def export(self, win):
                                   'fitted Hertzian prefactor[mN*µm^(-3/2)]',
                                   'calculated E [GPa]',
                                   'calculated max. shear stress [GPa]',
+                                ],
+                        )
+        df = df.T
+        #write to excel
+        df.to_excel(writer,sheet_name=sheetName, index=False)
+        for k in range(10):
+          #set the width of column
+          writer.sheets[sheetName].set_column(0, k, 20)
+    if Index_ExportTab == 3:
+      #define the data frame of each tests for tabCreep
+      for j, _ in enumerate(win.tabCreep_testName_collect):
+        sheetName = win.tabCreep_testName_collect[j]
+        n = len(win.tabCreep_equivStress_collect[j])
+        time_values = _tab_creep_time_values(win, j, n)
+        df = DataFrame(
+                        [
+                          time_values,
+                          win.tabCreep_equivStress_collect[j],
+                          win.tabCreep_CreepRate_collect[j],
+                        ],
+                        index =[
+                                  'time[s]',
+                                  'equiv stress[GPa]',
+                                  'creep rate[s-1]',
                                 ],
                         )
         df = df.T
@@ -292,7 +338,7 @@ def export(self, win):
                                 'calculated max. shear stress [GPa]',
                               ],
                       )
-    if Index_ExportTab == 2:
+    elif Index_ExportTab == 2:
       #define the data frame of all tests for tabClassification
       df = DataFrame(
                       [
@@ -312,6 +358,33 @@ def export(self, win):
                               'mean of Er [GPa]',
                               ],
                       )
+    elif Index_ExportTab == 3:
+      #define the data frame of all tests for tabCreep
+      All_testName_collect = []
+      All_time_collect = []
+      All_equivStress_collect = []
+      All_CreepRate_collect = []
+      for j, _ in enumerate(win.tabCreep_testName_collect):
+        time_values = _tab_creep_time_values(win, j, len(win.tabCreep_equivStress_collect[j]))
+        for k, _ in enumerate(win.tabCreep_equivStress_collect[j]):
+          All_testName_collect.append(win.tabCreep_testName_collect[j])
+          All_time_collect.append(time_values[k])
+          All_equivStress_collect.append(win.tabCreep_equivStress_collect[j][k])
+          All_CreepRate_collect.append(win.tabCreep_CreepRate_collect[j][k])
+      df = DataFrame(
+                      [
+                        All_testName_collect,
+                        All_time_collect,
+                        All_equivStress_collect,
+                        All_CreepRate_collect,
+                      ],
+                      index =[
+                              'Test Name',
+                              'time[s]',
+                              'equiv stress[GPa]',
+                              'creep rate[s-1]',
+                              ],
+                      )
 
     df = df.T
     sheetName = 'Results'
@@ -327,10 +400,10 @@ def export(self, win):
 
 
 def _export_hdf5(output_path, index_export_tab, df_params, win):
-  """Export results to HDF5."""
-  with h5py.File(output_path, mode="w") as h5_file:
-    h5_file.attrs['export_format'] = 'plain_hdf5'.encode('utf-8')
-    _write_hdf_dataframe(h5_file.create_group("experimental_parameters"), df_params)
+  """Export results to a pandas/PyTables HDF5 file."""
+  with pd.HDFStore(output_path, mode='w', complevel=9, complib='zlib') as h5_file:
+    h5_file.root._v_attrs.export_format = 'pandas_hdfstore'
+    _write_hdf_dataframe(h5_file, '/experimental_parameters', df_params)
     if index_export_tab == 0:
       summary_df = DataFrame({
         'Test Name': win.tabHE_testName_collect,
@@ -346,8 +419,8 @@ def _export_hdf5(output_path, index_export_tab, df_params, win):
         'X Position [µm]': win.tabHE_X_Position_collect,
         'Y Position [µm]': win.tabHE_Y_Position_collect,
       })
-      _write_hdf_dataframe(h5_file.create_group('results'), summary_df)
-      tests_group = h5_file.create_group('tests')
+      _write_hdf_dataframe(h5_file, '/results', summary_df)
+      test_keys = set()
       for i, test_name in enumerate(win.tabHE_testName_collect):
         x_pos = win.tabHE_X_Position_collect[i] if win.tabHE_X_Position_collect[i] is not None else 0
         y_pos = win.tabHE_Y_Position_collect[i] if win.tabHE_Y_Position_collect[i] is not None else 0
@@ -363,7 +436,7 @@ def _export_hdf5(output_path, index_export_tab, df_params, win):
           'X Position [µm]': x_pos * np.ones(n),
           'Y Position [µm]': y_pos * np.ones(n),
         })
-        _write_hdf_dataframe(tests_group.create_group(f'test_{i+1}'), per_test_df)
+        _write_hdf_dataframe(h5_file, _hdf_test_key(test_name, test_keys), per_test_df)
     elif index_export_tab == 1:
       rows = []
       for j, test_name in enumerate(win.tabPopIn_testName_collect):
@@ -384,7 +457,7 @@ def _export_hdf5(output_path, index_export_tab, df_params, win):
             'calculated E [GPa]': win.tabPopIn_E_collect[j],
             'calculated max. shear stress [GPa]': win.tabPopIn_maxShearStress_collect[j],
           })
-      _write_hdf_dataframe(h5_file.create_group('results'), DataFrame(rows))
+      _write_hdf_dataframe(h5_file, '/results', DataFrame(rows))
     elif index_export_tab == 2:
       classification_df = DataFrame({
         'File Number': win.tabClassification_FileNumber_collect,
@@ -394,26 +467,85 @@ def _export_hdf5(output_path, index_export_tab, df_params, win):
         'mean of E [GPa]': win.tabClassification_E_collect,
         'mean of Er [GPa]': win.tabClassification_Er_collect,
       })
-      _write_hdf_dataframe(h5_file.create_group('results'), classification_df)
+      _write_hdf_dataframe(h5_file, '/results', classification_df)
+    elif index_export_tab == 3:
+      summary_df = DataFrame({
+        'Test Name': win.tabCreep_testName_collect,
+        'mean of H [GPa]': win.tabCreep_Hmean_collect,
+        'std of H [GPa]': win.tabCreep_Hstd_collect,
+        'mean of E [GPa]': win.tabCreep_Emean_collect,
+        'std of E [GPa]': win.tabCreep_Estd_collect,
+        'X Position [µm]': win.tabCreep_X_Position_collect,
+        'Y Position [µm]': win.tabCreep_Y_Position_collect,
+      })
+      _write_hdf_dataframe(h5_file, '/results', summary_df)
+      test_keys = set()
+      for i, test_name in enumerate(win.tabCreep_testName_collect):
+        n = len(win.tabCreep_equivStress_collect[i])
+        time_values = _tab_creep_time_values(win, i, n)
+        per_test_df = DataFrame({
+          'Test Name': [test_name] * n,
+          'time[s]': time_values,
+          'equiv stress[GPa]': win.tabCreep_equivStress_collect[i],
+          'creep rate[s-1]': win.tabCreep_CreepRate_collect[i],
+        })
+        _write_hdf_dataframe(h5_file, _hdf_test_key(test_name, test_keys), per_test_df)
 
 
-def _write_hdf_dataframe(group, df):
-  """Write a pandas DataFrame as a single compound dataset (table)."""
-  dtype_list = []
-  columns_data = {}
+def _write_hdf_dataframe(store, key, df):
+  """Write a DataFrame in the pandas/PyTables format expected by ViTables."""
+  df = df.copy()
   for col_name in df.columns:
-    series = df[col_name]
-    if pd.api.types.is_numeric_dtype(series):
-      arr = series.fillna(np.nan).to_numpy(dtype=np.float64)
-      dtype_list.append((col_name, np.float64))
-    else:
-      encoded = [str('' if v is None else v).encode('utf-8') for v in series]
-      max_len = max((len(b) for b in encoded), default=1)
-      arr = np.array(encoded, dtype=f'S{max_len}')
-      dtype_list.append((col_name, f'S{max_len}'))
-    columns_data[col_name] = arr
-  compound_dtype = np.dtype(dtype_list)
-  table = np.empty(len(df), dtype=compound_dtype)
-  for col_name in df.columns:
-    table[col_name] = columns_data[col_name]
-  group.create_dataset('data', data=table)
+    if not pd.api.types.is_numeric_dtype(df[col_name]):
+      df[col_name] = df[col_name].map(_stringify_hdf_value)
+  hdf_format = 'fixed' if df.empty else 'table'
+  with warnings.catch_warnings():
+    warnings.filterwarnings('ignore', category=NaturalNameWarning)
+    store.put(key, df, format=hdf_format)
+
+
+def _stringify_hdf_value(value):
+  """Convert object values to strings without treating array-like values as missing."""
+  if value is None:
+    return ''
+  try:
+    is_missing = pd.isna(value)
+  except (TypeError, ValueError):
+    is_missing = False
+  if isinstance(is_missing, (bool, np.bool_)) and is_missing:
+    return ''
+  return str(value)
+
+
+def _tab_creep_time_values(win, index, length):
+  """Return creep time values matching one exported creep-rate test."""
+  time_collect = getattr(win, 'tabCreep_time_collect', [])
+  if index < len(time_collect):
+    try:
+      values = np.asarray(time_collect[index], dtype=float)
+    except (TypeError, ValueError):
+      values = np.asarray(time_collect[index])
+    if len(values) == length:
+      return values
+  return np.arange(length, dtype=float)
+
+
+def _hdf_test_key(test_name, used_keys):
+  """Return a unique HDF5 key whose leaf matches the exported test name."""
+  key_name = _sanitize_hdf_key_name(test_name)
+  key = f'/tests/{key_name}'
+  if key not in used_keys:
+    used_keys.add(key)
+    return key
+  counter = 2
+  while f'{key}_{counter}' in used_keys:
+    counter += 1
+  unique_key = f'{key}_{counter}'
+  used_keys.add(unique_key)
+  return unique_key
+
+
+def _sanitize_hdf_key_name(value):
+  """Make a test name safe as one HDF5 path component."""
+  name = str(value).strip().replace('/', '_')
+  return name or 'test'

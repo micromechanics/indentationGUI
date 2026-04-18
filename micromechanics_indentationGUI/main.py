@@ -358,6 +358,7 @@ class MainWindow(QMainWindow): #pylint: disable=too-many-public-methods
     self.tabCreep_H_collect=[]
     self.tabCreep_E_collect=[]
     self.tabCreep_testName_collect=[]
+    self.tabCreep_time_collect=[]
     self.canvas_dict = {}
     self.ax_dict = {}
 
@@ -856,9 +857,15 @@ class DialogExport(QDialog):
       tabName='tabClassification'
       self.ui.comboBox_ExportFormat.setCurrentIndex(1)
       files_list = (window.ui.textEdit_Files_tabClassification.toPlainText()).split("\n")
+    elif self.ui.comboBox_ExportTab.currentIndex()==3:
+      tabName='tabCreep'
+      self.ui.comboBox_ExportFormat.setCurrentIndex(1)
     #set default file name und folder path for {tabName}
     if tabName == 'tabClassification':
       tab_path = files_list[0]
+    elif tabName == 'tabCreep':
+      files_list = read_file_list(window.ui.tableWidget_path_tabCreep)
+      tab_path = files_list[0] if files_list else ''
     else:
       tab_path = eval(f"window.ui.lineEdit_path_{tabName}.text()") # pylint: disable=eval-used
     file_extension = self._current_file_extension()

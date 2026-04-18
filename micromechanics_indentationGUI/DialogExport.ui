@@ -80,6 +80,11 @@
        <string>K-means Clustering</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>Creep Rate</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="4" column="0">

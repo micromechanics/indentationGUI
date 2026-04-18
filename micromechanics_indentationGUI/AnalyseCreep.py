@@ -227,6 +227,7 @@ def CalculateCreepRate(self,ax=[False, False,False]):
   elif self.method == Method.MULTI:
     # Store creep rate for each cycle
     self.CreepRate = []
+    self.time_duringCreep = []
     # Initialize mask for selecting creep segments
     mask = np.zeros_like(self.h, dtype=bool)
     # Loop over all loading/unloading cycles
@@ -261,10 +262,12 @@ def CalculateCreepRate(self,ax=[False, False,False]):
         # Linear creep rate estimate
         CreepRate = popt[0]/h[-1]
         self.CreepRate.append(CreepRate) # /s
+        self.time_duringCreep.append(t[-1])
       else:
          # Calculate creep rate from fitted function
         CreepRate = derivate(t[-1], *params)/h[-1]
         self.CreepRate.append(CreepRate) # /s
+        self.time_duringCreep.append(t[-1])
         # Optional plot of fitted creep curve
         if ax[1]:
           t_new = np.arange(np.min(t), np.max(t)+1, 1)

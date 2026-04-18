@@ -34,6 +34,10 @@ Users need to know:
   - The automatically generated HDF5 file has the same file name as the original file (e.g. the XLSX file for G200X) except the file extension of ".h5" and locates in the same folder as the original file.
   - The original file extension (e.g. '.xlsx' for G200X) should be given in the path instead of the file extension of the HDF5 file (".h5").
   - **[Important]** If you changed the content of the original file, please delete the correspoding HDF5 file.
+- For exporting calculated results:
+  - Results can be exported to `.xlsx` or `.h5`.
+  - Exported `.h5` result files are written in pandas/PyTables format for compatibility with tools such as ViTables.
+  - Creep-rate exports include `time[s]`, `equiv stress[GPa]`, and `creep rate[s-1]` for each exported test.
 
 Running by keyboard typing the following command and pressing Enter in the terminal
 ``` bash

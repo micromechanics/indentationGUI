@@ -221,6 +221,9 @@ def Calculate_CreepRate(self): # pylint: disable=too-many-locals,too-many-statem
   hardness_duringCreep_max_collect = []
   CreepRate_min_collect = []
   CreepRate_max_collect = []
+  time_collect = []
+  equiv_stress_collect = []
+  creep_rate_collect = []
   while True:
     print('first while loop')
     # i.analyse(remove_frameCompliance=remove_frameCompliance,calculate_CreepRate=False)
@@ -284,8 +287,12 @@ def Calculate_CreepRate(self): # pylint: disable=too-many-locals,too-many-statem
       #plotting Creep rate
       if i.method == Method.CSM:
         Number_segments = int((i.time_duringCreep[-1] - i.time_duringCreep[0])/DataSegment4Smooth)
+        time_duringCreep_mean, _, _ = split_mean_var_with_index(i.time_duringCreep, n_segments=Number_segments)
         hardness_duringCreep_mean, hardness_duringCreep_std, _ = split_mean_var_with_index(i.hardness_duringCreep, n_segments=Number_segments)#pylint: disable=unused-variable
         CreepRate_mean, CreepRate_std, _ = split_mean_var_with_index(i.CreepRate, n_segments=Number_segments)#pylint: disable=unused-variable
+        time_collect.append(time_duringCreep_mean)
+        equiv_stress_collect.append(hardness_duringCreep_mean/3)
+        creep_rate_collect.append(CreepRate_mean)
         Label = "smoothed" if not labeld_smoothCurve else None
         ax_CreepRate1.plot(hardness_duringCreep_mean/3, CreepRate_mean,
           linewidth=2, alpha=0.9,label=Label,zorder=2, color='black')
@@ -311,6 +318,12 @@ def Calculate_CreepRate(self): # pylint: disable=too-many-locals,too-many-statem
         hardness_duringCreep_max_collect.append(np.max(i.hardness))
         CreepRate_min_collect.append(np.min(i.CreepRate))
         CreepRate_max_collect.append(np.max(i.CreepRate))
+        creep_time = np.asarray(getattr(i, 'time_duringCreep', []), dtype=float)
+        if len(creep_time) != len(i.CreepRate):
+          creep_time = np.arange(len(i.CreepRate), dtype=float)
+        time_collect.append(creep_time)
+        equiv_stress_collect.append(np.array(i.hardness)/3)
+        creep_rate_collect.append(np.array(i.CreepRate))
       #plotting H/E**2 - hc
       ax_HE2_hc.plot(i.hc[::DecreaseDataDensity],i.hardness[::DecreaseDataDensity]/i.modulus[::DecreaseDataDensity]**2,'.-', linewidth=1, picker=True, label=i.testName)
     if not i.testList:
@@ -388,6 +401,9 @@ def Calculate_CreepRate(self): # pylint: disable=too-many-locals,too-many-statem
   self.tabCreep_X_Position_collect=X_Position_collect
   self.tabCreep_Y_Position_collect=Y_Position_collect
   self.tabCreep_testName_collect=testName_collect
+  self.tabCreep_time_collect=time_collect
+  self.tabCreep_equivStress_collect=equiv_stress_collect
+  self.tabCreep_CreepRate_collect=creep_rate_collect
   #listing Test in the Table
   self.ui.tableWidget_tabCreep.setRowCount(len(OriginalAlltest))
   for k, theTest in enumerate(OriginalAlltest):
