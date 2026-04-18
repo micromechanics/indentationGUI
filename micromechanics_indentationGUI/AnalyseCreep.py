@@ -172,14 +172,14 @@ def plot_load_depth_time(self,tabName,If_inclusive_frameStiffness='inclusive'):
 
 def CalculateCreepRate(self,ax=[False, False,False]):
   """
-    Calculate creep rate during indentation experiments.
+  Calculate creep rate during indentation experiments.
 
-    Parameters
-    ----------
-    ax : list
-        Optional matplotlib axes for plotting results:
-        ax[1] -> creep depth fit
-        ax[2] -> hardness during creep
+  Parameters
+  ----------
+  ax : list
+    Optional matplotlib axes for plotting results:
+    ax[1] -> creep depth fit
+    ax[2] -> hardness during creep
   """
   # Creep model function: logarithmic creep behavior
   # h(t) = a * log(t + t0) + h0
