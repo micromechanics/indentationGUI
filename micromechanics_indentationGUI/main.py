@@ -51,7 +51,7 @@ def _configure_qt_runtime():
 _configure_qt_runtime()
 
 import numpy as np
-from PySide6.QtGui import QDesktopServices, QAction, QKeySequence, QShortcut, QIcon # pylint: disable=no-name-in-module
+from PySide6.QtGui import QDesktopServices, QAction, QKeySequence, QShortcut, QIcon, QGuiApplication # pylint: disable=no-name-in-module
 from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QFileDialog, QTableWidgetItem # pylint: disable=no-name-in-module
 from PySide6.QtCore import QUrl, Qt, QObject,QEvent, QTimer, QCoreApplication, QSize # pylint: disable=no-name-in-module
 from matplotlib.backends.backend_qtagg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar) # pylint: disable=no-name-in-module # from matplotlib.backends.qt_compat import QtWidgets
@@ -1225,17 +1225,34 @@ def main():
   global window, window_DialogExport, window_DialogSaveAs, window_DialogOpen, \
     window_DialogError, window_DialogWait, window_DialogAbout, \
     window_DialogPathList, window_DialogTestList
+  # On Wayland the compositor uses the app-id (== argv[0] basename by default)
+  # to match the .desktop file for the title-bar / taskbar icon. When launched
+  # via `python -m micromechanics_indentationGUI.main` argv[0] is "main" or the
+  # full module path, which never matches indentationGUI.desktop. Override
+  # argv[0] before QApplication is constructed so Qt advertises the right
+  # app-id to Wayland.
+  sys.argv[0] = "indentationGUI"
+  QGuiApplication.setDesktopFileName("indentationGUI")
+  if sys.platform == "win32":
+    # Without an explicit AppUserModelID, Windows groups the taskbar entry
+    # under python.exe and shows the Python icon instead of ours.
+    import ctypes
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("indentationGUI")
   app = QApplication(sys.argv)
+  app.setApplicationName("indentationGUI")
+  app.setApplicationDisplayName("indentationGUI")
+  app.setDesktopFileName("indentationGUI")
   window = MainWindow()
   window.setWindowTitle("indentationGUI")
   logo_icon = QIcon()
   logo_path = f"{window.file_path}{window.slash}pic{window.slash}logo{window.slash}"
-  logo_icon.addFile(f"{logo_path}logo.png", QSize(1000,1000))
+  logo_icon.addFile(f"{logo_path}logo.png", QSize(2000,2000))
   logo_icon.addFile(f"{logo_path}logo_16x16.png", QSize(16,16))
   logo_icon.addFile(f"{logo_path}logo_24x24.png", QSize(24,24))
   logo_icon.addFile(f"{logo_path}logo_32x32.png", QSize(32,32))
   logo_icon.addFile(f"{logo_path}logo_48x48.png", QSize(48,48))
   logo_icon.addFile(f"{logo_path}logo_256x256.png", QSize(256,256))
+  app.setWindowIcon(logo_icon)
   window.setWindowIcon(logo_icon)
   window.show()
   window.activateWindow()
