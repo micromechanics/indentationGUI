@@ -1,3 +1,8 @@
+--------2026-05-04--------Weiguang
+1. Update pandas and openpyxl dependency requirements for Python 3.12 compatibility.
+2. Improve Excel-to-HDF5 conversion for newer pandas versions.
+3. Add pandas compatibility tests for Excel-to-HDF5 conversion and HDF5 export.
+
 --------2026-03-29--------Weiguang
 1. Add HDF5 export.
 2. Improve HDF5 export and SMART500 position reading.

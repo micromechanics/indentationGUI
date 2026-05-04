@@ -3,9 +3,9 @@ pyside6 >= 6.6.3.1
 numpy < 2.0
 matplotlib >= 3.6.3
 micromechanics == 1.1.14
-pandas == 1.4.2
+pandas >= 2.1.4
 h5py
-openpyxl >= 3.1.1
+openpyxl >= 3.1.5
 scikit-learn
 tables
 xlsxwriter == 3.1.2

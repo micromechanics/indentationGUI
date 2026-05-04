@@ -1,5 +1,30 @@
 """ Module for tools for hdf5 """
+import warnings
+
 import pandas as pd
+from tables import NaturalNameWarning
+
+def _normalize_excel_sheet_for_hdf5(data):
+  """Convert Excel sheet columns to HDF5-friendly NumPy/object dtypes."""
+  if data.empty and len(data.columns) == 0:
+    return data
+  normalized_columns = []
+  for i, col_name in enumerate(data.columns):
+    column = data.iloc[:, i]
+    if i == 0 and col_name == 'Markers':
+      column = column.map(lambda value: '' if pd.isna(value) else str(value)).astype(object)
+    else:
+      column = pd.Series(
+        pd.to_numeric(column, errors='coerce').to_numpy(dtype='float64'),
+        index=data.index,
+      )
+    normalized_columns.append(column)
+  normalized_data = pd.DataFrame(
+    {i: column.to_numpy() for i, column in enumerate(normalized_columns)},
+    index=data.index,
+  )
+  normalized_data.columns = data.columns
+  return normalized_data
 
 def convertXLSXtoHDF5(XLSX_File,progressbar=None):
   """
@@ -11,24 +36,18 @@ def convertXLSXtoHDF5(XLSX_File,progressbar=None):
   """
   print('XLSX_File!!!!!!!!!!!!!!!',XLSX_File)
   df = pd.ExcelFile(XLSX_File)
-  store = pd.HDFStore(f"{XLSX_File[:-5]}.h5", mode='w', complevel=9, complib='zlib')
   print (df.sheet_names)
-  for idx, sheet_name in enumerate(df.sheet_names):
-    data = df.parse(sheet_name)
-    for i, _ in enumerate(data.columns):
-      if i==0:
-        if data.columns[i] == 'Markers':
-          data.iloc[:,i]=data.iloc[:,i].astype(str)
-        else:
-          data.iloc[:,i] = pd.to_numeric(data.iloc[:,i], errors='coerce')
-      elif i>0:
-        data.iloc[:,i] = pd.to_numeric(data.iloc[:,i], errors='coerce')
-    try:
-      store.put(sheet_name, data, format='table', append=True)
-    except:
-      store.put(sheet_name, data, format='fixed')
-      print('fixed', sheet_name)
-    if progressbar is not None:
-      progressbar(idx/len(df.sheet_names)*100, 'convert')
-  print (store.keys())
-  store.close()
+  with pd.HDFStore(f"{XLSX_File[:-5]}.h5", mode='w', complevel=9, complib='zlib') as store:
+    for idx, sheet_name in enumerate(df.sheet_names):
+      data = df.parse(sheet_name)
+      data = _normalize_excel_sheet_for_hdf5(data)
+      with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', category=NaturalNameWarning)
+        try:
+          store.put(sheet_name, data, format='table', append=True)
+        except:
+          store.put(sheet_name, data, format='fixed')
+          print('fixed', sheet_name)
+      if progressbar is not None:
+        progressbar(idx/len(df.sheet_names)*100, 'convert')
+    print (store.keys())
