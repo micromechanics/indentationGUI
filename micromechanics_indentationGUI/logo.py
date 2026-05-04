@@ -77,15 +77,20 @@ def draw_logo():
 def save_standard_logo_set(fig):
   """Save the standard icon sizes."""
   output_map = {
-    "logo.png": 1000,
-    "logo_16x16.png": 8,
-    "logo_24x24.png": 12,
-    "logo_32x32.png": 16,
-    "logo_48x48.png": 24,
-    "logo_256x256.png": 128,
+    "logo.png": (2000, 2000),
+    "logo_16x16.png": (16, 16),
+    "logo_24x24.png": (24, 24),
+    "logo_32x32.png": (32, 32),
+    "logo_48x48.png": (48, 48),
+    "logo_256x256.png": (256, 256),
   }
-  for filename, dpi in output_map.items():
-    fig.savefig(OUTPUT_DIR / filename, dpi=dpi, bbox_inches="tight", pad_inches=0)
+  for filename, size in output_map.items():
+    path = OUTPUT_DIR / filename
+    fig.savefig(path, dpi=size[0] // 2, bbox_inches="tight", pad_inches=0)
+    image = Image.open(path).convert("RGBA")
+    if image.size != size:
+      image = image.resize(size, Image.LANCZOS)
+      image.save(path)
 
 
 def save_white_logo_set():
